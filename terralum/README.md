@@ -27,6 +27,12 @@ For the WSL build in `build/`, the builder also writes `terralum/build/terralum-
 ./build/gemrb/gemrb -c terralum/build/terralum-wsl.cfg
 ```
 
+On Windows, after building GemRB under WSL, you can assemble and launch in one command:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File terralum\play.ps1
+```
+
 Start a new game, move around the courtyard, select **Study** to uncover the route, then **Down** to enter the Hollow. Map and inventory controls come from the GemRB demo.
 
 ## Author with an AI coder
