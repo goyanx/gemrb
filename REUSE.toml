@@ -36,6 +36,16 @@ SPDX-License-Identifier = "MIT"
 ###############################################################################
 # all the rest is for our included demo
 [[annotations]]
+path = "terralum/art/**"
+SPDX-FileCopyrightText = "2026, Golem Inc."
+SPDX-License-Identifier = "CC0-1.0"
+
+[[annotations]]
+path = "terralum/story.json"
+SPDX-FileCopyrightText = "2026, Golem Inc."
+SPDX-License-Identifier = "GPL-2.0-or-later"
+
+[[annotations]]
 path = "demo/**"
 SPDX-FileCopyrightText = "2012, Contributors to the GemRB project <https://gemrb.org>"
 SPDX-License-Identifier = "CC-BY-SA-4.0"

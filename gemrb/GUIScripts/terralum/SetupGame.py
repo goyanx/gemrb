@@ -1,0 +1,21 @@
+# SPDX-FileCopyrightText: 2012 Contributors to the GemRB project <https://gemrb.org>
+#
+# SPDX-License-Identifier: GPL-2.0-or-later
+
+import GemRB
+import Start
+from GUIDefines import GS_PARTYAI
+from ie_stats import IE_STR
+
+def OnLoad():
+	# skipping chargen
+	GemRB.CreatePlayer ("protagon", 1|0x8000) # exportable
+	GemRB.SetPlayerName (1, Start.Name, 0)
+	GemRB.SetPlayerSound (1, "male001")
+	# set strength, so items can be picked up (currently needed for encumbrance labels)
+	GemRB.SetPlayerStat (1, IE_STR, 14)
+
+	GemRB.GameSetScreenFlags (GS_PARTYAI, OP_OR)
+	GemRB.SetVar("CHAPTER", 1)
+	GemRB.SetVar("TL_STAGE", 0)
+	GemRB.EnterGame()

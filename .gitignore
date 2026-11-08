@@ -22,6 +22,8 @@ xcuserdata
 /cmake_uninstall.cmake
 /CMakeCache.txt
 /build
+/terralum/build/
+/Cache2/
 
 #MSVC generates these
 /.vs

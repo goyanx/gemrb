@@ -1,0 +1,11 @@
+{
+  "title": "Terralum: The Shattered Meridian",
+  "hero_default_name": "Ari Vale",
+  "opening": "The sky above Terralum has forgotten its stars. You have reached the Meridian Observatory, where a broken map may point toward the source of the silence.",
+  "first_objective": "Explore the courtyard. Use Study to examine the star-map dais.",
+  "discovery": "The brass rings turn beneath your hand. A buried route appears: the Hollow below the observatory. Something there is still answering the sky.",
+  "second_objective": "Use Down to follow the newly revealed route.",
+  "arrival": "The stone closes behind you. Ahead, the Hollow carries a faint pulse of blue light. This is where the search begins.",
+  "study_label": "Study",
+  "descend_label": "Down"
+}

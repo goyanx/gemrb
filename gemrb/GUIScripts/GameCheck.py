@@ -55,7 +55,7 @@ def IsBG2Demo ():
 	return ('BG2Demo' in GemRB.__dict__) and (GemRB.BG2Demo == True)
 
 def IsGemRBDemo ():
-	return GemRB.GameType == "demo"
+	return GemRB.GameType in ("demo", "terralum")
 
 def IsBGT (mode):
 	modes = { "bg1" : 0, "soa" : 1, "tob" : 2 }
