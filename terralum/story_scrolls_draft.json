@@ -1,0 +1,189 @@
+{
+  "title": "Terralum: Scrolls of Byzantem",
+  "hero_default_name": "Algoreth Jon Goren",
+  "chapters": [
+    {
+      "title": "I. The Royal Audience",
+      "area": "tl0001",
+      "place": "Alsperia Market",
+      "music": "tlcity.mus",
+      "voice": "tln0001",
+      "narration": "In Alsperia, the wizard Algoreth Jon Goren seeks the lost scrolls of Byzantem. Their secret is passage between worlds. The royal court may know the road to Lorian.",
+      "beats": [
+        {
+          "speaker": "Archivist Mara",
+          "text": "Dorian the Seer was the scrolls' last keeper. He went west through Mistwood. The Caverns of Lorian hold the scrolls, but the old trail is lost.",
+          "action": "Seek the court"
+        },
+        {
+          "speaker": "King Edmon",
+          "text": "A map, a horse, and a night's shelter are yours. Bring back knowledge that may aid Alsperia.",
+          "action": "Answer the king"
+        },
+        {
+          "speaker": "Queen Alisande",
+          "text": "Power travels with obligation, Master Goren. Remember whose trust opens this road.",
+          "action": "Take the western road"
+        }
+      ]
+    },
+    {
+      "title": "II. Through Mistwood",
+      "area": "tl0002",
+      "place": "Mistwood Road",
+      "music": "tlwood.mus",
+      "voice": "tln0002",
+      "narration": "The royal map carries Algoreth into Mistwood. Old waystones promise a safe route, while unseen watchers stir beyond the trees.",
+      "beats": [
+        {
+          "speaker": "Scout Tessa",
+          "text": "I know this road. The moss hides snares; follow the pale stones and keep your spellbook ready.",
+          "action": "Follow Tessa"
+        },
+        {
+          "speaker": "Tessa",
+          "text": "These tracks circle us. Something from the ruins hunts travellers after dusk.",
+          "action": "Face the ambush",
+          "encounter": "Mistwood stalker"
+        },
+        {
+          "speaker": "Dorian's inscription",
+          "text": "The path between worlds answers neither conquest nor fear. Carry a question worth the crossing.",
+          "action": "Enter Lorian"
+        }
+      ]
+    },
+    {
+      "title": "III. The Caverns of Lorian",
+      "area": "tl0003",
+      "place": "Lorian Cavern",
+      "music": "tlcave.mus",
+      "voice": "tln0003",
+      "narration": "Within Lorian, an ancient Byzantem arch guards a silver chest. Dorian's warning follows Algoreth into the dark.",
+      "beats": [
+        {
+          "speaker": "Dorian the Seer",
+          "text": "I kept the scrolls hidden from kings and thieves alike. Tell me why you would open a way to another world.",
+          "action": "Answer Dorian"
+        },
+        {
+          "speaker": "Dorian",
+          "text": "The chest is protected by an old guardian. It knows no ambition, only the duty to keep the door closed.",
+          "action": "Confront the guardian",
+          "encounter": "Lorian guardian"
+        },
+        {
+          "speaker": "Algoreth",
+          "text": "The silver lid yields. The scrolls of Byzantem describe crossings to Glacium, Sirocco, Verdania, Oceania, and Ebonrealm.",
+          "action": "Claim the scrolls"
+        }
+      ]
+    },
+    {
+      "title": "IV. The King's Bargain",
+      "area": "tl0004",
+      "place": "Alsperia Court",
+      "music": "tlcity.mus",
+      "voice": "tln0004",
+      "narration": "Algoreth returns to Alsperia with the scrolls. The court's gift of passage has become a claim upon his discovery.",
+      "beats": [
+        {
+          "speaker": "King Edmon",
+          "text": "Let our scholars copy the scrolls, so this power serves the realm rather than one wizard.",
+          "action": "Hear Alisande"
+        },
+        {
+          "speaker": "Queen Alisande",
+          "text": "A copy can spread knowledge. It can also arm every rival throne. Choose carefully who reads it first.",
+          "action": "Question the court"
+        },
+        {
+          "speaker": "Court Mage Ilyra",
+          "text": "The Sirocco passage is unstable. A damaged seal could open here, beneath the city itself.",
+          "action": "Guard the road"
+        }
+      ]
+    },
+    {
+      "title": "V. The Broken Crossing",
+      "area": "tl0005",
+      "place": "Mistwood Ruins",
+      "music": "tlwood.mus",
+      "voice": "tln0005",
+      "narration": "A seal has failed near Mistwood. Algoreth and Tessa return to the ruins before the breach can reach Alsperia.",
+      "beats": [
+        {
+          "speaker": "Tessa",
+          "text": "The trees grow frost on one side and desert glass on the other. That is no season I know.",
+          "action": "Search the ruins"
+        },
+        {
+          "speaker": "Ilyra",
+          "text": "This breach has no chosen destination. It tears at every realm.",
+          "action": "Defend the seal",
+          "encounter": "Crossing wraith"
+        },
+        {
+          "speaker": "Algoreth",
+          "text": "The ward holds for now. Dorian's question was a warning: a crossing needs purpose, not just power.",
+          "action": "Return to Lorian"
+        }
+      ]
+    },
+    {
+      "title": "VI. Dorian's Testament",
+      "area": "tl0006",
+      "place": "Byzantem Arch",
+      "music": "tlcave.mus",
+      "voice": "tln0006",
+      "narration": "At the arch, Dorian reveals why the scrolls were hidden. Each crossing binds Terralum to the world beyond it, and every opened road demands a keeper.",
+      "beats": [
+        {
+          "speaker": "Dorian",
+          "text": "I was the last keeper, not the last owner. No one can own a road between worlds.",
+          "action": "Ask of the realms"
+        },
+        {
+          "speaker": "Queen Alisande",
+          "text": "I came because Alsperia cannot leave its future to a closed door. I will stand beside you when you decide.",
+          "action": "Prepare the seal"
+        },
+        {
+          "speaker": "Algoreth",
+          "text": "A king may command a realm. A keeper must hear those who would walk the road.",
+          "action": "Return to Alsperia"
+        }
+      ]
+    },
+    {
+      "title": "VII. The Wizard King's Choice",
+      "area": "tl0007",
+      "place": "Alsperia Court",
+      "music": "tlcity.mus",
+      "voice": "tln0007",
+      "narration": "Algoreth stands before the throne. The scrolls are his, but their consequences belong to Terralum. His first decree will shape every crossing to come.",
+      "beats": [
+        {
+          "speaker": "King Edmon",
+          "text": "The nobles ask you to rule by force. The scholars ask for open study. The border lords ask to burn the scrolls.",
+          "action": "Hear the council"
+        },
+        {
+          "speaker": "Tessa",
+          "text": "People on the road will pay for a mistake first. Give them a voice before you open another gate.",
+          "action": "Answer Tessa"
+        },
+        {
+          "speaker": "Queen Alisande",
+          "text": "Build a council to guard each crossing, and let no crown claim the roads alone.",
+          "action": "Make the decree"
+        },
+        {
+          "speaker": "Algoreth",
+          "text": "I accept the title Wizard King as a duty. Alsperia will keep the scrolls, and the five realms will be approached with consent and care.",
+          "action": "Complete the campaign"
+        }
+      ]
+    }
+  ]
+}

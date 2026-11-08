@@ -17,5 +17,8 @@ def OnLoad():
 
 	GemRB.GameSetScreenFlags (GS_PARTYAI, OP_OR)
 	GemRB.SetVar("CHAPTER", 1)
-	GemRB.SetVar("TL_STAGE", 0)
+	GemRB.SetVar("TL_CHAPTER", 0)
+	GemRB.SetVar("TL_BEAT", 0)
+	GemRB.SetGlobal("TLCHAP", "GLOBAL", 0)
+	GemRB.SetGlobal("TLBEAT", "GLOBAL", 0)
 	GemRB.EnterGame()

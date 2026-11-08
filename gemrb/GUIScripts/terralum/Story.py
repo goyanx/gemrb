@@ -13,3 +13,6 @@ STORY_FILE = Path(__file__).resolve().parents[3] / "terralum" / "story.json"
 def get(key):
 	with STORY_FILE.open(encoding="utf-8") as source:
 		return json.load(source)[key]
+
+def chapters():
+	return get("chapters")

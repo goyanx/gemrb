@@ -1,11 +1,194 @@
 {
-  "title": "Terralum: The Shattered Meridian",
-  "hero_default_name": "Ari Vale",
-  "opening": "The sky above Terralum has forgotten its stars. You have reached the Meridian Observatory, where a broken map may point toward the source of the silence.",
-  "first_objective": "Explore the courtyard. Use Study to examine the star-map dais.",
-  "discovery": "The brass rings turn beneath your hand. A buried route appears: the Hollow below the observatory. Something there is still answering the sky.",
-  "second_objective": "Use Down to follow the newly revealed route.",
-  "arrival": "The stone closes behind you. Ahead, the Hollow carries a faint pulse of blue light. This is where the search begins.",
-  "study_label": "Study",
-  "descend_label": "Down"
+  "title": "Terralum: Scrolls of Byzantem",
+  "hero_default_name": "Algoreth Jon Goren",
+  "chapters": [
+    {
+      "title": "I. The Royal Audience",
+      "area": "tl0001",
+      "place": "Alsperia Market",
+      "music": "tlcity.mus",
+      "voice": "tln0001",
+      "narration": "In Alsperia, the wizard Algoreth Jon Goren seeks the lost scrolls of Byzantem. King Edmon and his wife, Queen Alisande, may know the road to Lorian.",
+      "beats": [
+        {
+          "speaker": "Archivist Mara",
+          "text": "Dorian the Seer was the scrolls' last keeper. He went west through Mistwood. The Caverns of Lorian hold the scrolls, but the old trail is lost.",
+          "action": "Seek the court"
+        },
+        {
+          "speaker": "King Edmon",
+          "text": "A map, a horse, and a night's shelter are yours. Bring back knowledge that may aid Alsperia.",
+          "action": "Answer the king"
+        },
+        {
+          "speaker": "Queen Alisande",
+          "text": "Power travels with obligation, Master Goren. Remember whose trust opens this road.",
+          "action": "Take the western road"
+        }
+      ]
+    },
+    {
+      "title": "II. Through Mistwood",
+      "area": "tl0002",
+      "place": "Mistwood Road",
+      "music": "tlwood.mus",
+      "voice": "tln0002",
+      "narration": "The royal map carries Algoreth into Mistwood. Old waystones promise a safe route, while unseen watchers stir beyond the trees.",
+      "beats": [
+        {
+          "speaker": "Scout Tessa",
+          "text": "I know this road. The moss hides snares; follow the pale stones and keep your spellbook ready.",
+          "action": "Follow Tessa"
+        },
+        {
+          "speaker": "Tessa",
+          "text": "These tracks circle us. Something from the ruins hunts travellers after dusk.",
+          "action": "Face the ambush",
+          "encounter": "Mistwood stalker"
+        },
+        {
+          "speaker": "Dorian's inscription",
+          "text": "The path between worlds answers neither conquest nor fear. Carry a question worth the crossing.",
+          "action": "Enter Lorian"
+        }
+      ]
+    },
+    {
+      "title": "III. The Caverns of Lorian",
+      "area": "tl0003",
+      "place": "Lorian Cavern",
+      "music": "tlcave.mus",
+      "voice": "tln0003",
+      "narration": "Within Lorian, an ancient Byzantem arch guards a silver chest. Dorian's warning follows Algoreth into the dark.",
+      "beats": [
+        {
+          "speaker": "Dorian the Seer",
+          "text": "I kept the scrolls hidden from kings and thieves alike. Tell me why you would open a way to another world.",
+          "action": "Answer Dorian"
+        },
+        {
+          "speaker": "Dorian",
+          "text": "The chest is protected by an old guardian. It knows no ambition, only the duty to keep the door closed.",
+          "action": "Confront the guardian",
+          "encounter": "Lorian guardian"
+        },
+        {
+          "speaker": "Algoreth",
+          "text": "The silver lid yields. The scrolls of Byzantem hold the secret of world travelling. Algoreth carries them back toward Alsperia.",
+          "action": "Claim the scrolls"
+        }
+      ]
+    },
+    {
+      "title": "IV. Return to Alsperia",
+      "area": "tl0004",
+      "place": "Alsperia Court",
+      "music": "tlcity.mus",
+      "voice": "tln0004",
+      "narration": "Algoreth returns from Lorian with the scrolls. King Edmon and Queen Alisande receive the wizard who travelled under their protection.",
+      "beats": [
+        {
+          "speaker": "King Edmon",
+          "text": "You found what you sought. Our map and horse carried you west; now tell us what Lorian has taught you.",
+          "action": "Hear Alisande"
+        },
+        {
+          "speaker": "Queen Alisande",
+          "text": "Knowledge won in darkness deserves careful study. Alsperia will hear your account before any court decides what comes next.",
+          "action": "Question the court"
+        },
+        {
+          "speaker": "Algoreth",
+          "text": "The scrolls speak of travel between worlds. Their meaning will take time to master; for now I owe this court an honest account.",
+          "action": "Turn the page"
+        }
+      ]
+    },
+    {
+      "title": "V. The Eastern Academy",
+      "area": "tl0005",
+      "place": "Old Observatory Vault",
+      "music": "tlcave.mus",
+      "voice": "tln0005",
+      "narration": "Much later, Algoreth is Wizard King of Alsperia. Alisande is now his wife and co-ruler. The surviving record leaves the years between their early court and this reign unwritten. Magister Vael reports a disturbance beneath the eastern academy.",
+      "beats": [
+        {
+          "speaker": "Magister Vael",
+          "text": "Before dawn, the old observatory annex changed. Light bent, glyphs shifted, and voices answered from the sealed lecture vault.",
+          "action": "Hear Alisande"
+        },
+        {
+          "speaker": "Queen Alisande",
+          "text": "The wardens will hold the perimeter. Go carefully, my love. Whatever speaks below already knows your voice.",
+          "action": "Enter the vault"
+        },
+        {
+          "speaker": "Algoreth",
+          "text": "A false version of me waits inside the Tear. I will give the breach a boundary instead of feeding it more force.",
+          "action": "Hold the ward",
+          "encounter": "Vault echo"
+        },
+        {
+          "speaker": "Algoreth",
+          "text": "Power shall endure only in form. Form shall endure only in purpose. Purpose shall endure only where being does not devour itself.",
+          "action": "Seal the Tear"
+        }
+      ]
+    },
+    {
+      "title": "VI. The Living Record",
+      "area": "tl0006",
+      "place": "Deep Archives",
+      "music": "tlcave.mus",
+      "voice": "tln0006",
+      "narration": "The Tear of Chaos is sealed, and the false Algoreth remains within it. The king, Alisande and Ealdrin descend to the Deep Archives to learn whether other Tears exist.",
+      "beats": [
+        {
+          "speaker": "Ealdrin",
+          "text": "The living record has no title. It speaks of extraordinary powers questioning their limits, and something that answers the question.",
+          "action": "Read the record"
+        },
+        {
+          "speaker": "Queen Alisande",
+          "text": "If the Tear has a counterpart, we need scholars, warders and maps before we leave. I will not let you face it alone.",
+          "action": "Consult Ealdrin"
+        },
+        {
+          "speaker": "Ealdrin",
+          "text": "An archive account warns that forcing a Tear shut can make the sealer its anchor. We should compare the signs in Eldrador.",
+          "action": "Answer the summons"
+        }
+      ]
+    },
+    {
+      "title": "VII. The Eldrador Expedition",
+      "area": "tl0007",
+      "place": "Alsperia Skyport",
+      "music": "tlcity.mus",
+      "voice": "tln0007",
+      "narration": "Queen Vaelthira of Eldrador has found another unstable Tear in her lower sanctuary. Algoreth and his companions prepare an Aethercraft to investigate. What awaits them there remains unknown.",
+      "beats": [
+        {
+          "speaker": "Queen Vaelthira",
+          "text": "Our sanctuary's Tear speaks with a familiar voice. I ask you to see it, not to destroy it blindly.",
+          "action": "Hear Seraphina"
+        },
+        {
+          "speaker": "Seraphina Everglow",
+          "text": "I have the ward diagrams ready. Your Majesty, the Aethercraft can carry the court's instruments and scholars.",
+          "action": "Check the ship"
+        },
+        {
+          "speaker": "Alistair",
+          "text": "The vessel is ready. The magic knights will guard the academy while you are away.",
+          "action": "Board together"
+        },
+        {
+          "speaker": "Queen Alisande",
+          "text": "Eldrador has invited us. We go together, and we return with the truth we can find.",
+          "action": "Depart for Eldrador"
+        }
+      ]
+    }
+  ]
 }

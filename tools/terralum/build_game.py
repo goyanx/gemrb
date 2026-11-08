@@ -20,17 +20,30 @@ SOURCE = ROOT / "demo"
 PROJECT = ROOT / "terralum"
 OUTPUT = PROJECT / "build" / "game"
 AREA_IMAGE = PROJECT / "art" / "observatory_courtyard.png"
-STORY_KEYS = (
-    "title", "hero_default_name", "opening", "first_objective",
-    "discovery", "second_objective", "arrival", "study_label", "descend_label",
-)
+AREAS = {
+    "tl0001": "alsperia_market.png",
+    "tl0002": "mistwood_road.png",
+    "tl0003": "lorian_cavern.png",
+    "tl0004": "alsperia_court.png",
+    "tl0005": "tear_vault.png",
+    "tl0006": "deep_archives.png",
+    "tl0007": "alsperia_skyport.png",
+}
 
 
 def read_story():
     story = json.loads((PROJECT / "story.json").read_text(encoding="utf-8"))
-    for key in STORY_KEYS:
+    for key in ("title", "hero_default_name"):
         if not isinstance(story.get(key), str) or not story[key].strip():
             raise ValueError(f"story.json: {key} must be nonempty text")
+    chapters = story.get("chapters", [])
+    if len(chapters) != 7:
+        raise ValueError("story.json must define seven chapters")
+    for chapter in chapters:
+        if chapter.get("area") not in AREAS or not chapter.get("beats"):
+            raise ValueError("each chapter needs a built area and story beats")
+        if not all(beat.get("speaker") and beat.get("text") and beat.get("action") for beat in chapter["beats"]):
+            raise ValueError("each story beat needs a speaker, text, and action")
     return story
 
 
@@ -83,6 +96,48 @@ def build():
     image = write_tis(AREA_IMAGE, SOURCE / "override" / "ar0100.tis", OUTPUT / "override" / "ar0100.tis")
     image.save(OUTPUT / "override" / "ar0100.png")
 
+    # Clone only the demo's geometry template. The ARE's actor and spawn
+    # counts are cleared so its tutorial cast does not reappear in Terralum.
+    for area, image_name in AREAS.items():
+        upper = area.upper().encode("ascii")
+        for suffix in (".are", ".WED", ".mos", "LM.BMP", "SR.BMP", "HT.BMP", "TMP.BMP"):
+            source_name = "ar0100" + suffix if suffix in (".are", ".mos") else "AR0100" + suffix
+            data = (SOURCE / "override" / source_name).read_bytes()
+            if suffix in (".are", ".WED"):
+                data = data.replace(b"AR0100", upper)
+            if suffix == ".are":
+                data = bytearray(data)
+                struct.pack_into("<H", data, 0x58, 0)  # actor count
+                struct.pack_into("<I", data, 0x6C, 0)  # spawn count
+                song_offset = struct.unpack_from("<I", data, 0xBC)[0]
+                song_index = {"tl0001": 1, "tl0002": 3, "tl0003": 2,
+                              "tl0004": 1, "tl0005": 2, "tl0006": 2,
+                              "tl0007": 1}[area]
+                struct.pack_into("<II", data, song_offset, song_index, song_index)
+            target_name = area + suffix if suffix in (".are", ".mos") else area.upper() + suffix
+            (OUTPUT / "override" / target_name).write_bytes(data)
+        write_tis(PROJECT / "art" / image_name, SOURCE / "override" / "ar0100.tis", OUTPUT / "override" / (area + ".tis"))
+
+    game = OUTPUT / "override" / "gem-demo.gam"
+    game.write_bytes(game.read_bytes().replace(b"AR0100", b"TL0001"))
+    for table in ("startare.2da", "mastarea.2da"):
+        path = OUTPUT / "override" / table
+        path.write_text(path.read_text(encoding="ascii").replace("AR0100", "TL0001"), encoding="ascii")
+    startpos = OUTPUT / "override" / "startpos.2da"
+    startpos.write_text(startpos.read_text(encoding="ascii").replace("1409    585", "800     585").replace("1035    917", "600     917"), encoding="ascii")
+    songs = OUTPUT / "override" / "songlist.2da"
+    songs.write_text(songs.read_text(encoding="ascii").replace("mx0100.mus", "tlcity.mus").replace("mx0110.mus", "tlcave.mus")
+                     + "3       mistwood        tlwood.mus\n", encoding="ascii")
+    actions = OUTPUT / "override" / "action.ids"
+    actions.write_text(actions.read_text(encoding="ascii") + "\n3 Attack(O:Target*)\n", encoding="ascii")
+    for sound in (PROJECT / "audio").glob("tln*.ogg"):
+        shutil.copy2(sound, OUTPUT / "override" / sound.name)
+    for music in (PROJECT / "audio" / "music").rglob("*"):
+        if music.is_file():
+            destination = OUTPUT / "music" / music.relative_to(PROJECT / "audio" / "music")
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(music, destination)
+
     gemrb_ini = OUTPUT / "override" / "gemrb.ini"
     ini_text = gemrb_ini.read_text(encoding="utf-8")
     gemrb_ini.write_text(ini_text.replace("WindowTitle = GemRB demo", f"WindowTitle = {story['title']}"), encoding="utf-8")
@@ -111,6 +166,7 @@ def build():
     return {
         "game_path": str(OUTPUT), "config_path": str(config),
         "wsl_config_path": str(wsl_config) if wsl_config else None, "tiles": 450,
+        "areas": list(AREAS), "chapters": len(story["chapters"]),
     }
 
 
