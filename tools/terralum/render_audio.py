@@ -53,8 +53,13 @@ def main():
     parser.add_argument("--model", type=Path, required=True)
     parser.add_argument("--voices", type=Path, required=True)
     parser.add_argument("--voice", default="af_heart")
+    parser.add_argument("--chapter", type=int, help="Render only this one-based chapter narration")
     args = parser.parse_args()
     chapters = json.loads((PROJECT / "story.json").read_text(encoding="utf-8"))["chapters"]
+    if args.chapter is not None:
+        if not 1 <= args.chapter <= len(chapters):
+            parser.error("--chapter must name an existing chapter")
+        chapters = [chapters[args.chapter - 1]]
     kokoro = Kokoro(str(args.model), str(args.voices))
     for chapter in chapters:
         samples, sample_rate = kokoro.create(chapter["narration"], voice=args.voice, speed=0.97, lang="en-us")
@@ -63,6 +68,8 @@ def main():
             sf.write(wav, samples, sample_rate)
             encode(wav, PROJECT / "audio" / (chapter["voice"] + ".ogg"))
         print(chapter["voice"], flush=True)
+    if args.chapter is not None:
+        return
     for name, notes, seed in (("TLCITY", (110, 164.81, 220), 1),
                               ("TLWOOD", (82.41, 123.47, 164.81), 2),
                               ("TLCAVE", (73.42, 110, 146.83), 3)):

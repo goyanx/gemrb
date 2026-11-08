@@ -62,7 +62,8 @@ class Window:
 
 window = Window()
 events = []
-globals_ = {"TLCHAP": 0, "TLBEAT": 0}
+globals_ = {"TLCHAP": 0, "TLBEAT": 0, "TLENEMY": 0}
+enemy_dead = False
 gemrb = types.ModuleType("GemRB")
 gemrb.LoadWindow = lambda *args: window
 gemrb.GetGameVar = lambda name: globals_[name]
@@ -75,6 +76,7 @@ gemrb.CreateCreature = lambda *args: 1001
 gemrb.SetPlayerName = lambda *args: None
 gemrb.SetPlayerStat = lambda *args: None
 gemrb.ExecuteString = lambda action, actor: events.append(("attack", action, actor))
+gemrb.GetPlayerStat = lambda actor, stat: 2048 if enemy_dead else 0
 gemrb.GamePause = lambda *args: None
 sys.modules["GemRB"] = gemrb
 for name, symbol in (("GUICommon", "GetWindowPack"), ("GUIMA", "OpenMapWindow"), ("GUIINV", "OpenInventoryWindow")):
@@ -97,7 +99,12 @@ for chapter in range(7):
         if "encounter" in beat:
             window.controls[4].press()
             assert ("attack", "Attack(Player1)", 1001) in events
+            assert globals_["TLENEMY"] == 1001
+            window.controls[4].press()
+            assert globals_["TLBEAT"] == beats.index(beat)
+            enemy_dead = True
         window.controls[4].press()
+        enemy_dead = False
 assert "TO BE CONTINUED" in window.controls[0].text
 assert len([event for event in events if event[0] == "area"]) == 6
 assert len([event for event in events if event[0] == "voice"]) == 7

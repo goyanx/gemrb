@@ -21,4 +21,5 @@ def OnLoad():
 	GemRB.SetVar("TL_BEAT", 0)
 	GemRB.SetGlobal("TLCHAP", "GLOBAL", 0)
 	GemRB.SetGlobal("TLBEAT", "GLOBAL", 0)
+	GemRB.SetGlobal("TLENEMY", "GLOBAL", 0)
 	GemRB.EnterGame()

@@ -5,7 +5,7 @@ This is a working adaptation note, not a replacement for the user's source files
 ## Established material used in the current campaign
 
 - Algoreth Jon Goren begins the game as a powerful wizard seeking the scrolls of Byzantem, which concern world travelling. The early transcript places him in Alsperia, sends him through Mistwood to the Caverns of Lorian, and names Dorian the Seer as the scrolls' last keeper.
-- At that early court, Edmon is King of Alsperia and Alisande is **Edmon's wife and queen**. The user clarified this relationship directly on 2026-11-09.
+- Edmon is the original King of Alsperia in this story. At his early court, Alisande is **Edmon's wife and queen**. The user clarified both his place in the royal chronology and their marriage directly on 2026-11-09.
 - In the later recovered chronicle, Algoreth is Wizard King and **Alisande is his wife and co-ruler**. The available material does not establish when or how Edmon's reign or marriage ended, or how Algoreth and Alisande married. The game therefore skips that missing interval rather than inventing Edmon's fate.
 - Later, Magister Vael reports a disturbance beneath the eastern magical academy. Algoreth meets a false version of himself and stabilizes the Tear of Chaos by imposing a law of form and purpose. The false self remains contained.
 - Ealdrin and Alisande join research into other Tears. A recovered Deep Archives account associates them with extraordinary power confronting its limits. Whether Deep and Eternal Archives are the same place is unresolved.

@@ -9,7 +9,7 @@ import GUICommon
 import GUIMA
 import GUIINV
 from GUIDefines import *
-from ie_stats import IE_EA, ENEMY
+from ie_stats import IE_EA, IE_STATE_ID, STATE_DEAD, ENEMY
 
 
 def _style(button, width=None):
@@ -51,7 +51,12 @@ def OnLoad():
 	voice.SetText("NARRATE")
 
 	chapters = Story.chapters()
-	state = {"enemy": 0}
+	def enemy_alive(enemy):
+		try:
+			return not GemRB.GetPlayerStat(enemy, IE_STATE_ID) & STATE_DEAD
+		except RuntimeError:
+			# GemRB may remove the actor once its death animation ends.
+			return False
 
 	def narrate():
 		chapter = chapters[GemRB.GetGameVar("TLCHAP")]
@@ -70,17 +75,22 @@ def OnLoad():
 		beat_index = GemRB.GetGameVar("TLBEAT")
 		chapter = chapters[chapter_index]
 		beat = chapter["beats"][beat_index]
-		if "encounter" in beat and not state["enemy"]:
+		enemy = GemRB.GetGameVar("TLENEMY")
+		if "encounter" in beat and not enemy:
 			# The demo humanoid supplies an open-licensed CRE template. The
 			# campaign names and hostility are assigned at spawn time.
-			state["enemy"] = GemRB.CreateCreature(1, "riddler")
-			GemRB.SetPlayerName(state["enemy"], beat["encounter"], 0)
-			GemRB.SetPlayerStat(state["enemy"], IE_EA, ENEMY)
-			GemRB.ExecuteString("Attack(Player1)", state["enemy"])
-			message.Append("\n\nENCOUNTER: " + beat["encounter"] + " emerges. Select it and attack; press Continue after the fight.")
+			enemy = GemRB.CreateCreature(1, "riddler")
+			GemRB.SetGlobal("TLENEMY", "GLOBAL", enemy)
+			GemRB.SetPlayerName(enemy, beat["encounter"], 0)
+			GemRB.SetPlayerStat(enemy, IE_EA, ENEMY)
+			GemRB.ExecuteString("Attack(Player1)", enemy)
+			message.Append("\n\nENCOUNTER: " + beat["encounter"] + " emerges. Defeat it to continue.")
 			action.SetText("CONTINUE")
 			return
-		state["enemy"] = 0
+		if "encounter" in beat and enemy_alive(enemy):
+			message.Append("\n\n" + beat["encounter"] + " still stands. Defeat it to continue.")
+			return
+		GemRB.SetGlobal("TLENEMY", "GLOBAL", 0)
 		beat_index += 1
 		if beat_index >= len(chapter["beats"]):
 			chapter_index += 1
