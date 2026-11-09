@@ -955,9 +955,9 @@ assert choice_count == 48
 # conversation. Both records persist through a script reload and change court dialogue.
 return_index = chapter_index_by_area["tl0025"]
 return_followup = campaign.Story.cast("tl0025")[1]["choices"][0]["followup"]
-for selected, expected_response, expected_route in (
-        (1, "Pell left the pale-stone route marker", "Pell leaves a pale-stone marker"),
-        (2, "Pell kept the complete Mistwood route", "Pell leaves a brief danger warning")):
+for selected, expected_response, expected_edmon, expected_route in (
+        (1, "Pell left the pale-stone route marker", "A public marker guides travellers", "Pell leaves a pale-stone marker"),
+        (2, "Pell kept the complete Mistwood route", "The patrol map stays in the crown record", "Pell leaves a brief danger warning")):
     window = Window()
     events.clear()
     timed_events.clear()
@@ -999,6 +999,11 @@ for selected, expected_response, expected_route in (
         if "Queen Alisande:" in window.controls[0].text:
             break
     assert expected_response in window.controls[0].text
+    for _ in range(len(campaign.Story.cast("tl0004"))):
+        window.controls[11].press()
+        if "King Edmon:" in window.controls[0].text:
+            break
+    assert expected_edmon in window.controls[0].text
 
 choice_count += len(return_followup["choices"])
 assert choice_count == 50

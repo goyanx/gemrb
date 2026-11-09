@@ -594,7 +594,19 @@
       "goal": "Hear Algoreth's account and learn what the recovered scrolls can and cannot do.",
       "knowledge": "Knows Algoreth returned with the scrolls after travelling under royal protection; he does not yet know what they contain.",
       "voice": "Measured and authoritative, welcoming without promising what he cannot know.",
-      "provenance": "user-confirmed"
+      "provenance": "user-confirmed",
+      "responses": [
+        {
+          "flag": "TLRETURNMARK",
+          "value": 1,
+          "line": "A public marker guides travellers without revealing the patrol hours. The full schedule remains in the crown record."
+        },
+        {
+          "flag": "TLRETURNMARK",
+          "value": 2,
+          "line": "The patrol map stays in the crown record, while Pell's warning can turn travellers away from danger without publishing our route."
+        }
+      ]
     },
     {
       "name": "Queen Alisande",
