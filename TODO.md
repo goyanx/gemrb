@@ -19,7 +19,7 @@ This is the current work ledger for human and AI contributors. Read [AGENTS.md](
 
 ## Ongoing
 
-- [ ] **Scene dialogue slice:** scene cast and Talk lines work, but the control cycles a single line per NPC. It is not native GemRB DLG dialogue, has no player response choices, and does not change quests or the world. This is the next implementation slice.
+- [ ] **Scene dialogue slice:** Alsperia Market now has three Talk response buttons, a persistent route flag, and two visible outcomes in Mistwood (a safe route that skips the ambush, or Edmon's extra waywarden). This is implemented and mock-tested but still needs live UI/save testing. Other NPCs still have a single Talk line; the custom choice UI is not a native GemRB DLG system.
 - [ ] **Playable-scene verification:** the campaign-flow script mocks GemRB; the game has only had an opening smoke launch and screenshot. Full live input, later-area entry, actual fights, save/load, and the Talk control still need direct playtesting.
 - [ ] **Art and geometry:** characters currently reuse the demo's two humanoid sprites; all seven areas still share the AR0100 template walkmesh and terrain files despite their distinct backdrops.
 - [ ] **Campaign length:** seven locations and 23 beats form a short outline, not a long-form campaign. See `terralum/campaign_plan.md` for the intended acts and additional places.
@@ -28,9 +28,9 @@ This is the current work ledger for human and AI contributors. Read [AGENTS.md](
 
 ### P0 — Make one scene a real RPG conversation
 
-- [ ] Choose a small scene (Alsperia Market) and implement one native GemRB conversation with about three player options.
-- [ ] Make choices set durable quest flags; show different follow-up dialogue based on those flags.
-- [ ] Give the quest a readable clue, a meaningful event or reward, a failure/skip path, and a journal entry.
+- [ ] Playtest the Alsperia Market conversation buttons in live GemRB and confirm choices persist after save/load.
+- [ ] Extend branching conversations and durable flag effects to the remaining acts, using the market route choice as the tested pattern.
+- [ ] Give the market quest a readable clue, a journal entry, and robust failure/skip paths beyond the current route and ambush outcomes.
 - [ ] Add scene-cast data authoring and validation to the MCP tools so coders can safely create/update NPCs and dialogue.
 - [ ] Test the dialogue and state changes in live GemRB, including save/load and repeat area entry; retain the current mock as a fast logic check.
 

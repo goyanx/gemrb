@@ -23,7 +23,7 @@ class Control:
         self.press = None
 
     def __getattr__(self, name):
-        if name in ("SetFlags", "AddAlias", "SetColor", "SetAnimation", "SetBorder"):
+        if name in ("SetFlags", "AddAlias", "SetColor", "SetAnimation", "SetBorder", "SetVisible"):
             return lambda *args: None
         raise AttributeError(name)
 
@@ -62,7 +62,7 @@ class Window:
 
 window = Window()
 events = []
-globals_ = {"TLCHAP": 0, "TLBEAT": 0, "TLENEMY": 0, "TLCAST": 0}
+globals_ = {"TLCHAP": 0, "TLBEAT": 0, "TLENEMY": 0, "TLCAST": 0, "TLMARALEAD": 0, "TLMISTWOODSAFE": 0}
 enemy_dead = False
 current_area = "tl0001"
 next_actor = 1001
@@ -112,11 +112,20 @@ assert "Archivist Mara" in window.controls[0].text
 assert len([event for event in events if event[0] == "spawn"]) == len(campaign.Story.cast("tl0001"))
 window.controls[11].press()
 assert "Dorian's last travel ledger" in window.controls[0].text
+assert window.controls[12].text == "Ask for the old route"
+window.controls[12].press()
+assert globals_["TLMARALEAD"] == 1
+assert "safe path" in window.controls[0].text
 for chapter in range(7):
     assert globals_["TLCHAP"] == chapter
     beats = campaign.Story.chapters()[chapter]["beats"]
     for beat in beats:
         if "encounter" in beat:
+            if chapter == 1 and globals_["TLMARALEAD"] == 1:
+                window.controls[4].press()
+                assert globals_["TLMISTWOODSAFE"] == 1
+                assert "skirts the stalker's ambush" in window.controls[0].text
+                continue
             window.controls[4].press()
             assert any(event[:2] == ("attack", "Attack(Player1)") for event in events)
             assert globals_["TLENEMY"] > 1001
@@ -130,8 +139,13 @@ for chapter in range(7):
     assert globals_["TLCAST"] == globals_["TLCHAP"] + 1
     current_cast = campaign.Story.cast(campaign.Story.chapters()[globals_["TLCHAP"]]["area"])
     assert any(name[0] == "name" and name[2] == current_cast[0]["name"] for name in events)
+    if globals_["TLCHAP"] == 1:
+        assert "Mara's ledger marks the pale stones" in window.controls[0].text
+        window.controls[11].press()
+        assert "skirt the ruined watchpost" in window.controls[0].text
 assert "TO BE CONTINUED" in window.controls[0].text
 assert len([event for event in events if event[0] == "area"]) == 6
 assert len([event for event in events if event[0] == "voice"]) == 7
+assert len([event for event in events if event[0] == "attack"]) == 2
 print("Seven scene casts,", sum(len(campaign.Story.cast(chapter["area"])) for chapter in campaign.Story.chapters()),
-      "named actors, Talk interactions, three encounter gates, six area transitions, and seven voice cues passed")
+      "named actors, Talk choices and route effects, encounter gates, six area transitions, and seven voice cues passed")

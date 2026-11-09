@@ -1,11 +1,15 @@
 {
   "tl0001": [
-    {"name": "Archivist Mara", "creature": "riddler", "position": [690, 520], "line": "Dorian's last travel ledger is in the library. The court holds the key to his western route."},
+    {"name": "Archivist Mara", "creature": "riddler", "position": [690, 520], "line": "Dorian's last travel ledger is in the library. The court holds the key to his western route.", "choices": [
+      {"label": "Ask for the old route", "reply": "Mara marks a safe path through the pale stones in Dorian's ledger. Carry the route west.", "flag": "TLMARALEAD", "value": 1},
+      {"label": "Ask the king for aid", "reply": "Mara suggests seeking Edmon's seal before leaving the city. The king can authorize help.", "flag": "TLMARALEAD", "value": 2},
+      {"label": "Leave it for later", "reply": "Mara closes the ledger. The western trail will have to be found without its guide.", "flag": "TLMARALEAD", "value": 3}
+    ]},
     {"name": "King Edmon", "creature": "protagon", "position": [930, 500], "line": "I am Alsperia's original king. I grant you a map and shelter; return with knowledge, not conquest."},
     {"name": "Queen Alisande", "creature": "riddler", "position": [870, 620], "line": "Edmon is my husband and king. His trust opens this road, and I expect you to honor it."}
   ],
   "tl0002": [
-    {"name": "Scout Tessa", "creature": "protagon", "position": [680, 520], "line": "Pale stones mark the safe ground. The moss hides old snares, so watch where you step."},
+    {"name": "Scout Tessa", "creature": "protagon", "position": [680, 520], "line": "Pale stones mark the safe ground. The moss hides old snares, so watch where you step.", "route_lines": {"1": "Mara's ledger marked the pale stones correctly. We can skirt the ruined watchpost before the stalker finds us.", "2": "Edmon's waywarden is already scouting ahead. Keep to the track while he draws the stalker off."}},
     {"name": "Lost Wayfarer", "creature": "riddler", "position": [930, 500], "line": "Something circles the ruined watchpost. I heard it answer my name from the trees."}
   ],
   "tl0003": [

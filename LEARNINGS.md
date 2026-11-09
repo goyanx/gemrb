@@ -22,6 +22,7 @@ This file records verified implementation findings and mistakes that should info
 - **Make area-entry callbacks idempotent.** Save a durable scene/cast flag or inspect existing actors so area reloads and saves do not duplicate NPCs or rewards. Test both fresh entry and revisit.
 - **`CreateCreature` can place a CRE at a world coordinate.** `SetPlayerName` can give the actor a display name and `SetPlayerStat(actor, IE_EA, NEUTRAL)` can make a prototype actor neutral. The current implementation uses two demo CREs, so distinct names and lines do not make their repeated silhouettes visually unique.
 - **A text-panel line is not native Infinity Engine dialogue.** The current Talk control cycles lines in the campaign panel. It does not provide DLG choices, conditions, interjections, or durable quest consequences. Do not claim branching dialogue until the engine shows and persists those effects.
+- **A purpose-built choice panel can prove branching quest logic before the DLG toolchain exists.** The market scene now offers three Talk responses, records a global route flag, and changes the Mistwood encounter and dialogue. This is a real stateful prototype, but still requires live button/save testing and should not be described as native DLG support.
 - **Use log evidence after a live launch.** Search `GemRB.log` for `Python/ERROR`, `Traceback`, resource lookup failures, area import errors, and audio imports. A script-level mock cannot expose missing area resources or a callback firing at the wrong time.
 
 ## Testing and production workflow

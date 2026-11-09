@@ -23,4 +23,6 @@ def OnLoad():
 	GemRB.SetGlobal("TLBEAT", "GLOBAL", 0)
 	GemRB.SetGlobal("TLENEMY", "GLOBAL", 0)
 	GemRB.SetGlobal("TLCAST", "GLOBAL", 0)
+	GemRB.SetGlobal("TLMARALEAD", "GLOBAL", 0)
+	GemRB.SetGlobal("TLMISTWOODSAFE", "GLOBAL", 0)
 	GemRB.EnterGame()

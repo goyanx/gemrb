@@ -55,6 +55,11 @@ def read_story():
                 raise ValueError(f"scene cast for {area} has an incomplete NPC")
             if len(person.get("position", [])) != 2 or any(not isinstance(value, int) for value in person["position"]):
                 raise ValueError(f"scene cast position for {area} must contain two integer coordinates")
+            choices = person.get("choices", [])
+            if len(choices) > 3 or any(not choice.get("label") or not choice.get("reply")
+                                        or not choice.get("flag") or type(choice.get("value")) is not int
+                                        for choice in choices):
+                raise ValueError(f"scene dialogue choices for {area} must define up to three complete options")
     return story
 
 
