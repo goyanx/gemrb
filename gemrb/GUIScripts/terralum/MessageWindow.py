@@ -65,7 +65,7 @@ def OnLoad():
 	journal_button.SetText("JOURNAL")
 	journal_button.SetHotKey("j", 0, True)
 	journal_state = {"open": False}
-	dialogue_state = {"has_choices": False}
+	dialogue_state = {"has_choices": False, "must_finish_followup": False, "followup_journal": None}
 
 	chapters = Story.chapters()
 	cast_index = {"line": -1}
@@ -89,6 +89,8 @@ def OnLoad():
 		GemRB.SetGlobal("TLCAST", "GLOBAL", chapter_index + 1)
 
 	def talk_to_scene_npc():
+		if dialogue_state["must_finish_followup"]:
+			return
 		if journal_state["open"]:
 			journal_state["open"] = False
 			journal_button.SetText("JOURNAL")
@@ -106,20 +108,34 @@ def OnLoad():
 				line = response["line"]
 				break
 		message.SetText("[cap]T[/cap]ERRALUM  |  " + chapters[chapter_index]["title"] + "\n" + chapters[chapter_index]["place"] + "\n\n" + person["name"] + ": " + line + "\n\n")
+		show_dialogue_choices(person, person.get("choices", []))
+
+	def show_dialogue_choices(person, choices):
 		for index, button in enumerate(choice_buttons):
-			choices = person.get("choices", [])
 			button.SetVisible(index < len(choices))
 			if index < len(choices):
 				choice = choices[index]
 				button.SetText(choice["label"])
 				button.SetHotKey(str(index + 1), 0, True)
 				button.OnPress(lambda choice=choice, person=person: choose_dialogue(person, choice))
-		dialogue_state["has_choices"] = bool(person.get("choices"))
-		journal_button.SetVisible(not bool(person.get("choices")))
+		dialogue_state["has_choices"] = bool(choices)
+		journal_button.SetVisible(not bool(choices))
 
 	def choose_dialogue(person, choice):
+		was_followup = dialogue_state["must_finish_followup"]
 		GemRB.SetGlobal(choice["flag"], "GLOBAL", choice["value"])
 		chapter = chapters[GemRB.GetGameVar("TLCHAP")]
+		if was_followup:
+			record_journal_event(dialogue_state["followup_journal"], chapter["act"])
+			dialogue_state["must_finish_followup"] = False
+			dialogue_state["followup_journal"] = None
+		followup = choice.get("followup")
+		if followup:
+			dialogue_state["must_finish_followup"] = True
+			dialogue_state["followup_journal"] = followup.get("journal")
+			message.SetText("[cap]T[/cap]ERRALUM  |  " + chapter["title"] + "\n" + chapter["place"] + "\n\n" + person["name"] + ": " + choice["reply"] + "\n\n" + person["name"] + ": " + followup["line"] + "\n\n")
+			show_dialogue_choices(person, followup["choices"])
+			return
 		record_journal_event(choice.get("journal"), chapter["act"])
 		message.SetText("[cap]T[/cap]ERRALUM  |  " + chapter["title"] + "\n" + chapter["place"] + "\n\n" + person["name"] + ": " + choice["reply"] + "\n\n")
 		dialogue_state["has_choices"] = False
@@ -218,6 +234,9 @@ def OnLoad():
 		beat_index = GemRB.GetGameVar("TLBEAT")
 		chapter = chapters[chapter_index]
 		beat = chapter["beats"][beat_index]
+		if dialogue_state["must_finish_followup"]:
+			message.Append("\n\nFinish this conversation before continuing.")
+			return
 		if chapter["area"] == "tl0003" and beat_index == 0 and not GemRB.GetGameVar("TLLORIANPURPOSE"):
 			message.Append("\n\nDorian waits for your answer. Speak with him before approaching the guardian.")
 			return

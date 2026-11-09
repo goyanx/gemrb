@@ -134,11 +134,22 @@ def read_story():
                 raise ValueError(f"encounter actor flag {actor_flag} for {chapter['area']} has no matching scene NPC")
     for area_cast in cast.values():
         for person in area_cast:
-            for choice in person.get("choices", []):
+            for choice in iter_npc_choices(person.get("choices", [])):
                 event = choice.get("journal")
                 if event is not None:
                     validate_journal_event(event, journal_flags, initialized_flags)
+                followup = choice.get("followup")
+                if followup and followup.get("journal"):
+                    validate_journal_event(followup["journal"], journal_flags, initialized_flags)
     return story
+
+
+def iter_npc_choices(choices):
+    for choice in choices:
+        yield choice
+        followup = choice.get("followup")
+        if followup:
+            yield from followup.get("choices", [])
 
 
 def validate_journal_event(event, used_flags, initialized_flags):
@@ -174,12 +185,7 @@ def validate_npc(person, area, require_design=False):
         raise ValueError(f"scene cast spawn flag for {area} must be a TL global name")
     choices = person.get("choices", [])
     if (not isinstance(choices, list) or len(choices) > 3
-            or any(not isinstance(choice, dict)
-                   or not isinstance(choice.get("label"), str) or not choice["label"].strip() or len(choice["label"]) > 200
-                   or not isinstance(choice.get("reply"), str) or not choice["reply"].strip() or len(choice["reply"]) > 2000
-                   or not isinstance(choice.get("flag"), str)
-                   or not re.fullmatch(r"TL[A-Z][A-Z0-9_]{1,28}", choice["flag"])
-                   or type(choice.get("value")) is not int for choice in choices)):
+            or any(not validate_choice(choice, allow_followup=True) for choice in choices)):
         raise ValueError(f"scene dialogue choices for {area} must define up to three complete options")
     responses = person.get("responses", [])
     if (not isinstance(responses, list)
@@ -202,6 +208,37 @@ def validate_npc(person, area, require_design=False):
                 raise ValueError(f"NPC cast entry for {area} needs a nonempty {field}")
         if person.get("provenance") not in ("canon", "user-confirmed", "adaptation", "unresolved"):
             raise ValueError(f"NPC cast entry for {area} needs a recognized provenance label")
+
+
+def validate_choice(choice, allow_followup=False):
+    if (not isinstance(choice, dict)
+            or not isinstance(choice.get("label"), str) or not choice["label"].strip() or len(choice["label"]) > 200
+            or not isinstance(choice.get("reply"), str) or not choice["reply"].strip() or len(choice["reply"]) > 2000
+            or not isinstance(choice.get("flag"), str)
+            or not re.fullmatch(r"TL[A-Z][A-Z0-9_]{1,28}", choice["flag"])
+            or type(choice.get("value")) is not int):
+        return False
+    followup = choice.get("followup")
+    if followup is None:
+        return True
+    journal = followup.get("journal") if isinstance(followup, dict) else None
+    journal_valid = (journal is None or (
+        isinstance(journal, dict)
+        and isinstance(journal.get("flag"), str)
+        and re.fullmatch(r"TL[A-Z][A-Z0-9_]{1,28}", journal["flag"])
+        and isinstance(journal.get("text"), str)
+        and bool(journal["text"].strip())
+        and len(journal["text"]) <= 2000
+        and type(journal.get("section")) is int
+        and journal["section"] in (1, 2, 4)
+    ))
+    return (allow_followup and isinstance(followup, dict)
+            and isinstance(followup.get("line"), str) and followup["line"].strip()
+            and len(followup["line"]) <= 2000
+            and journal_valid
+            and isinstance(followup.get("choices"), list)
+            and 1 <= len(followup["choices"]) <= 3
+            and all(validate_choice(child) for child in followup["choices"]))
 
 
 def validate_cast(cast):

@@ -13,7 +13,29 @@
           "label": "Ask for the old route",
           "reply": "Mara marks a safe path through the pale stones in Dorian's ledger. Carry the route west.",
           "flag": "TLMARALEAD",
-          "value": 1
+          "value": 1,
+          "followup": {
+            "line": "These marks can help the library restore its damaged index. Should I copy the landmarks for Inessa, or keep the ledger sealed for the court?",
+            "journal": {
+              "flag": "TLJRN_MARA",
+              "section": 4,
+              "text": "Algoreth and Archivist Mara agreed how to handle Dorian's western route ledger. The library will respond to the record's selected handling."
+            },
+            "choices": [
+              {
+                "label": "Copy the landmarks for Inessa",
+                "reply": "Mara copies the pale-stone marks onto a separate sheet for Inessa. The original ledger stays safely in the court archive.",
+                "flag": "TLMARADETAIL",
+                "value": 1
+              },
+              {
+                "label": "Keep the ledger sealed",
+                "reply": "Mara seals the ledger for the court. Inessa can compare it in the archive, but the marks will not travel ahead of it.",
+                "flag": "TLMARADETAIL",
+                "value": 2
+              }
+            ]
+          }
         },
         {
           "label": "Ask the king for aid",
@@ -75,6 +97,18 @@
         520
       ],
       "line": "The route index was scraped where the western landmarks should be. I need the market ledger to restore the missing marks.",
+      "responses": [
+        {
+          "flag": "TLMARADETAIL",
+          "value": 1,
+          "line": "Mara sent a separate landmark copy. I can compare the marks here while the court keeps Dorian's original ledger sealed."
+        },
+        {
+          "flag": "TLMARADETAIL",
+          "value": 2,
+          "line": "Mara kept the ledger sealed for the court. I can still compare the record here, but the marked copy is not traveling ahead of us."
+        }
+      ],
       "choices": [
         {
           "label": "Copy the rune index",

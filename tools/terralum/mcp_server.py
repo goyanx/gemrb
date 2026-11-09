@@ -12,7 +12,7 @@ from pathlib import Path
 
 from PIL import Image
 
-from build_game import AREAS, CAST_FILE, PROJECT, build, read_cast, read_story, validate_cast, validate_npc
+from build_game import AREAS, CAST_FILE, PROJECT, build, iter_npc_choices, read_cast, read_story, validate_cast, validate_npc
 
 
 STORY_PATH = PROJECT / "story.json"
@@ -38,6 +38,22 @@ NPC_INPUT_SCHEMA = {
                 "reply": {"type": "string", "minLength": 1, "maxLength": 2000},
                 "flag": {"type": "string", "pattern": "^TL[A-Z][A-Z0-9_]{1,28}$"},
                 "value": {"type": "integer"},
+                "followup": {"type": "object", "properties": {
+                    "line": {"type": "string", "minLength": 1, "maxLength": 2000},
+                    "journal": {"type": "object", "properties": {
+                        "flag": {"type": "string", "pattern": "^TL[A-Z][A-Z0-9_]{1,28}$"},
+                        "section": {"type": "integer", "enum": [1, 2, 4]},
+                        "text": {"type": "string", "minLength": 1, "maxLength": 2000},
+                    }, "required": ["flag", "section", "text"], "additionalProperties": False},
+                    "choices": {"type": "array", "minItems": 1, "maxItems": 3, "items": {
+                        "type": "object", "properties": {
+                            "label": {"type": "string", "minLength": 1, "maxLength": 200},
+                            "reply": {"type": "string", "minLength": 1, "maxLength": 2000},
+                            "flag": {"type": "string", "pattern": "^TL[A-Z][A-Z0-9_]{1,28}$"},
+                            "value": {"type": "integer"},
+                        }, "required": ["label", "reply", "flag", "value"], "additionalProperties": False,
+                    }},
+                }, "required": ["line", "choices"], "additionalProperties": False},
             }, "required": ["label", "reply", "flag", "value"], "additionalProperties": False,
         }},
         "responses": {"type": "array", "maxItems": 24, "items": {
@@ -177,8 +193,10 @@ def call_tool(name, arguments):
         validate_npc(npc, area, require_design=True)
         setup = SETUP_PATH.read_text(encoding="utf-8")
         registered_flags = set(re.findall(r'GemRB\.SetGlobal\("(TL[A-Z0-9_]+)", "GLOBAL", 0\)', setup))
-        npc_flags = {entry["flag"] for field in ("choices", "responses")
-                     for entry in npc.get(field, [])}
+        npc_flags = {entry["flag"] for entry in npc.get("responses", [])}
+        npc_flags.update(entry["flag"] for entry in iter_npc_choices(npc.get("choices", [])))
+        npc_flags.update(choice["followup"]["journal"]["flag"] for choice in npc.get("choices", [])
+                         if choice.get("followup", {}).get("journal"))
         if missing_flags := npc_flags - registered_flags:
             missing = ", ".join(sorted(missing_flags))
             raise ValueError(f"register campaign flags before using them in scene dialogue: {missing}")

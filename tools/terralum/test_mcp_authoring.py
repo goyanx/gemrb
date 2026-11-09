@@ -181,6 +181,37 @@ class SceneCastAuthoringTests(unittest.TestCase):
         self.assertEqual(update_beat_schema["properties"]["chapter"]["maximum"], len(build_game.AREAS))
         self.assertEqual(set_journal_schema["properties"]["trigger"]["enum"], ["advance", "victory"])
 
+    def test_staged_choice_requires_registered_nested_flags_and_valid_journal(self):
+        npc = self.npc("Staged Market Archivist")
+        npc["choices"][0]["followup"] = {
+            "line": "Should the landmarks travel ahead of the sealed ledger?",
+            "journal": {"flag": "TLSTAGEDJOURNAL", "section": 4,
+                        "text": "The party chose how Mara will share Dorian's western route ledger."},
+            "choices": [{"label": "Copy the landmarks", "reply": "Mara makes a copy.",
+                         "flag": "TLSTAGED", "value": 1}],
+        }
+        original = self.cast_path.read_text(encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "register campaign flags"):
+            mcp_server.call_tool("terralum_upsert_scene_npc", {"area": "tl0001", "npc": npc})
+        self.assertEqual(self.cast_path.read_text(encoding="utf-8"), original)
+
+        for flag in ("TLTEST", "TLSTAGED", "TLSTAGEDJOURNAL"):
+            mcp_server.call_tool("terralum_register_campaign_flag", {"flag": flag})
+        added = self.payload(mcp_server.call_tool("terralum_upsert_scene_npc", {
+            "area": "tl0001", "npc": npc,
+        }))
+        self.assertEqual(added["npc"]["choices"][0]["followup"]["journal"]["flag"], "TLSTAGEDJOURNAL")
+
+        invalid = self.npc("Invalid Staged Archivist")
+        invalid["choices"][0]["followup"] = {
+            "line": "A valid question.",
+            "journal": {"flag": "TLBADJOURNAL", "section": 3, "text": "Invalid section."},
+            "choices": [{"label": "Seal", "reply": "Done.", "flag": "TLSTAGED", "value": 1}],
+        }
+        with self.assertRaisesRegex(ValueError, "complete options"):
+            mcp_server.call_tool("terralum_upsert_scene_npc", {"area": "tl0001", "npc": invalid})
+        self.assertEqual(len(build_game.read_cast()["tl0001"]), 4)
+
     def test_stdio_server_lists_and_calls_scene_tools(self):
         requests = [
             {"jsonrpc": "2.0", "id": 1, "method": "initialize"},
