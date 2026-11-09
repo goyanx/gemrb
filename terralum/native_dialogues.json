@@ -151,6 +151,16 @@
       {
         "say": "The map marks the road through Mistwood toward Lorian. It cannot tell us whether Dorian's old waystones still stand or what the scrolls contain.",
         "transitions": [{"text": "Then we will verify the route as we travel.", "final": true}]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 13}, {"flag": "TLRETURNMARK", "value": 1}],
+        "say": "You returned with the scrolls and left a public route marker for Mistwood. Travellers gain a warning, while the patrol schedule stays in the crown record.",
+        "transitions": [{"text": "We kept the warning useful without exposing the patrol.", "final": true}]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 13}, {"flag": "TLRETURNMARK", "value": 2}],
+        "say": "You returned with the scrolls and kept the complete Mistwood route in the crown archive. Pell's warning can still turn travellers from danger without publishing the schedule.",
+        "transitions": [{"text": "We preserved the route for the crown to review.", "final": true}]
       }
     ]
   },
@@ -172,6 +182,53 @@
       {
         "say": "The court records name Mistwood and Lorian, but an old route is not a promise about the road today. Ask the people who live along it what has changed.",
         "transitions": [{"text": "We will listen as we go.", "final": true}]
+      },
+      {
+        "when": [
+          {"flag": "TLCHAP", "value": 13}, {"flag": "TLRETURNMARK", "value": 1},
+          {"flag": "TLGALLERY", "value": 1}
+        ],
+        "say": "The public Mistwood marker guides travellers without exposing the patrol, and you left Lorian's sealed niches closed. That restraint honors Edmon's trust while we study the scrolls.",
+        "transitions": [{"text": "We should preserve both the warning and the limits of our account.", "final": true}]
+      },
+      {
+        "when": [
+          {"flag": "TLCHAP", "value": 13}, {"flag": "TLRETURNMARK", "value": 1},
+          {"flag": "TLGALLERY", "value": 2}
+        ],
+        "say": "The public Mistwood marker helps travellers, but the Lorian warning remains unresolved. Before another gate is approached, the court must agree what the scrolls may be used for.",
+        "transitions": [{"text": "We will keep that warning before the court.", "final": true}]
+      },
+      {
+        "when": [
+          {"flag": "TLCHAP", "value": 13}, {"flag": "TLRETURNMARK", "value": 2},
+          {"flag": "TLGALLERY", "value": 1}
+        ],
+        "say": "The full Mistwood route stays in Edmon's archive, and the sealed niches in Lorian remained closed. The warning can stay public without exposing the patrol record.",
+        "transitions": [{"text": "The court will keep the route and the scrolls' meaning distinct.", "final": true}]
+      },
+      {
+        "when": [
+          {"flag": "TLCHAP", "value": 13}, {"flag": "TLRETURNMARK", "value": 2},
+          {"flag": "TLGALLERY", "value": 2}
+        ],
+        "say": "The route remains in the crown archive, while the Lorian warning is still open. We must not let control of the record stand in for an answer about the scrolls.",
+        "transitions": [{"text": "We will leave both questions on the record.", "final": true}]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 14}, {"flag": "TLWITNESS", "value": 1}],
+        "say": "Oren placed Dorian's route testimony beside the scroll account, with their limits marked in the docket. The route tells us how you reached Lorian; it does not tell us what the scrolls mean.",
+        "transitions": [{"text": "The paired record should preserve that distinction.", "final": true}]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 14}, {"flag": "TLWITNESS", "value": 2}],
+        "say": "Oren filed the trail testimony and scroll notes separately. Edmon and I can review each without treating one account as proof of the other.",
+        "transitions": [{"text": "We will keep the accounts open to review.", "final": true}]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 14}, {"flag": "TLWITNESS", "value": 0}],
+        "say": "Edmon and I will hear the witnesses before the court seals its account. The people who could be harmed deserve a voice.",
+        "transitions": [{"text": "I will hear Oren's docket proposal first.", "final": true}]
       }
     ]
   },

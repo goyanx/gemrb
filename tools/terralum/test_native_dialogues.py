@@ -31,8 +31,11 @@ class NativeDialogueResourceTests(unittest.TestCase):
                      for index in range(resource_count)}
         cast = json.loads((PROJECT / "scene_cast.json").read_text(encoding="utf-8"))
         dialogues = read_native_dialogues()
-        bindings = {person["dialog"].upper(): (area, person["name"])
-                    for area, people in cast.items() for person in people if person.get("dialog")}
+        bindings = {}
+        for area, people in cast.items():
+            for person in people:
+                if person.get("dialog"):
+                    bindings.setdefault(person["dialog"].upper(), []).append((area, person["name"]))
         for resref, dialogue in dialogues.items():
             path = pack / "override" / f"{resref.lower()}.dlg"
             self.assertTrue(path.is_file(), f"missing compiled DLG for {resref}")
@@ -78,10 +81,13 @@ class NativeDialogueResourceTests(unittest.TestCase):
                                 f'SetGlobal("{write["flag"]}","GLOBAL",{write["value"]})',
                                 action_scripts[transition[4]],
                             )
-        self.assertEqual(bindings["KINGEDM"], ("tl0001", "King Edmon"))
-        self.assertEqual(bindings["ALISAND"], ("tl0001", "Queen Alisande"))
-        self.assertEqual(bindings["MARA"], ("tl0001", "Archivist Mara"))
-        self.assertEqual(bindings["OREN"], ("tl0011", "Royal Scribe Oren"))
+        self.assertIn(("tl0001", "King Edmon"), bindings["KINGEDM"])
+        self.assertIn(("tl0004", "King Edmon"), bindings["KINGEDM"])
+        self.assertIn(("tl0001", "Queen Alisande"), bindings["ALISAND"])
+        self.assertIn(("tl0004", "Queen Alisande"), bindings["ALISAND"])
+        self.assertIn(("tl0011", "Queen Alisande"), bindings["ALISAND"])
+        self.assertEqual(bindings["MARA"], [("tl0001", "Archivist Mara")])
+        self.assertEqual(bindings["OREN"], [("tl0011", "Royal Scribe Oren")])
 
     def test_compiled_alistair_dialogue_and_tlk(self):
         pack = Path(os.environ.get("TERRALUM_GAME_OUTPUT", PROJECT / "build" / "game")).resolve()

@@ -16,7 +16,7 @@ scene_production_plan.md tracks the BG2-inspired delivery slices. campaign_plan.
 
 ## Build and play
 
-Native Infinity Engine DLG conversations currently cover Archivist Mara, King Edmon, and Queen Alisande in the opening scene, Royal Scribe Oren in the council, and Alistair in the Chart Room and Hangar. Mara's and Oren's two-stage DLGs set the same campaign globals as the custom panel, write one shared journal entry each, and feed later dialogue by Inessa and Alisande. Other authored NPC choices still use the campaign panel. DLG resources are compiled with `dialog.tlk` strings and checked by `test_native_dialogues.py`; click interaction and save/load still need live playtesting.
+Native Infinity Engine DLG conversations currently cover Archivist Mara, King Edmon, and Queen Alisande in the opening scene, Royal Scribe Oren in the council, and Alistair in the Chart Room and Hangar. Mara's and Oren's two-stage DLGs set the same campaign globals as the custom panel, write one shared journal entry each, and feed later dialogue by Inessa and Alisande. Edmon and Alisande's return-court DLG entry states combine the public/archive route choice with the resolved/open Lorian gallery warning; Alisande also responds to both council docket outcomes. Other authored NPC choices still use the campaign panel. DLG resources are compiled with `dialog.tlk` strings and checked by `test_native_dialogues.py`; click interaction and save/load still need live playtesting.
 
 From the repository root:
 
