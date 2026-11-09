@@ -32,11 +32,11 @@ list of [options, tips and priorities](https://github.com/gemrb/gemrb/blob/maste
 
 **An original Infinity Engine style RPG campaign, built on GemRB.** In **Terralum: Scrolls of Byzantem**, Algoreth Jon Goren leaves the court of Alsperia to recover the lost scrolls. The trail leads through the Mistwood and Caverns of Lorian, then toward the eastern academy, the Deep Archives, and the mysteries of the Tears.
 
-The playable prototype currently covers nineteen scene areas across a seven-act story spine. It includes a named local cast, branching decisions, a persistent quest journal, optional Kokoro narration, ambient music, and gated encounters. It is an active prototype: campaign content and systems are growing, and the full-length RPG is still ahead.
+The playable prototype currently covers **19 scene areas and 48 story beats across seven acts**. It includes a 43-actor scene cast, branching dialogue, a persistent quest journal, optional Kokoro narration, ambient music, and four gated encounters. The latest Act VI quest lets the party investigate a missing archive folio peacefully or challenge its guardian, with the outcome remembered in a later scene. It is an active prototype: campaign content and systems are growing, and the full-length RPG is still ahead.
 
 ### See Terralum running in GemRB
 
-The opening Market scene is a live capture from the game. It shows the player party, three scene NPCs, the current story beat, and the Talk, Narrate, and Continue controls. The close-up highlights the cast placement and scene presentation.
+The opening Market scene is a live capture from GemRB. It shows the player party, three scene NPCs, the current story beat, and the Talk, Narrate, and Continue controls. The close-up highlights cast placement and scene presentation. Concept art below previews the campaign's intended locations; it is not in-game art.
 
 <p align="center">
   <img src="terralum/screenshots/alsperia-market-npcs.png" alt="Live GemRB capture of Terralum's Alsperia Market scene, with the player and three local NPCs" width="94%">
@@ -53,9 +53,9 @@ The opening Market scene is a live capture from the game. It shows the player pa
 </p>
 <p align="center"><em>Campaign locations · generated concept art, not in-game screenshots</em></p>
 
-### Scene art
+### Campaign location gallery
 
-Eighteen distinct generated concept backdrops preview the nineteen scene areas; one backdrop is reused. They are visual targets for the current prototype. The Royal Stables, Dispatch Archive, Hunter's Camp, River Crossing, Three-Cairn Fork, Mistwood Road, Ruined Watchpost, Lorian Cavern, and Seal Gallery have custom searchmaps. The Royal Stables, Dispatch Archive, and River Crossing concept art appear in the gallery below; the live GemRB captures above show the current Market scene. The Mistwood ambush has two enemies at authored, connected road positions; in Lorian, the Guardian NPC waits beside the chest and turns hostile in place. All nineteen areas still use the demo's shared WED layout and other terrain resources.
+Eighteen distinct generated concept backdrops preview the nineteen scene areas; one backdrop is reused. They are visual targets for the current prototype. The Royal Stables, Dispatch Archive, Hunter's Camp, River Crossing, Three-Cairn Fork, Mistwood Road, Ruined Watchpost, Lorian Cavern, Seal Gallery, and Deep Archives have custom searchmaps. All nineteen areas still use the demo's shared WED layout and other terrain resources.
 
 <table>
   <tr>
@@ -97,7 +97,7 @@ Eighteen distinct generated concept backdrops preview the nineteen scene areas; 
 - [Campaign plan](terralum/campaign_plan.md) — seven-act story spine and planned expansion.
 - [TODO and handoff](TODO.md) — completed, ongoing, and next work.
 
-Terralum is an in-progress prototype, not a finished or full-length RPG. The current cast reuses demo sprites and all nineteen areas still inherit the demo WED layout; the Royal Stables, Dispatch Archive, Hunter's Camp, River Crossing, the Three-Cairn Fork, Mistwood Road, Ruined Watchpost, Lorian Cavern, and Seal Gallery have custom searchmaps, while the other ten use the generic one. Choices use a custom panel rather than native Infinity Engine DLG resources. The project guide and handoff describe current playability and verification gaps.
+Terralum is an in-progress prototype, not a finished or full-length RPG. The current cast reuses demo sprites and all nineteen areas still inherit the demo WED layout; ten areas have custom searchmaps, while the other nine use the generic one. Choices use a custom panel rather than native Infinity Engine DLG resources. The project guide and handoff describe current playability and verification gaps.
 
 ## Supported platforms
 

@@ -756,6 +756,58 @@
       "knowledge": "Knows the Tear of Chaos is contained and the false Algoreth remains within it; the intervening years and the nature of other Tears remain unresolved.",
       "voice": "Warm, composed, and direct about responsibility.",
       "provenance": "canon"
+    },
+    {
+      "name": "Archivist Nera",
+      "creature": "protagon",
+      "position": [
+        720,
+        700
+      ],
+      "line": "The living record and its witness are catalogued, but the comparison leaf is not. We can call the Index Warden to test the gap or leave the folio sealed.",
+      "choices": [
+        {
+          "label": "Call the Index Warden",
+          "reply": "Nera calls the Warden to witness the missing leaf. The seal remains closed; the answer must be earned from its keeper.",
+          "flag": "TLARCHIVEWARD",
+          "value": 1
+        },
+        {
+          "label": "Leave the folio sealed",
+          "reply": "You leave the dormant ward intact. The missing leaf stays an unanswered question, and Selene can prepare the witness account.",
+          "flag": "TLARCHIVEWARD",
+          "value": 2
+        }
+      ],
+      "role": "Deep Archive conservator",
+      "faction": "Deep Archives",
+      "goal": "Protect the sealed account while helping Ealdrin distinguish the catalog gap from a conclusion about the Tears.",
+      "knowledge": "Knows the comparison leaf is absent and that the Index Warden guards unindexed folios; does not know what the missing leaf would prove.",
+      "voice": "Precise and patient, treating missing evidence as a question rather than a verdict.",
+      "provenance": "adaptation"
+    },
+    {
+      "name": "Index Warden",
+      "creature": "riddler",
+      "position": [
+        1180,
+        650
+      ],
+      "spawn_flag": "TLDEEP_ARCHIVE_WARDEN",
+      "line": "The sealed account remains in order. No witness is called while the folio rests undisturbed.",
+      "role": "Keeper of the Deep Archive index wards",
+      "faction": "Deep Archives",
+      "goal": "Guard the unindexed folios without exposing the sealed account to an untested inquiry.",
+      "knowledge": "Knows the missing comparison leaf is held among the unindexed folios; cannot explain what it would establish about other Tears.",
+      "voice": "Formal and measured, speaking only to the limits of its record.",
+      "provenance": "adaptation",
+      "responses": [
+        {
+          "flag": "TLARCHIVEWARD",
+          "value": 1,
+          "line": "You called me to witness the missing comparison. The account remains sealed; answer the test, and I will yield the leaf."
+        }
+      ]
     }
   ],
   "tl0007": [
@@ -842,7 +894,19 @@
       "goal": "Protect the original sealed account while helping Ealdrin prepare a responsible copy or witness record.",
       "knowledge": "Knows the index entry and the living witness; does not claim the account resolves the nature of the Tears.",
       "voice": "Careful and protective of fragile records.",
-      "provenance": "adaptation"
+      "provenance": "adaptation",
+      "responses": [
+        {
+          "flag": "TLARCHIVEWARD",
+          "value": 1,
+          "line": "Nera called the Index Warden to testify. I can prepare the witness record while Ealdrin compares the recovered catalog leaf."
+        },
+        {
+          "flag": "TLARCHIVEWARD",
+          "value": 2,
+          "line": "Nera left the folio sealed. I will preserve the account and prepare the living witness statement for Ealdrin."
+        }
+      ]
     },
     {
       "name": "Ealdrin",
@@ -857,7 +921,19 @@
       "goal": "Choose a responsible way to prepare the Index Hall record for the Eldrador inquiry.",
       "knowledge": "Knows the index names a sealed account and a living witness; he will compare either source with the Eldrador signs.",
       "voice": "Thoughtful and skeptical, separating evidence from interpretation.",
-      "provenance": "canon"
+      "provenance": "canon",
+      "responses": [
+        {
+          "flag": "TLJRN_ARCHIVE_WARD",
+          "value": 1,
+          "line": "The Warden yielded the comparison leaf but no verdict. It records the catalog gap; the living witness still matters."
+        },
+        {
+          "flag": "TLARCHIVEWARD",
+          "value": 2,
+          "line": "The folio remains sealed. We will keep the missing comparison as an open question and rely on Selene’s witness account."
+        }
+      ]
     }
   ],
   "tl0017": [

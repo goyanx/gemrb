@@ -233,6 +233,10 @@ def OnLoad():
 		if chapter["area"] == "tl0017" and beat_index == 0 and not GemRB.GetGameVar("TLTRAVELKIT"):
 			message.Append("\n\nThe horse is ready, but the pack still needs a field kit. Speak with Stablemaster Edda before riding west.")
 			return
+		if (chapter["area"] == "tl0006" and beat.get("encounter_if")
+				and not GemRB.GetGameVar("TLARCHIVEWARD")):
+			message.Append("\n\nBefore calling the Index Warden, speak with Archivist Nera and decide what to do with the sealed folio.")
+			return
 		if (chapter["area"] == "tl0002" and beat.get("encounter")
 				and (GemRB.GetGameVar("TLMARALEAD") == 1 or GemRB.GetGameVar("TLLIBRARYCLUE") == 1
 				     or (GemRB.GetGameVar("TLTRAVELKIT") == 1 and GemRB.GetGameVar("TLHUNTER") == 1)
@@ -240,6 +244,11 @@ def OnLoad():
 				     or (GemRB.GetGameVar("TLMARALEAD") == 2 and GemRB.GetGameVar("TLROYALORDER") == 1)
 				     or GemRB.GetGameVar("TLRIVERROUTE") == 1)):
 			GemRB.SetGlobal("TLMISTWOODSAFE", "GLOBAL", 1)
+			GemRB.SetGlobal("TLBEAT", "GLOBAL", beat_index + 1)
+			show()
+			return
+		encounter_gate = beat.get("encounter_if")
+		if encounter_gate and GemRB.GetGameVar(encounter_gate["flag"]) != encounter_gate["value"]:
 			GemRB.SetGlobal("TLBEAT", "GLOBAL", beat_index + 1)
 			show()
 			return
@@ -300,6 +309,8 @@ def OnLoad():
 		if "encounter" in beat and not group and enemy_alive(enemy):
 			message.Append("\n\n" + beat["encounter"] + " still stands. Defeat it to continue.")
 			return
+		if "encounter" in beat and not group and enemy:
+			record_journal_event(beat.get("victory_journal"), chapter["act"])
 		GemRB.SetGlobal("TLENEMY", "GLOBAL", 0)
 		beat_index += 1
 		if beat_index >= len(chapter["beats"]):

@@ -74,6 +74,7 @@ globals_ = {"TLCHAP": 0, "TLBEAT": 0, "TLENEMY": 0, "TLENEMY_STALKER": 0,
             "TLENEMY_PROWLER": 0, "TLCAST": 0,
             "TLMARALEAD": 0, "TLLIBRARYCLUE": 0, "TLWATCHPOST": 0, "TLHUNTER": 0,
             "TLGALLERY": 0, "TLCOURT": 0, "TLECHO": 0, "TLMISTWOODSAFE": 0, "TLMISTWOODVICTORY": 0, "TLARCHIVE": 0, "TLVOYAGE": 0,
+            "TLARCHIVEWARD": 0, "TLDEEP_ARCHIVE_WARDEN": 0, "TLJRN_ARCHIVE_WARD": 0,
             "TLJRN_BYZANTEM": 0, "TLJRN_MISTWOOD": 0, "TLJRN_MISTWOOD_AMBUSH": 0, "TLJRN_HUNTER": 0, "TLJRN_HUNTER_RESOLVED": 0,
             "TLHUNTERTRACK": 0, "TLJRN_TRACKS": 0, "TLTRAVELKIT": 0, "TLJRN_TRAVELKIT": 0, "TLROYALORDER": 0, "TLJRN_ROYALORDER": 0, "TLRIVER": 0, "TLRIVERROUTE": 0, "TLJRN_RIVER": 0,
             "TLWAYSTONE": 0, "TLJRN_WAYSTONE": 0,
@@ -184,6 +185,14 @@ for chapter_index, chapter in enumerate(chapters):
             assert "archive copy is aboard" in window.controls[0].text
         if chapter["area"] == "tl0002" and globals_["TLLIBRARYCLUE"] == 1:
             assert "Leora’s copied schedule gives me the patrol turn" in window.controls[0].text
+        if chapter["area"] == "tl0006":
+            window.controls[11].press()
+            window.controls[11].press()
+            assert "Archivist Nera" in window.controls[0].text
+            assert window.controls[12].text == "Call the Index Warden"
+            window.controls[13].press()
+            assert globals_["TLARCHIVEWARD"] == 2
+            assert "dormant ward intact" in window.controls[0].text
         if people[0].get("choices"):
             selected = people[0]["choices"][0]
             choice_button = window.controls[12]
@@ -200,6 +209,14 @@ for chapter_index, chapter in enumerate(chapters):
                 assert route["text"] in window.controls[0].text, (chapter["area"], route, window.controls[0].text)
                 break
         if "encounter" in beat:
+            if beat.get("encounter_if") and globals_[beat["encounter_if"]["flag"]] != beat["encounter_if"]["value"]:
+                window.controls[4].press()
+                assert globals_["TLBEAT"] == beats.index(beat) + 1
+                following_beat = beats[beats.index(beat) + 1]
+                selected_route = next(route for route in following_beat["routes"]
+                                      if globals_[route["flag"]] == route["value"])
+                assert selected_route["text"] in window.controls[0].text, (selected_route, window.controls[0].text)
+                continue
             if chapter["area"] == "tl0002" and (globals_["TLMARALEAD"] == 1 or globals_["TLLIBRARYCLUE"] == 1 or (globals_["TLTRAVELKIT"] == 1 and globals_["TLHUNTER"] == 1) or (globals_["TLTRAVELKIT"] == 2 and globals_["TLHUNTERTRACK"] == 1)):
                 window.controls[4].press()
                 assert globals_["TLMISTWOODSAFE"] == 1
@@ -235,6 +252,7 @@ assert globals_["TLWATCHPOST"] == 1
 assert globals_["TLGALLERY"] == 1
 assert globals_["TLCOURT"] == 1
 assert globals_["TLECHO"] == 1
+assert globals_["TLARCHIVEWARD"] == 2
 assert len([event for event in events if event[0] == "area"]) == 18
 assert len([event for event in events if event[0] == "voice"]) == 7
 assert len([event for event in events if event[0] == "attack"]) == 2
@@ -731,6 +749,58 @@ for chapter_index, chapter in enumerate(chapters):
                 assert globals_[event["flag"]] == 1
                 assert any(entry["value"] == event["text"] for entry in journal_entries)
             choice_count += 1
-assert choice_count == 31
+assert choice_count == 33
+
+# Act VI's optional archive quest offers a peaceful path and a gated warder
+# challenge. Victory records the comparison leaf and changes dialogue in the
+# following Index Hall scene without turning the archive clue into a verdict.
+archive_index = chapter_index_by_area["tl0006"]
+window = Window()
+events.clear()
+timed_events.clear()
+current_area = "tl0006"
+enemy_dead = False
+globals_.update({"TLCHAP": archive_index, "TLBEAT": 2, "TLENEMY": 0, "TLCAST": 0,
+                 "TLARCHIVEWARD": 0, "TLDEEP_ARCHIVE_WARDEN": 0, "TLJRN_ARCHIVE_WARD": 0})
+campaign.OnLoad()
+while timed_events:
+    timed_events.pop(0)()
+window.controls[4].press()
+assert globals_["TLBEAT"] == 2
+assert "speak with Archivist Nera" in window.controls[0].text
+for _ in range(3):
+    window.controls[11].press()
+assert "Archivist Nera" in window.controls[0].text
+window.controls[12].press()
+assert globals_["TLARCHIVEWARD"] == 1
+window.controls[11].press()
+assert "called me to witness the missing comparison" in window.controls[0].text
+window.controls[4].press()
+assert globals_["TLENEMY"] == globals_["TLDEEP_ARCHIVE_WARDEN"] > 1001
+assert any(event[:2] == ("attack", "Attack(Player1)") for event in events)
+window.controls[4].press()
+assert globals_["TLBEAT"] == 2
+enemy_dead = True
+window.controls[4].press()
+assert globals_["TLBEAT"] == 3
+assert globals_["TLJRN_ARCHIVE_WARD"] == 1
+assert "yielded the missing comparison leaf" in window.controls[0].text
+assert any("recovered the comparison leaf without opening the sealed account" in entry["value"]
+           for entry in journal_entries)
+enemy_dead = False
+
+window = Window()
+events.clear()
+timed_events.clear()
+current_area = "tl0013"
+globals_.update({"TLCHAP": chapter_index_by_area["tl0013"], "TLBEAT": 0, "TLENEMY": 0, "TLCAST": 0})
+campaign.OnLoad()
+while timed_events:
+    timed_events.pop(0)()
+window.controls[11].press()
+assert "called the Index Warden" in window.controls[0].text
+window.controls[11].press()
+assert "Warden yielded the comparison leaf but no verdict" in window.controls[0].text
+
 print(len(chapters), "scenes across seven acts,", sum(len(campaign.Story.cast(chapter["area"])) for chapter in chapters),
-      "named scene actors, keyboard controls, authored journal events and combat aftermath, all 31 response options, three market routes, encounter gates, eighteen transitions, and seven voice cues passed")
+      "named scene actors, keyboard controls, authored journal events and combat aftermath, all 33 response options, three market routes, four encounter gates, eighteen transitions, and seven voice cues passed")

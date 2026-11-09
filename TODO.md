@@ -10,13 +10,15 @@ This is the current work ledger for human and AI contributors. Read [AGENTS.md](
 - [x] Exposed the full baseline through the read-only `terralum_get_design_standard` MCP tool.
 - [x] Built an 19-scene campaign slice across the seven-act spine, adding the Royal Dispatch Archive and Royal Stables in Act I, then the Mistwood Hunter's Camp and Three-Cairn Fork before the road and watchpost in Act II. Story provenance and uncertainties are noted in `terralum/lore_notes.md`.
 - [x] Added 18 distinct generated backdrops for the 19 scene resources (one is reused), seven act-entry Kokoro narration clips, and three looping ambient music tracks.
-- [x] Added 41 named, scene-specific NPC placements across 19 areas; added Talk, Narrate, Continue, and numbered-response keyboard shortcuts alongside visible controls. Current sprites reuse two demo templates.
-- [x] Completed structured role, faction, goal, knowledge, voice, and provenance sheets for all 41 NPC cast entries; pack validation now rejects entries missing this design context.
-- [x] Added a victory gate to each of the three prototype encounters.
+- [x] Added 43 named, scene-specific NPC placements across 19 areas; added Talk, Narrate, Continue, and numbered-response keyboard shortcuts alongside visible controls. Current sprites reuse two demo templates.
+- [x] Completed structured role, faction, goal, knowledge, voice, and provenance sheets for all 43 NPC cast entries; pack validation now rejects entries missing this design context.
+- [x] Added a victory gate to each of the four prototype encounters.
 - [x] Expanded the Mistwood Road gate into a two-foe authored encounter group; each enemy has its own connected spawn point and persistent actor flag, and the campaign mock verifies both attack orders and the group victory gate.
 - [x] Made the Mistwood fight's victory persist as a resolved journal event and changed Courier Pell's watchpost response when both road creatures are defeated.
+- [x] Added Act VI's optional Deep Archive Warden quest: Archivist Nera can leave the folio sealed or call the Warden, with a connected encounter position, victory journal entry, and Index Hall dialogue that preserves both outcomes.
 - [x] Fixed the ARE builder counts: it now preserves the demo entrances and clears actor, region, spawn, container, item, and door counts that belonged to the demo.
-- [x] Campaign-flow mock reports 19 scene casts, 41 actor placements, keyboard controls, all 31 authored response options, three market routes, three encounter gates, four hostile actors across those encounters, eighteen area transitions, and seven voice cues.
+- [x] Campaign-flow mock reports 19 scene casts, 43 actor placements, keyboard controls, all 33 authored response options, three market routes, four encounter gates, five hostile actors across those encounters, eighteen area transitions, and seven voice cues.
+- [x] Expanded the MCP journal authoring tool to cover all 19 scenes and attach journal events to encounter victories; its test covers late-act authoring, victory hooks, and duplicate-flag rejection.
 - [x] Added campaign journal entries for story beats and dialogue choices, plus the active/resolved Hunter's Camp objective; entries use GemRB's persistent journal API and are guarded against duplicate records.
 - [x] Added Ranger Ilya's optional creekside conversation and stateful route around the Mistwood stalker; the dialogue journal event is deduplicated on repeat interaction, and the campaign mock tests the dark-lantern branch through Dorian's inscription.
 - [x] Added the Three-Cairn Fork as an adaptation scene with two named waykeepers, a two-outcome marker decision, a journaled route discovery, and changed dialogue at the Ruined Watchpost.
@@ -38,11 +40,11 @@ This is the current work ledger for human and AI contributors. Read [AGENTS.md](
 
 ## Ongoing
 
-- [ ] **Scene dialogue slice:** Market, library, Royal Dispatch Archive, Royal Stables, River Crossing, watchpost, Lorian purpose test, seal gallery, council, academy courtyard, archive index, and hangar choices set persistent flags with later text outcomes. The logic is mock-tested; live input/save testing remains open. The custom choice UI is not a native GemRB DLG system.
-- [ ] **Journal verification:** seventeen event flags, including the conditional Mistwood ambush victory, Dispatch Archive patrol schedule, Royal Stables kit, River Crossing outcome, Seal Gallery outcome, Lorian purpose choice, and optional creekside clue, plus revisit deduplication, pass the script mock; live display and save/load still need direct playtesting.
-- [ ] **Playable-scene verification:** the extended pack builds and the opening area starts in live GemRB. All nine custom maps pass script connectivity checks, but live movement is unverified. The WSLg window input path has not yet been verified. Later-area entry, player movement, actual fights, choice input, save/load, and return entry still need direct playtesting.
-- [ ] **Art and geometry:** Characters currently reuse the demo's two humanoid sprites. The Royal Dispatch Archive, Royal Stables, Hunter's Camp, River Crossing, the Three-Cairn Fork, Mistwood Road, the Ruined Watchpost, Lorian Cavern, and the Seal Gallery now have custom searchmaps, but all 19 areas still inherit the AR0100 WED layout and terrain/height/light files; the other 10 also use its generic searchmap. All nine custom maps pass connectivity checks, while actual in-engine movement remains unverified.
-- [ ] **Campaign length:** 19 locations and 47 beats form an expanded prototype, not a long-form campaign. Act II now has the trail-marker side scene and a kit-dependent river crossing; Acts VI and VII have archive-index and hangar preparation locations. Deeper quest arcs remain; see `terralum/campaign_plan.md`.
+- [ ] **Scene dialogue slice:** Market, library, Royal Dispatch Archive, Royal Stables, River Crossing, watchpost, Lorian purpose test, seal gallery, Deep Archives, council, academy courtyard, archive index, and hangar choices set persistent flags with later text outcomes. The logic is mock-tested; live input/save testing remains open. The custom choice UI is not a native GemRB DLG system.
+- [ ] **Journal verification:** eighteen event flags, including the conditional Mistwood and Deep Archive encounter victories, Dispatch Archive patrol schedule, Royal Stables kit, River Crossing outcome, Seal Gallery outcome, Lorian purpose choice, and optional creekside clue, plus revisit deduplication, pass the script mock; live display and save/load still need direct playtesting.
+- [ ] **Playable-scene verification:** the extended pack builds and the opening area starts in live GemRB. All ten custom maps pass script connectivity checks, but live movement is unverified. The WSLg window input path has not yet been verified. Later-area entry, player movement, actual fights, choice input, save/load, and return entry still need direct playtesting.
+- [ ] **Art and geometry:** Characters currently reuse the demo's two humanoid sprites. The Royal Dispatch Archive, Royal Stables, Hunter's Camp, River Crossing, the Three-Cairn Fork, Mistwood Road, the Ruined Watchpost, Lorian Cavern, the Seal Gallery, and Deep Archives now have custom searchmaps, but all 19 areas still inherit the AR0100 WED layout and terrain/height/light files; the other 9 also use its generic searchmap. All ten custom maps pass connectivity checks, while actual in-engine movement remains unverified.
+- [ ] **Campaign length:** 19 locations and 48 beats form an expanded prototype, not a long-form campaign. Act II now has the trail-marker side scene and a kit-dependent river crossing; Act VI adds an optional Index Warden challenge with peaceful and combat paths; Act VII has archive-index and hangar preparation locations. Deeper quest arcs remain; see `terralum/campaign_plan.md`.
 
 ## To do, in priority order
 
@@ -56,12 +58,12 @@ This is the current work ledger for human and AI contributors. Read [AGENTS.md](
 
 ### P1 — Make every scene coherent and navigable
 
-- [ ] Extend the nine custom searchmaps to the remaining 10 areas; replace shared WED geometry, entrances, terrain/height/light maps, and prove party movement in every scene.
+- [ ] Extend the ten custom searchmaps to the remaining 9 areas; replace shared WED geometry, entrances, terrain/height/light maps, and prove party movement in every scene.
 - [x] Add focused searchmap checks for dimensions/palette, blocked terrain and props, and four-way connectivity from the party start to scene NPCs, encounter spawns, and exits.
 - [ ] Replace repeated placeholder NPC models with unique/generated or compatible open-licensed art and portraits. Keep provenance and license records.
 - [ ] Place actual interactable clues, containers, doors, and travel links only where they match the new scene geometry.
 - [ ] Turn encounters into fully authored tactical events with clues, distinct enemy behavior and art, balance, failure outcomes, and quest-state effects. Mistwood now has a connected two-foe ambush with persistent actor IDs and a group victory gate; live combat and balance remain unverified.
-- [ ] Review the 41 complete cast sheets against live scenes; deepen return-state dialogue and recurring NPC continuity where appropriate.
+- [ ] Review the 43 complete cast sheets against live scenes; deepen return-state dialogue and recurring NPC continuity where appropriate.
 
 ### P2 — Expand the campaign
 

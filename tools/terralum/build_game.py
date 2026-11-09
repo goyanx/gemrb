@@ -74,7 +74,7 @@ def read_story():
             raise ValueError("each chapter needs a built area and story beats")
         if not all(beat.get("speaker") and beat.get("text") and beat.get("action") for beat in chapter["beats"]):
             raise ValueError("each story beat needs a speaker, text, and action")
-        for beat in chapter["beats"]:
+        for beat_index, beat in enumerate(chapter["beats"]):
             enemies = beat.get("enemies")
             if enemies is not None:
                 if (not beat.get("encounter") or not isinstance(enemies, list)
@@ -104,6 +104,17 @@ def read_story():
                                            or not re.fullmatch(r"TL[A-Z][A-Z0-9_]{1,28}", actor_flag)
                                            or actor_flag not in initialized_flags):
                 raise ValueError(f"encounter actor flag for {chapter['area']} must name an initialized TL global")
+            encounter_gate = beat.get("encounter_if")
+            if encounter_gate is not None and (
+                    not beat.get("encounter") or not isinstance(encounter_gate, dict)
+                    or not isinstance(encounter_gate.get("flag"), str)
+                    or not re.fullmatch(r"TL[A-Z][A-Z0-9_]{1,28}", encounter_gate["flag"])
+                    or encounter_gate["flag"] not in initialized_flags
+                    or type(encounter_gate.get("value")) is not int
+                    or beat_index + 1 >= len(chapter["beats"])):
+                raise ValueError(f"conditional encounter for {chapter['area']} needs an initialized flag, integer value, and following beat")
+            if beat.get("victory_journal") is not None and not beat.get("encounter"):
+                raise ValueError(f"victory journal event for {chapter['area']} needs an encounter")
             for event_key in ("journal", "victory_journal"):
                 event = beat.get(event_key)
                 if event is not None:

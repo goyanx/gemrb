@@ -95,6 +95,45 @@ class SceneCastAuthoringTests(unittest.TestCase):
         saved_story = json.loads(self.story_path.read_text(encoding="utf-8"))
         self.assertEqual(saved_story["chapters"][0]["beats"][0]["journal"]["flag"], "TLTESTJOURNAL")
 
+        last_scene_flag = self.payload(mcp_server.call_tool("terralum_register_campaign_flag", {
+            "flag": "TLTESTLASTSCENE",
+        }))
+        self.assertTrue(last_scene_flag["registered"])
+        last_scene_event = self.payload(mcp_server.call_tool("terralum_set_journal_event", {
+            "chapter": len(build_game.AREAS), "beat": 1, "flag": "TLTESTLASTSCENE",
+            "text": "The final scene authoring bound is reachable.", "section": 4,
+        }))
+        self.assertEqual(last_scene_event["chapter"], len(build_game.AREAS))
+        saved_story = json.loads(self.story_path.read_text(encoding="utf-8"))
+        self.assertEqual(saved_story["chapters"][-1]["beats"][0]["journal"]["flag"], "TLTESTLASTSCENE")
+
+        victory_flag = self.payload(mcp_server.call_tool("terralum_register_campaign_flag", {
+            "flag": "TLTESTVICTORY",
+        }))
+        self.assertTrue(victory_flag["registered"])
+        road_index = next(i for i, chapter in enumerate(saved_story["chapters"], start=1)
+                          if chapter["area"] == "tl0002")
+        victory_beat = next(i for i, beat in enumerate(saved_story["chapters"][road_index - 1]["beats"], start=1)
+                            if beat.get("encounter"))
+        victory_event = self.payload(mcp_server.call_tool("terralum_set_journal_event", {
+            "chapter": road_index, "beat": victory_beat, "flag": "TLTESTVICTORY",
+            "text": "The encounter was resolved.", "section": 2, "trigger": "victory",
+        }))
+        self.assertEqual(victory_event["trigger"], "victory")
+        saved_story = json.loads(self.story_path.read_text(encoding="utf-8"))
+        self.assertEqual(saved_story["chapters"][road_index - 1]["beats"][victory_beat - 1]
+                         ["victory_journal"]["flag"], "TLTESTVICTORY")
+        with self.assertRaisesRegex(ValueError, "require an encounter"):
+            mcp_server.call_tool("terralum_set_journal_event", {
+                "chapter": len(build_game.AREAS), "beat": 1, "flag": "TLTESTVICTORY",
+                "text": "Invalid victory hook.", "section": 2, "trigger": "victory",
+            })
+        with self.assertRaisesRegex(ValueError, "unique across story beats"):
+            mcp_server.call_tool("terralum_set_journal_event", {
+                "chapter": len(build_game.AREAS), "beat": 1, "flag": "TLJRN_ARCHIVE_WARD",
+                "text": "Duplicate victory hook.", "section": 2,
+            })
+
         registered = self.payload(mcp_server.call_tool("terralum_register_campaign_flag", {"flag": "TLTEST"}))
         self.assertEqual(registered, {"flag": "TLTEST", "registered": True, "initial_value": 0})
         repeated = self.payload(mcp_server.call_tool("terralum_register_campaign_flag", {"flag": "TLTEST"}))
@@ -134,6 +173,13 @@ class SceneCastAuthoringTests(unittest.TestCase):
         names = {tool["name"] for tool in listed}
         self.assertTrue({"terralum_get_scene_cast", "terralum_upsert_scene_npc",
                          "terralum_register_campaign_flag"}.issubset(names))
+        set_journal_schema = next(tool["inputSchema"] for tool in mcp_server.TOOLS
+                                  if tool["name"] == "terralum_set_journal_event")
+        update_beat_schema = next(tool["inputSchema"] for tool in mcp_server.TOOLS
+                                  if tool["name"] == "terralum_update_beat")
+        self.assertEqual(set_journal_schema["properties"]["chapter"]["maximum"], len(build_game.AREAS))
+        self.assertEqual(update_beat_schema["properties"]["chapter"]["maximum"], len(build_game.AREAS))
+        self.assertEqual(set_journal_schema["properties"]["trigger"]["enum"], ["advance", "victory"])
 
     def test_stdio_server_lists_and_calls_scene_tools(self):
         requests = [

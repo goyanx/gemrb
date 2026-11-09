@@ -284,13 +284,19 @@
             {
               "name": "Mistwood stalker",
               "creature": "riddler",
-              "position": [1008, 444],
+              "position": [
+                1008,
+                444
+              ],
               "flag": "TLENEMY_STALKER"
             },
             {
               "name": "Pale-stone prowler",
               "creature": "protagon",
-              "position": [1120, 560],
+              "position": [
+                1120,
+                560
+              ],
               "flag": "TLENEMY_PROWLER"
             }
           ]
@@ -315,11 +321,11 @@
               "value": 1,
               "text": "The hunters' shuttered lantern marked a quiet bend around the stalker. Dorian's warning points onward to the watchpost."
             },
-        {
-          "flag": "TLHUNTERTRACK",
-          "value": 1,
-          "text": "Ilya's creekside tracks led the party beneath the stalker's sightline. They reach Dorian's warning without revealing the camp or lighting its lantern."
-        },
+            {
+              "flag": "TLHUNTERTRACK",
+              "value": 1,
+              "text": "Ilya's creekside tracks led the party beneath the stalker's sightline. They reach Dorian's warning without revealing the camp or lighting its lantern."
+            },
             {
               "flag": "TLHUNTER",
               "value": 2,
@@ -396,7 +402,10 @@
           "text": "The chest is protected by an old guardian. It knows no ambition, only the duty to keep the door closed.",
           "action": "Confront the guardian",
           "encounter": "Lorian guardian",
-          "spawn_position": [1230, 250],
+          "spawn_position": [
+            1230,
+            250
+          ],
           "encounter_actor_flag": "TLLORIAN_GUARDIAN",
           "journal": {
             "flag": "TLJRN_LORIAN_PURPOSE",
@@ -615,9 +624,44 @@
           "action": "Consult Ealdrin"
         },
         {
+          "speaker": "Archivist Nera",
+          "text": "The witness entry is present, but its comparison leaf is missing. The Index Warden keeps the unindexed folios; we can ask it to account for the gap, or leave the old seal untouched.",
+          "action": "Investigate the missing leaf",
+          "encounter": "Deep Archive Warden",
+          "encounter_actor_flag": "TLDEEP_ARCHIVE_WARDEN",
+          "encounter_if": {
+            "flag": "TLARCHIVEWARD",
+            "value": 1
+          },
+          "victory_journal": {
+            "flag": "TLJRN_ARCHIVE_WARD",
+            "section": 2,
+            "text": "The party challenged the Deep Archive Warden and recovered the comparison leaf without opening the sealed account. Ealdrin will compare its catalog marks with the Eldrador evidence."
+          },
+          "routes": [
+            {
+              "flag": "TLARCHIVEWARD",
+              "value": 2,
+              "text": "Nera leaves the Index Warden undisturbed. The missing comparison remains an open question; Selene and the living witness will guide the next inquiry."
+            }
+          ]
+        },
+        {
           "speaker": "Ealdrin",
           "text": "An archive account warns that forcing a Tear shut can make the sealer its anchor. We should compare the signs in Eldrador.",
-          "action": "Answer the summons"
+          "action": "Answer the summons",
+          "routes": [
+            {
+              "flag": "TLARCHIVEWARD",
+              "value": 1,
+              "text": "The Warden yielded the missing comparison leaf but offered no verdict. Ealdrin will compare its catalog marks with the Eldrador signs."
+            },
+            {
+              "flag": "TLARCHIVEWARD",
+              "value": 2,
+              "text": "Nera left the folio sealed. Selene will prepare the witness account, and the missing comparison remains an open question."
+            }
+          ]
         }
       ]
     },

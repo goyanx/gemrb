@@ -64,6 +64,11 @@ expected = {
         "blocked": [(8, 46), (10, 85), (83, 77), (95, 40), (43, 20), (60, 91)],
         "description": "cavern plaza, western arch, and scroll chest approach",
     },
+    "tl0006": {
+        "routes": [(50, 5), (50, 90)],
+        "blocked": [(33, 45), (69, 40), (36, 64), (73, 64)],
+        "description": "Deep Archive stacks, conservator floor, and sealed-index approaches",
+    },
     "tl0016": {
         "routes": [(24, 5), (95, 27), (72, 92)],
         "blocked": [(5, 45), (56, 20), (90, 76), (30, 88)],

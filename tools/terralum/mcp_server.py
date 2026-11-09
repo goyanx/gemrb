@@ -88,14 +88,16 @@ TOOLS = [
     },
     {
         "name": "terralum_set_journal_event",
-        "description": "Attach a persistent journal entry to a scene beat. Register its campaign flag first; section 1 is an active quest, 2 is a resolved quest, and 4 is the journal timeline.",
+        "description": "Attach a persistent journal entry to a scene beat or encounter victory. Register its campaign flag first; section 1 is an active quest, 2 is a resolved quest, and 4 is the journal timeline.",
         "inputSchema": {"type": "object", "properties": {
-            "chapter": {"type": "integer", "minimum": 1, "maximum": 15,
+            "chapter": {"type": "integer", "minimum": 1, "maximum": len(AREAS),
                          "description": "One-based scene index in story.json."},
             "beat": {"type": "integer", "minimum": 1},
             "flag": {"type": "string", "pattern": "^TL[A-Z][A-Z0-9_]{1,28}$"},
             "text": {"type": "string", "minLength": 1, "maxLength": 2000},
             "section": {"type": "integer", "enum": [1, 2, 4]},
+            "trigger": {"type": "string", "enum": ["advance", "victory"],
+                        "description": "Use victory for an encounter success event; defaults to advance."},
         }, "required": ["chapter", "beat", "flag", "text", "section"], "additionalProperties": False},
     },
     {
@@ -117,7 +119,7 @@ TOOLS = [
         "inputSchema": {
             "type": "object",
             "properties": {
-              "chapter": {"type": "integer", "minimum": 1, "maximum": 15,
+              "chapter": {"type": "integer", "minimum": 1, "maximum": len(AREAS),
                             "description": "One-based scene index in story.json."},
                 "beat": {"type": "integer", "minimum": 1},
                 "field": {"type": "string", "enum": ["speaker", "text", "action"]},
@@ -219,29 +221,38 @@ def call_tool(name, arguments):
         flag = arguments.get("flag")
         text = arguments.get("text")
         section = arguments.get("section")
+        trigger = arguments.get("trigger", "advance")
         story = read_story()
         if (type(chapter_index) is not int or not 1 <= chapter_index <= len(story["chapters"])
                 or type(beat_index) is not int
                 or not 1 <= beat_index <= len(story["chapters"][chapter_index - 1]["beats"])
                 or not isinstance(flag, str) or not re.fullmatch(r"TL[A-Z][A-Z0-9_]{1,28}", flag)
                 or not isinstance(text, str) or not text.strip() or len(text) > 2000
-                or type(section) is not int or section not in (1, 2, 4)):
+                or type(section) is not int or section not in (1, 2, 4)
+                or trigger not in ("advance", "victory")):
             raise ValueError("Invalid scene beat, campaign flag, journal text, or journal section")
+        beat_data = story["chapters"][chapter_index - 1]["beats"][beat_index - 1]
+        if trigger == "victory" and not beat_data.get("encounter"):
+            raise ValueError("victory journal events require an encounter beat")
         setup = SETUP_PATH.read_text(encoding="utf-8")
         if f'GemRB.SetGlobal("{flag}", "GLOBAL", 0)' not in setup:
             raise ValueError("register the journal event flag before adding the event")
         for scene_number, scene in enumerate(story["chapters"], start=1):
-            for beat_number, beat_data in enumerate(scene["beats"], start=1):
-                existing = beat_data.get("journal") or {}
-                if (existing.get("flag") == flag
-                        and (scene_number != chapter_index or beat_number != beat_index)):
-                    raise ValueError("journal event flags must be unique across story beats")
+            for beat_number, candidate_beat in enumerate(scene["beats"], start=1):
+                for event_key in ("journal", "victory_journal"):
+                    existing = candidate_beat.get(event_key) or {}
+                    is_target = (scene_number == chapter_index and beat_number == beat_index
+                                 and event_key == ("victory_journal" if trigger == "victory" else "journal"))
+                    if existing.get("flag") == flag and not is_target:
+                        raise ValueError("journal event flags must be unique across story beats")
         event = {"flag": flag, "section": section, "text": text.strip()}
-        story["chapters"][chapter_index - 1]["beats"][beat_index - 1]["journal"] = event
+        event_key = "victory_journal" if trigger == "victory" else "journal"
+        beat_data = story["chapters"][chapter_index - 1]["beats"][beat_index - 1]
+        beat_data[event_key] = event
         temporary = STORY_PATH.with_suffix(STORY_PATH.suffix + ".tmp")
         temporary.write_text(json.dumps(story, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
         temporary.replace(STORY_PATH)
-        return result({"chapter": chapter_index, "beat": beat_index, "journal": event})
+        return result({"chapter": chapter_index, "beat": beat_index, "trigger": trigger, "journal": event})
     if name == "terralum_update_story":
         field = arguments.get("field")
         value = arguments.get("text")
