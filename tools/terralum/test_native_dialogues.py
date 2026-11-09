@@ -31,6 +31,16 @@ class NativeDialogueResourceTests(unittest.TestCase):
                      for index in range(resource_count)}
         cast = json.loads((PROJECT / "scene_cast.json").read_text(encoding="utf-8"))
         dialogues = read_native_dialogues()
+        council_states = [state for state in dialogues["ALISAND"]["states"]
+                          if {condition["flag"] for condition in state.get("when", [])}
+                          >= {"TLPPELLDOCKET", "TLWITNESS", "TLCOURT"}]
+        self.assertEqual(len(council_states), 12)
+        self.assertEqual({tuple(next(condition["value"] for condition in state["when"]
+                                     if condition["flag"] == flag)
+                               for flag in ("TLPPELLDOCKET", "TLWITNESS", "TLCOURT"))
+                          for state in council_states},
+                         {(pell, witness, policy) for pell in (1, 2)
+                          for witness in (0, 1, 2) for policy in (1, 2)})
         bindings = {}
         for area, people in cast.items():
             for person in people:

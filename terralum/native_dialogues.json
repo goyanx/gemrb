@@ -2,58 +2,60 @@
   "PELL": {
     "states": [
       {
-        "when": [{"flag": "TLCHAP", "value": 14}, {"flag": "TLPPELLDOCKET", "value": 0},
-                 {"flag": "TLRETURNMARK", "value": 1}],
+        "when": [{"flag": "TLCHAP", "value": 14}, {"flag": "TLPPELLDOCKET", "value": 0}, {"flag": "TLRETURNMARK", "value": 1}],
         "say": "I can testify that the public Mistwood marker warned travellers of the unsafe turn while the patrol schedule stayed in Edmon's archive. I cannot say what the scrolls mean.",
         "transitions": [
-          {"text": "Ask Pell to enter his route testimony.", "next": 2,
-           "set": [{"flag": "TLPPELLDOCKET", "value": 3}]},
+          {"text": "Ask Pell to enter his route testimony.", "next": 2, "set": [{"flag": "TLPPELLDOCKET", "value": 3}]},
           {"text": "Leave his statement out of the docket.", "final": true}
         ]
       },
       {
-        "when": [{"flag": "TLCHAP", "value": 14}, {"flag": "TLPPELLDOCKET", "value": 0},
-                 {"flag": "TLRETURNMARK", "value": 2}],
+        "when": [{"flag": "TLCHAP", "value": 14}, {"flag": "TLPPELLDOCKET", "value": 0}, {"flag": "TLRETURNMARK", "value": 2}],
         "say": "I can testify that the full Mistwood route stayed in the crown archive and that the watchpost carried a public warning. Neither record tells me what the scrolls mean.",
         "transitions": [
-          {"text": "Ask Pell to enter his route testimony.", "next": 2,
-           "set": [{"flag": "TLPPELLDOCKET", "value": 3}]},
+          {"text": "Ask Pell to enter his route testimony.", "next": 2, "set": [{"flag": "TLPPELLDOCKET", "value": 3}]},
           {"text": "Leave his statement out of the docket.", "final": true}
         ]
       },
       {
         "say": "Should my account of the Mistwood warning enter the public docket as a short summary, or should the route details remain in the crown file?",
         "transitions": [
-          {"text": "Enter the warning as a public summary.", "next": 3,
-           "journal": "Courier Pell's public docket statement records the Mistwood warning while keeping the patrol detail with the crown. His testimony does not claim knowledge of Dorian's scrolls.",
-           "set": [{"flag": "TLPPELLDOCKET", "value": 1}, {"flag": "TLJRN_PELL_PUBLIC", "value": 1}]},
-          {"text": "Restrict route details to the crown file.", "next": 4,
-           "journal": "Courier Pell's route detail remains in the crown file, with only the Mistwood warning available to travellers. His testimony does not claim knowledge of Dorian's scrolls.",
-           "set": [{"flag": "TLPPELLDOCKET", "value": 2}, {"flag": "TLJRN_PELL_ARCHIVE", "value": 1}]}
+          {"text": "Enter the warning as a public summary.", "next": 3, "journal": "Courier Pell's public docket statement records the Mistwood warning while keeping the patrol detail with the crown. His testimony does not claim knowledge of Dorian's scrolls.", "set": [{"flag": "TLPPELLDOCKET", "value": 1}, {"flag": "TLJRN_PELL_PUBLIC", "value": 1}]},
+          {"text": "Restrict route details to the crown file.", "next": 4, "journal": "Courier Pell's route detail remains in the crown file, with only the Mistwood warning available to travellers. His testimony does not claim knowledge of Dorian's scrolls.", "set": [{"flag": "TLPPELLDOCKET", "value": 2}, {"flag": "TLJRN_PELL_ARCHIVE", "value": 1}]}
         ]
       },
       {
         "say": "I will enter the warning in the public docket and keep the patrol detail with the crown. Travellers can be warned without publishing the route.",
-        "transitions": [{"text": "Thank Pell for keeping the account precise.", "final": true}]
+        "transitions": [
+          {"text": "Thank Pell for keeping the account precise.", "final": true}
+        ]
       },
       {
         "say": "I will keep the full route in the crown file and add only the warning to the public account. The record will not expose the patrol schedule.",
-        "transitions": [{"text": "Thank Pell for preserving the route record.", "final": true}]
+        "transitions": [
+          {"text": "Thank Pell for preserving the route record.", "final": true}
+        ]
       },
       {
         "when": [{"flag": "TLCHAP", "value": 14}, {"flag": "TLPPELLDOCKET", "value": 1}],
         "say": "My warning is in the public docket; the patrol detail remains with the crown. That gives travellers a caution without exposing the route.",
-        "transitions": [{"text": "The court has your testimony.", "final": true}]
+        "transitions": [
+          {"text": "The court has your testimony.", "final": true}
+        ]
       },
       {
         "when": [{"flag": "TLCHAP", "value": 14}, {"flag": "TLPPELLDOCKET", "value": 2}],
         "say": "The full route stays in the crown file, with only the warning available to travellers. That is the limit of what my testimony can establish.",
-        "transitions": [{"text": "The court has your testimony.", "final": true}]
+        "transitions": [
+          {"text": "The court has your testimony.", "final": true}
+        ]
       },
       {
         "when": [{"flag": "TLCHAP", "value": 14}, {"flag": "TLPPELLDOCKET", "value": 3}],
         "say": "I have prepared the statement. We still need to decide whether the public docket carries only the warning or the crown keeps the full route detail.",
-        "transitions": [{"text": "Finish entering Pell's testimony.", "next": 2}]
+        "transitions": [
+          {"text": "Finish entering Pell's testimony.", "next": 2}
+        ]
       }
     ]
   },
@@ -63,100 +65,96 @@
         "when": [{"flag": "TLCHAP", "value": 14}, {"flag": "TLORENDOCKET", "value": 0}],
         "say": "The docket can preserve the route and scroll accounts without deciding what the scrolls were meant to do. How should I file your testimony?",
         "transitions": [
-          {"text": "Review the council docket.", "next": 1,
-           "set": [{"flag": "TLORENDOCKET", "value": 1}]},
+          {"text": "Review the council docket.", "next": 1, "set": [{"flag": "TLORENDOCKET", "value": 1}]},
           {"text": "Leave the docket open for further testimony.", "final": true}
         ]
       },
       {
         "say": "Should the route testimony and the account of the scrolls be placed side by side, or filed separately until more evidence is found?",
         "transitions": [
-          {"text": "Place the accounts side by side.", "next": 2,
-           "journal": "At Edmon and Alisande's council, Algoreth chose how Royal Scribe Oren would preserve the route testimony and scroll account. The docket records the limits of both witnesses without settling the scrolls' purpose.",
-           "set": [{"flag": "TLWITNESS", "value": 1}, {"flag": "TLJRN_COURT_RECORD", "value": 1}]},
-          {"text": "File them as separate accounts.", "next": 3,
-           "journal": "At Edmon and Alisande's council, Algoreth chose how Royal Scribe Oren would preserve the route testimony and scroll account. The docket records the limits of both witnesses without settling the scrolls' purpose.",
-           "set": [{"flag": "TLWITNESS", "value": 2}, {"flag": "TLJRN_COURT_RECORD", "value": 1}]}
+          {"text": "Place the accounts side by side.", "next": 2, "journal": "At Edmon and Alisande's council, Algoreth chose how Royal Scribe Oren would preserve the route testimony and scroll account. The docket records the limits of both witnesses without settling the scrolls' purpose.", "set": [{"flag": "TLWITNESS", "value": 1}, {"flag": "TLJRN_COURT_RECORD", "value": 1}]},
+          {"text": "File them as separate accounts.", "next": 3, "journal": "At Edmon and Alisande's council, Algoreth chose how Royal Scribe Oren would preserve the route testimony and scroll account. The docket records the limits of both witnesses without settling the scrolls' purpose.", "set": [{"flag": "TLWITNESS", "value": 2}, {"flag": "TLJRN_COURT_RECORD", "value": 1}]}
         ]
       },
       {
         "say": "I will place Dorian's route testimony beside the scroll account, with a note that the route records how you reached Lorian, not what the scrolls mean.",
-        "transitions": [{"text": "Keep that distinction in the record.", "final": true}]
+        "transitions": [
+          {"text": "Keep that distinction in the record.", "final": true}
+        ]
       },
       {
         "say": "I will file the trail testimony and scroll notes separately. Their relationship remains open for further study.",
-        "transitions": [{"text": "Keep both accounts available to the court.", "final": true}]
+        "transitions": [
+          {"text": "Keep both accounts available to the court.", "final": true}
+        ]
       },
       {
-        "when": [{"flag": "TLCHAP", "value": 14}, {"flag": "TLORENDOCKET", "value": 1},
-                 {"flag": "TLWITNESS", "value": 1}],
+        "when": [{"flag": "TLCHAP", "value": 14}, {"flag": "TLORENDOCKET", "value": 1}, {"flag": "TLWITNESS", "value": 1}],
         "say": "The paired docket keeps the route evidence distinct from the scrolls' meaning. That is a useful record for the court.",
-        "transitions": [{"text": "Thank Oren for preserving the distinction.", "final": true}]
+        "transitions": [
+          {"text": "Thank Oren for preserving the distinction.", "final": true}
+        ]
       },
       {
-        "when": [{"flag": "TLCHAP", "value": 14}, {"flag": "TLORENDOCKET", "value": 1},
-                 {"flag": "TLWITNESS", "value": 2}],
+        "when": [{"flag": "TLCHAP", "value": 14}, {"flag": "TLORENDOCKET", "value": 1}, {"flag": "TLWITNESS", "value": 2}],
         "say": "The separate accounts preserve the limits of what we know. Edmon and Alisande can review each without treating one as proof of the other.",
-        "transitions": [{"text": "Thank Oren for preserving both accounts.", "final": true}]
+        "transitions": [
+          {"text": "Thank Oren for preserving both accounts.", "final": true}
+        ]
       },
       {
-        "when": [{"flag": "TLCHAP", "value": 14}, {"flag": "TLORENDOCKET", "value": 1},
-                 {"flag": "TLWITNESS", "value": 0}],
+        "when": [{"flag": "TLCHAP", "value": 14}, {"flag": "TLORENDOCKET", "value": 1}, {"flag": "TLWITNESS", "value": 0}],
         "say": "I have prepared the council docket. We can still decide whether to pair the route testimony with the scroll account or preserve them separately.",
-        "transitions": [{"text": "Decide how the council should file the evidence.", "next": 1}]
+        "transitions": [
+          {"text": "Decide how the council should file the evidence.", "next": 1}
+        ]
       }
     ]
   },
   "MARA": {
     "states": [
       {
-        "when": [
-          {"flag": "TLCHAP", "value": 0},
-          {"flag": "TLMARALEAD", "value": 0},
-          {"flag": "TLJRN_MARA", "value": 0}
-        ],
+        "when": [{"flag": "TLCHAP", "value": 0}, {"flag": "TLMARALEAD", "value": 0}, {"flag": "TLJRN_MARA", "value": 0}],
         "say": "Dorian's last travel ledger is in the library. Its pale-stone marks point west, but they cannot tell us whether the waystones still stand.",
         "transitions": [
-          {"text": "Ask Mara to show you Dorian's route.", "next": 1,
-           "set": [{"flag": "TLMARALEAD", "value": 1}]},
-          {"text": "Ask the king for aid instead.", "next": 4,
-           "set": [{"flag": "TLMARALEAD", "value": 2}]},
-          {"text": "Leave the ledger for another time.", "next": 5,
-           "set": [{"flag": "TLMARALEAD", "value": 3}]}
+          {"text": "Ask Mara to show you Dorian's route.", "next": 1, "set": [{"flag": "TLMARALEAD", "value": 1}]},
+          {"text": "Ask the king for aid instead.", "next": 4, "set": [{"flag": "TLMARALEAD", "value": 2}]},
+          {"text": "Leave the ledger for another time.", "next": 5, "set": [{"flag": "TLMARALEAD", "value": 3}]}
         ]
       },
       {
         "say": "These marks may help Inessa restore the damaged library index. Should I copy them onto a separate sheet, or keep Dorian's ledger sealed for the court?",
         "transitions": [
-          {"text": "Copy the landmarks for Inessa.", "next": 2,
-           "journal": "Algoreth and Archivist Mara agreed how to handle Dorian's western route ledger. The library will respond to the record's selected handling.",
-           "set": [{"flag": "TLMARADETAIL", "value": 1}, {"flag": "TLJRN_MARA", "value": 1}]},
-          {"text": "Keep the ledger sealed for the court.", "next": 3,
-           "journal": "Algoreth and Archivist Mara agreed how to handle Dorian's western route ledger. The library will respond to the record's selected handling.",
-           "set": [{"flag": "TLMARADETAIL", "value": 2}, {"flag": "TLJRN_MARA", "value": 1}]}
+          {"text": "Copy the landmarks for Inessa.", "next": 2, "journal": "Algoreth and Archivist Mara agreed how to handle Dorian's western route ledger. The library will respond to the record's selected handling.", "set": [{"flag": "TLMARADETAIL", "value": 1}, {"flag": "TLJRN_MARA", "value": 1}]},
+          {"text": "Keep the ledger sealed for the court.", "next": 3, "journal": "Algoreth and Archivist Mara agreed how to handle Dorian's western route ledger. The library will respond to the record's selected handling.", "set": [{"flag": "TLMARADETAIL", "value": 2}, {"flag": "TLJRN_MARA", "value": 1}]}
         ]
       },
       {
         "say": "I have copied the landmarks onto a separate sheet for Inessa. The original ledger remains sealed in the court archive.",
-        "transitions": [{"text": "We will compare the copy with the library index.", "final": true}]
+        "transitions": [
+          {"text": "We will compare the copy with the library index.", "final": true}
+        ]
       },
       {
         "say": "The ledger will remain sealed for the court. Inessa can compare its record in the archive, but no marked copy will travel ahead of us.",
-        "transitions": [{"text": "We will preserve the record and its limits.", "final": true}]
+        "transitions": [
+          {"text": "We will preserve the record and its limits.", "final": true}
+        ]
       },
       {
         "say": "Edmon can authorize help from the crown. Tell him where the road leads and what the expedition needs.",
-        "transitions": [{"text": "I will speak with the king.", "final": true}]
+        "transitions": [
+          {"text": "I will speak with the king.", "final": true}
+        ]
       },
       {
         "say": "Very well. The route remains in the court's records until you are ready to pursue it.",
-        "transitions": [{"text": "I will return if we need the ledger.", "final": true}]
+        "transitions": [
+          {"text": "I will return if we need the ledger.", "final": true}
+        ]
       },
       {
-        "when": [
-          {"flag": "TLCHAP", "value": 0}, {"flag": "TLMARALEAD", "value": 1},
-          {"flag": "TLMARADETAIL", "value": 0}
-        ],
+        "when": [{"flag": "TLCHAP", "value": 0}, {"flag": "TLMARALEAD", "value": 1}, {"flag": "TLMARADETAIL", "value": 0}],
         "say": "We have the route. The library can use a copy of its pale-stone landmarks, or I can keep the original ledger sealed for the court.",
         "transitions": [
           {"text": "Choose how to preserve Dorian's route.", "next": 1},
@@ -164,30 +162,32 @@
         ]
       },
       {
-        "when": [
-          {"flag": "TLCHAP", "value": 0}, {"flag": "TLMARALEAD", "value": 1},
-          {"flag": "TLMARADETAIL", "value": 1}
-        ],
+        "when": [{"flag": "TLCHAP", "value": 0}, {"flag": "TLMARALEAD", "value": 1}, {"flag": "TLMARADETAIL", "value": 1}],
         "say": "The landmarks were copied for Inessa, while the original remains in the court archive. She can compare the separate sheet with the damaged index.",
-        "transitions": [{"text": "Thank Mara for keeping both records clear.", "final": true}]
+        "transitions": [
+          {"text": "Thank Mara for keeping both records clear.", "final": true}
+        ]
       },
       {
-        "when": [
-          {"flag": "TLCHAP", "value": 0}, {"flag": "TLMARALEAD", "value": 1},
-          {"flag": "TLMARADETAIL", "value": 2}
-        ],
+        "when": [{"flag": "TLCHAP", "value": 0}, {"flag": "TLMARALEAD", "value": 1}, {"flag": "TLMARADETAIL", "value": 2}],
         "say": "The ledger remains sealed for the court. Inessa may compare its record in the archive, but the marked route will not travel separately.",
-        "transitions": [{"text": "Thank Mara for preserving the record.", "final": true}]
+        "transitions": [
+          {"text": "Thank Mara for preserving the record.", "final": true}
+        ]
       },
       {
         "when": [{"flag": "TLCHAP", "value": 0}, {"flag": "TLMARALEAD", "value": 2}],
         "say": "I suggested you seek the king's aid. Edmon can weigh the request against the crown's duties.",
-        "transitions": [{"text": "I will speak with Edmon.", "final": true}]
+        "transitions": [
+          {"text": "I will speak with Edmon.", "final": true}
+        ]
       },
       {
         "when": [{"flag": "TLCHAP", "value": 0}, {"flag": "TLMARALEAD", "value": 3}],
         "say": "You chose to leave Dorian's route for later. The ledger remains here if the expedition needs it.",
-        "transitions": [{"text": "That is all for now.", "final": true}]
+        "transitions": [
+          {"text": "That is all for now.", "final": true}
+        ]
       }
     ]
   },
@@ -204,21 +204,29 @@
       },
       {
         "say": "Bring back knowledge that may aid Alsperia. I ask for no conquest, and I will not pretend a royal seal can make the western road safe.",
-        "transitions": [{"text": "I will remember your trust.", "final": true}]
+        "transitions": [
+          {"text": "I will remember your trust.", "final": true}
+        ]
       },
       {
         "say": "The map marks the road through Mistwood toward Lorian. It cannot tell us whether Dorian's old waystones still stand or what the scrolls contain.",
-        "transitions": [{"text": "Then we will verify the route as we travel.", "final": true}]
+        "transitions": [
+          {"text": "Then we will verify the route as we travel.", "final": true}
+        ]
       },
       {
         "when": [{"flag": "TLCHAP", "value": 13}, {"flag": "TLRETURNMARK", "value": 1}],
         "say": "You returned with the scrolls and left a public route marker for Mistwood. Travellers gain a warning, while the patrol schedule stays in the crown record.",
-        "transitions": [{"text": "We kept the warning useful without exposing the patrol.", "final": true}]
+        "transitions": [
+          {"text": "We kept the warning useful without exposing the patrol.", "final": true}
+        ]
       },
       {
         "when": [{"flag": "TLCHAP", "value": 13}, {"flag": "TLRETURNMARK", "value": 2}],
         "say": "You returned with the scrolls and kept the complete Mistwood route in the crown archive. Pell's warning can still turn travellers from danger without publishing the schedule.",
-        "transitions": [{"text": "We preserved the route for the crown to review.", "final": true}]
+        "transitions": [
+          {"text": "We preserved the route for the crown to review.", "final": true}
+        ]
       }
     ]
   },
@@ -235,297 +243,235 @@
       },
       {
         "say": "Power can travel farther than the person who claims it. Keep a record of what the scrolls show, and of what they do not show, so the court cannot mistake a guess for knowledge.",
-        "transitions": [{"text": "I will keep the evidence distinct.", "final": true}]
+        "transitions": [
+          {"text": "I will keep the evidence distinct.", "final": true}
+        ]
       },
       {
         "say": "The court records name Mistwood and Lorian, but an old route is not a promise about the road today. Ask the people who live along it what has changed.",
-        "transitions": [{"text": "We will listen as we go.", "final": true}]
+        "transitions": [
+          {"text": "We will listen as we go.", "final": true}
+        ]
       },
       {
-        "when": [
-          {"flag": "TLCHAP", "value": 13}, {"flag": "TLRETURNMARK", "value": 1},
-          {"flag": "TLGALLERY", "value": 1}
-        ],
+        "when": [{"flag": "TLCHAP", "value": 13}, {"flag": "TLRETURNMARK", "value": 1}, {"flag": "TLGALLERY", "value": 1}],
         "say": "The public Mistwood marker guides travellers without exposing the patrol, and you left Lorian's sealed niches closed. That restraint honors Edmon's trust while we study the scrolls.",
-        "transitions": [{"text": "We should preserve both the warning and the limits of our account.", "final": true}]
+        "transitions": [
+          {"text": "We should preserve both the warning and the limits of our account.", "final": true}
+        ]
       },
       {
-        "when": [
-          {"flag": "TLCHAP", "value": 13}, {"flag": "TLRETURNMARK", "value": 1},
-          {"flag": "TLGALLERY", "value": 2}
-        ],
+        "when": [{"flag": "TLCHAP", "value": 13}, {"flag": "TLRETURNMARK", "value": 1}, {"flag": "TLGALLERY", "value": 2}],
         "say": "The public Mistwood marker helps travellers, but the Lorian warning remains unresolved. Before another gate is approached, the court must agree what the scrolls may be used for.",
-        "transitions": [{"text": "We will keep that warning before the court.", "final": true}]
+        "transitions": [
+          {"text": "We will keep that warning before the court.", "final": true}
+        ]
       },
       {
-        "when": [
-          {"flag": "TLCHAP", "value": 13}, {"flag": "TLRETURNMARK", "value": 2},
-          {"flag": "TLGALLERY", "value": 1}
-        ],
+        "when": [{"flag": "TLCHAP", "value": 13}, {"flag": "TLRETURNMARK", "value": 2}, {"flag": "TLGALLERY", "value": 1}],
         "say": "The full Mistwood route stays in Edmon's archive, and the sealed niches in Lorian remained closed. The warning can stay public without exposing the patrol record.",
-        "transitions": [{"text": "The court will keep the route and the scrolls' meaning distinct.", "final": true}]
+        "transitions": [
+          {"text": "The court will keep the route and the scrolls' meaning distinct.", "final": true}
+        ]
       },
       {
-        "when": [
-          {"flag": "TLCHAP", "value": 13}, {"flag": "TLRETURNMARK", "value": 2},
-          {"flag": "TLGALLERY", "value": 2}
-        ],
+        "when": [{"flag": "TLCHAP", "value": 13}, {"flag": "TLRETURNMARK", "value": 2}, {"flag": "TLGALLERY", "value": 2}],
         "say": "The route remains in the crown archive, while the Lorian warning is still open. We must not let control of the record stand in for an answer about the scrolls.",
-        "transitions": [{"text": "We will leave both questions on the record.", "final": true}]
+        "transitions": [
+          {"text": "We will leave both questions on the record.", "final": true}
+        ]
       },
       {
-        "when": [{"flag": "TLCHAP", "value": 14}, {"flag": "TLPPELLDOCKET", "value": 1},
-                 {"flag": "TLWITNESS", "value": 0}],
-        "say": "Pell entered a public warning without the patrol details. Oren still needs to decide whether the route testimony and scroll account belong together.",
-        "transitions": [{"text": "We will keep warning and scroll purpose distinct.", "final": true}]
+        "when": [{"flag": "TLCHAP", "value": 14}, {"flag": "TLPPELLDOCKET", "value": 1}, {"flag": "TLWITNESS", "value": 0}, {"flag": "TLCOURT", "value": 1}],
+        "say": "Pell entered a public warning without the patrol details. Oren still needs to decide whether the route testimony and scroll account belong together. The road remains open to supervised scholars and travellers.",
+        "transitions": [
+          {"text": "We will keep warning and scroll purpose distinct.", "final": true}
+        ]
       },
       {
-        "when": [{"flag": "TLCHAP", "value": 14}, {"flag": "TLPPELLDOCKET", "value": 1},
-                 {"flag": "TLWITNESS", "value": 1}],
-        "say": "Pell's public warning and Oren's paired docket both preserve limits: one cautions travellers, the other records how the route testimony relates to the scroll account without claiming their purpose.",
-        "transitions": [{"text": "The public record should state only what each witness can establish.", "final": true}]
+        "when": [{"flag": "TLCHAP", "value": 14}, {"flag": "TLPPELLDOCKET", "value": 1}, {"flag": "TLWITNESS", "value": 0}, {"flag": "TLCOURT", "value": 2}],
+        "say": "Pell entered a public warning without the patrol details. Oren still needs to decide whether the route testimony and scroll account belong together. Scroll access requires leave from Edmon and me.",
+        "transitions": [
+          {"text": "We will keep warning and scroll purpose distinct.", "final": true}
+        ]
       },
       {
-        "when": [{"flag": "TLCHAP", "value": 14}, {"flag": "TLPPELLDOCKET", "value": 1},
-                 {"flag": "TLWITNESS", "value": 2}],
-        "say": "Pell's warning is public, while Oren filed the route testimony and scroll account separately. The docket does not let either account stand as proof of the other's meaning.",
-        "transitions": [{"text": "Keep the warning useful and the two accounts distinct.", "final": true}]
+        "when": [{"flag": "TLCHAP", "value": 14}, {"flag": "TLPPELLDOCKET", "value": 1}, {"flag": "TLWITNESS", "value": 1}, {"flag": "TLCOURT", "value": 1}],
+        "say": "Pell's public warning and Oren's paired docket both preserve limits: one cautions travellers, the other records how the route testimony relates to the scroll account without claiming their purpose. The road remains open to supervised scholars and travellers.",
+        "transitions": [
+          {"text": "The public record should state only what each witness can establish.", "final": true}
+        ]
       },
       {
-        "when": [{"flag": "TLCHAP", "value": 14}, {"flag": "TLPPELLDOCKET", "value": 2},
-                 {"flag": "TLWITNESS", "value": 0}],
-        "say": "Pell kept the route details with the crown and entered only a warning for travellers. Oren still needs to decide how the scroll testimony belongs in the docket.",
-        "transitions": [{"text": "The court can review both records without merging them.", "final": true}]
+        "when": [{"flag": "TLCHAP", "value": 14}, {"flag": "TLPPELLDOCKET", "value": 1}, {"flag": "TLWITNESS", "value": 1}, {"flag": "TLCOURT", "value": 2}],
+        "say": "Pell's public warning and Oren's paired docket both preserve limits: one cautions travellers, the other records how the route testimony relates to the scroll account without claiming their purpose. Scroll access requires leave from Edmon and me.",
+        "transitions": [
+          {"text": "The public record should state only what each witness can establish.", "final": true}
+        ]
       },
       {
-        "when": [{"flag": "TLCHAP", "value": 14}, {"flag": "TLPPELLDOCKET", "value": 2},
-                 {"flag": "TLWITNESS", "value": 1}],
-        "say": "Pell's detailed route stays in the crown file; Oren's paired docket places the route testimony beside the scroll account but marks that the route does not establish the scrolls' purpose.",
-        "transitions": [{"text": "Keep the restricted route detail separate from the paired evidence.", "final": true}]
+        "when": [{"flag": "TLCHAP", "value": 14}, {"flag": "TLPPELLDOCKET", "value": 1}, {"flag": "TLWITNESS", "value": 2}, {"flag": "TLCOURT", "value": 1}],
+        "say": "Pell's warning is public, while Oren filed the route testimony and scroll account separately. The docket does not let either account stand as proof of the other's meaning. The road remains open to supervised scholars and travellers.",
+        "transitions": [
+          {"text": "Keep the warning useful and the two accounts distinct.", "final": true}
+        ]
       },
       {
-        "when": [{"flag": "TLCHAP", "value": 14}, {"flag": "TLPPELLDOCKET", "value": 2},
-                 {"flag": "TLWITNESS", "value": 2}],
-        "say": "Pell's detailed route stays in the crown file, and Oren kept the testimony and scroll account separate. Both decisions limit what the court claims to know.",
-        "transitions": [{"text": "Keep both limits in the record.", "final": true}]
+        "when": [{"flag": "TLCHAP", "value": 14}, {"flag": "TLPPELLDOCKET", "value": 1}, {"flag": "TLWITNESS", "value": 2}, {"flag": "TLCOURT", "value": 2}],
+        "say": "Pell's warning is public, while Oren filed the route testimony and scroll account separately. The docket does not let either account stand as proof of the other's meaning. Scroll access requires leave from Edmon and me.",
+        "transitions": [
+          {"text": "Keep the warning useful and the two accounts distinct.", "final": true}
+        ]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 14}, {"flag": "TLPPELLDOCKET", "value": 2}, {"flag": "TLWITNESS", "value": 0}, {"flag": "TLCOURT", "value": 1}],
+        "say": "Pell kept the route details with the crown and entered only a warning for travellers. Oren still needs to decide how the scroll testimony belongs in the docket. The road remains open to supervised scholars and travellers.",
+        "transitions": [
+          {"text": "The court can review both records without merging them.", "final": true}
+        ]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 14}, {"flag": "TLPPELLDOCKET", "value": 2}, {"flag": "TLWITNESS", "value": 0}, {"flag": "TLCOURT", "value": 2}],
+        "say": "Pell kept the route details with the crown and entered only a warning for travellers. Oren still needs to decide how the scroll testimony belongs in the docket. Scroll access requires leave from Edmon and me.",
+        "transitions": [
+          {"text": "The court can review both records without merging them.", "final": true}
+        ]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 14}, {"flag": "TLPPELLDOCKET", "value": 2}, {"flag": "TLWITNESS", "value": 1}, {"flag": "TLCOURT", "value": 1}],
+        "say": "Pell's detailed route stays in the crown file; Oren's paired docket places the route testimony beside the scroll account but marks that the route does not establish the scrolls' purpose. The road remains open to supervised scholars and travellers.",
+        "transitions": [
+          {"text": "Keep the restricted route detail separate from the paired evidence.", "final": true}
+        ]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 14}, {"flag": "TLPPELLDOCKET", "value": 2}, {"flag": "TLWITNESS", "value": 1}, {"flag": "TLCOURT", "value": 2}],
+        "say": "Pell's detailed route stays in the crown file; Oren's paired docket places the route testimony beside the scroll account but marks that the route does not establish the scrolls' purpose. Scroll access requires leave from Edmon and me.",
+        "transitions": [
+          {"text": "Keep the restricted route detail separate from the paired evidence.", "final": true}
+        ]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 14}, {"flag": "TLPPELLDOCKET", "value": 2}, {"flag": "TLWITNESS", "value": 2}, {"flag": "TLCOURT", "value": 1}],
+        "say": "Pell's detailed route stays in the crown file, and Oren kept the testimony and scroll account separate. Both decisions limit what the court claims to know. The road remains open to supervised scholars and travellers.",
+        "transitions": [
+          {"text": "Keep both limits in the record.", "final": true}
+        ]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 14}, {"flag": "TLPPELLDOCKET", "value": 2}, {"flag": "TLWITNESS", "value": 2}, {"flag": "TLCOURT", "value": 2}],
+        "say": "Pell's detailed route stays in the crown file, and Oren kept the testimony and scroll account separate. Both decisions limit what the court claims to know. Scroll access requires leave from Edmon and me.",
+        "transitions": [
+          {"text": "Keep both limits in the record.", "final": true}
+        ]
       },
       {
         "when": [{"flag": "TLCHAP", "value": 14}, {"flag": "TLWITNESS", "value": 1}],
         "say": "Oren placed Dorian's route testimony beside the scroll account, with their limits marked in the docket. The route tells us how you reached Lorian; it does not tell us what the scrolls mean.",
-        "transitions": [{"text": "The paired record should preserve that distinction.", "final": true}]
+        "transitions": [
+          {"text": "The paired record should preserve that distinction.", "final": true}
+        ]
       },
       {
         "when": [{"flag": "TLCHAP", "value": 14}, {"flag": "TLWITNESS", "value": 2}],
         "say": "Oren filed the trail testimony and scroll notes separately. Edmon and I can review each without treating one account as proof of the other.",
-        "transitions": [{"text": "We will keep the accounts open to review.", "final": true}]
+        "transitions": [
+          {"text": "We will keep the accounts open to review.", "final": true}
+        ]
       },
       {
         "when": [{"flag": "TLCHAP", "value": 14}, {"flag": "TLWITNESS", "value": 0}],
         "say": "Edmon and I will hear the witnesses before the court seals its account. The people who could be harmed deserve a voice.",
-        "transitions": [{"text": "I will hear Oren's docket proposal first.", "final": true}]
+        "transitions": [
+          {"text": "I will hear Oren's docket proposal first.", "final": true}
+        ]
       }
     ]
   },
   "ALISTAR": {
     "states": [
       {
-        "when": [
-          {
-            "flag": "TLCHAP",
-            "value": 18
-          }
-        ],
+        "when": [{"flag": "TLCHAP", "value": 18}],
         "say": "I work on the magic knights’ armaments and on Alsperia’s magical craft. Neither discipline tells me what waits in Eldrador.",
         "transitions": [
-          {
-            "text": "Ask how his work relates to this voyage.",
-            "next": 6
-          },
-          {
-            "text": "Return to the charts.",
-            "final": true
-          }
+          {"text": "Ask how his work relates to this voyage.", "next": 6},
+          {"text": "Return to the charts.", "final": true}
         ]
       },
       {
-        "when": [
-          {
-            "flag": "TLCHAP",
-            "value": 19
-          },
-          {
-            "flag": "TLBRIEFING",
-            "value": 1
-          },
-          {
-            "flag": "TLVOYAGE",
-            "value": 1
-          }
-        ],
+        "when": [{"flag": "TLCHAP", "value": 19}, {"flag": "TLBRIEFING", "value": 1}, {"flag": "TLVOYAGE", "value": 1}],
         "say": "You carry Selene’s marked account and Aven chose observation. Keep the incomplete record apart from the instruments; neither tells us what waits there.",
         "transitions": [
-          {
-            "text": "Ask whether the preparations explain the Tear.",
-            "next": 7
-          },
-          {
-            "text": "Keep the records distinct and proceed.",
-            "final": true
-          }
+          {"text": "Ask whether the preparations explain the Tear.", "next": 7},
+          {"text": "Keep the records distinct and proceed.", "final": true}
         ]
       },
       {
-        "when": [
-          {
-            "flag": "TLCHAP",
-            "value": 19
-          },
-          {
-            "flag": "TLBRIEFING",
-            "value": 1
-          },
-          {
-            "flag": "TLVOYAGE",
-            "value": 2
-          }
-        ],
+        "when": [{"flag": "TLCHAP", "value": 19}, {"flag": "TLBRIEFING", "value": 1}, {"flag": "TLVOYAGE", "value": 2}],
         "say": "The marked account travels separately while Aven prepares a guarded arrival. Those preparations protect the inquiry; they do not settle the record.",
         "transitions": [
-          {
-            "text": "Ask whether the preparations explain the Tear.",
-            "next": 8
-          },
-          {
-            "text": "Keep the records distinct and proceed.",
-            "final": true
-          }
+          {"text": "Ask whether the preparations explain the Tear.", "next": 8},
+          {"text": "Keep the records distinct and proceed.", "final": true}
         ]
       },
       {
-        "when": [
-          {
-            "flag": "TLCHAP",
-            "value": 19
-          },
-          {
-            "flag": "TLBRIEFING",
-            "value": 2
-          },
-          {
-            "flag": "TLVOYAGE",
-            "value": 1
-          }
-        ],
+        "when": [{"flag": "TLCHAP", "value": 19}, {"flag": "TLBRIEFING", "value": 2}, {"flag": "TLVOYAGE", "value": 1}],
         "say": "Ealdrin carries Selene’s witness notes, and Aven chose observation. We can listen first without treating a witness account as a verdict.",
         "transitions": [
-          {
-            "text": "Ask whether the preparations explain the Tear.",
-            "next": 9
-          },
-          {
-            "text": "Keep the records distinct and proceed.",
-            "final": true
-          }
+          {"text": "Ask whether the preparations explain the Tear.", "next": 9},
+          {"text": "Keep the records distinct and proceed.", "final": true}
         ]
       },
       {
-        "when": [
-          {
-            "flag": "TLCHAP",
-            "value": 19
-          },
-          {
-            "flag": "TLBRIEFING",
-            "value": 2
-          },
-          {
-            "flag": "TLVOYAGE",
-            "value": 2
-          }
-        ],
+        "when": [{"flag": "TLCHAP", "value": 19}, {"flag": "TLBRIEFING", "value": 2}, {"flag": "TLVOYAGE", "value": 2}],
         "say": "The witness notes travel with the warding instruments aboard a guarded approach. I will keep our technical readings distinct from what Selene witnessed.",
         "transitions": [
-          {
-            "text": "Ask whether the preparations explain the Tear.",
-            "next": 10
-          },
-          {
-            "text": "Keep the records distinct and proceed.",
-            "final": true
-          }
+          {"text": "Ask whether the preparations explain the Tear.", "next": 10},
+          {"text": "Keep the records distinct and proceed.", "final": true}
         ]
       },
       {
-        "when": [
-          {
-            "flag": "TLCHAP",
-            "value": 19
-          }
-        ],
+        "when": [{"flag": "TLCHAP", "value": 19}],
         "say": "The Aethercraft carries our instruments and records. My work on the magic knights’ armaments cannot tell us what the Eldrador Tear is.",
         "transitions": [
-          {
-            "text": "Ask whether the preparations explain the Tear.",
-            "next": 11
-          },
-          {
-            "text": "Keep the records distinct and proceed.",
-            "final": true
-          }
+          {"text": "Ask whether the preparations explain the Tear.", "next": 11},
+          {"text": "Keep the records distinct and proceed.", "final": true}
         ]
       },
       {
         "say": "I develop weapons and projectiles for Alsperia’s magic knights, and I am involved with the Aethercraft. I can describe our work, but it gives me no special knowledge of the Tear.",
         "transitions": [
-          {
-            "text": "Thank you, Alistair.",
-            "final": true
-          }
+          {"text": "Thank you, Alistair.", "final": true}
         ]
       },
       {
         "say": "No. The ship and its instruments prepare us to observe and protect the expedition; they cannot establish the Tear’s origin or meaning.",
         "transitions": [
-          {
-            "text": "Then we will keep that question open.",
-            "final": true
-          }
+          {"text": "Then we will keep that question open.", "final": true}
         ]
       },
       {
         "say": "No. The ship and its instruments prepare us to observe and protect the expedition; they cannot establish the Tear’s origin or meaning.",
         "transitions": [
-          {
-            "text": "Then we will keep that question open.",
-            "final": true
-          }
+          {"text": "Then we will keep that question open.", "final": true}
         ]
       },
       {
         "say": "No. The ship and its instruments prepare us to observe and protect the expedition; they cannot establish the Tear’s origin or meaning.",
         "transitions": [
-          {
-            "text": "Then we will keep that question open.",
-            "final": true
-          }
+          {"text": "Then we will keep that question open.", "final": true}
         ]
       },
       {
         "say": "No. The ship and its instruments prepare us to observe and protect the expedition; they cannot establish the Tear’s origin or meaning.",
         "transitions": [
-          {
-            "text": "Then we will keep that question open.",
-            "final": true
-          }
+          {"text": "Then we will keep that question open.", "final": true}
         ]
       },
       {
         "say": "No. Our preparations may help us observe and protect the expedition, but they cannot establish the Tear’s origin or meaning.",
         "transitions": [
-          {
-            "text": "Then we will keep that question open.",
-            "final": true
-          }
+          {"text": "Then we will keep that question open.", "final": true}
         ]
       }
     ]

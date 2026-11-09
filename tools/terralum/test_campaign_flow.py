@@ -87,7 +87,8 @@ globals_ = {"TLCHAP": 0, "TLBEAT": 0, "TLENEMY": 0, "TLENEMY_STALKER": 0,
             "TLJRN_SCROLLS": 0, "TLJRN_TEAR": 0,
             "TLJRN_ARCHIVE": 0, "TLJRN_ELDRADOR": 0, "TLJRN_VOYAGE": 0, "TLJRN_BRIEFING": 0,
             "TLELDRADOR": 0, "TLSANCTUARY": 0, "TLJRN_ARRIVAL": 0, "TLJRN_SANCTUARY": 0,
-            "TLPPELLDOCKET": 0, "TLJRN_PELL_PUBLIC": 0, "TLJRN_PELL_ARCHIVE": 0}
+            "TLPPELLDOCKET": 0, "TLJRN_PELL_PUBLIC": 0, "TLJRN_PELL_ARCHIVE": 0,
+            "TLJRN_COURT_OPEN": 0, "TLJRN_COURT_RESTRICTED": 0}
 globals_.update({"TLMARADETAIL": 0, "TLJRN_MARA": 0, "TLFOLLOWPENDING": 0,
                  "TLFOLLOWNPC": 0, "TLFOLLOWCHOICE": 0, "TLWITNESS": 0,
                  "TLORENDOCKET": 0, "TLJRN_COURT_RECORD": 0, "TLRELAY": 0, "TLJRN_RELAY": 0, "TLRETURNMARK": 0, "TLJRN_RETURNMARK": 0})
@@ -337,12 +338,14 @@ assert globals_["TLGALLERY"] == 1
 assert globals_["TLCOURT"] == 1
 assert globals_["TLWITNESS"] == 1
 assert globals_["TLJRN_COURT_RECORD"] == 1
+assert globals_["TLJRN_COURT_OPEN"] == 1
+assert globals_["TLJRN_COURT_RESTRICTED"] == 0
 assert globals_["TLECHO"] == 1
 assert globals_["TLARCHIVEWARD"] == 2
 assert len([event for event in events if event[0] == "area"]) == 24
 assert len([event for event in events if event[0] == "voice"]) == 8
 assert len([event for event in events if event[0] == "attack"]) == 2
-assert len(journal_entries) == 23
+assert len(journal_entries) == 24
 assert globals_["TLJRN_WAYSTONE"] == 1
 assert any("Three-Cairn Fork" in entry["value"] for entry in journal_entries)
 assert globals_["TLJRN_LORIAN_PURPOSE"] == 1
@@ -352,6 +355,42 @@ assert any("chose whether to name restraint or demand passage" in entry["value"]
 assert globals_["TLJRN_HUNTER_RESOLVED"] == 1
 assert any(entry["Section"] == 2 and "Hunter's Camp decision is resolved" in entry["value"]
            for entry in journal_entries)
+
+# Captain Rovan's policy options are one-time, distinct journaled outcomes.
+rovan = next(person for person in campaign.Story.cast("tl0011") if person["name"] == "Captain Rovan")
+for selected, event_flag, response in (
+        (1, "TLJRN_COURT_OPEN", "Rovan will keep the road open"),
+        (2, "TLJRN_COURT_RESTRICTED", "Rovan records the court's caution")):
+    window = Window()
+    events.clear()
+    timed_events.clear()
+    journal_entries.clear()
+    current_area = "tl0011"
+    globals_.update({key: (1 if key.startswith("TLJRN_") else 0) for key in globals_})
+    globals_.update({"TLCHAP": chapter_index_by_area["tl0011"], "TLBEAT": 1, "TLENEMY": 0, "TLCAST": 0,
+                     "TLCOURT": 0, "TLJRN_COURT_OPEN": 0, "TLJRN_COURT_RESTRICTED": 0})
+    campaign.OnLoad()
+    while timed_events:
+        timed_events.pop(0)()
+    for _ in range(len(campaign.Story.cast("tl0011"))):
+        window.controls[11].press()
+        if "Captain Rovan:" in window.controls[0].text:
+            break
+    assert "Captain Rovan:" in window.controls[0].text
+    window.controls[11 + selected].press()
+    assert globals_["TLCOURT"] == selected
+    assert globals_[event_flag] == 1
+    assert sum("western road" in entry["value"] or "scrolls until" in entry["value"]
+               for entry in journal_entries) == 1
+    assert response in window.controls[0].text
+    campaign.OnLoad()
+    while timed_events:
+        timed_events.pop(0)()
+    for _ in range(len(campaign.Story.cast("tl0011"))):
+        window.controls[11].press()
+        if "Captain Rovan:" in window.controls[0].text:
+            break
+    assert window.controls[12].visible is False
 
 # Exercise every remaining response option and its next-beat result.
 for chapter_index, choice_index in ((chapter_index_by_area[area], choice) for area, choice in (("tl0001", 1), ("tl0001", 2), ("tl0008", 1), ("tl0017", 1), ("tl0015", 1), ("tl0016", 1), ("tl0009", 1), ("tl0003", 1), ("tl0010", 1), ("tl0011", 1), ("tl0012", 1), ("tl0021", 1), ("tl0013", 1), ("tl0014", 1))):
@@ -924,7 +963,7 @@ for selected, expected_response, expected_route in (
     journal_entries.clear()
     current_area = "tl0011"
     globals_.update({key: (1 if key.startswith("TLJRN_") else 0) for key in globals_})
-    globals_.update({"TLCHAP": council_index, "TLBEAT": 1, "TLENEMY": 0, "TLCAST": 0,
+    globals_.update({"TLCHAP": chapter_index_by_area["tl0011"], "TLBEAT": 1, "TLENEMY": 0, "TLCAST": 0,
                      "TLWITNESS": 0, "TLORENDOCKET": 0, "TLJRN_COURT_RECORD": 0,
                      "TLFOLLOWPENDING": 0, "TLFOLLOWNPC": 0, "TLFOLLOWCHOICE": 0})
     campaign.OnLoad()
@@ -971,54 +1010,57 @@ for selected, event_flag, expected_response in (
         (1, "TLJRN_PELL_PUBLIC", "My warning is in the public docket"),
         (2, "TLJRN_PELL_ARCHIVE", "The full route stays in the crown file")):
     for witness in (0, 1, 2):
-        window = Window()
-        events.clear()
-        timed_events.clear()
-        journal_entries.clear()
-        current_area = "tl0011"
-        globals_.update({key: (1 if key.startswith("TLJRN_") else 0) for key in globals_})
-        globals_.update({"TLCHAP": council_index, "TLBEAT": 1, "TLENEMY": 0, "TLCAST": 0,
-                         "TLRETURNMARK": 1, "TLPPELLDOCKET": 0, "TLWITNESS": witness,
-                         "TLORENDOCKET": 0 if witness == 0 else 1,
-                         "TLJRN_COURT_RECORD": 0 if witness == 0 else 1,
-                         "TLJRN_PELL_PUBLIC": 0, "TLJRN_PELL_ARCHIVE": 0})
-        campaign.OnLoad()
-        while timed_events:
-            timed_events.pop(0)()
-        for _ in range(len(campaign.Story.cast("tl0011"))):
-            window.controls[11].press()
-            if "Courier Pell:" in window.controls[0].text:
-                break
-        assert "Courier Pell:" in window.controls[0].text
-        window.controls[12 if selected == 1 else 13].press()
-        assert globals_["TLPPELLDOCKET"] == selected
-        assert globals_[event_flag] == 1
-        assert sum(event["value"].startswith("Courier Pell'") for event in journal_entries) == 1
-        campaign.OnLoad()
-        while timed_events:
-            timed_events.pop(0)()
-        for _ in range(len(campaign.Story.cast("tl0011"))):
-            window.controls[11].press()
-            if "Courier Pell:" in window.controls[0].text:
-                break
-        assert expected_response in window.controls[0].text
-        assert sum(event["value"].startswith("Courier Pell'") for event in journal_entries) == 1
-        queen_response = {
-            (1, 0): "Pell entered a public warning",
-            (1, 1): "Pell's public warning and Oren's paired docket",
-            (1, 2): "Pell's warning is public, while Oren filed",
-            (2, 0): "Pell kept the route details with the crown",
-            (2, 1): "Pell's detailed route stays in the crown file; Oren's paired docket",
-            (2, 2): "Pell's detailed route stays in the crown file, and Oren kept",
-        }[(selected, witness)]
-        campaign.OnLoad()
-        while timed_events:
-            timed_events.pop(0)()
-        for _ in range(len(campaign.Story.cast("tl0011"))):
-            window.controls[11].press()
-            if "Queen Alisande:" in window.controls[0].text:
-                break
-        assert queen_response in window.controls[0].text
+        for court_policy in (1, 2):
+            window = Window()
+            events.clear()
+            timed_events.clear()
+            journal_entries.clear()
+            current_area = "tl0011"
+            globals_.update({key: (1 if key.startswith("TLJRN_") else 0) for key in globals_})
+            globals_.update({"TLCHAP": chapter_index_by_area["tl0011"], "TLBEAT": 1, "TLENEMY": 0, "TLCAST": 0,
+                             "TLRETURNMARK": 1, "TLPPELLDOCKET": 0, "TLWITNESS": witness, "TLCOURT": court_policy,
+                             "TLORENDOCKET": 0 if witness == 0 else 1,
+                             "TLJRN_COURT_RECORD": 0 if witness == 0 else 1,
+                             "TLJRN_PELL_PUBLIC": 0, "TLJRN_PELL_ARCHIVE": 0})
+            campaign.OnLoad()
+            while timed_events:
+                timed_events.pop(0)()
+            for _ in range(len(campaign.Story.cast("tl0011"))):
+                window.controls[11].press()
+                if "Courier Pell:" in window.controls[0].text:
+                    break
+            assert "Courier Pell:" in window.controls[0].text
+            window.controls[12 if selected == 1 else 13].press()
+            assert globals_["TLPPELLDOCKET"] == selected
+            assert globals_[event_flag] == 1
+            assert sum(event["value"].startswith("Courier Pell'") for event in journal_entries) == 1
+            campaign.OnLoad()
+            while timed_events:
+                timed_events.pop(0)()
+            for _ in range(len(campaign.Story.cast("tl0011"))):
+                window.controls[11].press()
+                if "Courier Pell:" in window.controls[0].text:
+                    break
+            assert expected_response in window.controls[0].text
+            assert sum(event["value"].startswith("Courier Pell'") for event in journal_entries) == 1
+            queen_response = {
+                (1, 0): "Pell entered a public warning",
+                (1, 1): "Pell's public warning and Oren's paired docket",
+                (1, 2): "Pell's warning is public, while Oren filed",
+                (2, 0): "Pell kept the route details with the crown",
+                (2, 1): "Pell's detailed route stays in the crown file; Oren's paired docket",
+                (2, 2): "Pell's detailed route stays in the crown file, and Oren kept",
+            }[(selected, witness)]
+            campaign.OnLoad()
+            while timed_events:
+                timed_events.pop(0)()
+            for _ in range(len(campaign.Story.cast("tl0011"))):
+                window.controls[11].press()
+                if "Queen Alisande:" in window.controls[0].text:
+                    break
+            assert queen_response in window.controls[0].text, (selected, witness, court_policy, window.controls[0].text)
+            policy_response = "The road remains open to supervised scholars and travellers." if court_policy == 1 else "Scroll access requires leave from Edmon and me."
+            assert policy_response in window.controls[0].text
 
 assert choice_count == 50
 

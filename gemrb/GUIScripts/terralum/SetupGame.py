@@ -54,6 +54,8 @@ def OnLoad():
 	GemRB.SetGlobal("TLJRN_BYZANTEM", "GLOBAL", 0)
 	GemRB.SetGlobal("TLJRN_MARA", "GLOBAL", 0)
 	GemRB.SetGlobal("TLJRN_COURT_RECORD", "GLOBAL", 0)
+	GemRB.SetGlobal("TLJRN_COURT_OPEN", "GLOBAL", 0)
+	GemRB.SetGlobal("TLJRN_COURT_RESTRICTED", "GLOBAL", 0)
 	GemRB.SetGlobal("TLPPELLDOCKET", "GLOBAL", 0)
 	GemRB.SetGlobal("TLJRN_PELL_PUBLIC", "GLOBAL", 0)
 	GemRB.SetGlobal("TLJRN_PELL_ARCHIVE", "GLOBAL", 0)

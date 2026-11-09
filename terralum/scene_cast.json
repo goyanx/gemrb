@@ -665,13 +665,23 @@
           "label": "Keep the road open",
           "reply": "Rovan will keep the road open for scholars and travellers under the court's watch.",
           "flag": "TLCOURT",
-          "value": 1
+          "value": 1,
+          "journal": {
+            "flag": "TLJRN_COURT_OPEN",
+            "section": 4,
+            "text": "At the Council Chamber, Algoreth chose to keep the western road open to supervised scholars and travellers. The policy governs access; it does not settle the scrolls’ purpose."
+          }
         },
         {
           "label": "Restrict the scrolls",
           "reply": "Rovan records the court's caution. Access to the scrolls will require the king and queen's leave.",
           "flag": "TLCOURT",
-          "value": 2
+          "value": 2,
+          "journal": {
+            "flag": "TLJRN_COURT_RESTRICTED",
+            "section": 4,
+            "text": "At the Council Chamber, Algoreth chose to restrict access to the scrolls until Edmon and Alisande hear a clear purpose. The policy records caution; it does not settle what the scrolls were made to do."
+          }
         }
       ],
       "role": "Captain of the royal guard",
@@ -698,28 +708,52 @@
       "provenance": "user-confirmed",
       "responses": [
         {
-          "when": [{"flag": "TLPPELLDOCKET", "value": 1}, {"flag": "TLWITNESS", "value": 0}],
-          "line": "Pell entered a public warning without the patrol details. Oren still needs to decide whether the route testimony and scroll account belong together."
+          "when": [{"flag": "TLPPELLDOCKET", "value": 1}, {"flag": "TLWITNESS", "value": 0}, {"flag": "TLCOURT", "value": 1}],
+          "line": "Pell entered a public warning without the patrol details. Oren still needs to decide whether the route testimony and scroll account belong together. The road remains open to supervised scholars and travellers."
         },
         {
-          "when": [{"flag": "TLPPELLDOCKET", "value": 1}, {"flag": "TLWITNESS", "value": 1}],
-          "line": "Pell's public warning and Oren's paired docket both preserve limits: one cautions travellers, the other records how the route testimony relates to the scroll account without claiming their purpose."
+          "when": [{"flag": "TLPPELLDOCKET", "value": 1}, {"flag": "TLWITNESS", "value": 0}, {"flag": "TLCOURT", "value": 2}],
+          "line": "Pell entered a public warning without the patrol details. Oren still needs to decide whether the route testimony and scroll account belong together. Scroll access requires leave from Edmon and me."
         },
         {
-          "when": [{"flag": "TLPPELLDOCKET", "value": 1}, {"flag": "TLWITNESS", "value": 2}],
-          "line": "Pell's warning is public, while Oren filed the route testimony and scroll account separately. The docket does not let either account stand as proof of the other's meaning."
+          "when": [{"flag": "TLPPELLDOCKET", "value": 1}, {"flag": "TLWITNESS", "value": 1}, {"flag": "TLCOURT", "value": 1}],
+          "line": "Pell's public warning and Oren's paired docket both preserve limits: one cautions travellers, the other records how the route testimony relates to the scroll account without claiming their purpose. The road remains open to supervised scholars and travellers."
         },
         {
-          "when": [{"flag": "TLPPELLDOCKET", "value": 2}, {"flag": "TLWITNESS", "value": 0}],
-          "line": "Pell kept the route details with the crown and entered only a warning for travellers. Oren still needs to decide how the scroll testimony belongs in the docket."
+          "when": [{"flag": "TLPPELLDOCKET", "value": 1}, {"flag": "TLWITNESS", "value": 1}, {"flag": "TLCOURT", "value": 2}],
+          "line": "Pell's public warning and Oren's paired docket both preserve limits: one cautions travellers, the other records how the route testimony relates to the scroll account without claiming their purpose. Scroll access requires leave from Edmon and me."
         },
         {
-          "when": [{"flag": "TLPPELLDOCKET", "value": 2}, {"flag": "TLWITNESS", "value": 1}],
-          "line": "Pell's detailed route stays in the crown file; Oren's paired docket places the route testimony beside the scroll account but marks that the route does not establish the scrolls' purpose."
+          "when": [{"flag": "TLPPELLDOCKET", "value": 1}, {"flag": "TLWITNESS", "value": 2}, {"flag": "TLCOURT", "value": 1}],
+          "line": "Pell's warning is public, while Oren filed the route testimony and scroll account separately. The docket does not let either account stand as proof of the other's meaning. The road remains open to supervised scholars and travellers."
         },
         {
-          "when": [{"flag": "TLPPELLDOCKET", "value": 2}, {"flag": "TLWITNESS", "value": 2}],
-          "line": "Pell's detailed route stays in the crown file, and Oren kept the testimony and scroll account separate. Both decisions limit what the court claims to know."
+          "when": [{"flag": "TLPPELLDOCKET", "value": 1}, {"flag": "TLWITNESS", "value": 2}, {"flag": "TLCOURT", "value": 2}],
+          "line": "Pell's warning is public, while Oren filed the route testimony and scroll account separately. The docket does not let either account stand as proof of the other's meaning. Scroll access requires leave from Edmon and me."
+        },
+        {
+          "when": [{"flag": "TLPPELLDOCKET", "value": 2}, {"flag": "TLWITNESS", "value": 0}, {"flag": "TLCOURT", "value": 1}],
+          "line": "Pell kept the route details with the crown and entered only a warning for travellers. Oren still needs to decide how the scroll testimony belongs in the docket. The road remains open to supervised scholars and travellers."
+        },
+        {
+          "when": [{"flag": "TLPPELLDOCKET", "value": 2}, {"flag": "TLWITNESS", "value": 0}, {"flag": "TLCOURT", "value": 2}],
+          "line": "Pell kept the route details with the crown and entered only a warning for travellers. Oren still needs to decide how the scroll testimony belongs in the docket. Scroll access requires leave from Edmon and me."
+        },
+        {
+          "when": [{"flag": "TLPPELLDOCKET", "value": 2}, {"flag": "TLWITNESS", "value": 1}, {"flag": "TLCOURT", "value": 1}],
+          "line": "Pell's detailed route stays in the crown file; Oren's paired docket places the route testimony beside the scroll account but marks that the route does not establish the scrolls' purpose. The road remains open to supervised scholars and travellers."
+        },
+        {
+          "when": [{"flag": "TLPPELLDOCKET", "value": 2}, {"flag": "TLWITNESS", "value": 1}, {"flag": "TLCOURT", "value": 2}],
+          "line": "Pell's detailed route stays in the crown file; Oren's paired docket places the route testimony beside the scroll account but marks that the route does not establish the scrolls' purpose. Scroll access requires leave from Edmon and me."
+        },
+        {
+          "when": [{"flag": "TLPPELLDOCKET", "value": 2}, {"flag": "TLWITNESS", "value": 2}, {"flag": "TLCOURT", "value": 1}],
+          "line": "Pell's detailed route stays in the crown file, and Oren kept the testimony and scroll account separate. Both decisions limit what the court claims to know. The road remains open to supervised scholars and travellers."
+        },
+        {
+          "when": [{"flag": "TLPPELLDOCKET", "value": 2}, {"flag": "TLWITNESS", "value": 2}, {"flag": "TLCOURT", "value": 2}],
+          "line": "Pell's detailed route stays in the crown file, and Oren kept the testimony and scroll account separate. Both decisions limit what the court claims to know. Scroll access requires leave from Edmon and me."
         },
         {
           "flag": "TLWITNESS",
@@ -1333,55 +1367,19 @@
       "provenance": "canon",
       "responses": [
         {
-          "when": [
-            {
-              "flag": "TLBRIEFING",
-              "value": 1
-            },
-            {
-              "flag": "TLVOYAGE",
-              "value": 1
-            }
-          ],
+          "when": [{"flag": "TLBRIEFING", "value": 1}, {"flag": "TLVOYAGE", "value": 1}],
           "line": "You carry Selene’s marked account and Aven chose observation. Keep the incomplete record apart from the instruments; neither tells us what waits there."
         },
         {
-          "when": [
-            {
-              "flag": "TLBRIEFING",
-              "value": 1
-            },
-            {
-              "flag": "TLVOYAGE",
-              "value": 2
-            }
-          ],
+          "when": [{"flag": "TLBRIEFING", "value": 1}, {"flag": "TLVOYAGE", "value": 2}],
           "line": "The marked account travels separately while Aven prepares a guarded arrival. Those preparations protect the inquiry; they do not settle the record."
         },
         {
-          "when": [
-            {
-              "flag": "TLBRIEFING",
-              "value": 2
-            },
-            {
-              "flag": "TLVOYAGE",
-              "value": 1
-            }
-          ],
+          "when": [{"flag": "TLBRIEFING", "value": 2}, {"flag": "TLVOYAGE", "value": 1}],
           "line": "Ealdrin carries Selene’s witness notes, and Aven chose observation. We can listen first without treating a witness account as a verdict."
         },
         {
-          "when": [
-            {
-              "flag": "TLBRIEFING",
-              "value": 2
-            },
-            {
-              "flag": "TLVOYAGE",
-              "value": 2
-            }
-          ],
+          "when": [{"flag": "TLBRIEFING", "value": 2}, {"flag": "TLVOYAGE", "value": 2}],
           "line": "The witness notes travel with the warding instruments aboard a guarded approach. I will keep our technical readings distinct from what Selene witnessed."
         }
       ],
