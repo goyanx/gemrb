@@ -176,6 +176,44 @@
       ]
     },
     {
+      "title": "II. Through Mistwood — The River Crossing",
+      "act": 2,
+      "area": "tl0019",
+      "place": "Mistwood River Crossing",
+      "music": "tlwood.mus",
+      "voice": "",
+      "narration": "A fallen footbridge has left Courier Eren and his sealed dispatch on the far bank. Fordkeeper Maelin knows the stepping stones, but the current is rising.",
+      "beats": [
+        {
+          "speaker": "Fordkeeper Maelin",
+          "text": "The bridge will not carry a loaded cart. With a handline we can bring Eren and his dispatch across quietly; by the stones, we can get Eren out and leave the cart.",
+          "action": "Choose the crossing"
+        },
+        {
+          "speaker": "Algoreth",
+          "text": "Eren reaches the north bank, but the route depends on how we crossed.",
+          "action": "Take the north bank",
+          "journal": {
+            "flag": "TLJRN_RIVER",
+            "section": 4,
+            "text": "At Mistwood’s flooded crossing, Algoreth chose whether to rig a rope handline for Courier Eren’s dispatch or guide him across the exposed stepping stones."
+          },
+          "routes": [
+            {
+              "flag": "TLRIVERROUTE",
+              "value": 1,
+              "text": "The expedition’s rope holds as a handline. Eren and his dispatch cross quietly, and Maelin points out the downstream bank beyond the stalker’s patrol."
+            },
+            {
+              "flag": "TLRIVERROUTE",
+              "value": 2,
+              "text": "The cart stays behind and Eren makes the exposed ford. Without a secured handline, the party must use the watched road."
+            }
+          ]
+        }
+      ]
+    },
+    {
       "title": "II. Through Mistwood — The Three-Cairn Fork",
       "act": 2,
       "area": "tl0016",

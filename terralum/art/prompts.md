@@ -17,5 +17,6 @@ Shared direction: wide 1600 × 1152 playable isometric fantasy RPG area; hand-pa
 | `mistwood_waystone_fork.png` | Rain-darkened Three-Cairn Fork with a turned mossy waystone, shallow creek, three pale-stone paths, and a broad open central clearing. |
 | `alsperia_royal_stables.png` | Painterly Alsperia stable courtyard with a horse, tack, open cobbled route, and city gate. |
 | `alsperia_dispatch_archive.png` | Royal dispatch archive with patrol maps, central route table, scroll shelves, and broad walkable floor. |
+| `mistwood_river_crossing.png` | Mistwood river ford at dusk with a damaged footbridge, rope handline, courier cart, lantern, and open north/south approaches. |
 
 `mistwood_ruins.png`, `byzantem_arch.png`, and `council_chamber.png` are concept art from the earlier story draft and are not used in the current build.

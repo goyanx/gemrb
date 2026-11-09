@@ -74,7 +74,7 @@ globals_ = {"TLCHAP": 0, "TLBEAT": 0, "TLENEMY": 0, "TLCAST": 0,
             "TLMARALEAD": 0, "TLLIBRARYCLUE": 0, "TLWATCHPOST": 0, "TLHUNTER": 0,
             "TLGALLERY": 0, "TLCOURT": 0, "TLECHO": 0, "TLMISTWOODSAFE": 0, "TLARCHIVE": 0, "TLVOYAGE": 0,
             "TLJRN_BYZANTEM": 0, "TLJRN_MISTWOOD": 0, "TLJRN_HUNTER": 0, "TLJRN_HUNTER_RESOLVED": 0,
-            "TLHUNTERTRACK": 0, "TLJRN_TRACKS": 0, "TLTRAVELKIT": 0, "TLJRN_TRAVELKIT": 0, "TLROYALORDER": 0, "TLJRN_ROYALORDER": 0,
+            "TLHUNTERTRACK": 0, "TLJRN_TRACKS": 0, "TLTRAVELKIT": 0, "TLJRN_TRAVELKIT": 0, "TLROYALORDER": 0, "TLJRN_ROYALORDER": 0, "TLRIVER": 0, "TLRIVERROUTE": 0, "TLJRN_RIVER": 0,
             "TLWAYSTONE": 0, "TLJRN_WAYSTONE": 0,
             "TLLORIANPURPOSE": 0, "TLLORIAN_GUARDIAN": 0, "TLJRN_LORIAN_PURPOSE": 0,
             "TLJRN_GALLERY_RESOLUTION": 0,
@@ -162,7 +162,7 @@ assert globals_["TLMARALEAD"] == 1
 assert "safe path" in window.controls[0].text
 chapters = campaign.Story.chapters()
 chapter_index_by_area = {chapter["area"]: index for index, chapter in enumerate(chapters)}
-assert len(chapters) == 18
+assert len(chapters) == 19
 assert sorted({chapter["act"] for chapter in chapters}) == list(range(1, 8))
 for chapter_index, chapter in enumerate(chapters):
     assert globals_["TLCHAP"] == chapter_index
@@ -233,10 +233,10 @@ assert globals_["TLWATCHPOST"] == 1
 assert globals_["TLGALLERY"] == 1
 assert globals_["TLCOURT"] == 1
 assert globals_["TLECHO"] == 1
-assert len([event for event in events if event[0] == "area"]) == 17
+assert len([event for event in events if event[0] == "area"]) == 18
 assert len([event for event in events if event[0] == "voice"]) == 7
 assert len([event for event in events if event[0] == "attack"]) == 2
-assert len(journal_entries) == 14
+assert len(journal_entries) == 15
 assert globals_["TLJRN_WAYSTONE"] == 1
 assert any("Three-Cairn Fork" in entry["value"] for entry in journal_entries)
 assert globals_["TLJRN_LORIAN_PURPOSE"] == 1
@@ -552,6 +552,71 @@ for kit, expected_reply in ((1, "The spare oil is packed"), (2, "The rope and ra
         timed_events.pop(0)()
     assert len(journal_entries) == before + 1
 
+# The river crossing requires a route decision. The handline only creates a
+# quiet route with the expedition rope kit; the exposed ford, or a handline
+# attempt without rope, reaches the watched road and its encounter. Eren reports
+# the same outcome when he appears again at the Ruined Watchpost.
+river_index = chapter_index_by_area["tl0019"]
+road_index = chapter_index_by_area["tl0002"]
+for kit, crossing_choice, expected_route in ((2, 1, 1), (1, 1, 2), (2, 2, 2)):
+    window = Window()
+    events.clear()
+    timed_events.clear()
+    current_area = "tl0019"
+    enemy_dead = False
+    globals_.update({"TLCHAP": river_index, "TLBEAT": 0, "TLENEMY": 0, "TLCAST": 0,
+                     "TLTRAVELKIT": kit, "TLRIVER": 0, "TLRIVERROUTE": 0, "TLJRN_RIVER": 0})
+    campaign.OnLoad()
+    while timed_events:
+        timed_events.pop(0)()
+    window.controls[4].press()
+    assert globals_["TLBEAT"] == 0
+    assert "Choose how to cross" in window.controls[0].text
+    window.controls[11].press()
+    window.controls[12 + crossing_choice - 1].press()
+    assert globals_["TLRIVER"] == crossing_choice
+    window.controls[11].press()
+    assert ("rope will bring my cart" if crossing_choice == 1 else "Leave the cart") in window.controls[0].text
+    before = len(journal_entries)
+    window.controls[4].press()
+    assert globals_["TLBEAT"] == 1
+    assert globals_["TLRIVERROUTE"] == expected_route
+    assert globals_["TLJRN_RIVER"] == 1
+    assert len(journal_entries) == before + 1
+    river_beat = campaign.Story.chapters()[river_index]["beats"][1]
+    expected_route_text = next(route["text"] for route in river_beat["routes"]
+                               if route["flag"] == "TLRIVERROUTE" and route["value"] == expected_route)
+    assert expected_route_text in window.controls[0].text
+
+    window = Window()
+    events.clear()
+    timed_events.clear()
+    current_area = "tl0002"
+    globals_.update({"TLCHAP": road_index, "TLBEAT": 1, "TLENEMY": 0, "TLCAST": 0,
+                     "TLMARALEAD": 3, "TLLIBRARYCLUE": 2, "TLHUNTER": 2,
+                     "TLHUNTERTRACK": 0, "TLTRAVELKIT": kit, "TLRIVERROUTE": expected_route,
+                     "TLROYALORDER": 0, "TLMISTWOODSAFE": 0})
+    campaign.OnLoad()
+    while timed_events:
+        timed_events.pop(0)()
+    window.controls[4].press()
+    assert (globals_["TLMISTWOODSAFE"] == 1) is (expected_route == 1)
+    assert (globals_["TLENEMY"] == 0) is (expected_route == 1)
+
+    window = Window()
+    events.clear()
+    timed_events.clear()
+    current_area = "tl0009"
+    globals_.update({"TLCHAP": chapter_index_by_area["tl0009"], "TLBEAT": 1,
+                     "TLENEMY": 0, "TLCAST": 0, "TLRIVERROUTE": expected_route})
+    campaign.OnLoad()
+    while timed_events:
+        timed_events.pop(0)()
+    window.controls[11].press()
+    window.controls[11].press()
+    assert ("handline kept the dispatch dry" if expected_route == 1 else
+            "exposed ford") in window.controls[0].text
+
 # Both waystone decisions must alter what Tessa says after reaching the watchpost.
 watchpost_index = next(index for index, chapter in enumerate(chapters) if chapter["area"] == "tl0009")
 for waystone, expected_text in (
@@ -597,6 +662,6 @@ for chapter_index, chapter in enumerate(chapters):
                 assert globals_[event["flag"]] == 1
                 assert any(entry["value"] == event["text"] for entry in journal_entries)
             choice_count += 1
-assert choice_count == 29
+assert choice_count == 31
 print(len(chapters), "scenes across seven acts,", sum(len(campaign.Story.cast(chapter["area"])) for chapter in chapters),
-      "named scene actors, keyboard controls, fifteen authored journal events, all 29 response options, three market routes, encounter gates, seventeen transitions, and seven voice cues passed")
+      "named scene actors, keyboard controls, sixteen authored journal events, all 31 response options, three market routes, encounter gates, eighteen transitions, and seven voice cues passed")

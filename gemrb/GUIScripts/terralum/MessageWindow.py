@@ -182,6 +182,10 @@ def OnLoad():
 		beat_index = GemRB.GetGameVar("TLBEAT")
 		chapter = chapters[chapter_index]
 		beat = chapter["beats"][beat_index]
+		if chapter["area"] == "tl0019" and beat_index == 1:
+			river_route = 1 if (GemRB.GetGameVar("TLTRAVELKIT") == 2
+							and GemRB.GetGameVar("TLRIVER") == 1) else 2
+			GemRB.SetGlobal("TLRIVERROUTE", "GLOBAL", river_route)
 		record_journal_entry(chapter, beat)
 		journal_button.SetVisible(True)
 		journal_button.SetText("JOURNAL")
@@ -223,6 +227,9 @@ def OnLoad():
 		if chapter["area"] == "tl0018" and beat_index == 0 and not GemRB.GetGameVar("TLROYALORDER"):
 			message.Append("\n\nThe dispatch remains to be decided. Speak with Archivist Leora before leaving the archive.")
 			return
+		if chapter["area"] == "tl0019" and beat_index == 0 and not GemRB.GetGameVar("TLRIVER"):
+			message.Append("\n\nEren is still on the far bank. Choose how to cross before leaving the river.")
+			return
 		if chapter["area"] == "tl0017" and beat_index == 0 and not GemRB.GetGameVar("TLTRAVELKIT"):
 			message.Append("\n\nThe horse is ready, but the pack still needs a field kit. Speak with Stablemaster Edda before riding west.")
 			return
@@ -230,7 +237,8 @@ def OnLoad():
 				and (GemRB.GetGameVar("TLMARALEAD") == 1 or GemRB.GetGameVar("TLLIBRARYCLUE") == 1
 				     or (GemRB.GetGameVar("TLTRAVELKIT") == 1 and GemRB.GetGameVar("TLHUNTER") == 1)
 				     or (GemRB.GetGameVar("TLTRAVELKIT") == 2 and GemRB.GetGameVar("TLHUNTERTRACK") == 1)
-				     or (GemRB.GetGameVar("TLMARALEAD") == 2 and GemRB.GetGameVar("TLROYALORDER") == 1))):
+				     or (GemRB.GetGameVar("TLMARALEAD") == 2 and GemRB.GetGameVar("TLROYALORDER") == 1)
+				     or GemRB.GetGameVar("TLRIVERROUTE") == 1)):
 			GemRB.SetGlobal("TLMISTWOODSAFE", "GLOBAL", 1)
 			GemRB.SetGlobal("TLBEAT", "GLOBAL", beat_index + 1)
 			show()

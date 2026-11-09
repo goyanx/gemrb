@@ -28,6 +28,7 @@ AREAS = {
     "tl0008": "deep_archives.png",
     "tl0017": "alsperia_royal_stables.png",
     "tl0018": "alsperia_dispatch_archive.png",
+    "tl0019": "mistwood_river_crossing.png",
     "tl0015": "mistwood_hunters_camp.png",
     "tl0016": "mistwood_waystone_fork.png",
     "tl0002": "mistwood_road.png",
@@ -48,7 +49,7 @@ AREA_SONG_INDEX = {
     "tl0005": 2, "tl0006": 2, "tl0007": 1, "tl0008": 1,
     "tl0009": 3, "tl0010": 2, "tl0011": 1, "tl0012": 2,
     "tl0013": 2, "tl0014": 1, "tl0015": 3,
-    "tl0016": 3, "tl0017": 1, "tl0018": 1,
+    "tl0016": 3, "tl0017": 1, "tl0018": 1, "tl0019": 3,
 }
 
 

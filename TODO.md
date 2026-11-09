@@ -8,18 +8,19 @@ This is the current work ledger for human and AI contributors. Read [AGENTS.md](
 - [x] Added `terralum/GOLD_STANDARD_GAME_DESIGN_PIPELINE.md` with canon rules, production gates, scene acceptance criteria, and current-state gaps.
 - [x] Added repo-level `AGENTS.md` instructions that direct AI and human game contributors to the baseline and lore notes.
 - [x] Exposed the full baseline through the read-only `terralum_get_design_standard` MCP tool.
-- [x] Built an 18-scene campaign slice across the seven-act spine, adding the Royal Dispatch Archive and Royal Stables in Act I, then the Mistwood Hunter's Camp and Three-Cairn Fork before the road and watchpost in Act II. Story provenance and uncertainties are noted in `terralum/lore_notes.md`.
-- [x] Added 17 distinct generated backdrops for the 18 scene resources (one is reused), seven act-entry Kokoro narration clips, and three looping ambient music tracks.
-- [x] Added 38 named, scene-specific NPC actors across 18 areas; added Talk, Narrate, Continue, and numbered-response keyboard shortcuts alongside visible controls. Current sprites reuse two demo templates.
-- [x] Completed structured role, faction, goal, knowledge, voice, and provenance sheets for all 38 NPC cast entries; pack validation now rejects entries missing this design context.
+- [x] Built an 19-scene campaign slice across the seven-act spine, adding the Royal Dispatch Archive and Royal Stables in Act I, then the Mistwood Hunter's Camp and Three-Cairn Fork before the road and watchpost in Act II. Story provenance and uncertainties are noted in `terralum/lore_notes.md`.
+- [x] Added 18 distinct generated backdrops for the 19 scene resources (one is reused), seven act-entry Kokoro narration clips, and three looping ambient music tracks.
+- [x] Added 41 named, scene-specific NPC placements across 19 areas; added Talk, Narrate, Continue, and numbered-response keyboard shortcuts alongside visible controls. Current sprites reuse two demo templates.
+- [x] Completed structured role, faction, goal, knowledge, voice, and provenance sheets for all 41 NPC cast entries; pack validation now rejects entries missing this design context.
 - [x] Added a victory gate to each of the three prototype encounters.
 - [x] Fixed the ARE builder counts: it now preserves the demo entrances and clears actor, region, spawn, container, item, and door counts that belonged to the demo.
-- [x] Campaign-flow mock reports 18 scene casts, 38 actors, keyboard controls, all 29 authored response options, three market routes, three encounter gates, seventeen area transitions, and seven voice cues.
+- [x] Campaign-flow mock reports 19 scene casts, 41 actor placements, keyboard controls, all 31 authored response options, three market routes, three encounter gates, eighteen area transitions, and seven voice cues.
 - [x] Added campaign journal entries for story beats and dialogue choices, plus the active/resolved Hunter's Camp objective; entries use GemRB's persistent journal API and are guarded against duplicate records.
 - [x] Added Ranger Ilya's optional creekside conversation and stateful route around the Mistwood stalker; the dialogue journal event is deduplicated on repeat interaction, and the campaign mock tests the dark-lantern branch through Dorian's inscription.
 - [x] Added the Three-Cairn Fork as an adaptation scene with two named waykeepers, a two-outcome marker decision, a journaled route discovery, and changed dialogue at the Ruined Watchpost.
 - [x] Added a required three-option purpose conversation with Dorian in Lorian; it records the answer in the journal and changes the Guardian's response. The campaign mock covers all answers and verifies the player cannot skip the conversation to start the encounter.
 - [x] Authored and connectivity-checked a fifth custom `SR.BMP` for Lorian Cavern; the party, Dorian, Guardian, western arch, scroll chest approach, and authored Guardian spawn connect across the plaza.
+- [x] Added Mistwood River Crossing between Hunter’s Camp and the Three-Cairn Fork. Fordkeeper Maelin and Courier Eren resolve a handline-or-ford choice; only the rope kit unlocks the quiet stalker bypass, and Eren carries the outcome to the watchpost. The scene has journal state, original art, and a connected searchmap.
 - [x] Added the Alsperia Royal Dispatch Archive as an Act I scene with Archivist Leora and Page Nerin, a required copy-or-seal patrol schedule choice, a journal event, a custom connected searchmap, and a reliable Waywarden diversion at Mistwood when the schedule is copied.
 - [x] Added Alsperia Royal Stables as an Act I scene with two scene NPCs, a required lantern-or-rope kit choice, a journal event, a custom connected searchmap, and matching kit consequences for later Mistwood bypass routes.
 - [x] Made the Seal Gallery inscription a required two-outcome scene event: restraint resolves the warning, while demanding passage leaves it open; both outcomes persist to the journal and change Queen Alisande's return-court response. Added and connectivity-checked a custom `SR.BMP` for the gallery hall and its three approaches.
@@ -35,11 +36,11 @@ This is the current work ledger for human and AI contributors. Read [AGENTS.md](
 
 ## Ongoing
 
-- [ ] **Scene dialogue slice:** Market, library, watchpost, Lorian purpose test, seal gallery, council, academy courtyard, archive index, and hangar choices set persistent flags with later text outcomes. The logic is mock-tested; live input/save testing remains open. The custom choice UI is not a native GemRB DLG system.
-- [ ] **Journal verification:** fifteen event flags, including the Dispatch Archive patrol schedule, Royal Stables kit, Seal Gallery outcome, Lorian purpose choice, and optional creekside clue, plus revisit deduplication, pass the script mock; live display and save/load still need direct playtesting.
-- [ ] **Playable-scene verification:** the extended pack builds and the opening area starts in live GemRB. All eight custom maps pass script connectivity checks, but live movement is unverified. The WSLg window input path has not yet been verified. Later-area entry, player movement, actual fights, choice input, save/load, and return entry still need direct playtesting.
-- [ ] **Art and geometry:** Characters currently reuse the demo's two humanoid sprites. The Royal Dispatch Archive, Royal Stables, Hunter's Camp, the Three-Cairn Fork, Mistwood Road, the Ruined Watchpost, Lorian Cavern, and the Seal Gallery now have custom searchmaps, but all 18 areas still inherit the AR0100 WED layout and terrain/height/light files; the other 10 also use its generic searchmap. All eight custom maps pass connectivity checks, while actual in-engine movement remains unverified.
-- [ ] **Campaign length:** 18 locations and 45 beats form an expanded prototype, not a long-form campaign. Act II now has a side scene about the trail marker; Acts VI and VII have archive-index and hangar preparation locations. Deeper quest arcs remain; see `terralum/campaign_plan.md`.
+- [ ] **Scene dialogue slice:** Market, library, Royal Dispatch Archive, Royal Stables, River Crossing, watchpost, Lorian purpose test, seal gallery, council, academy courtyard, archive index, and hangar choices set persistent flags with later text outcomes. The logic is mock-tested; live input/save testing remains open. The custom choice UI is not a native GemRB DLG system.
+- [ ] **Journal verification:** sixteen event flags, including the Dispatch Archive patrol schedule, Royal Stables kit, River Crossing outcome, Seal Gallery outcome, Lorian purpose choice, and optional creekside clue, plus revisit deduplication, pass the script mock; live display and save/load still need direct playtesting.
+- [ ] **Playable-scene verification:** the extended pack builds and the opening area starts in live GemRB. All nine custom maps pass script connectivity checks, but live movement is unverified. The WSLg window input path has not yet been verified. Later-area entry, player movement, actual fights, choice input, save/load, and return entry still need direct playtesting.
+- [ ] **Art and geometry:** Characters currently reuse the demo's two humanoid sprites. The Royal Dispatch Archive, Royal Stables, Hunter's Camp, River Crossing, the Three-Cairn Fork, Mistwood Road, the Ruined Watchpost, Lorian Cavern, and the Seal Gallery now have custom searchmaps, but all 19 areas still inherit the AR0100 WED layout and terrain/height/light files; the other 10 also use its generic searchmap. All nine custom maps pass connectivity checks, while actual in-engine movement remains unverified.
+- [ ] **Campaign length:** 19 locations and 47 beats form an expanded prototype, not a long-form campaign. Act II now has the trail-marker side scene and a kit-dependent river crossing; Acts VI and VII have archive-index and hangar preparation locations. Deeper quest arcs remain; see `terralum/campaign_plan.md`.
 
 ## To do, in priority order
 
@@ -53,12 +54,12 @@ This is the current work ledger for human and AI contributors. Read [AGENTS.md](
 
 ### P1 — Make every scene coherent and navigable
 
-- [ ] Extend the eight custom searchmaps to the remaining 10 areas; replace shared WED geometry, entrances, terrain/height/light maps, and prove party movement in every scene.
+- [ ] Extend the nine custom searchmaps to the remaining 10 areas; replace shared WED geometry, entrances, terrain/height/light maps, and prove party movement in every scene.
 - [x] Add focused searchmap checks for dimensions/palette, blocked terrain and props, and four-way connectivity from the party start to scene NPCs, encounter spawns, and exits.
 - [ ] Replace repeated placeholder NPC models with unique/generated or compatible open-licensed art and portraits. Keep provenance and license records.
 - [ ] Place actual interactable clues, containers, doors, and travel links only where they match the new scene geometry.
 - [ ] Turn encounters into authored tactical events with clues, sensible placement, AI, balance, victory/failure outcomes, and quest-state effects. The Mistwood stalker now uses a connected, authored spawn coordinate.
-- [ ] Review the 36 complete cast sheets against live scenes; deepen return-state dialogue and recurring NPC continuity where appropriate.
+- [ ] Review the 41 complete cast sheets against live scenes; deepen return-state dialogue and recurring NPC continuity where appropriate.
 
 ### P2 — Expand the campaign
 

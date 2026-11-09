@@ -374,6 +374,33 @@
       "provenance": "adaptation"
     },
     {
+      "name": "Courier Eren",
+      "creature": "riddler",
+      "position": [
+        1000,
+        650
+      ],
+      "line": "Maelin helped me carry the dispatch out of the flood. I still have to get it to the next courier.",
+      "responses": [
+        {
+          "flag": "TLRIVERROUTE",
+          "value": 1,
+          "line": "The handline kept the dispatch dry and brought us around the watched road. I can give Pell the route record."
+        },
+        {
+          "flag": "TLRIVERROUTE",
+          "value": 2,
+          "line": "I left the cart and carried the dispatch through the exposed ford. We still had to take the watched road."
+        }
+      ],
+      "role": "Royal road courier",
+      "faction": "Alsperia Courier Service",
+      "goal": "Deliver the sealed route dispatch to Courier Pell at the watchpost.",
+      "knowledge": "Knows how the party crossed the river and that the dispatch must reach Courier Pell; cannot identify the stalker.",
+      "voice": "Grateful and precise, reporting the route without embellishing the record.",
+      "provenance": "adaptation"
+    },
+    {
       "name": "Waywarden Saren",
       "creature": "protagon",
       "position": [
@@ -997,6 +1024,64 @@
       "goal": "Keep the archive’s field maps legible and help authorized travellers understand the patrol marks.",
       "knowledge": "Knows the map table’s route marks and where schedules are stored; has not travelled west himself.",
       "voice": "Curious and clear, eager to explain what a map can and cannot prove.",
+      "provenance": "adaptation"
+    }
+  ],
+  "tl0019": [
+    {
+      "name": "Fordkeeper Maelin",
+      "creature": "protagon",
+      "position": [
+        560,
+        350
+      ],
+      "line": "The current has taken the bridge pins. I can walk you over the pale stones, or help you rig a handline if you brought rope.",
+      "choices": [
+        {
+          "label": "Rig the rope handline",
+          "reply": "You set the expedition rope across the current. If it reaches the far bank, Eren can save his dispatch with the cart.",
+          "flag": "TLRIVER",
+          "value": 1
+        },
+        {
+          "label": "Guide Eren over the stepping stones",
+          "reply": "You guide Eren over the shallow stones and leave the loaded cart above the water. The crossing is exposed, but no one is left on the far bank.",
+          "flag": "TLRIVER",
+          "value": 2
+        }
+      ],
+      "role": "Mistwood fordkeeper",
+      "faction": "Mistwood River Wardens",
+      "goal": "Keep travellers and couriers from being swept into the flooded crossing.",
+      "knowledge": "Knows the ford, the exposed stepping stones, and where a handline can be secured; does not know what hunts the road.",
+      "voice": "Practical and watchful, giving a clear warning before offering a route.",
+      "provenance": "adaptation"
+    },
+    {
+      "name": "Courier Eren",
+      "creature": "riddler",
+      "position": [
+        1000,
+        780
+      ],
+      "line": "The dispatch is sealed against water. It records the road, not what waits along it.",
+      "responses": [
+        {
+          "flag": "TLRIVER",
+          "value": 1,
+          "line": "The rope will bring my cart and dispatch across, if it holds."
+        },
+        {
+          "flag": "TLRIVER",
+          "value": 2,
+          "line": "Leave the cart. I can carry the dispatch over the stones."
+        }
+      ],
+      "role": "Royal road courier",
+      "faction": "Alsperia Courier Service",
+      "goal": "Carry a sealed route dispatch to the Ruined Watchpost without losing it to the flood.",
+      "knowledge": "Knows the dispatch concerns the road and patrol markers; has not read it or met the stalker.",
+      "voice": "Urgent but composed, distinguishing what the document says from what it does not.",
       "provenance": "adaptation"
     }
   ]
