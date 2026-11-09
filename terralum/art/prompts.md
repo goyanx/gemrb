@@ -14,5 +14,6 @@ Shared direction: wide 1600 × 1152 playable isometric fantasy RPG area; hand-pa
 | `deep_archives.png` | Moonlit Deep Archives, old shelves, an open walkable reading floor and a titleless illuminated book. |
 | `alsperia_skyport.png` | Alsperia skyport at dawn, an original brass-and-sail Aethercraft, instruments and a broad boarding platform. |
 | `mistwood_hunters_camp.png` | Mistwood hunter camp at twilight, a shielded trail lantern, pale waystones, shelter and open walkable clearing. |
+| `mistwood_waystone_fork.png` | Rain-darkened Three-Cairn Fork with a turned mossy waystone, shallow creek, three pale-stone paths, and a broad open central clearing. |
 
 `mistwood_ruins.png`, `byzantem_arch.png`, and `council_chamber.png` are concept art from the earlier story draft and are not used in the current build.

@@ -100,6 +100,44 @@
       ]
     },
     {
+      "title": "II. Through Mistwood — The Three-Cairn Fork",
+      "act": 2,
+      "area": "tl0016",
+      "place": "Mistwood Three-Cairn Fork",
+      "music": "tlwood.mus",
+      "voice": "",
+      "narration": "At a rain-darkened fork, a mossed waystone lies turned across three pale-stone paths. Two local keepers disagree about whether to set it upright.",
+      "beats": [
+        {
+          "speaker": "Waykeeper Sella",
+          "text": "Last night's storm turned the center stone. Its old face has no name, only a worn notch. I won't choose a direction for every traveler.",
+          "action": "Inspect marker",
+          "journal": {
+            "flag": "TLJRN_WAYSTONE",
+            "section": 4,
+            "text": "At Mistwood's Three-Cairn Fork, the party found a waystone turned by the storm. Its maker is unknown, and its worn notch may record an old trail."
+          }
+        },
+        {
+          "speaker": "Carver Doma",
+          "text": "The notch marks a road, not a safe passage. The socket is still sound; the choice is whether to make the direction plain again.",
+          "action": "Join the road",
+          "routes": [
+            {
+              "flag": "TLWAYSTONE",
+              "value": 1,
+              "text": "You set the waystone upright. Its worn notch points toward the ruined watchpost, but names no maker and promises no safety."
+            },
+            {
+              "flag": "TLWAYSTONE",
+              "value": 2,
+              "text": "You leave the marker turned. The party follows the pale stones without trusting an unreadable sign."
+            }
+          ]
+        }
+      ]
+    },
+    {
       "title": "II. Through Mistwood",
       "act": 2,
       "area": "tl0002",
@@ -182,6 +220,16 @@
           "text": "The rubbing names the western arch. If we leave the watchpost standing, the next travellers may still find this road.",
           "action": "Choose trail",
           "routes": [
+            {
+              "flag": "TLWAYSTONE",
+              "value": 1,
+              "text": "The reset waystone gave Tessa a clear heading to the watchpost. Pell's charcoal rubbing adds the western arch; neither mark explains the stalker."
+            },
+            {
+              "flag": "TLWAYSTONE",
+              "value": 2,
+              "text": "With the waystone left turned, Tessa followed the pale stones. Pell's rubbing adds the western arch to the route."
+            },
             {
               "flag": "TLWATCHPOST",
               "value": 1,

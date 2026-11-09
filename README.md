@@ -30,10 +30,10 @@ list of [options, tips and priorities](https://github.com/gemrb/gemrb/blob/maste
 
 ## Terralum: Scrolls of Byzantem
 
-An original fantasy campaign is taking shape inside this GemRB fork. **Terralum: Scrolls of Byzantem** follows Algoreth Jon Goren from the court of Alsperia into a search for the lost scrolls, through the Mistwood and Caverns of Lorian, and onward toward the mysteries of the Tears. Its current prototype spans fifteen scene areas across a seven-act story spine, with a named cast, branching choices, a persistent quest journal, Kokoro narration, ambient music, and gated encounters.
+An original fantasy campaign is taking shape inside this GemRB fork. **Terralum: Scrolls of Byzantem** follows Algoreth Jon Goren from the court of Alsperia into a search for the lost scrolls, through the Mistwood and Caverns of Lorian, and onward toward the mysteries of the Tears. Its current prototype spans sixteen scene areas across a seven-act story spine, with a named cast, branching choices, a persistent quest journal, Kokoro narration, ambient music, and gated encounters.
 
 <p align="center">
-  <img src="terralum/screenshots/campaign-locations-concept-art.jpg" alt="Six Terralum location concepts: Alsperia Market, Mistwood Hunter Camp, Caverns of Lorian, Byzantem Seal Gallery, Deep Archives, and Aethercraft Hangar" width="94%">
+  <img src="terralum/screenshots/campaign-locations-concept-art.jpg" alt="Six Terralum locations: Alsperia Market, Hunter's Camp, Three-Cairn Fork, Caverns of Lorian, Deep Archives, and Aethercraft Hangar" width="94%">
 </p>
 <p align="center"><em>Location concept art — visual targets, not in-game screenshots</em></p>
 
@@ -53,7 +53,7 @@ These captures show the opening Alsperia Market scene running in GemRB. The wide
 
 ### Scene art
 
-Fourteen distinct generated concept backdrops preview the fifteen scene areas; one backdrop is reused. They are visual targets for the current prototype, whose areas still share demo walkable geometry.
+Fifteen distinct generated concept backdrops preview the sixteen scene areas; one backdrop is reused. They are visual targets for the current prototype. The Hunter's Camp and Three-Cairn Fork have custom searchmaps; all sixteen areas still use the demo's shared WED layout and other terrain resources.
 
 <table>
   <tr>
@@ -77,7 +77,8 @@ Fourteen distinct generated concept backdrops preview the fifteen scene areas; o
   <tr>
     <td align="center"><img src="terralum/art/aethercraft_hangar.png" alt="Aethercraft Hangar concept art" width="100%"><br><sub>Aethercraft Hangar</sub></td>
     <td align="center"><img src="terralum/art/mistwood_hunters_camp.png" alt="Mistwood Hunter's Camp concept art" width="100%"><br><sub>Mistwood Hunter's Camp</sub></td>
-    <td colspan="2" align="center"><sub>Fifteen scene areas across seven acts; one backdrop is reused.</sub></td>
+    <td align="center"><img src="terralum/art/mistwood_waystone_fork.png" alt="Mistwood Three-Cairn Fork concept art" width="100%"><br><sub>Three-Cairn Fork</sub></td>
+    <td align="center"><sub>Sixteen scene areas across seven acts; one backdrop is reused.</sub></td>
   </tr>
 </table>
 
@@ -88,7 +89,7 @@ Fourteen distinct generated concept backdrops preview the fifteen scene areas; o
 - [Campaign plan](terralum/campaign_plan.md) — seven-act story spine and planned expansion.
 - [TODO and handoff](TODO.md) — completed, ongoing, and next work.
 
-Terralum is an in-progress prototype, not a finished or full-length RPG. The current cast reuses demo sprites and all fifteen areas still inherit the demo WED layout; Hunter's Camp is the first with its own searchmap, while the other fourteen use the generic one. Choices use a custom panel rather than native Infinity Engine DLG resources. The project guide and handoff describe current playability and verification gaps.
+Terralum is an in-progress prototype, not a finished or full-length RPG. The current cast reuses demo sprites and all sixteen areas still inherit the demo WED layout; Hunter's Camp and the Three-Cairn Fork have custom searchmaps, while the other fourteen use the generic one. Choices use a custom panel rather than native Infinity Engine DLG resources. The project guide and handoff describe current playability and verification gaps.
 
 ## Supported platforms
 

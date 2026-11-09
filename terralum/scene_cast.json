@@ -198,6 +198,64 @@
       "faction": "Mistwood Hunters"
     }
   ],
+  "tl0016": [
+    {
+      "name": "Waykeeper Sella",
+      "role": "Caretaker of the Mistwood trail markers",
+      "goal": "Keep the fork legible for travelers without claiming the old marker points to safe ground.",
+      "knowledge": "Knows the pale stones still lead toward the ruined watchpost; cannot date or identify the waystone's maker.",
+      "voice": "Measured and practical, careful to separate route knowledge from guesses.",
+      "provenance": "adaptation",
+      "creature": "protagon",
+      "position": [
+        720,
+        636
+      ],
+      "line": "Last night's storm turned the center stone. Its old face has no name, only a worn notch. I won't choose a direction for every traveler.",
+      "choices": [
+        {
+          "label": "Set the waystone upright",
+          "reply": "You seat the marker in its socket. The pale stones now point toward the ruined watchpost; no maker's name survives.",
+          "flag": "TLWAYSTONE",
+          "value": 1
+        },
+        {
+          "label": "Leave the marker turned",
+          "reply": "You leave the stone as the storm turned it. The camp trail stays less visible, but the marker offers no direction.",
+          "flag": "TLWAYSTONE",
+          "value": 2
+        }
+      ],
+      "faction": "Mistwood Waykeepers"
+    },
+    {
+      "name": "Carver Doma",
+      "role": "Stoneworker who maintains the old trail signs",
+      "goal": "Preserve the remaining cuts in the waystone and stop visitors from mistaking a route for a promise of safety.",
+      "knowledge": "Recognizes weather wear and the marker's socket, but does not know who carved its original notch.",
+      "voice": "Dry, exact, and skeptical of confident explanations.",
+      "provenance": "adaptation",
+      "creature": "riddler",
+      "position": [
+        1040,
+        576
+      ],
+      "line": "A notch can point toward a road. It cannot tell you what waits on it.",
+      "responses": [
+        {
+          "flag": "TLWAYSTONE",
+          "value": 1,
+          "line": "The stone sits true again. Keep its worn notch; the old cut is all the direction we have."
+        },
+        {
+          "flag": "TLWAYSTONE",
+          "value": 2,
+          "line": "You left it turned. Better an unread mark than a false promise of safe passage."
+        }
+      ],
+      "faction": "Mistwood Waykeepers"
+    }
+  ],
   "tl0002": [
     {
       "name": "Scout Tessa",
