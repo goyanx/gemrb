@@ -86,7 +86,8 @@ globals_ = {"TLCHAP": 0, "TLBEAT": 0, "TLENEMY": 0, "TLENEMY_STALKER": 0,
             "TLJRN_GALLERY_RESOLUTION": 0,
             "TLJRN_SCROLLS": 0, "TLJRN_TEAR": 0,
             "TLJRN_ARCHIVE": 0, "TLJRN_ELDRADOR": 0, "TLJRN_VOYAGE": 0, "TLJRN_BRIEFING": 0,
-            "TLELDRADOR": 0, "TLSANCTUARY": 0, "TLJRN_ARRIVAL": 0, "TLJRN_SANCTUARY": 0}
+            "TLELDRADOR": 0, "TLSANCTUARY": 0, "TLJRN_ARRIVAL": 0, "TLJRN_SANCTUARY": 0,
+            "TLPPELLDOCKET": 0, "TLJRN_PELL_PUBLIC": 0, "TLJRN_PELL_ARCHIVE": 0}
 globals_.update({"TLMARADETAIL": 0, "TLJRN_MARA": 0, "TLFOLLOWPENDING": 0,
                  "TLFOLLOWNPC": 0, "TLFOLLOWCHOICE": 0, "TLWITNESS": 0,
                  "TLORENDOCKET": 0, "TLJRN_COURT_RECORD": 0, "TLRELAY": 0, "TLJRN_RELAY": 0, "TLRETURNMARK": 0, "TLJRN_RETURNMARK": 0})
@@ -842,7 +843,7 @@ for chapter_index, chapter in enumerate(chapters):
                 assert globals_[event["flag"]] == 1
                 assert any(entry["value"] == event["text"] for entry in journal_entries)
             choice_count += 1
-assert choice_count == 44
+assert choice_count == 46
 
 # Mara's staged ledger conversation records one shared journal event and carries
 # either handling choice into Scholar Inessa's later library dialogue.
@@ -907,7 +908,7 @@ for selected, expected_response in ((1, "separate landmark copy"),
 
 # Include the two nested options in the campaign-wide authored response count.
 choice_count += len(followup["choices"])
-assert choice_count == 46
+assert choice_count == 48
 
 # The Act IV council hearing requires the player to choose how Oren preserves
 # the evidence; Alisande and the closing record both acknowledge either path.
@@ -961,7 +962,65 @@ for selected, expected_response, expected_route in (
     assert expected_route in window.controls[0].text
 
 choice_count += len(council_followup["choices"])
-assert choice_count == 48
+assert choice_count == 50
+
+# Pell's council deposition is optional, gives bounded route testimony, and
+# journals the player's decision to publish only the warning or restrict detail.
+pell = next(person for person in campaign.Story.cast("tl0011") if person["name"] == "Courier Pell")
+for selected, event_flag, expected_response in (
+        (1, "TLJRN_PELL_PUBLIC", "My warning is in the public docket"),
+        (2, "TLJRN_PELL_ARCHIVE", "The full route stays in the crown file")):
+    for witness in (0, 1, 2):
+        window = Window()
+        events.clear()
+        timed_events.clear()
+        journal_entries.clear()
+        current_area = "tl0011"
+        globals_.update({key: (1 if key.startswith("TLJRN_") else 0) for key in globals_})
+        globals_.update({"TLCHAP": council_index, "TLBEAT": 1, "TLENEMY": 0, "TLCAST": 0,
+                         "TLRETURNMARK": 1, "TLPPELLDOCKET": 0, "TLWITNESS": witness,
+                         "TLORENDOCKET": 0 if witness == 0 else 1,
+                         "TLJRN_COURT_RECORD": 0 if witness == 0 else 1,
+                         "TLJRN_PELL_PUBLIC": 0, "TLJRN_PELL_ARCHIVE": 0})
+        campaign.OnLoad()
+        while timed_events:
+            timed_events.pop(0)()
+        for _ in range(len(campaign.Story.cast("tl0011"))):
+            window.controls[11].press()
+            if "Courier Pell:" in window.controls[0].text:
+                break
+        assert "Courier Pell:" in window.controls[0].text
+        window.controls[12 if selected == 1 else 13].press()
+        assert globals_["TLPPELLDOCKET"] == selected
+        assert globals_[event_flag] == 1
+        assert sum(event["value"].startswith("Courier Pell'") for event in journal_entries) == 1
+        campaign.OnLoad()
+        while timed_events:
+            timed_events.pop(0)()
+        for _ in range(len(campaign.Story.cast("tl0011"))):
+            window.controls[11].press()
+            if "Courier Pell:" in window.controls[0].text:
+                break
+        assert expected_response in window.controls[0].text
+        assert sum(event["value"].startswith("Courier Pell'") for event in journal_entries) == 1
+        queen_response = {
+            (1, 0): "Pell entered a public warning",
+            (1, 1): "Pell's public warning and Oren's paired docket",
+            (1, 2): "Pell's warning is public, while Oren filed",
+            (2, 0): "Pell kept the route details with the crown",
+            (2, 1): "Pell's detailed route stays in the crown file; Oren's paired docket",
+            (2, 2): "Pell's detailed route stays in the crown file, and Oren kept",
+        }[(selected, witness)]
+        campaign.OnLoad()
+        while timed_events:
+            timed_events.pop(0)()
+        for _ in range(len(campaign.Story.cast("tl0011"))):
+            window.controls[11].press()
+            if "Queen Alisande:" in window.controls[0].text:
+                break
+        assert queen_response in window.controls[0].text
+
+assert choice_count == 50
 
 # The return to the Mistwood Watchpost reuses the location but changes its
 # conversation. Both records persist through a script reload and change court dialogue.
@@ -1023,7 +1082,7 @@ for selected, expected_response, expected_edmon, expected_route in (
     assert expected_edmon in window.controls[0].text
 
 choice_count += len(return_followup["choices"])
-assert choice_count == 50
+assert choice_count == 52
 
 # Act VI's optional archive quest offers a peaceful path and a gated warder
 # challenge. Victory records the comparison leaf and changes dialogue in the
@@ -1195,7 +1254,7 @@ for signal in (1, 2):
         assert expected in window.controls[0].text
 
 choice_count += len(relay_followup["choices"])
-assert choice_count == 52
+assert choice_count == 54
 
 # The Act VII Eldrador landing and sanctuary-approach adaptations preserve the
 # unresolved Tear while carrying both evidence and protocol choices forward.
@@ -1294,4 +1353,4 @@ for (briefing, voyage), expected in alistair_lines.items():
     assert "cannot tell us what the Eldrador Tear is" not in window.controls[0].text
 
 print(len(chapters), "scenes across seven acts,", sum(len(campaign.Story.cast(chapter["area"])) for chapter in chapters),
-      "named scene actors, keyboard controls, authored journal events, four-state NPC response conditions, all 52 response options, three market routes, four encounter gates, twenty-four transitions, and seven voice cues passed")
+      "named scene actors, keyboard controls, authored journal events, four-state NPC response conditions, all 54 response options, three market routes, four encounter gates, twenty-four transitions, and seven voice cues passed")

@@ -1,4 +1,62 @@
 {
+  "PELL": {
+    "states": [
+      {
+        "when": [{"flag": "TLCHAP", "value": 14}, {"flag": "TLPPELLDOCKET", "value": 0},
+                 {"flag": "TLRETURNMARK", "value": 1}],
+        "say": "I can testify that the public Mistwood marker warned travellers of the unsafe turn while the patrol schedule stayed in Edmon's archive. I cannot say what the scrolls mean.",
+        "transitions": [
+          {"text": "Ask Pell to enter his route testimony.", "next": 2,
+           "set": [{"flag": "TLPPELLDOCKET", "value": 3}]},
+          {"text": "Leave his statement out of the docket.", "final": true}
+        ]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 14}, {"flag": "TLPPELLDOCKET", "value": 0},
+                 {"flag": "TLRETURNMARK", "value": 2}],
+        "say": "I can testify that the full Mistwood route stayed in the crown archive and that the watchpost carried a public warning. Neither record tells me what the scrolls mean.",
+        "transitions": [
+          {"text": "Ask Pell to enter his route testimony.", "next": 2,
+           "set": [{"flag": "TLPPELLDOCKET", "value": 3}]},
+          {"text": "Leave his statement out of the docket.", "final": true}
+        ]
+      },
+      {
+        "say": "Should my account of the Mistwood warning enter the public docket as a short summary, or should the route details remain in the crown file?",
+        "transitions": [
+          {"text": "Enter the warning as a public summary.", "next": 3,
+           "journal": "Courier Pell's public docket statement records the Mistwood warning while keeping the patrol detail with the crown. His testimony does not claim knowledge of Dorian's scrolls.",
+           "set": [{"flag": "TLPPELLDOCKET", "value": 1}, {"flag": "TLJRN_PELL_PUBLIC", "value": 1}]},
+          {"text": "Restrict route details to the crown file.", "next": 4,
+           "journal": "Courier Pell's route detail remains in the crown file, with only the Mistwood warning available to travellers. His testimony does not claim knowledge of Dorian's scrolls.",
+           "set": [{"flag": "TLPPELLDOCKET", "value": 2}, {"flag": "TLJRN_PELL_ARCHIVE", "value": 1}]}
+        ]
+      },
+      {
+        "say": "I will enter the warning in the public docket and keep the patrol detail with the crown. Travellers can be warned without publishing the route.",
+        "transitions": [{"text": "Thank Pell for keeping the account precise.", "final": true}]
+      },
+      {
+        "say": "I will keep the full route in the crown file and add only the warning to the public account. The record will not expose the patrol schedule.",
+        "transitions": [{"text": "Thank Pell for preserving the route record.", "final": true}]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 14}, {"flag": "TLPPELLDOCKET", "value": 1}],
+        "say": "My warning is in the public docket; the patrol detail remains with the crown. That gives travellers a caution without exposing the route.",
+        "transitions": [{"text": "The court has your testimony.", "final": true}]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 14}, {"flag": "TLPPELLDOCKET", "value": 2}],
+        "say": "The full route stays in the crown file, with only the warning available to travellers. That is the limit of what my testimony can establish.",
+        "transitions": [{"text": "The court has your testimony.", "final": true}]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 14}, {"flag": "TLPPELLDOCKET", "value": 3}],
+        "say": "I have prepared the statement. We still need to decide whether the public docket carries only the warning or the crown keeps the full route detail.",
+        "transitions": [{"text": "Finish entering Pell's testimony.", "next": 2}]
+      }
+    ]
+  },
   "OREN": {
     "states": [
       {
@@ -214,6 +272,42 @@
         ],
         "say": "The route remains in the crown archive, while the Lorian warning is still open. We must not let control of the record stand in for an answer about the scrolls.",
         "transitions": [{"text": "We will leave both questions on the record.", "final": true}]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 14}, {"flag": "TLPPELLDOCKET", "value": 1},
+                 {"flag": "TLWITNESS", "value": 0}],
+        "say": "Pell entered a public warning without the patrol details. Oren still needs to decide whether the route testimony and scroll account belong together.",
+        "transitions": [{"text": "We will keep warning and scroll purpose distinct.", "final": true}]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 14}, {"flag": "TLPPELLDOCKET", "value": 1},
+                 {"flag": "TLWITNESS", "value": 1}],
+        "say": "Pell's public warning and Oren's paired docket both preserve limits: one cautions travellers, the other records how the route testimony relates to the scroll account without claiming their purpose.",
+        "transitions": [{"text": "The public record should state only what each witness can establish.", "final": true}]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 14}, {"flag": "TLPPELLDOCKET", "value": 1},
+                 {"flag": "TLWITNESS", "value": 2}],
+        "say": "Pell's warning is public, while Oren filed the route testimony and scroll account separately. The docket does not let either account stand as proof of the other's meaning.",
+        "transitions": [{"text": "Keep the warning useful and the two accounts distinct.", "final": true}]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 14}, {"flag": "TLPPELLDOCKET", "value": 2},
+                 {"flag": "TLWITNESS", "value": 0}],
+        "say": "Pell kept the route details with the crown and entered only a warning for travellers. Oren still needs to decide how the scroll testimony belongs in the docket.",
+        "transitions": [{"text": "The court can review both records without merging them.", "final": true}]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 14}, {"flag": "TLPPELLDOCKET", "value": 2},
+                 {"flag": "TLWITNESS", "value": 1}],
+        "say": "Pell's detailed route stays in the crown file; Oren's paired docket places the route testimony beside the scroll account but marks that the route does not establish the scrolls' purpose.",
+        "transitions": [{"text": "Keep the restricted route detail separate from the paired evidence.", "final": true}]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 14}, {"flag": "TLPPELLDOCKET", "value": 2},
+                 {"flag": "TLWITNESS", "value": 2}],
+        "say": "Pell's detailed route stays in the crown file, and Oren kept the testimony and scroll account separate. Both decisions limit what the court claims to know.",
+        "transitions": [{"text": "Keep both limits in the record.", "final": true}]
       },
       {
         "when": [{"flag": "TLCHAP", "value": 14}, {"flag": "TLWITNESS", "value": 1}],

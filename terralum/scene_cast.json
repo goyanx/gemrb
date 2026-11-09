@@ -698,6 +698,30 @@
       "provenance": "user-confirmed",
       "responses": [
         {
+          "when": [{"flag": "TLPPELLDOCKET", "value": 1}, {"flag": "TLWITNESS", "value": 0}],
+          "line": "Pell entered a public warning without the patrol details. Oren still needs to decide whether the route testimony and scroll account belong together."
+        },
+        {
+          "when": [{"flag": "TLPPELLDOCKET", "value": 1}, {"flag": "TLWITNESS", "value": 1}],
+          "line": "Pell's public warning and Oren's paired docket both preserve limits: one cautions travellers, the other records how the route testimony relates to the scroll account without claiming their purpose."
+        },
+        {
+          "when": [{"flag": "TLPPELLDOCKET", "value": 1}, {"flag": "TLWITNESS", "value": 2}],
+          "line": "Pell's warning is public, while Oren filed the route testimony and scroll account separately. The docket does not let either account stand as proof of the other's meaning."
+        },
+        {
+          "when": [{"flag": "TLPPELLDOCKET", "value": 2}, {"flag": "TLWITNESS", "value": 0}],
+          "line": "Pell kept the route details with the crown and entered only a warning for travellers. Oren still needs to decide how the scroll testimony belongs in the docket."
+        },
+        {
+          "when": [{"flag": "TLPPELLDOCKET", "value": 2}, {"flag": "TLWITNESS", "value": 1}],
+          "line": "Pell's detailed route stays in the crown file; Oren's paired docket places the route testimony beside the scroll account but marks that the route does not establish the scrolls' purpose."
+        },
+        {
+          "when": [{"flag": "TLPPELLDOCKET", "value": 2}, {"flag": "TLWITNESS", "value": 2}],
+          "line": "Pell's detailed route stays in the crown file, and Oren kept the testimony and scroll account separate. Both decisions limit what the court claims to know."
+        },
+        {
           "flag": "TLWITNESS",
           "value": 1,
           "line": "The paired docket keeps the route evidence distinct from the scrolls' meaning. That is a useful record for our court."
@@ -753,6 +777,58 @@
       "goal": "Preserve the council's testimony accurately without inventing a purpose for the scrolls.",
       "knowledge": "Can compare the market ledger, Dorian's route, and Algoreth's report; cannot establish why the scrolls were created.",
       "voice": "Careful and exact, separating what a record says from what it cannot prove.",
+      "provenance": "adaptation"
+    },
+    {
+      "name": "Courier Pell",
+      "creature": "protagon",
+      "dialog": "PELL",
+      "position": [
+        800,
+        400
+      ],
+      "line": "I can testify to the route marker and the warning I left at the watchpost. I cannot tell the court what Dorian's scrolls were made to do.",
+      "choices": [
+        {
+          "label": "Enter the warning as a public summary",
+          "reply": "Pell enters the warning in the public docket and keeps the patrol detail with the crown. Travellers can be cautioned without publishing the route.",
+          "flag": "TLPPELLDOCKET",
+          "value": 1,
+          "journal": {
+            "flag": "TLJRN_PELL_PUBLIC",
+            "section": 4,
+            "text": "Courier Pell's public docket statement records the Mistwood warning while keeping the patrol detail with the crown. His testimony does not claim knowledge of Dorian's scrolls."
+          }
+        },
+        {
+          "label": "Restrict route details to the crown file",
+          "reply": "Pell keeps the full route in the crown file and adds only the warning to the public account. The docket will not expose the patrol schedule.",
+          "flag": "TLPPELLDOCKET",
+          "value": 2,
+          "journal": {
+            "flag": "TLJRN_PELL_ARCHIVE",
+            "section": 4,
+            "text": "Courier Pell's route detail remains in the crown file, with only the Mistwood warning available to travellers. His testimony does not claim knowledge of Dorian's scrolls."
+          }
+        }
+      ],
+      "responses": [
+        {
+          "flag": "TLPPELLDOCKET",
+          "value": 1,
+          "line": "My warning is in the public docket; the patrol detail remains with the crown. That gives travellers a caution without exposing the route."
+        },
+        {
+          "flag": "TLPPELLDOCKET",
+          "value": 2,
+          "line": "The full route stays in the crown file, with only the warning available to travellers. That is the limit of what my testimony can establish."
+        }
+      ],
+      "role": "Royal courier and route witness",
+      "faction": "Alsperia Crown Courier Service",
+      "goal": "Give the council a precise account of the Mistwood route record without claiming knowledge of the scrolls.",
+      "knowledge": "Knows where Pell left the public marker or crown route record and what warning he gave travellers; has no firsthand knowledge of the scrolls' purpose.",
+      "voice": "Plainspoken and exact, careful to separate what he carried from what he believes.",
       "provenance": "adaptation"
     }
   ],
