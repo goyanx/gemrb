@@ -62,6 +62,44 @@
       ]
     },
     {
+      "title": "I. The Royal Audience — Royal Stables",
+      "act": 1,
+      "area": "tl0017",
+      "place": "Alsperia Royal Stables",
+      "music": "tlcity.mus",
+      "voice": "",
+      "narration": "After leaving the library, Algoreth returns to the royal stables. Edmon's promised horse is ready, but the pack has room for only one field kit before the western ride.",
+      "beats": [
+        {
+          "speaker": "Stablemaster Edda",
+          "text": "The king's horse and map are ready. For Mistwood, take shuttered lantern oil or rope and trail rations; the pack cannot carry both.",
+          "action": "Choose a field kit"
+        },
+        {
+          "speaker": "Algoreth",
+          "text": "The horse is ready to leave Alsperia.",
+          "action": "Ride west",
+          "journal": {
+            "flag": "TLJRN_TRAVELKIT",
+            "section": 4,
+            "text": "At Edmon's stables, Algoreth chose one field kit for the Mistwood journey. The supplies will determine which quiet route Tessa and the hunters can safely use."
+          },
+          "routes": [
+            {
+              "flag": "TLTRAVELKIT",
+              "value": 1,
+              "text": "The pack holds a shuttered lantern and spare oil. Tessa can use its narrow signal to guide the party around the stalker's patrol."
+            },
+            {
+              "flag": "TLTRAVELKIT",
+              "value": 2,
+              "text": "The pack holds rope and trail rations. Ilya can use them to secure the creekside route beneath the stalker's sightline."
+            }
+          ]
+        }
+      ]
+    },
+    {
       "title": "II. Through Mistwood — Hunter's Camp",
       "act": 2,
       "area": "tl0015",

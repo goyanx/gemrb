@@ -140,6 +140,18 @@
           "value": 2
         }
       ],
+      "responses": [
+        {
+          "flag": "TLTRAVELKIT",
+          "value": 1,
+          "line": "The hooded lantern and spare oil give us a quiet signal. You still choose whether to light it."
+        },
+        {
+          "flag": "TLTRAVELKIT",
+          "value": 2,
+          "line": "The rope and rations make the creek route practical. Ilya knows where to test the crossing."
+        }
+      ],
       "faction": "Alsperia Expedition"
     },
     {
@@ -182,6 +194,18 @@
         690
       ],
       "line": "I can show you a creekside route. Read the broken reeds and the stalker's turn; we can leave the lantern black and stay below its sightline.",
+      "responses": [
+        {
+          "flag": "TLTRAVELKIT",
+          "value": 1,
+          "line": "The tracks show where it turns. Without rope, I can't promise the streambank will hold under everyone's weight."
+        },
+        {
+          "flag": "TLTRAVELKIT",
+          "value": 2,
+          "line": "The rope gives us a handline at the shallow crossing. We can follow the tracks beneath the stalker's sightline."
+        }
+      ],
       "choices": [
         {
           "label": "Read the creekside tracks",
@@ -790,6 +814,64 @@
       "knowledge": "Knows the index names a sealed account and a living witness; he will compare either source with the Eldrador signs.",
       "voice": "Thoughtful and skeptical, separating evidence from interpretation.",
       "provenance": "canon"
+    }
+  ],
+  "tl0017": [
+    {
+      "name": "Stablemaster Edda",
+      "creature": "protagon",
+      "position": [
+        600,
+        520
+      ],
+      "line": "The king's horse and map are ready. Choose whether the pack carries shuttered lantern oil or rope and trail rations.",
+      "choices": [
+        {
+          "label": "Pack shuttered lantern oil",
+          "reply": "Edda packs a hooded lantern and spare oil. Tessa can signal from cover, but the choice to light it remains yours.",
+          "flag": "TLTRAVELKIT",
+          "value": 1
+        },
+        {
+          "label": "Take rope and trail rations",
+          "reply": "Tavin packs braided rope and trail rations. Ilya can secure the creek crossing without exposing the camp to a light.",
+          "flag": "TLTRAVELKIT",
+          "value": 2
+        }
+      ],
+      "role": "Royal stablemaster",
+      "faction": "Alsperia Crown Stables",
+      "goal": "Prepare Edmon's promised horse and one useful field kit for the expedition.",
+      "knowledge": "Knows the stables' available travel supplies and the horse's condition; has not travelled through the Mistwood herself.",
+      "voice": "Competent and concise, focused on practical trade-offs.",
+      "provenance": "adaptation"
+    },
+    {
+      "name": "Groom Tavin",
+      "creature": "riddler",
+      "position": [
+        1000,
+        500
+      ],
+      "line": "Rope helps where the path narrows. A lantern helps only if its bearer chooses when to show it.",
+      "responses": [
+        {
+          "flag": "TLTRAVELKIT",
+          "value": 1,
+          "line": "The spare oil is packed. Keep the shutter closed until Tessa says a signal can help."
+        },
+        {
+          "flag": "TLTRAVELKIT",
+          "value": 2,
+          "line": "The rope and rations are packed. If the creek tracks hold, Ilya can guide the party across without a signal."
+        }
+      ],
+      "role": "Royal horse groom",
+      "faction": "Alsperia Crown Stables",
+      "goal": "Make sure the expedition's supplies match the route it intends to take.",
+      "knowledge": "Knows how to pack and handle horses, lanterns, and rope; has only hearsay about the Mistwood trail.",
+      "voice": "Friendly and direct, comfortable admitting what he has not seen.",
+      "provenance": "adaptation"
     }
   ],
   "tl0014": [

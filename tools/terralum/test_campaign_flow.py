@@ -74,7 +74,7 @@ globals_ = {"TLCHAP": 0, "TLBEAT": 0, "TLENEMY": 0, "TLCAST": 0,
             "TLMARALEAD": 0, "TLLIBRARYCLUE": 0, "TLWATCHPOST": 0, "TLHUNTER": 0,
             "TLGALLERY": 0, "TLCOURT": 0, "TLECHO": 0, "TLMISTWOODSAFE": 0, "TLARCHIVE": 0, "TLVOYAGE": 0,
             "TLJRN_BYZANTEM": 0, "TLJRN_MISTWOOD": 0, "TLJRN_HUNTER": 0, "TLJRN_HUNTER_RESOLVED": 0,
-            "TLHUNTERTRACK": 0, "TLJRN_TRACKS": 0,
+            "TLHUNTERTRACK": 0, "TLJRN_TRACKS": 0, "TLTRAVELKIT": 0, "TLJRN_TRAVELKIT": 0,
             "TLWAYSTONE": 0, "TLJRN_WAYSTONE": 0,
             "TLLORIANPURPOSE": 0, "TLLORIAN_GUARDIAN": 0, "TLJRN_LORIAN_PURPOSE": 0,
             "TLJRN_GALLERY_RESOLUTION": 0,
@@ -161,7 +161,8 @@ window.controls[12].press()
 assert globals_["TLMARALEAD"] == 1
 assert "safe path" in window.controls[0].text
 chapters = campaign.Story.chapters()
-assert len(chapters) == 16
+chapter_index_by_area = {chapter["area"]: index for index, chapter in enumerate(chapters)}
+assert len(chapters) == 17
 assert sorted({chapter["act"] for chapter in chapters}) == list(range(1, 8))
 for chapter_index, chapter in enumerate(chapters):
     assert globals_["TLCHAP"] == chapter_index
@@ -197,7 +198,7 @@ for chapter_index, chapter in enumerate(chapters):
                 assert route["text"] in window.controls[0].text, (chapter["area"], route, window.controls[0].text)
                 break
         if "encounter" in beat:
-            if chapter["area"] == "tl0002" and (globals_["TLMARALEAD"] == 1 or globals_["TLLIBRARYCLUE"] == 1 or globals_["TLHUNTER"] == 1):
+            if chapter["area"] == "tl0002" and (globals_["TLMARALEAD"] == 1 or globals_["TLLIBRARYCLUE"] == 1 or (globals_["TLTRAVELKIT"] == 1 and globals_["TLHUNTER"] == 1) or (globals_["TLTRAVELKIT"] == 2 and globals_["TLHUNTERTRACK"] == 1)):
                 window.controls[4].press()
                 assert globals_["TLMISTWOODSAFE"] == 1
                 assert globals_["TLBEAT"] == beats.index(beat) + 1
@@ -232,10 +233,10 @@ assert globals_["TLWATCHPOST"] == 1
 assert globals_["TLGALLERY"] == 1
 assert globals_["TLCOURT"] == 1
 assert globals_["TLECHO"] == 1
-assert len([event for event in events if event[0] == "area"]) == 15
+assert len([event for event in events if event[0] == "area"]) == 16
 assert len([event for event in events if event[0] == "voice"]) == 7
 assert len([event for event in events if event[0] == "attack"]) == 2
-assert len(journal_entries) == 12
+assert len(journal_entries) == 13
 assert globals_["TLJRN_WAYSTONE"] == 1
 assert any("Three-Cairn Fork" in entry["value"] for entry in journal_entries)
 assert globals_["TLJRN_LORIAN_PURPOSE"] == 1
@@ -247,7 +248,7 @@ assert any(entry["Section"] == 2 and "Hunter's Camp decision is resolved" in ent
            for entry in journal_entries)
 
 # Exercise every remaining response option and its next-beat result.
-for chapter_index, choice_index in ((0, 1), (0, 2), (1, 1), (2, 1), (3, 1), (5, 1), (7, 1), (9, 1), (10, 1), (13, 1), (15, 1)):
+for chapter_index, choice_index in ((chapter_index_by_area[area], choice) for area, choice in (("tl0001", 1), ("tl0001", 2), ("tl0008", 1), ("tl0017", 1), ("tl0015", 1), ("tl0016", 1), ("tl0009", 1), ("tl0003", 1), ("tl0010", 1), ("tl0011", 1), ("tl0012", 1), ("tl0013", 1), ("tl0014", 1))):
     chapter = chapters[chapter_index]
     window = Window()
     events.clear()
@@ -284,7 +285,7 @@ for lead, expect_warden in ((2, True), (3, False)):
     timed_events.clear()
     current_area = "tl0002"
     enemy_dead = False
-    globals_.update({"TLCHAP": 4, "TLBEAT": 1, "TLENEMY": 0, "TLCAST": 0,
+    globals_.update({"TLCHAP": chapter_index_by_area["tl0002"], "TLBEAT": 1, "TLENEMY": 0, "TLCAST": 0,
                      "TLMARALEAD": lead, "TLLIBRARYCLUE": 2, "TLMISTWOODSAFE": 0})
     campaign.OnLoad()
     while timed_events:
@@ -303,8 +304,8 @@ events.clear()
 timed_events.clear()
 current_area = "tl0002"
 enemy_dead = False
-globals_.update({"TLCHAP": 4, "TLBEAT": 1, "TLENEMY": 0, "TLCAST": 0,
-                 "TLMARALEAD": 3, "TLLIBRARYCLUE": 2, "TLHUNTER": 1, "TLMISTWOODSAFE": 0,
+globals_.update({"TLCHAP": chapter_index_by_area["tl0002"], "TLBEAT": 1, "TLENEMY": 0, "TLCAST": 0,
+                 "TLMARALEAD": 3, "TLLIBRARYCLUE": 2, "TLHUNTER": 1, "TLTRAVELKIT": 1, "TLMISTWOODSAFE": 0,
                  "TLJRN_HUNTER_RESOLVED": 0})
 campaign.OnLoad()
 while timed_events:
@@ -320,7 +321,7 @@ assert len(journal_entries) == resolved_journal_count + 1
 window = Window()
 events.clear()
 timed_events.clear()
-globals_.update({"TLCHAP": 4, "TLBEAT": 2, "TLENEMY": 0, "TLCAST": 0})
+globals_.update({"TLCHAP": chapter_index_by_area["tl0002"], "TLBEAT": 2, "TLENEMY": 0, "TLCAST": 0})
 campaign.OnLoad()
 while timed_events:
     timed_events.pop(0)()
@@ -339,7 +340,7 @@ for purpose_index, guardian_line in enumerate(guardian_lines):
     timed_events.clear()
     current_area = "tl0003"
     enemy_dead = False
-    globals_.update({"TLCHAP": 6, "TLBEAT": 0, "TLENEMY": 0, "TLCAST": 0,
+    globals_.update({"TLCHAP": chapter_index_by_area["tl0003"], "TLBEAT": 0, "TLENEMY": 0, "TLCAST": 0,
                      "TLLORIANPURPOSE": 0, "TLJRN_LORIAN_PURPOSE": 0})
     campaign.OnLoad()
     while timed_events:
@@ -368,7 +369,7 @@ for gallery_value, court_line in gallery_outcomes:
     events.clear()
     timed_events.clear()
     current_area = "tl0010"
-    globals_.update({"TLCHAP": 7, "TLBEAT": 0, "TLENEMY": 0, "TLCAST": 0,
+    globals_.update({"TLCHAP": chapter_index_by_area["tl0010"], "TLBEAT": 0, "TLENEMY": 0, "TLCAST": 0,
                      "TLGALLERY": 0, "TLJRN_GALLERY_RESOLUTION": 0})
     campaign.OnLoad()
     while timed_events:
@@ -384,7 +385,7 @@ for gallery_value, court_line in gallery_outcomes:
     window.controls[4].press()
     assert globals_["TLBEAT"] == 1
     assert globals_["TLJRN_GALLERY_RESOLUTION"] == 1
-    gallery_route = next(route for route in campaign.Story.chapters()[7]["beats"][1]["routes"]
+    gallery_route = next(route for route in campaign.Story.chapters()[chapter_index_by_area["tl0010"]]["beats"][1]["routes"]
                          if route["flag"] == "TLGALLERY" and route["value"] == gallery_value)
     assert gallery_route["text"] in window.controls[0].text
     assert any("chose whether to name restraint or demand passage" in entry["value"]
@@ -394,7 +395,7 @@ for gallery_value, court_line in gallery_outcomes:
     window = Window()
     events.clear()
     timed_events.clear()
-    globals_.update({"TLCHAP": 7, "TLBEAT": 1, "TLENEMY": 0, "TLCAST": 0,
+    globals_.update({"TLCHAP": chapter_index_by_area["tl0010"], "TLBEAT": 1, "TLENEMY": 0, "TLCAST": 0,
                      "TLGALLERY": gallery_value, "TLJRN_GALLERY_RESOLUTION": 1})
     campaign.OnLoad()
     while timed_events:
@@ -405,7 +406,7 @@ for gallery_value, court_line in gallery_outcomes:
     events.clear()
     timed_events.clear()
     current_area = "tl0004"
-    globals_.update({"TLCHAP": 8, "TLBEAT": 0, "TLENEMY": 0, "TLCAST": 0,
+    globals_.update({"TLCHAP": chapter_index_by_area["tl0004"], "TLBEAT": 0, "TLENEMY": 0, "TLCAST": 0,
                      "TLGALLERY": gallery_value})
     campaign.OnLoad()
     while timed_events:
@@ -417,8 +418,8 @@ for gallery_value, court_line in gallery_outcomes:
 window = Window()
 events.clear()
 timed_events.clear()
-globals_.update({"TLCHAP": 4, "TLBEAT": 1, "TLENEMY": 0, "TLCAST": 0,
-                 "TLMARALEAD": 3, "TLLIBRARYCLUE": 2, "TLHUNTER": 2, "TLMISTWOODSAFE": 0})
+globals_.update({"TLCHAP": chapter_index_by_area["tl0002"], "TLBEAT": 1, "TLENEMY": 0, "TLCAST": 0,
+                 "TLMARALEAD": 3, "TLLIBRARYCLUE": 2, "TLHUNTER": 2, "TLMISTWOODSAFE": 0, "TLTRAVELKIT": 2})
 campaign.OnLoad()
 while timed_events:
     timed_events.pop(0)()
@@ -433,7 +434,7 @@ events.clear()
 timed_events.clear()
 current_area = "tl0015"
 enemy_dead = False
-globals_.update({"TLCHAP": 2, "TLBEAT": 0, "TLENEMY": 0, "TLCAST": 0,
+globals_.update({"TLCHAP": chapter_index_by_area["tl0015"], "TLBEAT": 0, "TLENEMY": 0, "TLCAST": 0,
                  "TLMARALEAD": 3, "TLLIBRARYCLUE": 2, "TLHUNTER": 2,
                  "TLHUNTERTRACK": 0, "TLMISTWOODSAFE": 0,
                  "TLJRN_TRACKS": 0, "TLJRN_HUNTER_RESOLVED": 0})
@@ -461,8 +462,8 @@ window = Window()
 events.clear()
 timed_events.clear()
 current_area = "tl0002"
-globals_.update({"TLCHAP": 4, "TLBEAT": 1, "TLENEMY": 0, "TLCAST": 0,
-                 "TLMISTWOODSAFE": 0})
+globals_.update({"TLCHAP": chapter_index_by_area["tl0002"], "TLBEAT": 1, "TLENEMY": 0, "TLCAST": 0,
+                 "TLMISTWOODSAFE": 0, "TLTRAVELKIT": 2})
 campaign.OnLoad()
 while timed_events:
     timed_events.pop(0)()
@@ -472,6 +473,40 @@ assert globals_["TLBEAT"] == 2
 assert "Ilya's creekside tracks" in window.controls[0].text
 assert not any(event[0] == "attack" for event in events)
 assert globals_["TLJRN_HUNTER_RESOLVED"] == 1
+
+# The Royal Stables require a kit choice, journal it once, and make Tavin
+# acknowledge both outcomes.
+for kit, expected_reply in ((1, "The spare oil is packed"), (2, "The rope and rations are packed")):
+    window = Window()
+    events.clear()
+    timed_events.clear()
+    current_area = "tl0017"
+    globals_.update({"TLCHAP": chapter_index_by_area["tl0017"], "TLBEAT": 0, "TLENEMY": 0,
+                     "TLCAST": 0, "TLTRAVELKIT": 0, "TLJRN_TRAVELKIT": 0})
+    campaign.OnLoad()
+    while timed_events:
+        timed_events.pop(0)()
+    window.controls[4].press()
+    assert globals_["TLBEAT"] == 0
+    assert "Speak with Stablemaster Edda" in window.controls[0].text
+    window.controls[11].press()
+    window.controls[12 + kit - 1].press()
+    assert globals_["TLTRAVELKIT"] == kit
+    window.controls[11].press()
+    assert expected_reply in window.controls[0].text
+    before = len(journal_entries)
+    window.controls[4].press()
+    assert globals_["TLBEAT"] == 1
+    assert globals_["TLJRN_TRAVELKIT"] == 1
+    assert len(journal_entries) == before + 1
+    assert ("shuttered lantern" if kit == 1 else "rope and trail rations") in window.controls[0].text
+    window = Window()
+    globals_.update({"TLCHAP": chapter_index_by_area["tl0017"], "TLBEAT": 1, "TLENEMY": 0,
+                     "TLCAST": 0, "TLTRAVELKIT": kit, "TLJRN_TRAVELKIT": 1})
+    campaign.OnLoad()
+    while timed_events:
+        timed_events.pop(0)()
+    assert len(journal_entries) == before + 1
 
 # Both waystone decisions must alter what Tessa says after reaching the watchpost.
 watchpost_index = next(index for index, chapter in enumerate(chapters) if chapter["area"] == "tl0009")
@@ -518,6 +553,6 @@ for chapter_index, chapter in enumerate(chapters):
                 assert globals_[event["flag"]] == 1
                 assert any(entry["value"] == event["text"] for entry in journal_entries)
             choice_count += 1
-assert choice_count == 25
+assert choice_count == 27
 print(len(chapters), "scenes across seven acts,", sum(len(campaign.Story.cast(chapter["area"])) for chapter in chapters),
-      "named scene actors, keyboard controls, thirteen authored journal events, all 25 response options, three market routes, encounter gates, fifteen transitions, and seven voice cues passed")
+      "named scene actors, keyboard controls, fourteen authored journal events, all 27 response options, three market routes, encounter gates, sixteen transitions, and seven voice cues passed")

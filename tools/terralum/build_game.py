@@ -26,6 +26,7 @@ SETUP_FILE = ROOT / "gemrb" / "GUIScripts" / "terralum" / "SetupGame.py"
 AREAS = {
     "tl0001": "alsperia_market.png",
     "tl0008": "deep_archives.png",
+    "tl0017": "alsperia_royal_stables.png",
     "tl0015": "mistwood_hunters_camp.png",
     "tl0016": "mistwood_waystone_fork.png",
     "tl0002": "mistwood_road.png",
@@ -46,7 +47,7 @@ AREA_SONG_INDEX = {
     "tl0005": 2, "tl0006": 2, "tl0007": 1, "tl0008": 1,
     "tl0009": 3, "tl0010": 2, "tl0011": 1, "tl0012": 2,
     "tl0013": 2, "tl0014": 1, "tl0015": 3,
-    "tl0016": 3,
+    "tl0016": 3, "tl0017": 1,
 }
 
 
