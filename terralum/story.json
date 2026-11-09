@@ -302,6 +302,11 @@
           "speaker": "Algoreth",
           "text": "The scrolls are secured for the return journey. No second gate will be opened on the strength of these pages alone.",
           "action": "Return home",
+          "journal": {
+            "flag": "TLJRN_GALLERY_RESOLUTION",
+            "section": 4,
+            "text": "In the Byzantem Seal Gallery, Algoreth chose whether to name restraint or demand passage. The sealed niches remained closed, and the return court must decide what the scrolls may be used for."
+          },
           "routes": [
             {
               "flag": "TLGALLERY",

@@ -217,6 +217,9 @@ def OnLoad():
 		if chapter["area"] == "tl0003" and beat_index == 0 and not GemRB.GetGameVar("TLLORIANPURPOSE"):
 			message.Append("\n\nDorian waits for your answer. Speak with him before approaching the guardian.")
 			return
+		if chapter["area"] == "tl0010" and beat_index == 0 and not GemRB.GetGameVar("TLGALLERY"):
+			message.Append("\n\nThe inscription needs an answer. Speak with the Gallery Keeper before leaving the sealed niches.")
+			return
 		if (chapter["area"] == "tl0002" and beat.get("encounter")
 				and (GemRB.GetGameVar("TLMARALEAD") == 1 or GemRB.GetGameVar("TLLIBRARYCLUE") == 1
 				     or GemRB.GetGameVar("TLHUNTER") == 1 or GemRB.GetGameVar("TLHUNTERTRACK") == 1)):

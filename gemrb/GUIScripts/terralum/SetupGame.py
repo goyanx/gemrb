@@ -44,6 +44,7 @@ def OnLoad():
 	GemRB.SetGlobal("TLJRN_TRACKS", "GLOBAL", 0)
 	GemRB.SetGlobal("TLJRN_WAYSTONE", "GLOBAL", 0)
 	GemRB.SetGlobal("TLJRN_LORIAN_PURPOSE", "GLOBAL", 0)
+	GemRB.SetGlobal("TLJRN_GALLERY_RESOLUTION", "GLOBAL", 0)
 	GemRB.SetGlobal("TLJRN_SCROLLS", "GLOBAL", 0)
 	GemRB.SetGlobal("TLJRN_TEAR", "GLOBAL", 0)
 	GemRB.SetGlobal("TLJRN_ARCHIVE", "GLOBAL", 0)

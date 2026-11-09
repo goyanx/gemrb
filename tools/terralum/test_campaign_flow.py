@@ -77,6 +77,7 @@ globals_ = {"TLCHAP": 0, "TLBEAT": 0, "TLENEMY": 0, "TLCAST": 0,
             "TLHUNTERTRACK": 0, "TLJRN_TRACKS": 0,
             "TLWAYSTONE": 0, "TLJRN_WAYSTONE": 0,
             "TLLORIANPURPOSE": 0, "TLLORIAN_GUARDIAN": 0, "TLJRN_LORIAN_PURPOSE": 0,
+            "TLJRN_GALLERY_RESOLUTION": 0,
             "TLJRN_SCROLLS": 0, "TLJRN_TEAR": 0,
             "TLJRN_ARCHIVE": 0, "TLJRN_ELDRADOR": 0, "TLJRN_VOYAGE": 0}
 enemy_dead = False
@@ -234,11 +235,13 @@ assert globals_["TLECHO"] == 1
 assert len([event for event in events if event[0] == "area"]) == 15
 assert len([event for event in events if event[0] == "voice"]) == 7
 assert len([event for event in events if event[0] == "attack"]) == 2
-assert len(journal_entries) == 11
+assert len(journal_entries) == 12
 assert globals_["TLJRN_WAYSTONE"] == 1
 assert any("Three-Cairn Fork" in entry["value"] for entry in journal_entries)
 assert globals_["TLJRN_LORIAN_PURPOSE"] == 1
 assert any("answered Dorian's question" in entry["value"] for entry in journal_entries)
+assert globals_["TLJRN_GALLERY_RESOLUTION"] == 1
+assert any("chose whether to name restraint or demand passage" in entry["value"] for entry in journal_entries)
 assert globals_["TLJRN_HUNTER_RESOLVED"] == 1
 assert any(entry["Section"] == 2 and "Hunter's Camp decision is resolved" in entry["value"]
            for entry in journal_entries)
@@ -354,6 +357,63 @@ for purpose_index, guardian_line in enumerate(guardian_lines):
     window.controls[11].press()
     assert guardian_line in window.controls[0].text
 
+# The Seal Gallery answer is required to resolve the inscription, adds one
+# journal event, and changes Queen Alisande's response on the return to court.
+gallery_outcomes = (
+    (1, "You left the sealed niches closed in Lorian"),
+    (2, "The gallery warning remains unresolved"),
+)
+for gallery_value, court_line in gallery_outcomes:
+    window = Window()
+    events.clear()
+    timed_events.clear()
+    current_area = "tl0010"
+    globals_.update({"TLCHAP": 7, "TLBEAT": 0, "TLENEMY": 0, "TLCAST": 0,
+                     "TLGALLERY": 0, "TLJRN_GALLERY_RESOLUTION": 0})
+    campaign.OnLoad()
+    while timed_events:
+        timed_events.pop(0)()
+    window.controls[4].press()
+    assert globals_["TLBEAT"] == 0
+    assert "Speak with the Gallery Keeper" in window.controls[0].text
+    window.controls[11].press()
+    choice = campaign.Story.cast("tl0010")[0]["choices"][gallery_value - 1]
+    window.controls[12 + gallery_value - 1].press()
+    assert globals_["TLGALLERY"] == gallery_value
+    assert choice["reply"] in window.controls[0].text
+    window.controls[4].press()
+    assert globals_["TLBEAT"] == 1
+    assert globals_["TLJRN_GALLERY_RESOLUTION"] == 1
+    gallery_route = next(route for route in campaign.Story.chapters()[7]["beats"][1]["routes"]
+                         if route["flag"] == "TLGALLERY" and route["value"] == gallery_value)
+    assert gallery_route["text"] in window.controls[0].text
+    assert any("chose whether to name restraint or demand passage" in entry["value"]
+               for entry in journal_entries)
+
+    gallery_journal_count = len(journal_entries)
+    window = Window()
+    events.clear()
+    timed_events.clear()
+    globals_.update({"TLCHAP": 7, "TLBEAT": 1, "TLENEMY": 0, "TLCAST": 0,
+                     "TLGALLERY": gallery_value, "TLJRN_GALLERY_RESOLUTION": 1})
+    campaign.OnLoad()
+    while timed_events:
+        timed_events.pop(0)()
+    assert len(journal_entries) == gallery_journal_count
+
+    window = Window()
+    events.clear()
+    timed_events.clear()
+    current_area = "tl0004"
+    globals_.update({"TLCHAP": 8, "TLBEAT": 0, "TLENEMY": 0, "TLCAST": 0,
+                     "TLGALLERY": gallery_value})
+    campaign.OnLoad()
+    while timed_events:
+        timed_events.pop(0)()
+    window.controls[11].press()
+    window.controls[11].press()
+    assert court_line in window.controls[0].text
+
 window = Window()
 events.clear()
 timed_events.clear()
@@ -460,4 +520,4 @@ for chapter_index, chapter in enumerate(chapters):
             choice_count += 1
 assert choice_count == 25
 print(len(chapters), "scenes across seven acts,", sum(len(campaign.Story.cast(chapter["area"])) for chapter in chapters),
-      "named scene actors, keyboard controls, twelve authored journal events, all 25 response options, three market routes, encounter gates, fifteen transitions, and seven voice cues passed")
+      "named scene actors, keyboard controls, thirteen authored journal events, all 25 response options, three market routes, encounter gates, fifteen transitions, and seven voice cues passed")

@@ -39,6 +39,11 @@ expected = {
         "blocked": [(8, 50), (20, 84), (82, 84), (96, 45), (27, 29), (78, 41)],
         "description": "north portal approach, southern road, and watchpost plaza",
     },
+    "tl0010": {
+        "routes": [(50, 14), (92, 16), (40, 84)],
+        "blocked": [(5, 48), (97, 48), (59, 53), (20, 88), (68, 27)],
+        "description": "seal hall, central inscription, and three gallery approaches",
+    },
     "tl0003": {
         "routes": [(78, 20), (24, 20)],
         "blocked": [(8, 46), (10, 85), (83, 77), (95, 40), (43, 20), (60, 91)],

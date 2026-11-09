@@ -507,7 +507,19 @@
       "goal": "Protect the trust behind the expedition and ensure the scrolls are treated as a public responsibility.",
       "knowledge": "Knows the court's obligations and the people affected by royal decisions; her knowledge of the road is limited to the records before her.",
       "voice": "Warm, composed, and direct about responsibility.",
-      "provenance": "user-confirmed"
+      "provenance": "user-confirmed",
+      "responses": [
+        {
+          "flag": "TLGALLERY",
+          "value": 1,
+          "line": "You left the sealed niches closed in Lorian. That restraint honors Edmon's trust while we study what the scrolls actually say."
+        },
+        {
+          "flag": "TLGALLERY",
+          "value": 2,
+          "line": "The gallery warning remains unresolved. Before another gate is approached, the court should agree on what the scrolls may be used for."
+        }
+      ]
     }
   ],
   "tl0011": [
