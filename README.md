@@ -88,7 +88,7 @@ Fourteen distinct generated concept backdrops preview the fifteen scene areas; o
 - [Campaign plan](terralum/campaign_plan.md) — seven-act story spine and planned expansion.
 - [TODO and handoff](TODO.md) — completed, ongoing, and next work.
 
-Terralum is an in-progress prototype, not a finished or full-length RPG. The current cast reuses demo sprites, all fifteen areas share temporary demo geometry, and choices use a custom panel rather than native Infinity Engine DLG resources. The project guide and handoff describe current playability and verification gaps.
+Terralum is an in-progress prototype, not a finished or full-length RPG. The current cast reuses demo sprites and all fifteen areas still inherit the demo WED layout; Hunter's Camp is the first with its own searchmap, while the other fourteen use the generic one. Choices use a custom panel rather than native Infinity Engine DLG resources. The project guide and handoff describe current playability and verification gaps.
 
 ## Supported platforms
 

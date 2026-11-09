@@ -18,6 +18,7 @@ This is the current work ledger for human and AI contributors. Read [AGENTS.md](
 - [x] Added nine one-time journal events across the early scroll quest and later Tear research, including an active and resolved Hunter's Camp objective, with an in-game Journal panel backed by GemRB's persistent journal API.
 - [x] Expanded Act II with a Mistwood Hunter's Camp, two adaptation NPCs, a lantern choice, active and resolved journal events, and a quiet-trail route that can bypass the later stalker ambush.
 - [x] Fixed the safe-route skip to continue into Dorian's inscription beat, show route-specific text, and resolve the camp objective once in the journal.
+- [x] Authored the Hunter's Camp's first scene-specific `SR.BMP`: a connected clearing and trails, blocked shelter/cart/firepit/rock footprints, and reachable start/NPC positions. The map is declared in `terralum/area_searchmaps.json` and built from GemRB's indexed searchmap template.
 - [x] Built and launched the WSL GemRB pack with direct startup. The opening scene shows three NPCs beside the player; live startup loaded actors and city ambience with no Python traceback.
 - [x] Fork remote `goyanx/gemrb` and branch `terralum-first-slice` are configured; each accepted slice is committed, commented on, and pushed as shown in branch history.
 
@@ -26,7 +27,7 @@ This is the current work ledger for human and AI contributors. Read [AGENTS.md](
 - [ ] **Scene dialogue slice:** Market, library, watchpost, seal gallery, council, academy courtyard, archive index, and hangar choices set persistent flags with later text outcomes. The logic is mock-tested; live input/save testing remains open. The custom choice UI is not a native GemRB DLG system.
 - [ ] **Journal verification:** the log panel and nine event flags pass the script mock; live display, save/load, and revisit deduplication still need direct playtesting.
 - [ ] **Playable-scene verification:** the extended pack builds and the opening area starts in live GemRB. The new Hunter's Camp path has only script-level verification so far. The WSLg window input path has not yet been verified. Later-area entry, player movement, actual fights, choice input, save/load, and return entry still need direct playtesting.
-- [ ] **Art and geometry:** characters currently reuse the demo's two humanoid sprites; all 15 areas still share the AR0100 template walkmesh and terrain files despite their distinct/reused backdrops.
+- [ ] **Art and geometry:** characters currently reuse the demo's two humanoid sprites. Hunter's Camp now has a custom searchmap, but all 15 areas still inherit the AR0100 WED layout and terrain/height/light files; the other 14 also use its generic searchmap. The camp map is connectivity-checked in a script, while actual in-engine movement remains unverified.
 - [ ] **Campaign length:** 15 locations and 39 beats form an expanded prototype, not a long-form campaign. The Hunter's Camp adds one optional Mistwood stop; Acts VI and VII have archive-index and hangar preparation locations. Deeper quest arcs remain; see `terralum/campaign_plan.md`.
 
 ## To do, in priority order
@@ -41,7 +42,8 @@ This is the current work ledger for human and AI contributors. Read [AGENTS.md](
 
 ### P1 — Make every scene coherent and navigable
 
-- [ ] Author area-specific walkability, clipping, entrances, and search maps; replace the shared demo geometry and prove party movement through the scene.
+- [ ] Extend the camp searchmap workflow to the remaining 14 areas; replace shared WED geometry, entrances, terrain/height/light maps, and prove party movement in every scene.
+- [x] Add a focused searchmap check for dimensions/palette, blocked camp props, and four-way connectivity from the party start to both NPCs and the north/south trails.
 - [ ] Replace repeated placeholder NPC models with unique/generated or compatible open-licensed art and portraits. Keep provenance and license records.
 - [ ] Place actual interactable clues, containers, doors, and travel links only where they match the new scene geometry.
 - [ ] Turn encounters into authored tactical events with clues, sensible placement, AI, balance, victory/failure outcomes, and quest-state effects.

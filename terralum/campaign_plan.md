@@ -2,7 +2,7 @@
 
 The seven-act cadence follows the broad chapter structure of *Shadows of Amn*. Terralum's plot and places come from the early Alsperia transcript, the later recovered lore codex, or explicitly proposed adaptation material. The current game implements a short chapter spine. The targets below describe a longer future game; they are not current playtime claims.
 
-The current build has fifteen playable scene definitions across the seven-act spine. Act II now includes a Mistwood Hunter's Camp before the road and watchpost; Acts I–V have at least two locations, and Acts VI–VII have two each. Deeper quest arcs remain. The current area art and NPCs are present in the pack, but every area still inherits the same demo geometry and character silhouettes.
+The current build has fifteen playable scene definitions across the seven-act spine. Act II now includes a Mistwood Hunter's Camp before the road and watchpost; Acts I–V have at least two locations, and Acts VI–VII have two each. Deeper quest arcs remain. The current area art and NPCs are present in the pack, but all areas still inherit the demo WED geometry and character silhouettes. Hunter's Camp has the first bespoke searchmap; fourteen areas still use the generic demo searchmap.
 
 | Act | Established story anchor | Current scene areas | Next expansion target |
 | --- | --- | --- | --- |

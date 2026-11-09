@@ -12,7 +12,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-from PIL import Image
+from PIL import Image, ImageDraw
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -20,6 +20,7 @@ SOURCE = ROOT / "demo"
 PROJECT = ROOT / "terralum"
 OUTPUT = PROJECT / "build" / "game"
 CAST_FILE = PROJECT / "scene_cast.json"
+SEARCHMAP_FILE = PROJECT / "area_searchmaps.json"
 AREA_IMAGE = PROJECT / "art" / "observatory_courtyard.png"
 SETUP_FILE = ROOT / "gemrb" / "GUIScripts" / "terralum" / "SetupGame.py"
 AREAS = {
@@ -152,6 +153,54 @@ def read_cast():
     return validate_cast(json.loads(CAST_FILE.read_text(encoding="utf-8")))
 
 
+def read_searchmaps():
+    """Load and validate scene-specific walkable and blocked searchmap polygons."""
+    specs = json.loads(SEARCHMAP_FILE.read_text(encoding="utf-8"))
+    if not isinstance(specs, dict) or not set(specs).issubset(AREAS):
+        raise ValueError("area_searchmaps.json keys must name built scene areas")
+    for area, spec in specs.items():
+        if (not isinstance(spec, dict) or type(spec.get("base_value")) is not int
+                or not 0 <= spec["base_value"] <= 15
+                or type(spec.get("blocked_value")) is not int or not 0 <= spec["blocked_value"] <= 15):
+            raise ValueError(f"searchmap spec for {area} needs base and blocked values from 0 to 15")
+        for key in ("walkable", "blocked"):
+            polygons = spec.get(key)
+            if not isinstance(polygons, list) or not polygons:
+                raise ValueError(f"searchmap spec for {area} needs at least one {key} polygon")
+            for polygon in polygons:
+                if (not isinstance(polygon, list) or len(polygon) < 3
+                        or any(not isinstance(point, list) or len(point) != 2
+                               or any(type(coord) is not int or coord < 0 for coord in point)
+                               for point in polygon)):
+                    raise ValueError(f"searchmap {key} polygons for {area} need three or more nonnegative integer points")
+    return specs
+
+
+def write_searchmap(reference_path, spec, target_path=None):
+    """Build a paletted GemRB SR map from authored walkable and blocked polygons."""
+    with Image.open(reference_path) as reference:
+        if reference.mode != "P":
+            raise ValueError("GemRB searchmap template must use an indexed palette")
+        size = reference.size
+        palette = reference.getpalette()
+    image = Image.new("P", size, spec["base_value"])
+    if palette:
+        image.putpalette(palette)
+    draw = ImageDraw.Draw(image)
+    for polygon in spec["walkable"]:
+        if any(x >= size[0] or y >= size[1] for x, y in polygon):
+            raise ValueError(f"searchmap polygon exceeds {size[0]}x{size[1]} map bounds")
+        draw.polygon([tuple(point) for point in polygon], fill=1)
+    for polygon in spec["blocked"]:
+        if any(x >= size[0] or y >= size[1] for x, y in polygon):
+            raise ValueError(f"searchmap polygon exceeds {size[0]}x{size[1]} map bounds")
+        draw.polygon([tuple(point) for point in polygon], fill=spec["blocked_value"])
+    if target_path is not None:
+        target_path.parent.mkdir(parents=True, exist_ok=True)
+        image.save(target_path)
+    return image
+
+
 def write_tis(image_path, reference_path, target_path):
     """Replace the 25x18 paletted tiles while preserving the demo WED layout."""
     with reference_path.open("rb") as source:
@@ -195,6 +244,7 @@ def write_tis(image_path, reference_path, target_path):
 
 def build():
     story = read_story()
+    searchmaps = read_searchmaps()
     if OUTPUT.exists():
         shutil.rmtree(OUTPUT)
     shutil.copytree(SOURCE, OUTPUT)
@@ -206,6 +256,8 @@ def build():
     for area, image_name in AREAS.items():
         upper = area.upper().encode("ascii")
         for suffix in (".are", ".WED", ".mos", "LM.BMP", "SR.BMP", "HT.BMP", "TMP.BMP"):
+            if suffix == "SR.BMP" and area in searchmaps:
+                continue
             source_name = "ar0100" + suffix if suffix in (".are", ".mos") else "AR0100" + suffix
             data = (SOURCE / "override" / source_name).read_bytes()
             if suffix in (".are", ".WED"):
@@ -223,6 +275,9 @@ def build():
                 struct.pack_into("<II", data, song_offset, song_index, song_index)
             target_name = area + suffix if suffix in (".are", ".mos") else area.upper() + suffix
             (OUTPUT / "override" / target_name).write_bytes(data)
+        if area in searchmaps:
+            write_searchmap(SOURCE / "override" / "AR0100SR.BMP", searchmaps[area],
+                            OUTPUT / "override" / (area.upper() + "SR.BMP"))
         write_tis(PROJECT / "art" / image_name, SOURCE / "override" / "ar0100.tis", OUTPUT / "override" / (area + ".tis"))
 
     game = OUTPUT / "override" / "gem-demo.gam"
