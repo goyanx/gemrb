@@ -954,6 +954,22 @@
       "knowledge": "Knows the Tear of Chaos is contained and the false Algoreth remains within it; the intervening years and the nature of other Tears remain unresolved.",
       "voice": "Warm, composed, and direct about responsibility.",
       "provenance": "canon"
+    },
+    {
+      "name": "False Algoreth",
+      "creature": "riddler",
+      "position": [
+        1300,
+        650
+      ],
+      "line": "Next time, I will have learned.",
+      "role": "Echo within the contained Tear",
+      "faction": "The Tear",
+      "goal": "Break the boundary Algoreth imposes and mirror his voice closely enough to be mistaken for him.",
+      "knowledge": "Repeats Algoreth's voice and warns it will learn; its origin and nature remain unresolved.",
+      "voice": "An intimate imitation that turns cold when its boundary holds.",
+      "spawn_flag": "TLFALSE_ALGORETH",
+      "provenance": "canon"
     }
   ],
   "tl0021": [

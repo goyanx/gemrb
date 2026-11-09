@@ -373,31 +373,65 @@ def OnLoad():
 		if "encounter" in beat and not enemy and not group:
 			# A beat may turn a scene NPC hostile; otherwise, use the demo CRE
 			# as an open-licensed template for this encounter.
-			actor_flag = beat.get("encounter_actor_flag")
+			phases = beat.get("encounter_phases", [])
+			phase_index = GemRB.GetGameVar("TLECHOPHASE") if phases else 0
+			phase = phases[phase_index] if phases else {}
+			actor_flag = phase.get("actor_flag", beat.get("encounter_actor_flag"))
 			if actor_flag:
 				enemy = GemRB.GetGameVar(actor_flag)
 				if not enemy:
-					message.Append("\n\nThe guardian is absent from the scene. Reload the area before continuing.")
+					message.Append("\n\nThe encounter actor is absent from the scene. Reload the area before continuing.")
 					return
 			else:
-				spawn = beat.get("spawn_position")
+				spawn = phase.get("position", beat.get("spawn_position"))
 				if spawn:
 					enemy = GemRB.CreateCreature(1, "riddler", spawn[0], spawn[1])
 				else:
 					enemy = GemRB.CreateCreature(1, "riddler")
 			GemRB.SetGlobal("TLENEMY", "GLOBAL", enemy)
 			if not actor_flag:
-				GemRB.SetPlayerName(enemy, beat["encounter"], 0)
+				GemRB.SetPlayerName(enemy, phase.get("name", beat["encounter"]), 0)
 			GemRB.SetPlayerStat(enemy, IE_EA, ENEMY)
 			GemRB.ExecuteString("Attack(Player1)", enemy)
-			message.Append("\n\nENCOUNTER: " + beat["encounter"] + " emerges. Defeat it to continue.")
+			encounter_name = phase.get("name", beat["encounter"])
+			encounter_text = phase.get("text", encounter_name + " emerges.")
+			message.Append("\n\nENCOUNTER: " + encounter_text + " Defeat it to continue.")
 			action.SetText("CONTINUE")
 			return
 		if "encounter" in beat and not group and enemy_alive(enemy):
-			message.Append("\n\n" + beat["encounter"] + " still stands. Defeat it to continue.")
+			phases = beat.get("encounter_phases", [])
+			phase_index = GemRB.GetGameVar("TLECHOPHASE") if phases else 0
+			encounter_name = phases[phase_index].get("name", beat["encounter"]) if phases else beat["encounter"]
+			message.Append("\n\n" + encounter_name + " still stands. Defeat it to continue.")
 			return
 		if "encounter" in beat and not group and enemy:
-			record_journal_event(beat.get("victory_journal"), chapter["act"])
+			phases = beat.get("encounter_phases", [])
+			phase_index = GemRB.GetGameVar("TLECHOPHASE") if phases else 0
+			if phases and phase_index + 1 < len(phases):
+				phase_index += 1
+				phase = phases[phase_index]
+				GemRB.SetGlobal("TLECHOPHASE", "GLOBAL", phase_index)
+				actor_flag = phase.get("actor_flag")
+				if actor_flag:
+					enemy = GemRB.GetGameVar(actor_flag)
+					if not enemy:
+						GemRB.SetGlobal("TLENEMY", "GLOBAL", 0)
+						message.Append("\n\nThe next echo is absent from the scene. Reload the area before continuing.")
+						return
+				else:
+					spawn = phase.get("position")
+					enemy = GemRB.CreateCreature(1, "riddler", spawn[0], spawn[1])
+					GemRB.SetPlayerName(enemy, phase["name"], 0)
+				GemRB.SetGlobal("TLENEMY", "GLOBAL", enemy)
+				GemRB.SetPlayerStat(enemy, IE_EA, ENEMY)
+				GemRB.ExecuteString("Attack(Player1)", enemy)
+				message.Append("\n\nENCOUNTER: " + phase["text"] + " Defeat it to continue.")
+				action.SetText("CONTINUE")
+				return
+			else:
+				record_journal_event(beat.get("victory_journal"), chapter["act"])
+				if phases:
+					GemRB.SetGlobal("TLECHOPHASE", "GLOBAL", 0)
 		GemRB.SetGlobal("TLENEMY", "GLOBAL", 0)
 		beat_index += 1
 		if beat_index >= len(chapter["beats"]):

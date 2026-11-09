@@ -81,3 +81,5 @@ This file records verified implementation findings and mistakes that should info
 - **Build to a separate output when GemRB is using the live pack.** `TERRALUM_GAME_OUTPUT` lets the assembler and native dialogue tests target an isolated directory, avoiding replacement of resources held by an active game process. Its generated config is kept beside that output so the normal launch config remains unchanged.
 
 - **Combine persistent outcomes in a returning NPC's entry state.** Alisande's return-court conversation distinguishes all four combinations of the route-record and Lorian-gallery choices; separate single-flag responses would lose that continuity. Keep state predicates mutually exclusive so GemRB selects one unambiguous entry line.
+
+- **Keep phased encounter progress separate from encounter victory.** Persist a phase index while the active actor ID is saved in the existing enemy global. Spawn the next phase only after the current actor dies, and do not write the quest-resolution journal entry until the last phase is defeated. The script mock covers both transitions; actual combat and save/reload recovery still require live GemRB testing.

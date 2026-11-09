@@ -114,6 +114,22 @@ def read_story():
                                            or not re.fullmatch(r"TL[A-Z][A-Z0-9_]{1,28}", actor_flag)
                                            or actor_flag not in initialized_flags):
                 raise ValueError(f"encounter actor flag for {chapter['area']} must name an initialized TL global")
+            phases = beat.get("encounter_phases")
+            if phases is not None:
+                if (not beat.get("encounter") or not isinstance(phases, list)
+                        or not 2 <= len(phases) <= 4 or not beat.get("failure_recovery")):
+                    raise ValueError(f"phased encounter for {chapter['area']} needs two to four phases and a recovery path")
+                for phase in phases:
+                    position = phase.get("position") if isinstance(phase, dict) else None
+                    phase_flag = phase.get("actor_flag") if isinstance(phase, dict) else None
+                    if (not isinstance(phase, dict) or not isinstance(phase.get("name"), str)
+                            or not phase["name"].strip() or not phase.get("text")
+                            or (position is not None and (not isinstance(position, list) or len(position) != 2
+                                or any(type(value) is not int or not 0 <= value <= 32767 for value in position)))
+                            or (phase_flag is not None and (not isinstance(phase_flag, str)
+                                or not re.fullmatch(r"TL[A-Z][A-Z0-9_]{1,28}", phase_flag)
+                                or phase_flag not in initialized_flags))):
+                        raise ValueError(f"phases for {chapter['area']} need a name, text, optional bounded position, and initialized actor flag")
             encounter_gate = beat.get("encounter_if")
             if encounter_gate is not None and (
                     not beat.get("encounter") or not isinstance(encounter_gate, dict)
@@ -137,6 +153,10 @@ def read_story():
             actor_flag = beat.get("encounter_actor_flag")
             if actor_flag is not None and actor_flag not in cast_flags:
                 raise ValueError(f"encounter actor flag {actor_flag} for {chapter['area']} has no matching scene NPC")
+            for phase in beat.get("encounter_phases", []):
+                phase_flag = phase.get("actor_flag")
+                if phase_flag is not None and phase_flag not in cast_flags:
+                    raise ValueError(f"encounter phase actor flag {phase_flag} for {chapter['area']} has no matching scene NPC")
     for area_cast in cast.values():
         for person in area_cast:
             for response in person.get("responses", []):

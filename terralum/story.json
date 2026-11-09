@@ -731,7 +731,23 @@
           "speaker": "Algoreth",
           "text": "A false version of me waits inside the Tear. I will give the breach a boundary instead of feeding it more force.",
           "action": "Hold the ward",
-          "encounter": "Vault echo"
+          "encounter": "Vault echo",
+          "failure_recovery": "If the party is overcome, reload the latest save made before the vault fight. The seal and journal resolve only after both phases are defeated.",
+          "encounter_phases": [
+            {
+              "name": "Ward Shard",
+              "position": [
+                1320,
+                500
+              ],
+              "text": "The Ward Shard tears free and attacks. Its collapse will expose the voice behind it."
+            },
+            {
+              "name": "False Algoreth",
+              "actor_flag": "TLFALSE_ALGORETH",
+              "text": "The first pulse breaks. False Algoreth takes shape inside the boundary and warns, 'Next time, I will have learned.'"
+            }
+          ]
         },
         {
           "speaker": "Algoreth",

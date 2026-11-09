@@ -77,7 +77,7 @@ events = []
 globals_ = {"TLCHAP": 0, "TLBEAT": 0, "TLENEMY": 0, "TLENEMY_STALKER": 0,
             "TLENEMY_PROWLER": 0, "TLCAST": 0,
             "TLMARALEAD": 0, "TLLIBRARYCLUE": 0, "TLWATCHPOST": 0, "TLHUNTER": 0,
-            "TLGALLERY": 0, "TLCOURT": 0, "TLECHO": 0, "TLWARDING": 0, "TLJRN_WARDING": 0, "TLMISTWOODSAFE": 0, "TLMISTWOODVICTORY": 0, "TLARCHIVE": 0, "TLVOYAGE": 0, "TLBRIEFING": 0,
+            "TLGALLERY": 0, "TLCOURT": 0, "TLECHO": 0, "TLECHOPHASE": 0, "TLFALSE_ALGORETH": 0, "TLWARDING": 0, "TLJRN_WARDING": 0, "TLMISTWOODSAFE": 0, "TLMISTWOODVICTORY": 0, "TLARCHIVE": 0, "TLVOYAGE": 0, "TLBRIEFING": 0,
             "TLARCHIVEWARD": 0, "TLDEEP_ARCHIVE_WARDEN": 0, "TLJRN_ARCHIVE_WARD": 0,
             "TLJRN_BYZANTEM": 0, "TLJRN_MISTWOOD": 0, "TLJRN_MISTWOOD_AMBUSH": 0, "TLJRN_HUNTER": 0, "TLJRN_HUNTER_RESOLVED": 0,
             "TLHUNTERTRACK": 0, "TLJRN_TRACKS": 0, "TLTRAVELKIT": 0, "TLJRN_TRAVELKIT": 0, "TLROYALORDER": 0, "TLJRN_ROYALORDER": 0, "TLRIVER": 0, "TLRIVERROUTE": 0, "TLJRN_RIVER": 0,
@@ -324,6 +324,12 @@ for chapter_index, chapter in enumerate(chapters):
             window.controls[4].press()
             assert globals_["TLBEAT"] == beats.index(beat)
             enemy_dead = True
+            if beat.get("encounter_phases"):
+                window.controls[4].press()
+                assert globals_["TLBEAT"] == beats.index(beat)
+                assert globals_["TLECHOPHASE"] == 1
+                assert globals_["TLJRN_TEAR"] == 0
+                assert "False Algoreth" in window.controls[0].text, window.controls[0].text
         window.controls[4].press()
         enemy_dead = False
     while timed_events:
@@ -345,7 +351,7 @@ assert globals_["TLECHO"] == 1
 assert globals_["TLARCHIVEWARD"] == 2
 assert len([event for event in events if event[0] == "area"]) == 24
 assert len([event for event in events if event[0] == "voice"]) == 8
-assert len([event for event in events if event[0] == "attack"]) == 2
+assert len([event for event in events if event[0] == "attack"]) == 3, [event for event in events if event[0] == "attack"]
 assert len(journal_entries) == 24
 assert globals_["TLJRN_WAYSTONE"] == 1
 assert any("Three-Cairn Fork" in entry["value"] for entry in journal_entries)
@@ -1290,6 +1296,7 @@ for warding in (1, 2):
     current_area = "tl0021"
     enemy_dead = False
     globals_.update({"TLCHAP": annex_index, "TLBEAT": 0, "TLENEMY": 0, "TLCAST": 0,
+                     "TLECHOPHASE": 0, "TLFALSE_ALGORETH": 0,
                      "TLWARDING": 0, "TLJRN_WARDING": 0, "TLJRN_TEAR": 0,
                      "TLECHO": 1})
     campaign.OnLoad()
@@ -1314,14 +1321,20 @@ for warding in (1, 2):
     assert approach["text"] in window.controls[0].text
     window.controls[4].press()
     window.controls[4].press()
-    assert "Vault echo emerges" in window.controls[0].text
+    assert "Ward Shard" in window.controls[0].text, window.controls[0].text
     enemy_dead = True
+    window.controls[4].press()
+    assert "False Algoreth" in window.controls[0].text
+    assert "Next time, I will have learned" in window.controls[0].text
+    assert globals_["TLECHOPHASE"] == 1
+    assert globals_["TLJRN_TEAR"] == 0
     window.controls[4].press()
     resolution = next(route for route in campaign.Story.chapters()[chapter_index_by_area["tl0005"]]["beats"][3]["routes"]
                       if route["value"] == warding)
     assert resolution["text"] in window.controls[0].text
     assert "false self remains contained" in resolution["text"]
     assert globals_["TLJRN_TEAR"] == 1
+    assert globals_["TLECHOPHASE"] == 0
 
 # The Mistwood Relay choice records one shared journal event for either route
 # and preserves the dispatch schedule's limits in Saren's dialogue.
