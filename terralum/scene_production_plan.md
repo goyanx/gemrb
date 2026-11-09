@@ -25,4 +25,4 @@ Sources: [BioWare's BG2 postmortem](https://media.gdcvault.com/GD_Mag_Archives/G
 - **Slice D: Campaign depth.** Expand each act into several connected subareas with side quests and recurring companions, preserving the user's Terralum chronology.
 - **Slice E: Production review.** Play the entire campaign from a fresh save, test repeated area entry and save/load, verify Kokoro narration and ambient loops, then commit, comment, and push.
 
-The seven current locations and lore limits are documented in `lore_notes.md` and `campaign_plan.md`. Proposed NPCs/dialogue are adaptation content and must stay identified as such.
+The campaign now has fifteen scene areas. The Mistwood Hunter's Camp is the first added side stop: a two-NPC scene with a lantern decision that can bypass the later road ambush. Its new hunters and event are proposed adaptation content. Other location briefs and lore limits are documented in `lore_notes.md` and `campaign_plan.md`; preserve those provenance labels as new scenes are added.

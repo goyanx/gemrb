@@ -30,7 +30,7 @@ list of [options, tips and priorities](https://github.com/gemrb/gemrb/blob/maste
 
 ## Terralum: Scrolls of Byzantem
 
-An original fantasy campaign is taking shape inside this GemRB fork. **Terralum** follows Algoreth Jon Goren from the court of Alsperia into a search for the lost scrolls of Byzantem, then toward the later mystery of the Tears. The current slice spans seven acts and fourteen areas, with scene-specific casts, branching choices, a persistent quest journal, Kokoro narration, ambient music, and gated encounters.
+An original fantasy campaign is taking shape inside this GemRB fork. **Terralum** follows Algoreth Jon Goren from the court of Alsperia into a search for the lost scrolls of Byzantem, then toward the later mystery of the Tears. The current slice spans seven acts and fifteen areas, with scene-specific casts, branching choices, a persistent quest journal, Kokoro narration, ambient music, and gated encounters.
 
 ### Gameplay captures
 
@@ -48,7 +48,7 @@ These captures show the opening Alsperia Market scene running in GemRB. The wide
 
 ### Scene art
 
-Thirteen distinct generated concept backdrops preview the fourteen scene areas; one backdrop is reused. They are visual targets for the current prototype, whose areas still share demo walkable geometry.
+Fourteen distinct generated concept backdrops preview the fifteen scene areas; one backdrop is reused. They are visual targets for the current prototype, whose areas still share demo walkable geometry.
 
 <table>
   <tr>
@@ -71,7 +71,8 @@ Thirteen distinct generated concept backdrops preview the fourteen scene areas; 
   </tr>
   <tr>
     <td align="center"><img src="terralum/art/aethercraft_hangar.png" alt="Aethercraft Hangar concept art" width="100%"><br><sub>Aethercraft Hangar</sub></td>
-    <td colspan="3" align="center"><sub>Fourteen scene areas across seven acts; this gallery shows each distinct current backdrop once.</sub></td>
+    <td align="center"><img src="terralum/art/mistwood_hunters_camp.png" alt="Mistwood Hunter's Camp concept art" width="100%"><br><sub>Mistwood Hunter's Camp</sub></td>
+    <td colspan="2" align="center"><sub>Fifteen scene areas across seven acts; one backdrop is reused.</sub></td>
   </tr>
 </table>
 
@@ -82,7 +83,7 @@ Thirteen distinct generated concept backdrops preview the fourteen scene areas; 
 - [Campaign plan](terralum/campaign_plan.md) — seven-act story spine and planned expansion.
 - [TODO and handoff](TODO.md) — completed, ongoing, and next work.
 
-Terralum is an in-progress prototype, not a finished or full-length RPG. The current cast reuses demo sprites, all fourteen areas share temporary demo geometry, and choices use a custom panel rather than native Infinity Engine DLG resources. The project guide and handoff describe current playability and verification gaps.
+Terralum is an in-progress prototype, not a finished or full-length RPG. The current cast reuses demo sprites, all fifteen areas share temporary demo geometry, and choices use a custom panel rather than native Infinity Engine DLG resources. The project guide and handoff describe current playability and verification gaps.
 
 ## Supported platforms
 

@@ -8,13 +8,14 @@ This is the current work ledger for human and AI contributors. Read [AGENTS.md](
 - [x] Added `terralum/GOLD_STANDARD_GAME_DESIGN_PIPELINE.md` with canon rules, production gates, scene acceptance criteria, and current-state gaps.
 - [x] Added repo-level `AGENTS.md` instructions that direct AI and human game contributors to the baseline and lore notes.
 - [x] Exposed the full baseline through the read-only `terralum_get_design_standard` MCP tool.
-- [x] Built a 14-scene campaign slice across the seven-act spine: the opening court and library, Mistwood road and watchpost, Lorian cavern and seal gallery, return court and council, academy courtyard and Tear vault, Deep Archives and Index Hall, and the Eldrador skyport and Aethercraft Hangar. Story provenance and uncertainties are noted in `terralum/lore_notes.md`.
-- [x] Added generated backdrops for the 14 scene resources (some reuse a previously generated image), seven act-entry Kokoro narration clips, and three looping ambient music tracks.
-- [x] Added 29 named, scene-specific NPC actors across 14 areas; added Talk, Narrate, Continue, and numbered-response keyboard shortcuts alongside visible controls. Current sprites reuse two demo templates.
+- [x] Built a 15-scene campaign slice across the seven-act spine, adding the Mistwood Hunter's Camp before the road and watchpost. Story provenance and uncertainties are noted in `terralum/lore_notes.md`.
+- [x] Added generated backdrops for the 15 scene resources (some reuse a previously generated image), seven act-entry Kokoro narration clips, and three looping ambient music tracks.
+- [x] Added 31 named, scene-specific NPC actors across 15 areas; added Talk, Narrate, Continue, and numbered-response keyboard shortcuts alongside visible controls. Current sprites reuse two demo templates.
 - [x] Added a victory gate to each of the three prototype encounters.
 - [x] Fixed the ARE builder counts: it now preserves the demo entrances and clears actor, region, spawn, container, item, and door counts that belonged to the demo.
-- [x] Campaign-flow mock reports 14 scene casts, 29 actors, keyboard controls, all 17 authored response options, three market routes, three encounter gates, thirteen area transitions, and seven voice cues.
+- [x] Campaign-flow mock reports 15 scene casts, 31 actors, keyboard controls, all 19 authored response options, three market routes, three encounter gates, fourteen area transitions, and seven voice cues.
 - [x] Added seven one-time journal events across the early scroll quest and later Tear research, with an in-game Journal panel backed by GemRB's persistent journal API.
+- [x] Expanded Act II with a Mistwood Hunter's Camp, two adaptation NPCs, a lantern choice, an eighth journal event, and a quiet-trail route that can bypass the later stalker ambush.
 - [x] Built and launched the WSL GemRB pack with direct startup. The opening scene shows three NPCs beside the player; live startup loaded actors and city ambience with no Python traceback.
 - [x] Fork remote `goyanx/gemrb` and branch `terralum-first-slice` are configured; each accepted slice is committed, commented on, and pushed as shown in branch history.
 
@@ -22,9 +23,9 @@ This is the current work ledger for human and AI contributors. Read [AGENTS.md](
 
 - [ ] **Scene dialogue slice:** Market, library, watchpost, seal gallery, council, academy courtyard, archive index, and hangar choices set persistent flags with later text outcomes. The logic is mock-tested; live input/save testing remains open. The custom choice UI is not a native GemRB DLG system.
 - [ ] **Journal verification:** the log panel and seven event flags pass the script mock; live display, save/load, and revisit deduplication still need direct playtesting.
-- [ ] **Playable-scene verification:** the extended pack builds and the opening area starts in live GemRB. The WSLg window input path has not yet been verified. Later-area entry, player movement, actual fights, choice input, save/load, and return entry still need direct playtesting.
-- [ ] **Art and geometry:** characters currently reuse the demo's two humanoid sprites; all 14 areas still share the AR0100 template walkmesh and terrain files despite their distinct/reused backdrops.
-- [ ] **Campaign length:** 14 locations and 37 beats form an expanded prototype, not a long-form campaign. Acts VI and VII now have archive-index and hangar preparation locations; deeper quest arcs remain; see `terralum/campaign_plan.md`.
+- [ ] **Playable-scene verification:** the extended pack builds and the opening area starts in live GemRB. The new Hunter's Camp path has only script-level verification so far. The WSLg window input path has not yet been verified. Later-area entry, player movement, actual fights, choice input, save/load, and return entry still need direct playtesting.
+- [ ] **Art and geometry:** characters currently reuse the demo's two humanoid sprites; all 15 areas still share the AR0100 template walkmesh and terrain files despite their distinct/reused backdrops.
+- [ ] **Campaign length:** 15 locations and 39 beats form an expanded prototype, not a long-form campaign. The Hunter's Camp adds one optional Mistwood stop; Acts VI and VII have archive-index and hangar preparation locations. Deeper quest arcs remain; see `terralum/campaign_plan.md`.
 
 ## To do, in priority order
 

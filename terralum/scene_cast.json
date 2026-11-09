@@ -82,6 +82,62 @@
       "line": "Dorian's name appears in the oldest catalog. The entry says he feared the purpose of the traveller more than the road itself."
     }
   ],
+  "tl0015": [
+    {
+      "name": "Scout Tessa",
+      "role": "Royal scout and guide on the road to Lorian.",
+      "goal": "Help the hunters mark a safe bend while keeping the camp hidden from the stalker.",
+      "knowledge": "Knows the trail and the lantern's signal; does not know what follows the party or why.",
+      "voice": "Practical, alert, and economical with words.",
+      "provenance": "adaptation",
+      "creature": "protagon",
+      "position": [
+        690,
+        520
+      ],
+      "line": "We can shield the lantern and take the pale-stone bend, or leave the camp dark and move without its signal.",
+      "choices": [
+        {
+          "label": "Relight the shuttered lantern",
+          "reply": "You shield the lantern's flame. Its narrow beam marks a safe bend without lighting the whole camp.",
+          "flag": "TLHUNTER",
+          "value": 1
+        },
+        {
+          "label": "Keep the camp concealed",
+          "reply": "You leave the lantern shuttered. The camp stays hidden, but the road ahead remains uncertain.",
+          "flag": "TLHUNTER",
+          "value": 2
+        }
+      ]
+    },
+    {
+      "name": "Hunter Fen",
+      "role": "Local trail keeper at the Mistwood camp.",
+      "goal": "Keep the camp safe while giving travellers a usable route through the old wood.",
+      "knowledge": "Knows the marked path and how far the shuttered lantern can be seen; has not met the stalker.",
+      "voice": "Cautious and observant, describing concrete signs instead of guesses.",
+      "provenance": "adaptation",
+      "creature": "riddler",
+      "position": [
+        930,
+        500
+      ],
+      "line": "The pale stones are still there. A shielded flame will show the safe bend without carrying far through the trees.",
+      "responses": [
+        {
+          "flag": "TLHUNTER",
+          "value": 1,
+          "line": "The lantern is shuttered again. Follow its short beam and stay on the pale stones; the camp remains dark behind you."
+        },
+        {
+          "flag": "TLHUNTER",
+          "value": 2,
+          "line": "The lantern stays dark. I cannot promise the stalker has left the road, but the camp should remain concealed."
+        }
+      ]
+    }
+  ],
   "tl0002": [
     {
       "name": "Scout Tessa",
@@ -100,6 +156,16 @@
           "flag": "TLLIBRARYCLUE",
           "value": 1,
           "line": "Inessa's copied rune index matches the pale stones. We can skirt the watchpost if the stalker is near."
+        },
+        {
+          "flag": "TLHUNTER",
+          "value": 1,
+          "line": "The hunters' shuttered lantern marks the quiet bend. We can avoid the stalker's patrol if we stay on the pale stones."
+        },
+        {
+          "flag": "TLHUNTER",
+          "value": 2,
+          "line": "We kept the camp concealed, but its lantern gives us no signal. Stay alert; the stalker's path is uncertain."
         }
       ]
     },

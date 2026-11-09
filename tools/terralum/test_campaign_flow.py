@@ -71,9 +71,9 @@ class Window:
 window = Window()
 events = []
 globals_ = {"TLCHAP": 0, "TLBEAT": 0, "TLENEMY": 0, "TLCAST": 0,
-            "TLMARALEAD": 0, "TLLIBRARYCLUE": 0, "TLWATCHPOST": 0,
+            "TLMARALEAD": 0, "TLLIBRARYCLUE": 0, "TLWATCHPOST": 0, "TLHUNTER": 0,
             "TLGALLERY": 0, "TLCOURT": 0, "TLECHO": 0, "TLMISTWOODSAFE": 0, "TLARCHIVE": 0, "TLVOYAGE": 0,
-            "TLJRN_BYZANTEM": 0, "TLJRN_MISTWOOD": 0, "TLJRN_SCROLLS": 0, "TLJRN_TEAR": 0,
+            "TLJRN_BYZANTEM": 0, "TLJRN_MISTWOOD": 0, "TLJRN_HUNTER": 0, "TLJRN_SCROLLS": 0, "TLJRN_TEAR": 0,
             "TLJRN_ARCHIVE": 0, "TLJRN_ELDRADOR": 0, "TLJRN_VOYAGE": 0}
 enemy_dead = False
 current_area = "tl0001"
@@ -156,7 +156,7 @@ window.controls[12].press()
 assert globals_["TLMARALEAD"] == 1
 assert "safe path" in window.controls[0].text
 chapters = campaign.Story.chapters()
-assert len(chapters) == 14
+assert len(chapters) == 15
 assert sorted({chapter["act"] for chapter in chapters}) == list(range(1, 8))
 for chapter_index, chapter in enumerate(chapters):
     assert globals_["TLCHAP"] == chapter_index
@@ -179,6 +179,9 @@ for chapter_index, chapter in enumerate(chapters):
             assert choice_button.hotkey == ("1", 0, True)
             choice_button.press()
             assert globals_[selected["flag"]] == selected["value"]
+            if chapter["area"] == "tl0015":
+                window.controls[11].press()
+                assert "Follow its short beam" in window.controls[0].text
     beats = chapter["beats"]
     for beat in beats:
         for route in beat.get("routes", []):
@@ -186,7 +189,7 @@ for chapter_index, chapter in enumerate(chapters):
                 assert route["text"] in window.controls[0].text
                 break
         if "encounter" in beat:
-            if chapter["area"] == "tl0002" and (globals_["TLMARALEAD"] == 1 or globals_["TLLIBRARYCLUE"] == 1):
+            if chapter["area"] == "tl0002" and (globals_["TLMARALEAD"] == 1 or globals_["TLLIBRARYCLUE"] == 1 or globals_["TLHUNTER"] == 1):
                 window.controls[4].press()
                 assert globals_["TLMISTWOODSAFE"] == 1
                 assert "skirts the stalker's ambush" in window.controls[0].text
@@ -211,20 +214,20 @@ assert globals_["TLWATCHPOST"] == 1
 assert globals_["TLGALLERY"] == 1
 assert globals_["TLCOURT"] == 1
 assert globals_["TLECHO"] == 1
-assert len([event for event in events if event[0] == "area"]) == 13
+assert len([event for event in events if event[0] == "area"]) == 14
 assert len([event for event in events if event[0] == "voice"]) == 7
 assert len([event for event in events if event[0] == "attack"]) == 2
-assert len(journal_entries) == 7
+assert len(journal_entries) == 8
 
 # Exercise every remaining response option and its next-beat result.
-for chapter_index, choice_index in ((0, 1), (0, 2), (1, 1), (3, 1), (5, 1), (7, 1), (8, 1), (11, 1), (13, 1)):
+for chapter_index, choice_index in ((0, 1), (0, 2), (1, 1), (2, 1), (4, 1), (6, 1), (8, 1), (9, 1), (12, 1), (14, 1)):
     chapter = chapters[chapter_index]
     window = Window()
     events.clear()
     timed_events.clear()
     current_area = chapter["area"]
     globals_.update({"TLCHAP": chapter_index, "TLBEAT": 0, "TLENEMY": 0, "TLCAST": 0,
-                     "TLMARALEAD": 0, "TLLIBRARYCLUE": 0, "TLWATCHPOST": 0,
+                     "TLMARALEAD": 0, "TLLIBRARYCLUE": 0, "TLWATCHPOST": 0, "TLHUNTER": 0,
                      "TLGALLERY": 0, "TLCOURT": 0, "TLECHO": 0, "TLMISTWOODSAFE": 0, "TLARCHIVE": 0, "TLVOYAGE": 0})
     campaign.OnLoad()
     while timed_events:
@@ -236,6 +239,9 @@ for chapter_index, choice_index in ((0, 1), (0, 2), (1, 1), (3, 1), (5, 1), (7, 
     button.press()
     assert globals_[choice["flag"]] == choice["value"]
     assert choice["reply"] in window.controls[0].text
+    if chapter["area"] == "tl0015":
+        window.controls[11].press()
+        assert "camp should remain concealed" in window.controls[0].text
     if len(chapter["beats"]) > 1:
         window.controls[4].press()
         matching_route = next((route for route in chapter["beats"][1].get("routes", [])
@@ -250,7 +256,7 @@ for lead, expect_warden in ((2, True), (3, False)):
     timed_events.clear()
     current_area = "tl0002"
     enemy_dead = False
-    globals_.update({"TLCHAP": 2, "TLBEAT": 1, "TLENEMY": 0, "TLCAST": 0,
+    globals_.update({"TLCHAP": 3, "TLBEAT": 1, "TLENEMY": 0, "TLCAST": 0,
                      "TLMARALEAD": lead, "TLLIBRARYCLUE": 2, "TLMISTWOODSAFE": 0})
     campaign.OnLoad()
     while timed_events:
@@ -261,5 +267,32 @@ for lead, expect_warden in ((2, True), (3, False)):
     assert globals_["TLMISTWOODSAFE"] == 0
     assert globals_["TLENEMY"] > 1001
     assert any(event[:2] == ("attack", "Attack(Player1)") for event in events)
+
+# The hunter's lantern independently bypasses the road ambush; leaving it dark does not.
+window = Window()
+events.clear()
+timed_events.clear()
+current_area = "tl0002"
+enemy_dead = False
+globals_.update({"TLCHAP": 3, "TLBEAT": 1, "TLENEMY": 0, "TLCAST": 0,
+                 "TLMARALEAD": 3, "TLLIBRARYCLUE": 2, "TLHUNTER": 1, "TLMISTWOODSAFE": 0})
+campaign.OnLoad()
+while timed_events:
+    timed_events.pop(0)()
+window.controls[4].press()
+assert globals_["TLMISTWOODSAFE"] == 1
+assert "hunter's shuttered lantern" in window.controls[0].text
+
+window = Window()
+events.clear()
+timed_events.clear()
+globals_.update({"TLCHAP": 3, "TLBEAT": 1, "TLENEMY": 0, "TLCAST": 0,
+                 "TLMARALEAD": 3, "TLLIBRARYCLUE": 2, "TLHUNTER": 2, "TLMISTWOODSAFE": 0})
+campaign.OnLoad()
+while timed_events:
+    timed_events.pop(0)()
+window.controls[4].press()
+assert globals_["TLMISTWOODSAFE"] == 0
+assert globals_["TLENEMY"] > 1001
 print(len(chapters), "scenes across seven acts,", sum(len(campaign.Story.cast(chapter["area"])) for chapter in chapters),
-      "named scene actors, keyboard controls, a persistent seven-entry quest journal, all 17 responses, three market routes, encounter gates, thirteen transitions, and seven voice cues passed")
+      "named scene actors, keyboard controls, a persistent eight-entry quest journal, all 19 responses, three market routes, encounter gates, fourteen transitions, and seven voice cues passed")

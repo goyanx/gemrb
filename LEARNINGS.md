@@ -12,7 +12,7 @@ This file records verified implementation findings and mistakes that should info
 
 - **ARE headers use mixed-width counts.** In the demo area header, actor count is a 16-bit value at `0x58`, region count at `0x5A`, and spawn count is a 32-bit value at `0x64`. The field at `0x6C` is the 32-bit entrance count, not spawn count. Writing zero there silently removes entrances. Verify field offsets against the local importer and binary template before patching.
 - **ARE doors must agree with WED doors.** Leaving a demo ARE door while replacing or clearing its WED counterpart causes GemRB's `Found door without WED entry!` error. Clear both sides or author a matching door; do not just rename the area resref.
-- **A cloned area is not a finished scene.** The current 14 backdrops reuse AR0100's walkmesh, terrain/search maps, entrances, and other geometry assumptions. It may load but art, collision, props, and routes can disagree. Make geometry and actor positions area-specific before calling a scene accepted.
+- **A cloned area is not a finished scene.** The current 15 area resources reuse AR0100's walkmesh, terrain/search maps, entrances, and other geometry assumptions. They may load but art, collision, props, and routes can disagree. Make geometry and actor positions area-specific before calling a scene accepted.
 - **The build pack is generated.** `terralum/build/game` is output, not source of truth. Edit `terralum/` and `gemrb/GUIScripts/terralum/`, then run `tools/terralum/build_game.py`; a rebuild removes and recreates the pack.
 - **Validate content before assembling.** Build validation should check story shape, every scene's cast, known creature templates, coordinates, and referenced resources so a broken content file fails early.
 
@@ -34,6 +34,7 @@ This file records verified implementation findings and mistakes that should info
 - **Rebuild after changing story/audio/resource source.** The running process keeps loaded resources. Stop it, rebuild the ignored game pack, relaunch, then inspect the new log and screen.
 - **Keep lore and invention distinct.** The lore codex is a partial reconstruction and the user has corrected the early relationship: Alisande was married to Edmon, Alsperia's original king. The later chronicle names Algoreth as Wizard King with Alisande as wife/co-ruler, while the transition remains undocumented. Adaptation NPCs and dialogue must not invent missing history.
 - **Use production scope gates.** BG2's postmortem describes how a stable engine/content pipeline helped focus work on content, while its team also recognized oversized scope and QA difficulty. Complete and playtest a small act slice before filling every planned area with more content.
+- **Keep scene registries and authoring limits in sync.** Adding a scene requires updating the build's area-to-art and song maps, exact scene cast registry, MCP one-based chapter bounds, campaign tests, and handoff counts. The campaign-flow test caught these source-of-truth boundaries after the Hunter's Camp was inserted into Act II.
 
 ## Tooling and portability
 

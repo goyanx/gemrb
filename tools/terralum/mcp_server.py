@@ -89,7 +89,7 @@ TOOLS = [
         "name": "terralum_set_journal_event",
         "description": "Attach a persistent journal entry to a scene beat. Register its campaign flag first; section 1 is an active quest, 2 is a resolved quest, and 4 is the journal timeline.",
         "inputSchema": {"type": "object", "properties": {
-            "chapter": {"type": "integer", "minimum": 1, "maximum": 14,
+            "chapter": {"type": "integer", "minimum": 1, "maximum": 15,
                          "description": "One-based scene index in story.json."},
             "beat": {"type": "integer", "minimum": 1},
             "flag": {"type": "string", "pattern": "^TL[A-Z][A-Z0-9_]{1,28}$"},
@@ -116,7 +116,7 @@ TOOLS = [
         "inputSchema": {
             "type": "object",
             "properties": {
-              "chapter": {"type": "integer", "minimum": 1, "maximum": 14,
+              "chapter": {"type": "integer", "minimum": 1, "maximum": 15,
                             "description": "One-based scene index in story.json."},
                 "beat": {"type": "integer", "minimum": 1},
                 "field": {"type": "string", "enum": ["speaker", "text", "action"]},

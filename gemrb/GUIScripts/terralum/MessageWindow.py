@@ -210,10 +210,13 @@ def OnLoad():
 		chapter = chapters[chapter_index]
 		beat = chapter["beats"][beat_index]
 		if (chapter["area"] == "tl0002" and beat.get("encounter")
-				and (GemRB.GetGameVar("TLMARALEAD") == 1 or GemRB.GetGameVar("TLLIBRARYCLUE") == 1)):
+				and (GemRB.GetGameVar("TLMARALEAD") == 1 or GemRB.GetGameVar("TLLIBRARYCLUE") == 1
+				     or GemRB.GetGameVar("TLHUNTER") == 1)):
 			GemRB.SetGlobal("TLMISTWOODSAFE", "GLOBAL", 1)
 			GemRB.SetGlobal("TLBEAT", "GLOBAL", beat_index + 1)
-			route = "Inessa's copied rune index" if GemRB.GetGameVar("TLLIBRARYCLUE") == 1 else "Mara's ledger"
+			route = ("Inessa's copied rune index" if GemRB.GetGameVar("TLLIBRARYCLUE") == 1
+			         else "the hunter's shuttered lantern" if GemRB.GetGameVar("TLHUNTER") == 1
+			         else "Mara's ledger")
 			message.SetText("[cap]T[/cap]ERRALUM  |  " + chapter["title"] + "\n" + chapter["place"] + "\n\nFollowing " + route + ", the party skirts the stalker's ambush along the pale stones.\n\n")
 			return
 		enemy = GemRB.GetGameVar("TLENEMY")

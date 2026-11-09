@@ -62,6 +62,44 @@
       ]
     },
     {
+      "title": "II. Through Mistwood — Hunter's Camp",
+      "act": 2,
+      "area": "tl0015",
+      "place": "Mistwood Hunter's Camp",
+      "music": "tlwood.mus",
+      "voice": "",
+      "narration": "At a small camp beside the old road, Scout Tessa meets two local hunters. Their shuttered trail lantern can guide the party quietly, though lighting it may reveal the camp to whatever follows them.",
+      "beats": [
+        {
+          "speaker": "Scout Tessa",
+          "text": "This camp sits where the old trail divides. The hunters know which stones still hold, but they will not light their signal while the watcher is near.",
+          "action": "Hear the hunters",
+          "journal": {
+            "flag": "TLJRN_HUNTER",
+            "section": 1,
+            "text": "At the Mistwood Hunter's Camp, Scout Tessa asks whether to relight a shuttered trail lantern. The signal could guide the party around the stalker's path, but might reveal the camp."
+          }
+        },
+        {
+          "speaker": "Hunter Fen",
+          "text": "The pale stones are still there. A shielded flame will show the safe bend without carrying far through the trees.",
+          "action": "Take the road",
+          "routes": [
+            {
+              "flag": "TLHUNTER",
+              "value": 1,
+              "text": "You relight the lantern behind its shutter. Tessa follows the marked bend, avoiding the stalker's patrol."
+            },
+            {
+              "flag": "TLHUNTER",
+              "value": 2,
+              "text": "You leave the lantern dark to keep the camp concealed. The hunters point toward the road, but the stalker's path remains uncertain."
+            }
+          ]
+        }
+      ]
+    },
+    {
       "title": "II. Through Mistwood",
       "act": 2,
       "area": "tl0002",

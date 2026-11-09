@@ -135,7 +135,7 @@ class SceneCastAuthoringTests(unittest.TestCase):
             {"jsonrpc": "2.0", "id": 1, "method": "initialize"},
             {"jsonrpc": "2.0", "id": 2, "method": "tools/list"},
             {"jsonrpc": "2.0", "id": 3, "method": "tools/call", "params": {
-                "name": "terralum_get_scene_cast", "arguments": {"area": "tl0013"},
+                "name": "terralum_get_scene_cast", "arguments": {"area": "tl0015"},
             }},
         ]
         process = subprocess.run(
@@ -149,6 +149,7 @@ class SceneCastAuthoringTests(unittest.TestCase):
         self.assertIn("terralum_upsert_scene_npc", tool_names)
         self.assertIn("terralum_set_journal_event", tool_names)
         self.assertEqual(replies[2]["result"]["content"][0]["type"], "text")
+        self.assertIn("Hunter Fen", replies[2]["result"]["content"][0]["text"])
         self.assertNotIn("error", replies[2])
 
 
