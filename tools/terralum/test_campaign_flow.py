@@ -81,7 +81,8 @@ globals_ = {"TLCHAP": 0, "TLBEAT": 0, "TLENEMY": 0, "TLENEMY_STALKER": 0,
             "TLLORIANPURPOSE": 0, "TLLORIAN_GUARDIAN": 0, "TLJRN_LORIAN_PURPOSE": 0,
             "TLJRN_GALLERY_RESOLUTION": 0,
             "TLJRN_SCROLLS": 0, "TLJRN_TEAR": 0,
-            "TLJRN_ARCHIVE": 0, "TLJRN_ELDRADOR": 0, "TLJRN_VOYAGE": 0, "TLJRN_BRIEFING": 0}
+            "TLJRN_ARCHIVE": 0, "TLJRN_ELDRADOR": 0, "TLJRN_VOYAGE": 0, "TLJRN_BRIEFING": 0,
+            "TLELDRADOR": 0, "TLSANCTUARY": 0, "TLJRN_ARRIVAL": 0, "TLJRN_SANCTUARY": 0}
 enemy_dead = False
 dead_actors = set()
 current_area = "tl0001"
@@ -165,7 +166,7 @@ assert globals_["TLMARALEAD"] == 1
 assert "safe path" in window.controls[0].text
 chapters = campaign.Story.chapters()
 chapter_index_by_area = {chapter["area"]: index for index, chapter in enumerate(chapters)}
-assert len(chapters) == 21
+assert len(chapters) == 23
 assert sorted({chapter["act"] for chapter in chapters}) == list(range(1, 8))
 for chapter_index, chapter in enumerate(chapters):
     assert globals_["TLCHAP"] == chapter_index
@@ -253,10 +254,10 @@ assert globals_["TLGALLERY"] == 1
 assert globals_["TLCOURT"] == 1
 assert globals_["TLECHO"] == 1
 assert globals_["TLARCHIVEWARD"] == 2
-assert len([event for event in events if event[0] == "area"]) == 20
+assert len([event for event in events if event[0] == "area"]) == 22
 assert len([event for event in events if event[0] == "voice"]) == 7
 assert len([event for event in events if event[0] == "attack"]) == 2
-assert len(journal_entries) == 17
+assert len(journal_entries) == 19
 assert globals_["TLJRN_WAYSTONE"] == 1
 assert any("Three-Cairn Fork" in entry["value"] for entry in journal_entries)
 assert globals_["TLJRN_LORIAN_PURPOSE"] == 1
@@ -750,7 +751,7 @@ for chapter_index, chapter in enumerate(chapters):
                 assert globals_[event["flag"]] == 1
                 assert any(entry["value"] == event["text"] for entry in journal_entries)
             choice_count += 1
-assert choice_count == 37
+assert choice_count == 41
 
 # Act VI's optional archive quest offers a peaceful path and a gated warder
 # challenge. Victory records the comparison leaf and changes dialogue in the
@@ -883,5 +884,55 @@ for warding in (1, 2):
     assert "false self remains contained" in resolution["text"]
     assert globals_["TLJRN_TEAR"] == 1
 
+# The Act VII Eldrador landing and sanctuary-approach adaptations preserve the
+# unresolved Tear while carrying both evidence and protocol choices forward.
+for evidence in (1, 2):
+    for protocol in (1, 2):
+        quay_index = chapter_index_by_area["tl0022"]
+        window = Window()
+        events.clear()
+        timed_events.clear()
+        current_area = "tl0022"
+        enemy_dead = False
+        globals_.update({"TLCHAP": quay_index, "TLBEAT": 0, "TLENEMY": 0, "TLCAST": 0,
+                         "TLELDRADOR": 0, "TLSANCTUARY": 0,
+                         "TLJRN_ARRIVAL": 0, "TLJRN_SANCTUARY": 0})
+        campaign.OnLoad()
+        while timed_events:
+            timed_events.pop(0)()
+        window.controls[4].press()
+        assert globals_["TLBEAT"] == 0
+        assert "Vaelthira is waiting" in window.controls[0].text
+        window.controls[11].press()
+        window.controls[11 + evidence].press()
+        assert globals_["TLELDRADOR"] == evidence
+        window.controls[4].press()
+        assert globals_["TLJRN_ARRIVAL"] == 1
+        evidence_route = next(route for route in campaign.Story.chapters()[quay_index]["beats"][1]["routes"]
+                              if route["value"] == evidence)
+        assert evidence_route["text"] in window.controls[0].text
+        window.controls[4].press()
+        assert current_area == "tl0023"
+        while timed_events:
+            timed_events.pop(0)()
+        window.controls[11].press()
+        vaelthira_line = next(response["line"] for response in campaign.Story.cast("tl0023")[0]["responses"]
+                              if response["flag"] == "TLELDRADOR" and response["value"] == evidence)
+        assert vaelthira_line in window.controls[0].text
+        for _ in range(3):
+            window.controls[11].press()
+        protocol_choice = campaign.Story.cast("tl0023")[0]["choices"][protocol - 1]
+        window.controls[11 + protocol].press()
+        assert globals_["TLSANCTUARY"] == protocol
+        assert protocol_choice["reply"] in window.controls[0].text
+        window.controls[4].press()
+        assert globals_["TLJRN_SANCTUARY"] == 1
+        protocol_route = next(route for route in campaign.Story.chapters()[chapter_index_by_area["tl0023"]]["beats"][1]["routes"]
+                              if route["value"] == protocol)
+        assert protocol_route["text"] in window.controls[0].text
+        window.controls[4].press()
+        assert "The party has reached the lower sanctuary threshold" in window.controls[0].text
+        assert "has not been entered or resolved" in window.controls[0].text
+
 print(len(chapters), "scenes across seven acts,", sum(len(campaign.Story.cast(chapter["area"])) for chapter in chapters),
-      "named scene actors, keyboard controls, authored journal events and combat aftermath, all 37 response options, three market routes, four encounter gates, twenty transitions, and seven voice cues passed")
+      "named scene actors, keyboard controls, authored journal events and combat aftermath, all 41 response options, three market routes, four encounter gates, twenty-two transitions, and seven voice cues passed")

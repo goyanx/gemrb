@@ -84,6 +84,16 @@ expected = {
         "blocked": [(8, 42), (90, 43), (17, 74), (82, 75)],
         "description": "academy containment annex, open ring floor, and north/south vault approaches",
     },
+    "tl0022": {
+        "routes": [(50, 5), (50, 90)],
+        "blocked": [(8, 29), (91, 30), (12, 68), (89, 68)],
+        "description": "Eldrador landing quay, open arrival plaza, and harbor/inland approaches",
+    },
+    "tl0023": {
+        "routes": [(50, 5), (50, 90)],
+        "blocked": [(8, 36), (93, 37), (50, 37), (15, 70), (85, 70)],
+        "description": "lower sanctuary threshold, sealed inner gate, and outer ward ring",
+    },
 }
 assert set(searchmap_specs) == set(expected)
 cast_by_area = json.loads(build_game.CAST_FILE.read_text(encoding="utf-8"))

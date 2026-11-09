@@ -243,6 +243,12 @@ def OnLoad():
 		if chapter["area"] == "tl0021" and beat_index == 0 and not GemRB.GetGameVar("TLWARDING"):
 			message.Append("\n\nCelene is waiting for your containment rule before the party enters the vault.")
 			return
+		if chapter["area"] == "tl0022" and beat_index == 0 and not GemRB.GetGameVar("TLELDRADOR"):
+			message.Append("\n\nVaelthira is waiting for the party to choose how its first account of the sanctuary will be gathered.")
+			return
+		if chapter["area"] == "tl0023" and beat_index == 0 and not GemRB.GetGameVar("TLSANCTUARY"):
+			message.Append("\n\nMereth is waiting for the party to choose an approach to the sealed threshold.")
+			return
 		if (chapter["area"] == "tl0002" and beat.get("encounter")
 				and (GemRB.GetGameVar("TLMARALEAD") == 1 or GemRB.GetGameVar("TLLIBRARYCLUE") == 1
 				     or (GemRB.GetGameVar("TLTRAVELKIT") == 1 and GemRB.GetGameVar("TLHUNTER") == 1)
@@ -323,7 +329,7 @@ def OnLoad():
 			chapter_index += 1
 			beat_index = 0
 			if chapter_index >= len(chapters):
-				message.SetText("[cap]T[/cap]ERRALUM  |  TO BE CONTINUED\n\nThe Aethercraft departs for Eldrador. The fate of its Tear remains unknown.")
+				message.SetText("[cap]T[/cap]ERRALUM  |  TO BE CONTINUED\n\nThe party has reached the lower sanctuary threshold. Its inner gate remains sealed; Eldrador's Tear has not been entered or resolved.")
 				action.SetText("FINISHED")
 				action.OnPress(lambda: None)
 				return

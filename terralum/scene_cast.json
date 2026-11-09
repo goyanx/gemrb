@@ -1322,5 +1322,148 @@
       "voice": "Warm, composed, and direct about shared responsibility.",
       "provenance": "canon"
     }
+  ],
+  "tl0022": [
+    {
+      "name": "Queen Vaelthira",
+      "creature": "protagon",
+      "position": [
+        630,
+        500
+      ],
+      "line": "Welcome to Eldrador. Before we approach the lower sanctuary, choose what should anchor our first account: the people who heard the voice, or the ward marks measured around it.",
+      "choices": [
+        {
+          "label": "Hear the warders' witnesses",
+          "reply": "We will record each warder's account separately and keep testimony distinct from what the expedition infers.",
+          "flag": "TLELDRADOR",
+          "value": 1
+        },
+        {
+          "label": "Copy the measured seal records",
+          "reply": "We will copy the ward marks as measured, without assigning a cause to their changes.",
+          "flag": "TLELDRADOR",
+          "value": 2
+        }
+      ],
+      "role": "Queen of Eldrador",
+      "faction": "Eldrador Crown",
+      "goal": "Welcome the expedition and let Eldrador's evidence guide the first inquiry.",
+      "knowledge": "Knows that warders report a familiar voice and altered seal marks at the lower sanctuary; the cause and outcome remain unknown.",
+      "voice": "Measured and hospitable, directing attention to what local people have observed.",
+      "provenance": "canon"
+    },
+    {
+      "name": "Harbor Warden Oris",
+      "creature": "riddler",
+      "position": [
+        1040,
+        510
+      ],
+      "line": "The lower road is closed at Vaelthira's order. I can bring the warders to speak, or show you the seal ledger they made at the gate.",
+      "responses": [
+        {
+          "flag": "TLELDRADOR",
+          "value": 1,
+          "line": "The warders are ready to give their accounts one at a time. No one has agreed on what the voice means."
+        },
+        {
+          "flag": "TLELDRADOR",
+          "value": 2,
+          "line": "The seal ledger is copied from the instruments. It records changes, not their cause."
+        }
+      ],
+      "role": "Harbor and sanctuary road warden",
+      "faction": "Eldrador Wardens",
+      "goal": "Keep the road secure and give the expedition access to the local evidence it requests.",
+      "knowledge": "Knows that the road is closed and that warders recorded witness statements and seal measurements; has no explanation for the Tear.",
+      "voice": "Formal and practical, careful not to put words in the witnesses' mouths.",
+      "provenance": "adaptation"
+    }
+  ],
+  "tl0023": [
+    {
+      "name": "Queen Vaelthira",
+      "creature": "protagon",
+      "position": [
+        650,
+        480
+      ],
+      "line": "We are at the lower sanctuary threshold. Decide how close the party should come while the warders watch the sealed gate.",
+      "choices": [
+        {
+          "label": "Advance together to the outer ring",
+          "reply": "The party advances together to the outer ring and holds formation while the warders observe the gate.",
+          "flag": "TLSANCTUARY",
+          "value": 1
+        },
+        {
+          "label": "Hold back and listen first",
+          "reply": "Everyone stays beyond the outer line while Seraphina listens to the pulse. No one crosses the sealed threshold.",
+          "flag": "TLSANCTUARY",
+          "value": 2
+        }
+      ],
+      "responses": [
+        {
+          "flag": "TLELDRADOR",
+          "value": 1,
+          "line": "The warders' accounts are recorded separately. They agree on what they heard, but not on what it means."
+        },
+        {
+          "flag": "TLELDRADOR",
+          "value": 2,
+          "line": "The measured seal records are preserved without interpretation. We should let the evidence remain open."
+        }
+      ],
+      "role": "Queen of Eldrador",
+      "faction": "Eldrador Crown",
+      "goal": "Keep the investigation grounded in Eldrador's evidence and choose a cautious approach to the sealed sanctuary.",
+      "knowledge": "Knows the party's selected evidence record; has not entered the sealed lower sanctuary with the expedition.",
+      "voice": "Calm but concerned for her warders and people.",
+      "provenance": "canon"
+    },
+    {
+      "name": "Ward-Captain Mereth",
+      "creature": "riddler",
+      "position": [
+        1000,
+        500
+      ],
+      "line": "The outer ring is intact. Choose whether to approach it together or remain beyond it while the instruments listen.",
+      "responses": [
+        {
+          "flag": "TLSANCTUARY",
+          "value": 1,
+          "line": "The party is holding together at the outer ring. The gate remains sealed."
+        },
+        {
+          "flag": "TLSANCTUARY",
+          "value": 2,
+          "line": "The expedition is listening from beyond the outer ring. No one has crossed the sealed threshold."
+        }
+      ],
+      "role": "Ward captain of the Eldrador lower sanctuary",
+      "faction": "Eldrador Wardens",
+      "goal": "Protect the sanctuary and make the expedition's approach observable and controlled.",
+      "knowledge": "Knows the outer ring remains intact and the gate is sealed; the source of the pulse is unknown.",
+      "voice": "Disciplined and precise, giving clear safety instructions.",
+      "provenance": "adaptation"
+    },
+    {
+      "name": "Seraphina Everglow",
+      "creature": "protagon",
+      "position": [
+        1080,
+        780
+      ],
+      "line": "I can compare the listening instruments with the outer ward, but I will not treat a pulse as a message until we have evidence.",
+      "role": "Magical adviser to Queen Alisande",
+      "faction": "Alsperia Expedition",
+      "goal": "Observe the sanctuary pulse without overstating what the instruments can establish.",
+      "knowledge": "Carries listening instruments and ward diagrams; has not examined the source of Vaelthira's Tear.",
+      "voice": "Clear, patient, and evidence-focused.",
+      "provenance": "canon"
+    }
   ]
 }

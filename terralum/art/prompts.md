@@ -8,6 +8,14 @@ Shared direction: wide 1600 × 1152 playable isometric fantasy RPG area; hand-pa
 
 Wide fantasy RPG environment concept for a playable warding chamber, built around a restrained dimensional breach with etched measuring rings, brass arms, scholarly instruments, and clear approaches. No people, text, UI, or watermark. Concept art only; GemRB currently reuses the demo's area geometry.
 
+## Eldrador Arrival Quay
+
+Wide isometric fantasy RPG harbor concept for a playable first-contact scene: pale cliffside quay, sea, moored Aethercraft, guard posts, banners, and a broad open plaza between the harbor and an inland gate. No people, text, UI, or watermark. The landing is proposed continuation content after the documented departure.
+
+## Eldrador Lower Sanctuary Threshold
+
+Wide isometric fantasy RPG underground hall with an intact sealed inner gate, a violet pulse behind it, and a brass ward ring. Preserve a clear central walkable floor and an approach from below. No people, text, UI, or watermark. The image depicts only the threshold; it does not show the Tear's outcome.
+
 ## Expedition Chart Room (`expedition_chart_room.png`)
 
 Generated with the built-in image generator for a distinct Act VII preparation scene. Prompt: “Create a wide 4:3 fantasy environment concept painting for an original Infinity Engine-style RPG location called the Alsperia Expedition Chart Room. This is an early-modern medieval royal observatory annex: a circular stone room under the skyport, tall arched windows showing a twilight harbor and the silhouette of an airship, a large parchment route table with maps and brass instruments, a few rolled ward diagrams, restrained blue-green candlelight and warm lantern pools, carved star compass in the floor. Human-scale, grounded medieval materials, cinematic painterly isometric background art, detailed but readable composition, natural perspective from elevated three-quarter view suitable for a classic isometric RPG pre-rendered area. Clear open walkable floor in the middle and foreground for party/NPC sprites, furnishings kept to perimeter. No people, no text, no letters, no symbols that look like writing, no UI, no border. The scene should feel thoughtful and practical, an expedition preparation room rather than a throne room or battle arena.”

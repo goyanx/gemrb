@@ -68,4 +68,8 @@ def OnLoad():
 	GemRB.SetGlobal("TLJRN_BRIEFING", "GLOBAL", 0)
 	GemRB.SetGlobal("TLWARDING", "GLOBAL", 0)
 	GemRB.SetGlobal("TLJRN_WARDING", "GLOBAL", 0)
+	GemRB.SetGlobal("TLELDRADOR", "GLOBAL", 0)
+	GemRB.SetGlobal("TLSANCTUARY", "GLOBAL", 0)
+	GemRB.SetGlobal("TLJRN_ARRIVAL", "GLOBAL", 0)
+	GemRB.SetGlobal("TLJRN_SANCTUARY", "GLOBAL", 0)
 	GemRB.EnterGame()

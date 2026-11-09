@@ -874,6 +874,82 @@
           }
         }
       ]
+    },
+    {
+      "title": "VII. The Eldrador Expedition — Landing Quay",
+      "act": 7,
+      "area": "tl0022",
+      "place": "Eldrador Arrival Quay",
+      "music": "tlcity.mus",
+      "voice": "",
+      "narration": "The Aethercraft reaches Eldrador under Queen Vaelthira's invitation. At the harbor, warders have closed the road to the lower sanctuary while they compare new reports.",
+      "beats": [
+        {
+          "speaker": "Queen Vaelthira",
+          "text": "Welcome to Eldrador. Before we approach the lower sanctuary, choose what should anchor our first account: the people who heard the voice, or the ward marks measured around it.",
+          "action": "Gather first account"
+        },
+        {
+          "speaker": "Ealdrin",
+          "text": "We have a first account, not an explanation. Let us carry the record to the sanctuary threshold and keep each observation distinct.",
+          "action": "Approach sanctuary",
+          "journal": {
+            "flag": "TLJRN_ARRIVAL",
+            "section": 4,
+            "text": "The party arrived in Eldrador. Algoreth chose whether the expedition would begin with the warders' witness accounts or their measured seal records. The cause and outcome of Vaelthira's Tear remain unknown."
+          },
+          "routes": [
+            {
+              "flag": "TLELDRADOR",
+              "value": 1,
+              "text": "The warders' witness accounts are kept as testimony, with each speaker's words separate from the expedition's conclusions."
+            },
+            {
+              "flag": "TLELDRADOR",
+              "value": 2,
+              "text": "The measured seal records are copied without interpretation. The party carries no claim about what made the marks change."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "VII. The Eldrador Expedition — Lower Sanctuary Threshold",
+      "act": 7,
+      "area": "tl0023",
+      "place": "Eldrador Lower Sanctuary Threshold",
+      "music": "tlcave.mus",
+      "voice": "",
+      "narration": "At the lower sanctuary, the inner gate remains sealed. A dim pulse moves behind it, and the expedition stops at the warded threshold to agree on a careful approach.",
+      "beats": [
+        {
+          "speaker": "Queen Vaelthira",
+          "text": "The reports and the instruments disagree about what they mean. We can still decide how to approach without pretending to know what waits beyond the gate.",
+          "action": "Set approach"
+        },
+        {
+          "speaker": "Seraphina Everglow",
+          "text": "The protocol is recorded. We can test the outer ward from here, but the inner sanctuary remains sealed and the Tear untouched.",
+          "action": "Hold at threshold",
+          "journal": {
+            "flag": "TLJRN_SANCTUARY",
+            "section": 4,
+            "text": "At the Eldrador lower sanctuary, the party chose a cautious protocol at the sealed threshold. The expedition has not entered, identified, or resolved Vaelthira's Tear."
+          },
+          "routes": [
+            {
+              "flag": "TLSANCTUARY",
+              "value": 1,
+              "text": "The party advances together only to the outer ring, keeping a measured formation while the warders observe the gate."
+            },
+            {
+              "flag": "TLSANCTUARY",
+              "value": 2,
+              "text": "The party remains beyond the outer line while Seraphina listens to the pulse. No one crosses the sealed threshold."
+            }
+          ]
+        }
+      ]
     }
   ]
 }
