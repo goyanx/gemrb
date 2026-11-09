@@ -1,4 +1,44 @@
 {
+  "DORIAN": {
+    "states": [
+      {
+        "when": [{"flag": "TLCHAP", "value": 10}, {"flag": "TLLORIANPURPOSE", "value": 0}],
+        "say": "I hid the scrolls because a road between worlds magnifies the purpose of whoever crosses it. Tell me why you seek them.",
+        "transitions": [
+          {"text": "Seek a road beyond this world, and answer for the way it is used.", "next": 1, "set": [{"flag": "TLLORIANPURPOSE", "value": 1}]},
+          {"text": "Understand world travel without mistaking knowledge for mastery.", "next": 2, "set": [{"flag": "TLLORIANPURPOSE", "value": 2}]},
+          {"text": "Return the scrolls to King Edmon and answer for what they teach.", "next": 3, "set": [{"flag": "TLLORIANPURPOSE", "value": 3}]}
+        ]
+      },
+      {
+        "say": "You would carry a question beyond this world. I will remember that you accept responsibility for the road you open.",
+        "transitions": [{"text": "I understand the responsibility.", "final": true}]
+      },
+      {
+        "say": "You seek understanding, not mastery. Keep that distinction when the scrolls show you a road between worlds.",
+        "transitions": [{"text": "I will keep the distinction.", "final": true}]
+      },
+      {
+        "say": "You will return the scrolls to Edmon's court. A promise of return is not proof, but it is a purpose I can hear.",
+        "transitions": [{"text": "Then let the record judge what I do.", "final": true}]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 10}, {"flag": "TLLORIANPURPOSE", "value": 1}],
+        "say": "You named a question worth carrying beyond this world. Remember that opening a road makes you answerable for it.",
+        "transitions": [{"text": "I will remember why I sought the scrolls.", "final": true}]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 10}, {"flag": "TLLORIANPURPOSE", "value": 2}],
+        "say": "You sought understanding without claiming mastery. The scrolls can teach a route; they cannot decide what you should do with it.",
+        "transitions": [{"text": "The choice remains mine.", "final": true}]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 10}, {"flag": "TLLORIANPURPOSE", "value": 3}],
+        "say": "You pledged to return the scrolls to Edmon. The court will hear what you learned, but your actions will give that promise its weight.",
+        "transitions": [{"text": "I will carry them back to Alsperia.", "final": true}]
+      }
+    ]
+  },
   "PELL": {
     "states": [
       {

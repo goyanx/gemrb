@@ -99,6 +99,13 @@ class NativeDialogueResourceTests(unittest.TestCase):
         self.assertEqual(bindings["MARA"], [("tl0001", "Archivist Mara")])
         self.assertEqual(bindings["OREN"], [("tl0011", "Royal Scribe Oren")])
         self.assertEqual(bindings["PELL"], [("tl0011", "Courier Pell")])
+        self.assertEqual(bindings["DORIAN"], [("tl0003", "Dorian the Seer")])
+        dorian = dialogues["DORIAN"]["states"]
+        self.assertEqual(len(dorian), 7)
+        self.assertEqual([item["set"][0]["value"] for item in dorian[0]["transitions"]], [1, 2, 3])
+        self.assertEqual({tuple(condition["value"] for condition in state["when"]
+                                if condition["flag"] == "TLLORIANPURPOSE")
+                          for state in dorian[4:]}, {(1,), (2,), (3,)})
 
     def test_compiled_alistair_dialogue_and_tlk(self):
         pack = Path(os.environ.get("TERRALUM_GAME_OUTPUT", PROJECT / "build" / "game")).resolve()

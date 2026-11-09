@@ -463,6 +463,7 @@
   "tl0003": [
     {
       "name": "Dorian the Seer",
+      "dialog": "DORIAN",
       "creature": "riddler",
       "position": [
         700,
