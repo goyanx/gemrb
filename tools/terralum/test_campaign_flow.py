@@ -85,7 +85,7 @@ globals_ = {"TLCHAP": 0, "TLBEAT": 0, "TLENEMY": 0, "TLENEMY_STALKER": 0,
             "TLELDRADOR": 0, "TLSANCTUARY": 0, "TLJRN_ARRIVAL": 0, "TLJRN_SANCTUARY": 0}
 globals_.update({"TLMARADETAIL": 0, "TLJRN_MARA": 0, "TLFOLLOWPENDING": 0,
                  "TLFOLLOWNPC": 0, "TLFOLLOWCHOICE": 0, "TLWITNESS": 0,
-                 "TLORENDOCKET": 0, "TLJRN_COURT_RECORD": 0, "TLRELAY": 0, "TLJRN_RELAY": 0})
+                 "TLORENDOCKET": 0, "TLJRN_COURT_RECORD": 0, "TLRELAY": 0, "TLJRN_RELAY": 0, "TLRETURNMARK": 0, "TLJRN_RETURNMARK": 0})
 enemy_dead = False
 dead_actors = set()
 current_area = "tl0001"
@@ -189,8 +189,8 @@ assert any("agreed how to handle Dorian's western route ledger" in entry["value"
            for entry in journal_entries)
 chapters = campaign.Story.chapters()
 chapter_index_by_area = {chapter["area"]: index for index, chapter in enumerate(chapters)}
-assert len(chapters) == 24
-assert sum(len(chapter["beats"]) for chapter in chapters) == 60
+assert len(chapters) == 25
+assert sum(len(chapter["beats"]) for chapter in chapters) == 63
 assert sorted({chapter["act"] for chapter in chapters}) == list(range(1, 8))
 for chapter_index, chapter in enumerate(chapters):
     assert globals_["TLCHAP"] == chapter_index
@@ -233,6 +233,28 @@ for chapter_index, chapter in enumerate(chapters):
             if globals_[route["flag"]] == route["value"]:
                 assert route["text"] in window.controls[0].text, (chapter["area"], route, window.controls[0].text)
                 break
+        if chapter["area"] == "tl0025" and beats.index(beat) == 1:
+            window.controls[4].press()
+            assert globals_["TLBEAT"] == 1
+            assert "Pell is waiting for the route record" in window.controls[0].text
+            for _ in range(len(people)):
+                window.controls[11].press()
+                if "Courier Pell:" in window.controls[0].text:
+                    break
+            assert "Courier Pell:" in window.controls[0].text
+            window.controls[12].press()
+            assert "What should I leave for the next travellers?" in window.controls[0].text
+            window.controls[12].press()
+            assert globals_["TLRETURNMARK"] == 1
+            assert globals_["TLJRN_RETURNMARK"] == 1
+            assert any("chose how Courier Pell would preserve" in entry["value"] for entry in journal_entries)
+        if chapter["area"] == "tl0004" and beats.index(beat) == 1:
+            for _ in range(len(people)):
+                window.controls[11].press()
+                if "Queen Alisande:" in window.controls[0].text:
+                    break
+            assert "Queen Alisande:" in window.controls[0].text
+            assert "pale-stone route marker" in window.controls[0].text
         if chapter["area"] == "tl0024" and beats.index(beat) == 1:
             window.controls[4].press()
             assert globals_["TLBEAT"] == 1
@@ -311,10 +333,10 @@ assert globals_["TLWITNESS"] == 1
 assert globals_["TLJRN_COURT_RECORD"] == 1
 assert globals_["TLECHO"] == 1
 assert globals_["TLARCHIVEWARD"] == 2
-assert len([event for event in events if event[0] == "area"]) == 23
+assert len([event for event in events if event[0] == "area"]) == 24
 assert len([event for event in events if event[0] == "voice"]) == 8
 assert len([event for event in events if event[0] == "attack"]) == 2
-assert len(journal_entries) == 22
+assert len(journal_entries) == 23
 assert globals_["TLJRN_WAYSTONE"] == 1
 assert any("Three-Cairn Fork" in entry["value"] for entry in journal_entries)
 assert globals_["TLJRN_LORIAN_PURPOSE"] == 1
@@ -490,7 +512,7 @@ for gallery_value, court_line in gallery_outcomes:
     timed_events.clear()
     current_area = "tl0004"
     globals_.update({"TLCHAP": chapter_index_by_area["tl0004"], "TLBEAT": 0, "TLENEMY": 0, "TLCAST": 0,
-                     "TLGALLERY": gallery_value})
+                     "TLGALLERY": gallery_value, "TLRETURNMARK": 0})
     campaign.OnLoad()
     while timed_events:
         timed_events.pop(0)()
@@ -808,7 +830,7 @@ for chapter_index, chapter in enumerate(chapters):
                 assert globals_[event["flag"]] == 1
                 assert any(entry["value"] == event["text"] for entry in journal_entries)
             choice_count += 1
-assert choice_count == 43
+assert choice_count == 44
 
 # Mara's staged ledger conversation records one shared journal event and carries
 # either handling choice into Scholar Inessa's later library dialogue.
@@ -873,7 +895,7 @@ for selected, expected_response in ((1, "separate landmark copy"),
 
 # Include the two nested options in the campaign-wide authored response count.
 choice_count += len(followup["choices"])
-assert choice_count == 45
+assert choice_count == 46
 
 # The Act IV council hearing requires the player to choose how Oren preserves
 # the evidence; Alisande and the closing record both acknowledge either path.
@@ -927,7 +949,59 @@ for selected, expected_response, expected_route in (
     assert expected_route in window.controls[0].text
 
 choice_count += len(council_followup["choices"])
-assert choice_count == 47
+assert choice_count == 48
+
+# The return to the Mistwood Watchpost reuses the location but changes its
+# conversation. Both records persist through a script reload and change court dialogue.
+return_index = chapter_index_by_area["tl0025"]
+return_followup = campaign.Story.cast("tl0025")[1]["choices"][0]["followup"]
+for selected, expected_response, expected_route in (
+        (1, "Pell left the pale-stone route marker", "Pell leaves a pale-stone marker"),
+        (2, "Pell kept the complete Mistwood route", "Pell leaves a brief danger warning")):
+    window = Window()
+    events.clear()
+    timed_events.clear()
+    journal_entries.clear()
+    current_area = "tl0025"
+    globals_.update({key: (1 if key.startswith("TLJRN_") else 0) for key in globals_})
+    globals_.update({"TLCHAP": return_index, "TLBEAT": 1, "TLENEMY": 0, "TLCAST": 0,
+                     "TLRETURNMARK": 0, "TLJRN_RETURNMARK": 0,
+                     "TLFOLLOWPENDING": 0, "TLFOLLOWNPC": 0, "TLFOLLOWCHOICE": 0})
+    campaign.OnLoad()
+    while timed_events:
+        timed_events.pop(0)()
+    window.controls[4].press()
+    assert "Pell is waiting for the route record" in window.controls[0].text
+    for _ in range(len(campaign.Story.cast("tl0025"))):
+        window.controls[11].press()
+        if "Courier Pell:" in window.controls[0].text:
+            break
+    window.controls[12].press()
+    assert return_followup["line"] in window.controls[0].text
+    campaign.OnLoad()
+    while timed_events:
+        timed_events.pop(0)()
+    assert globals_["TLFOLLOWPENDING"] == 1
+    assert return_followup["line"] in window.controls[0].text
+    window.controls[11 + selected].press()
+    assert globals_["TLRETURNMARK"] == selected
+    assert globals_["TLJRN_RETURNMARK"] == 1
+    assert sum("chose how Courier Pell would preserve" in entry["value"]
+               for entry in journal_entries) == 1
+    window.controls[4].press()
+    assert expected_route in window.controls[0].text
+    window.controls[4].press()
+    assert current_area == "tl0004"
+    while timed_events:
+        timed_events.pop(0)()
+    for _ in range(len(campaign.Story.cast("tl0004"))):
+        window.controls[11].press()
+        if "Queen Alisande:" in window.controls[0].text:
+            break
+    assert expected_response in window.controls[0].text
+
+choice_count += len(return_followup["choices"])
+assert choice_count == 50
 
 # Act VI's optional archive quest offers a peaceful path and a gated warder
 # challenge. Victory records the comparison leaf and changes dialogue in the
@@ -1099,7 +1173,7 @@ for signal in (1, 2):
         assert expected in window.controls[0].text
 
 choice_count += len(relay_followup["choices"])
-assert choice_count == 49
+assert choice_count == 52
 
 # The Act VII Eldrador landing and sanctuary-approach adaptations preserve the
 # unresolved Tear while carrying both evidence and protocol choices forward.
@@ -1152,4 +1226,4 @@ for evidence in (1, 2):
         assert "has not been entered or resolved" in window.controls[0].text
 
 print(len(chapters), "scenes across seven acts,", sum(len(campaign.Story.cast(chapter["area"])) for chapter in chapters),
-      "named scene actors, keyboard controls, authored journal events and combat aftermath, all 49 response options, three market routes, four encounter gates, twenty-three transitions, and seven voice cues passed")
+      "named scene actors, keyboard controls, authored journal events and combat aftermath, all 52 response options, three market routes, four encounter gates, twenty-four transitions, and seven voice cues passed")

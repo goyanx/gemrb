@@ -32,7 +32,7 @@ list of [options, tips and priorities](https://github.com/gemrb/gemrb/blob/maste
 
 **An original Infinity Engine style RPG campaign, built on GemRB.** In **Terralum: Scrolls of Byzantem**, Algoreth Jon Goren leaves the court of Alsperia to recover the lost scrolls. The trail leads through the Mistwood and Caverns of Lorian, then toward the eastern academy, the Deep Archives, and the mysteries of the Tears.
 
-The playable prototype currently covers **24 scene areas and 60 story beats across seven acts**. Its 56 named scene actors have local dialogue and response choices. Stateful conversations carry across scenes: Mara's ledger handling changes Scholar Inessa's later Library response, Royal Scribe Oren's Council docket preserves whether route testimony and the scroll account are paired or kept separate, and Keeper Orla's new Mistwood Waywarden Relay lets Algoreth decide whether to call the patrol. Saren's dialogue reflects whether the party copied Leora's schedule; both relay outcomes are journaled. The campaign also has ambient music, optional Kokoro narration, and four gated encounters. Act VII continues from the Aethercraft departure into an Eldrador landing and sanctuary-threshold investigation. The party records testimony or ward measurements, then chooses a cautious approach; the game stops before the inner sanctuary is entered, leaving the Tear unresolved as the recovered lore requires. It is an active prototype: campaign content and systems are growing, and the full-length RPG is still ahead.
+The playable prototype currently covers **25 scene areas and 63 story beats across seven acts**. Its 58 named scene actors have local dialogue and response choices. Stateful conversations carry across scenes: Mara's ledger handling changes Scholar Inessa's later Library response, Royal Scribe Oren's Council docket preserves whether route testimony and the scroll account are paired or kept separate, and Keeper Orla's new Mistwood Waywarden Relay lets Algoreth decide whether to call the patrol. Saren's dialogue reflects whether the party copied Leora's schedule; both relay outcomes are journaled. After Lorian, the party returns to the watchpost: Pell records whether the route marker is public or held in Edmon's court archive, and Alisande responds to the decision. The campaign also has ambient music, optional Kokoro narration, and four gated encounters. Act VII continues from the Aethercraft departure into an Eldrador landing and sanctuary-threshold investigation. The party records testimony or ward measurements, then chooses a cautious approach; the game stops before the inner sanctuary is entered, leaving the Tear unresolved as the recovered lore requires. It is an active prototype: campaign content and systems are growing, and the full-length RPG is still ahead.
 
 ### See Terralum running in GemRB
 
@@ -55,7 +55,7 @@ The opening Market scene is a live capture from GemRB. It shows the player party
 
 ### Campaign location gallery
 
-Twenty-three distinct generated concept backdrops preview the twenty-four scene areas; one backdrop is reused. They are visual targets for the current prototype. The Royal Stables, Dispatch Archive, Council Chamber, Hunter's Camp, River Crossing, Three-Cairn Fork, Mistwood Road, Ruined Watchpost, Lorian Cavern, Seal Gallery, Deep Archives, Expedition Chart Room, Containment Annex, Eldrador Landing Quay, and Lower Sanctuary Threshold have custom searchmaps; the Waywarden Relay also has a custom searchmap. All twenty-four areas still use the demo's shared WED layout and other terrain resources.
+Twenty-three distinct generated concept backdrops preview the twenty-five scene areas. The Deep Archives and the returning Mistwood Watchpost reuse their existing location art. They are visual targets for the current prototype. The Royal Stables, Dispatch Archive, Council Chamber, Hunter's Camp, River Crossing, Three-Cairn Fork, Mistwood Road, Ruined Watchpost and its return visit, Lorian Cavern, Seal Gallery, Deep Archives, Expedition Chart Room, Containment Annex, Eldrador Landing Quay, and Lower Sanctuary Threshold have custom searchmaps; the Waywarden Relay also has a custom searchmap. All twenty-five areas still use the demo's shared WED layout and other terrain resources.
 
 <table>
   <tr>
@@ -89,6 +89,9 @@ Twenty-three distinct generated concept backdrops preview the twenty-four scene 
     <td align="center"><img src="terralum/art/mistwood_river_crossing.png" alt="Mistwood river crossing concept art: a handline above the ford and a damaged footbridge" width="100%"><br><sub>Mistwood River Crossing</sub></td>
   </tr>
   <tr>
+    <td align="center"><img src="terralum/art/mistwood_ruins.png" alt="Returning to the Mistwood Watchpost; reuses the existing location concept art" width="100%"><br><sub>Watchpost Return · reused location art</sub></td>
+  </tr>
+  <tr>
     <td align="center"><img src="terralum/art/mistwood_waywarden_relay.png" alt="Mistwood Waywarden Relay concept art: a covered signal lantern beside the pale-stone road" width="100%"><br><sub>Waywarden Relay</sub></td>
   </tr>
   <tr>
@@ -106,7 +109,7 @@ Twenty-three distinct generated concept backdrops preview the twenty-four scene 
 - [Campaign plan](terralum/campaign_plan.md) — seven-act story spine and planned expansion.
 - [TODO and handoff](TODO.md) — completed, ongoing, and next work.
 
-Terralum is an in-progress prototype, not a finished or full-length RPG. The current cast reuses demo sprites and all twenty-four areas still inherit the demo WED layout; sixteen areas have custom searchmaps, while the other eight use the generic one. Choices use a custom panel rather than native Infinity Engine DLG resources. The project guide and handoff describe current playability and verification gaps.
+Terralum is an in-progress prototype, not a finished or full-length RPG. The current cast reuses demo sprites and all twenty-five areas still inherit the demo WED layout; seventeen areas have custom searchmaps, while the other eight use the generic one. Choices use a custom panel rather than native Infinity Engine DLG resources. The project guide and handoff describe current playability and verification gaps.
 
 ## Supported platforms
 

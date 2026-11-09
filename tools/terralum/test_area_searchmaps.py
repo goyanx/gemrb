@@ -104,6 +104,11 @@ expected = {
         "blocked": [(8, 30), (91, 31), (39, 38), (68, 40), (12, 70), (87, 70)],
         "description": "Mistwood patrol relay, covered signal lantern, and north/south/west road approaches",
     },
+    "tl0025": {
+        "routes": [(59, 5), (50, 92)],
+        "blocked": [(8, 50), (20, 84), (82, 84), (96, 45), (27, 29), (78, 41)],
+        "description": "return to the Ruined Watchpost, cleared courier approach, and north/south routes",
+    },
 }
 assert set(searchmap_specs) == set(expected)
 cast_by_area = json.loads(build_game.CAST_FILE.read_text(encoding="utf-8"))

@@ -612,6 +612,16 @@
       "provenance": "user-confirmed",
       "responses": [
         {
+          "flag": "TLRETURNMARK",
+          "value": 1,
+          "line": "Pell left the pale-stone route marker for travellers and kept the patrol timings in Edmon’s record. That gives guidance without exposing the schedule."
+        },
+        {
+          "flag": "TLRETURNMARK",
+          "value": 2,
+          "line": "Pell kept the complete Mistwood route in the crown archive and left a warning at the watchpost. Edmon can review the patrol record before we share more."
+        },
+        {
           "flag": "TLGALLERY",
           "value": 1,
           "line": "You left the sealed niches closed in Lorian. That restraint honors Edmon's trust while we study what the scrolls actually say."
@@ -1633,6 +1643,102 @@
       "goal": "Keep relay signals clear and avoid drawing a patrol without the traveller’s consent.",
       "knowledge": "Knows the one-flash and two-flash signal code; does not know what is beyond Lorian’s western arch.",
       "voice": "Practical and deliberate, giving instructions in short phrases.",
+      "provenance": "adaptation"
+    }
+  ],
+  "tl0025": [
+    {
+      "name": "Waywarden Saren",
+      "creature": "protagon",
+      "position": [
+        930,
+        500
+      ],
+      "line": "The watchpost rubbing brought us back safely. The relay choice and the road itself both belong in our account.",
+      "responses": [
+        {
+          "flag": "TLRELAY",
+          "value": 1,
+          "line": "The relay signal brought a patrol onto the west road. I will include that choice with the route report."
+        },
+        {
+          "flag": "TLRELAY",
+          "value": 2,
+          "line": "The relay stayed dark on the outward journey. I will note that the party kept its approach quiet."
+        },
+        {
+          "flag": "TLMISTWOODVICTORY",
+          "value": 1,
+          "line": "The two creatures no longer hold the road. Pell can cross with the rubbing while I keep watch."
+        }
+      ],
+      "role": "Royal road warden",
+      "faction": "Edmon's Waywardens",
+      "goal": "Escort the return party and distinguish route safety from patrol timing in the report.",
+      "knowledge": "Knows which relay signal Algoreth chose, whether the schedule was copied, and whether the road ambush was defeated; cannot explain the stalker’s origin.",
+      "voice": "Disciplined and reflective, reporting events without guessing at their cause.",
+      "provenance": "adaptation"
+    },
+    {
+      "name": "Courier Pell",
+      "creature": "riddler",
+      "position": [
+        690,
+        520
+      ],
+      "line": "I can carry a short warning or the complete route account back to Alsperia. The next travellers need a mark they can trust.",
+      "responses": [
+        {
+          "flag": "TLWATCHPOST",
+          "value": 1,
+          "line": "You marked the old stairs for repair. I will add the fresh route marker beside the repaired approach."
+        },
+        {
+          "flag": "TLWATCHPOST",
+          "value": 2,
+          "line": "The old stairs remain unsafe. I will keep the marker clear of that approach and carry the full report to the court."
+        },
+        {
+          "flag": "TLROYALORDER",
+          "value": 1,
+          "line": "Leora’s copied schedule can stay with the crown record while I leave travellers a safe path marker."
+        }
+      ],
+      "choices": [
+        {
+          "label": "Settle the route record",
+          "reply": "Pell opens a clean page beside the old charcoal rubbing. The route details can be made public or kept with the crown report.",
+          "flag": "TLRETURNMARK",
+          "value": 1,
+          "followup": {
+            "line": "What should I leave for the next travellers?",
+            "journal": {
+              "flag": "TLJRN_RETURNMARK",
+              "section": 4,
+              "text": "On the return from Lorian, Algoreth chose how Courier Pell would preserve the Mistwood route: a public pale-stone marker for travellers, or a brief warning with the complete route kept in Alsperia’s crown archive."
+            },
+            "choices": [
+              {
+                "label": "Leave a pale-stone route marker",
+                "reply": "Pell marks the safe stones and keeps the exact patrol timings for Edmon’s court record.",
+                "flag": "TLRETURNMARK",
+                "value": 1
+              },
+              {
+                "label": "Keep the full route in the crown record",
+                "reply": "Pell leaves a brief warning at the watchpost and carries the complete route account back to Alsperia.",
+                "flag": "TLRETURNMARK",
+                "value": 2
+              }
+            ]
+          }
+        }
+      ],
+      "role": "Royal road courier",
+      "faction": "Alsperia Courier Service",
+      "goal": "Carry the recovered route account home while leaving useful guidance for travellers who follow.",
+      "knowledge": "Knows the charcoal rubbing and the party’s Mistwood choices; does not know what lies beyond Dorian’s western arch.",
+      "voice": "Quick and practical, attentive to what other travellers can safely use.",
       "provenance": "adaptation"
     }
   ]

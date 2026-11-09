@@ -273,8 +273,14 @@ def OnLoad():
 		if chapter["area"] == "tl0003" and beat_index == 0 and not GemRB.GetGameVar("TLLORIANPURPOSE"):
 			message.Append("\n\nDorian waits for your answer. Speak with him before approaching the guardian.")
 			return
+		if chapter["area"] == "tl0025" and beat_index == 1 and not GemRB.GetGameVar("TLRETURNMARK"):
+			message.Append("\n\nPell is waiting for the route record. Speak with him and decide what the next travellers should learn.")
+			return
 		if chapter["area"] == "tl0024" and beat_index == 1 and not GemRB.GetGameVar("TLRELAY"):
 			message.Append("\n\nThe relay is still unassigned. Speak with Orla and decide whether to signal the west patrol.")
+			return
+		if chapter["area"] == "tl0004" and beat_index == 1 and not GemRB.GetGameVar("TLRETURNMARK"):
+			message.Append("\n\nCourier Pell’s return report is missing. Speak with Queen Alisande to review the Mistwood record.")
 			return
 		if chapter["area"] == "tl0011" and beat_index == 1 and not GemRB.GetGameVar("TLWITNESS"):
 			message.Append("\n\nThe council docket is unfinished. Speak with Royal Scribe Oren and decide how the route and scroll accounts should be filed.")

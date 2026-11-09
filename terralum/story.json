@@ -502,6 +502,44 @@
       ]
     },
     {
+      "title": "III. The Return Road — Mistwood Watchpost",
+      "act": 3,
+      "area": "tl0025",
+      "place": "Mistwood Watchpost — Homeward",
+      "music": "tlwood.mus",
+      "voice": "",
+      "narration": "On the return from Lorian, Algoreth and Tessa reach the watchpost again. Courier Pell waits beside the charcoal rubbing, ready to carry the route record back to Alsperia.",
+      "beats": [
+        {
+          "speaker": "Waywarden Saren",
+          "text": "The watchpost looks different on the return. The road marks we leave here may guide the next travellers, and the full patrol route belongs in the crown record.",
+          "action": "Review the route"
+        },
+        {
+          "speaker": "Courier Pell",
+          "text": "I can carry a short warning or a complete route account to Alsperia. What should remain here for the next travellers?",
+          "action": "Choose the record"
+        },
+        {
+          "speaker": "Waywarden Saren",
+          "text": "The route record is ready for the road home.",
+          "action": "Return to Alsperia",
+          "routes": [
+            {
+              "flag": "TLRETURNMARK",
+              "value": 1,
+              "text": "Pell leaves a pale-stone marker for travellers and carries the detailed patrol timings back to King Edmon’s court."
+            },
+            {
+              "flag": "TLRETURNMARK",
+              "value": 2,
+              "text": "Pell leaves a brief danger warning and carries the complete Mistwood route to the crown archive."
+            }
+          ]
+        }
+      ]
+    },
+    {
       "title": "IV. Return to Alsperia",
       "act": 4,
       "area": "tl0004",
