@@ -135,6 +135,7 @@ gemrb.SetPlayerStat = lambda *args: None
 gemrb.ExecuteString = lambda action, actor: events.append(("attack", action, actor))
 gemrb.GetPlayerStat = lambda actor, stat: 2048 if enemy_dead or actor in dead_actors else 0
 gemrb.GamePause = lambda *args: None
+gemrb.GameControlSetTargetMode = lambda mode, types=0: events.append(("target-mode", mode, types))
 sys.modules["GemRB"] = gemrb
 for name, symbol in (("GUICommon", "GetWindowPack"), ("GUIMA", "OpenMapWindow"), ("GUIINV", "OpenInventoryWindow")):
     module = types.ModuleType(name)
@@ -151,11 +152,15 @@ while timed_events:
 assert window.controls[4].frame["w"] == 100
 assert window.controls[10].text == "NARRATE"
 assert window.controls[10].hotkey == ("n", 0, True)
-assert window.controls[11].text == "TALK"
-assert window.controls[11].hotkey == ("t", 0, True)
+assert window.controls[11].text == "CAST"
+assert window.controls[11].hotkey == ("c", 0, True)
+assert window.controls[16].text == "TALK"
+assert window.controls[16].hotkey == ("t", 0, True)
 assert window.controls[15].text == "JOURNAL"
 assert window.controls[15].hotkey == ("j", 0, True)
 assert window.controls[10].disabled is False
+window.controls[16].press()
+assert events[-1][0:2] == ("target-mode", 1)
 assert len(journal_entries) == 1
 window.controls[15].press()
 assert "Find his route and recover the Scrolls of Byzantem" in window.controls[0].text

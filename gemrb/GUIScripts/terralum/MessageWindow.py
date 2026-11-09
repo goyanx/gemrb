@@ -46,21 +46,25 @@ def OnLoad():
 
 	action = window.GetControl(4)
 	_style(action, 100)
-	voice = window.CreateButton(10, 660, 183, 100, 34)
+	voice = window.CreateButton(10, 630, 183, 90, 34)
 	_style(voice)
 	voice.SetText("NARRATE")
 	voice.SetHotKey("n", 0, True)
-	talk = window.CreateButton(11, 545, 183, 100, 34)
-	_style(talk)
-	talk.SetText("TALK")
-	talk.SetHotKey("t", 0, True)
+	cast = window.CreateButton(11, 440, 183, 90, 34)
+	_style(cast)
+	cast.SetText("CAST")
+	cast.SetHotKey("c", 0, True)
+	actor_talk = window.CreateButton(16, 535, 183, 90, 34)
+	_style(actor_talk)
+	actor_talk.SetText("TALK")
+	actor_talk.SetHotKey("t", 0, True)
 	choice_buttons = []
 	for index, x in enumerate((10, 183, 356)):
 		button = window.CreateButton(12 + index, x, 183, 160, 34)
 		_style(button)
 		button.SetVisible(False)
 		choice_buttons.append(button)
-	journal_button = window.CreateButton(15, 430, 183, 100, 34)
+	journal_button = window.CreateButton(15, 345, 183, 90, 34)
 	_style(journal_button)
 	journal_button.SetText("JOURNAL")
 	journal_button.SetHotKey("j", 0, True)
@@ -93,6 +97,7 @@ def OnLoad():
 	def talk_to_scene_npc():
 		if dialogue_state["must_finish_followup"]:
 			return
+		GemRB.GameControlSetTargetMode(TARGET_MODE_NONE)
 		if journal_state["open"]:
 			journal_state["open"] = False
 			journal_button.SetText("JOURNAL")
@@ -121,6 +126,17 @@ def OnLoad():
 			choices = []
 		show_dialogue_choices(person, choices)
 
+	def begin_actor_talk():
+		if dialogue_state["must_finish_followup"]:
+			message.Append("\n\nFinish this conversation before speaking with another NPC.")
+			return
+		if journal_state["open"]:
+			journal_state["open"] = False
+			journal_button.SetText("JOURNAL")
+			show()
+		GemRB.GameControlSetTargetMode(TARGET_MODE_TALK, GA_NO_DEAD | GA_NO_ENEMY | GA_NO_HIDDEN)
+		message.Append("\n\nChoose a scene NPC to speak with.")
+
 	def show_dialogue_choices(person, choices):
 		for index, button in enumerate(choice_buttons):
 			button.SetVisible(index < len(choices))
@@ -131,6 +147,7 @@ def OnLoad():
 				button.OnPress(lambda _button=None, choice=choice, person=person: choose_dialogue(person, choice))
 		dialogue_state["has_choices"] = bool(choices)
 		journal_button.SetVisible(not bool(choices))
+		cast.SetVisible(not bool(choices))
 
 	def choose_dialogue(person, choice):
 		was_followup = dialogue_state["must_finish_followup"]
@@ -475,7 +492,8 @@ def OnLoad():
 	action.OnPress(advance)
 	journal_button.OnPress(toggle_journal)
 	voice.OnPress(narrate)
-	talk.OnPress(talk_to_scene_npc)
+	cast.OnPress(talk_to_scene_npc)
+	actor_talk.OnPress(begin_actor_talk)
 	action.SetHotKey(GEM_RETURN, 0, True)
 	GemRB.LoadMusicPL(chapters[GemRB.GetGameVar("TLCHAP")]["music"], 1)
 	initial_chapter = GemRB.GetGameVar("TLCHAP")

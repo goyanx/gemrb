@@ -30,6 +30,11 @@ This fork includes **Terralum: Scrolls of Byzantem**, an original, story-driven 
 </p>
 <p align="center"><em>Left: live GemRB Journal with the opening quest recorded under Act I · Right: generated location concept art, a visual target rather than in-game scenery.</em></p>
 
+<p align="center">
+  <a href="terralum/screenshots/market-party-detail.png"><img src="terralum/screenshots/market-party-detail.png" alt="Detail crop of the player party and local NPC placements in the Alsperia Market" width="60%"></a>
+</p>
+<p align="center"><em>Live scene detail: the party and local cast are placed together in the opening market. Scene actors currently reuse the demo's placeholder sprites.</em></p>
+
 **[Campaign guide](terralum/README.md)** · **[Gold Standard pipeline](terralum/GOLD_STANDARD_GAME_DESIGN_PIPELINE.md)** · **[Campaign plan](terralum/campaign_plan.md)** · **[Current TODO](TODO.md)**
 
 > **Prototype status:** This is an expanding playable slice, not a finished full-length RPG. Its party and scene actors currently reuse demo sprites, and all 25 areas still inherit the demo's WED layout and terrain. The campaign has custom per-area searchmaps, authored cast and dialogue choices, and a growing set of stateful story events. See the [campaign guide](terralum/README.md) for build steps and current verification limits.
