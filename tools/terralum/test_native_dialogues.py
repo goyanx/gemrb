@@ -2,9 +2,10 @@
 # SPDX-FileCopyrightText: 2026 Golem Inc.
 # SPDX-License-Identifier: GPL-2.0-or-later
 
-"""Check the native Alistair DLG and its compiled dialog.tlk references."""
+"""Check compiled native DLG resources and their dialog.tlk references."""
 
 import json
+import os
 import struct
 import sys
 import unittest
@@ -20,8 +21,44 @@ from tlk import Tlk
 
 
 class NativeDialogueResourceTests(unittest.TestCase):
+    def test_all_compiled_dialogues_have_valid_reachable_text(self):
+        pack = Path(os.environ.get("TERRALUM_GAME_OUTPUT", PROJECT / "build" / "game")).resolve()
+        with (pack / "dialog.tlk").open("rb") as stream:
+            talk_table = Tlk(stream)
+        key_data = (pack / "chitin.key").read_bytes()
+        _bif_count, resource_count, _bif_offset, resources_offset = struct.unpack_from("<4I", key_data, 8)
+        resources = {struct.unpack_from("<8sHI", key_data, resources_offset + index * 14)[:2]
+                     for index in range(resource_count)}
+        cast = json.loads((PROJECT / "scene_cast.json").read_text(encoding="utf-8"))
+        dialogues = read_native_dialogues()
+        bindings = {person["dialog"].upper(): (area, person["name"])
+                    for area, people in cast.items() for person in people if person.get("dialog")}
+        for resref, dialogue in dialogues.items():
+            path = pack / "override" / f"{resref.lower()}.dlg"
+            self.assertTrue(path.is_file(), f"missing compiled DLG for {resref}")
+            data = path.read_bytes()
+            header = struct.unpack_from("<8s11I", data)
+            self.assertEqual(header[0], b"DLG V1.0")
+            state_count, states_offset, transition_count, transitions_offset = header[1:5]
+            self.assertEqual(state_count, len(dialogue["states"]))
+            self.assertIn((resref.lower().encode("ascii").ljust(8, b"\0"), 0x3F3), resources)
+            states = [struct.unpack_from("<4I", data, states_offset + i * 16)
+                      for i in range(state_count)]
+            transitions = [struct.unpack_from("<5I8sI", data, transitions_offset + i * 32)
+                           for i in range(transition_count)]
+            for index, (say_ref, first, count, _trigger) in enumerate(states):
+                self.assertEqual(talk_table[say_ref]["string"].decode("utf-8"), dialogue["states"][index]["say"])
+                self.assertLessEqual(first + count, transition_count)
+                for local, transition in enumerate(transitions[first:first + count]):
+                    self.assertEqual(talk_table[transition[1]]["string"].decode("utf-8"),
+                                     dialogue["states"][index]["transitions"][local]["text"])
+                    if not transition[0] & 0x08:
+                        self.assertLess(transition[6], state_count)
+        self.assertEqual(bindings["KINGEDM"], ("tl0001", "King Edmon"))
+        self.assertEqual(bindings["ALISAND"], ("tl0001", "Queen Alisande"))
+
     def test_compiled_alistair_dialogue_and_tlk(self):
-        pack = PROJECT / "build" / "game"
+        pack = Path(os.environ.get("TERRALUM_GAME_OUTPUT", PROJECT / "build" / "game")).resolve()
         dlg_path = pack / "override" / "alistar.dlg"
         tlk_path = pack / "dialog.tlk"
         self.assertTrue(dlg_path.is_file(), "build the game pack before checking DLG resources")

@@ -110,7 +110,7 @@ Twenty-three distinct generated concept backdrops preview the twenty-five scene 
 - [Campaign plan](terralum/campaign_plan.md) — seven-act story spine and planned expansion.
 - [TODO and handoff](TODO.md) — completed, ongoing, and next work.
 
-Terralum is an in-progress prototype, not a finished or full-length RPG. The current cast reuses demo sprites and all twenty-five areas still inherit the demo WED layout; all twenty-five areas now have custom searchmaps, with structural connectivity checks for each. Alistair's actors are bound to a native DLG resource pilot; most NPC conversations still use the custom choice panel, and direct click/save behavior remains unverified in live GemRB. The project guide and handoff describe current playability and verification gaps.
+Terralum is an in-progress prototype, not a finished or full-length RPG. The current cast reuses demo sprites and all twenty-five areas still inherit the demo WED layout; all twenty-five areas now have custom searchmaps, with structural connectivity checks for each. King Edmon, Queen Alisande, and Alistair have native DLG resources; most NPC conversations still use the custom choice panel, and direct click/save behavior remains unverified in live GemRB. The project guide and handoff describe current playability and verification gaps.
 
 ## Supported platforms
 

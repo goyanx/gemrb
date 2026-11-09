@@ -16,6 +16,8 @@ scene_production_plan.md tracks the BG2-inspired delivery slices. campaign_plan.
 
 ## Build and play
 
+Native Infinity Engine DLG conversations currently cover King Edmon and Queen Alisande in the opening scene and Alistair in the Chart Room and Hangar. Other authored NPC choices still use the campaign panel. DLG resources are compiled with `dialog.tlk` strings and checked by `test_native_dialogues.py`; click interaction and save/load still need live playtesting.
+
 From the repository root:
 
 ```powershell

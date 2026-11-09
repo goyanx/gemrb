@@ -60,6 +60,7 @@
     {
       "name": "King Edmon",
       "creature": "protagon",
+      "dialog": "KINGEDM",
       "position": [
         930,
         500
@@ -75,6 +76,7 @@
     {
       "name": "Queen Alisande",
       "creature": "riddler",
+      "dialog": "ALISAND",
       "position": [
         870,
         620

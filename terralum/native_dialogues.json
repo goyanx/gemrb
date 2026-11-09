@@ -1,4 +1,46 @@
 {
+  "KINGEDM": {
+    "states": [
+      {
+        "when": [{"flag": "TLCHAP", "value": 0}],
+        "say": "Dorian the Seer carried the Scrolls of Byzantem west. I can give you a map, a horse, and shelter; the road and its dangers remain yours to judge.",
+        "transitions": [
+          {"text": "Ask what the crown expects in return.", "next": 1},
+          {"text": "Ask what the map can tell us.", "next": 2},
+          {"text": "Thank the king and leave.", "final": true}
+        ]
+      },
+      {
+        "say": "Bring back knowledge that may aid Alsperia. I ask for no conquest, and I will not pretend a royal seal can make the western road safe.",
+        "transitions": [{"text": "I will remember your trust.", "final": true}]
+      },
+      {
+        "say": "The map marks the road through Mistwood toward Lorian. It cannot tell us whether Dorian's old waystones still stand or what the scrolls contain.",
+        "transitions": [{"text": "Then we will verify the route as we travel.", "final": true}]
+      }
+    ]
+  },
+  "ALISAND": {
+    "states": [
+      {
+        "when": [{"flag": "TLCHAP", "value": 0}],
+        "say": "Edmon is my husband and Alsperia's original king. His trust opens this road; what you learn about the scrolls will carry obligations beyond this court.",
+        "transitions": [
+          {"text": "Ask what obligation she means.", "next": 1},
+          {"text": "Ask what she knows of the western road.", "next": 2},
+          {"text": "I will honor the trust you place in me.", "final": true}
+        ]
+      },
+      {
+        "say": "Power can travel farther than the person who claims it. Keep a record of what the scrolls show, and of what they do not show, so the court cannot mistake a guess for knowledge.",
+        "transitions": [{"text": "I will keep the evidence distinct.", "final": true}]
+      },
+      {
+        "say": "The court records name Mistwood and Lorian, but an old route is not a promise about the road today. Ask the people who live along it what has changed.",
+        "transitions": [{"text": "We will listen as we go.", "final": true}]
+      }
+    ]
+  },
   "ALISTAR": {
     "states": [
       {

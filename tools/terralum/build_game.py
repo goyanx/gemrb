@@ -5,6 +5,7 @@
 """Assemble the Terralum game pack from GemRB's redistributable demo data."""
 
 import json
+import os
 import re
 import shutil
 import struct
@@ -18,7 +19,7 @@ from PIL import Image, ImageDraw
 ROOT = Path(__file__).resolve().parents[2]
 SOURCE = ROOT / "demo"
 PROJECT = ROOT / "terralum"
-OUTPUT = PROJECT / "build" / "game"
+OUTPUT = Path(os.environ.get("TERRALUM_GAME_OUTPUT", PROJECT / "build" / "game")).resolve()
 CAST_FILE = PROJECT / "scene_cast.json"
 NATIVE_DIALOGUE_FILE = PROJECT / "native_dialogues.json"
 SEARCHMAP_FILE = PROJECT / "area_searchmaps.json"
@@ -601,14 +602,18 @@ def build():
             "Width = 1280\nHeight = 800\nSkipIntroVideos = 0\n"
         )
 
-    config = PROJECT / "build" / "terralum.cfg"
+    default_output = (PROJECT / "build" / "game").resolve()
+    config_dir = PROJECT / "build" if OUTPUT == default_output else OUTPUT.parent
+    config_name = "terralum.cfg" if OUTPUT == default_output else f"{OUTPUT.name}.cfg"
+    config = config_dir / config_name
     config.write_text(config_text(lambda path: path.as_posix()), encoding="utf-8")
     wsl_config = None
     if re.match(r"^[A-Za-z]:", str(ROOT)):
         def wsl_path(path):
             posix = path.as_posix()
             return f"/mnt/{posix[0].lower()}/{posix[3:]}"
-        wsl_config = PROJECT / "build" / "terralum-wsl.cfg"
+        wsl_name = "terralum-wsl.cfg" if OUTPUT == default_output else f"{OUTPUT.name}-wsl.cfg"
+        wsl_config = config_dir / wsl_name
         wsl_config.write_text(config_text(wsl_path), encoding="utf-8")
     return {
         "game_path": str(OUTPUT), "config_path": str(config),
