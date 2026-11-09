@@ -19,16 +19,16 @@ Would you like to create a game like Baldur's Gate?
 This fork includes **Terralum: Scrolls of Byzantem**, an original, story-driven Infinity Engine style RPG campaign built on GemRB. Follow Algoreth Jon Goren from the court of Alsperia through the Mistwood, Lorian, the eastern academy, the Deep Archives, and onward to Eldrador. The current prototype spans **25 areas across seven acts**, with local NPCs, branching choices, journaled consequences, encounters, optional narration, and ambient music.
 
 <p align="center">
-  <a href="terralum/screenshots/alsperia-market-npcs.png"><img src="terralum/screenshots/alsperia-market-npcs.png" alt="Live GemRB gameplay capture of the Alsperia Market opening scene, showing the party, local cast, story text, and controls" width="92%"></a>
+  <a href="terralum/screenshots/alsperia-market-live.png"><img src="terralum/screenshots/alsperia-market-live.png" alt="Actual GemRB capture of the opening Alsperia Market scene, with the party, three local cast actors, story text, journal, Talk, Continue, and Narrate controls" width="92%"></a>
 </p>
-<p align="center"><em>Live GemRB capture: the opening Market scene with party, local cast, story panel, journal control, Talk, Continue, and Kokoro Narrate.</em></p>
+<p align="center"><em>Live GemRB campaign capture: the Alsperia Market opening scene with its local cast, story panel, journal control, Talk, Continue, and Kokoro Narrate.</em></p>
 
 <p align="center">
   <a href="terralum/screenshots/market-party-detail.png"><img src="terralum/screenshots/market-party-detail.png" alt="Close-up of the player and scene cast in the live Market area" width="44%"></a>
   &nbsp;&nbsp;
   <a href="terralum/screenshots/campaign-locations-concept-art.jpg"><img src="terralum/screenshots/campaign-locations-concept-art.jpg" alt="Generated concept-art montage previewing Terralum campaign locations" width="44%"></a>
 </p>
-<p align="center"><em>Left: crop from the same live Market capture · Right: generated location concept art, a visual target rather than in-game scenery.</em></p>
+<p align="center"><em>Left: gameplay detail crop from an earlier Market capture · Right: generated location concept art, a visual target rather than in-game scenery.</em></p>
 
 **[Campaign guide](terralum/README.md)** · **[Gold Standard pipeline](terralum/GOLD_STANDARD_GAME_DESIGN_PIPELINE.md)** · **[Campaign plan](terralum/campaign_plan.md)** · **[Current TODO](TODO.md)**
 

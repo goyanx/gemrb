@@ -86,4 +86,4 @@ This file records verified implementation findings and mistakes that should info
 
 - **Use a complete condition set for dialogue that combines two choices.** False Algoreth’s line checks both the Academy warding rule and the pulse response, yielding four exclusive states. Test all combinations so a line cannot reflect only one prior choice or fall back to stale generic text.
 
-- **A headless engine startup is not a playthrough.** An isolated Xvfb run can confirm GemRB loads its core and Start GUI without a Python traceback, but demo resource warnings and no simulated player input mean scene loading, combat, and save/load are still unverified. Keep that result separate from live gameplay evidence.
+- **Headless UI input can verify a first frame, not a full playthrough.** In an isolated Xvfb run, GemRB rendered the Start GUI, accepted a click on Begin Terralum, loaded Alsperia Market, and displayed its cast and custom panel. The run still logged missing game tables and an invalid dialog.tlk seek; later scenes, combat, Talk responses, and save/load need separate evidence.
