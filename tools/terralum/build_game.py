@@ -104,10 +104,10 @@ def read_story():
                                            or not re.fullmatch(r"TL[A-Z][A-Z0-9_]{1,28}", actor_flag)
                                            or actor_flag not in initialized_flags):
                 raise ValueError(f"encounter actor flag for {chapter['area']} must name an initialized TL global")
-            event = beat.get("journal")
-            if event is None:
-                continue
-            validate_journal_event(event, journal_flags, initialized_flags)
+            for event_key in ("journal", "victory_journal"):
+                event = beat.get(event_key)
+                if event is not None:
+                    validate_journal_event(event, journal_flags, initialized_flags)
     cast = read_cast()
     for chapter in chapters:
         cast_flags = {person.get("spawn_flag") for person in cast[chapter["area"]]}

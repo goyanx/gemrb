@@ -271,6 +271,8 @@ def OnLoad():
 			for member in group:
 				GemRB.SetGlobal(member["flag"], "GLOBAL", 0)
 			GemRB.SetGlobal("TLENEMY", "GLOBAL", 0)
+			GemRB.SetGlobal("TLMISTWOODVICTORY", "GLOBAL", 1)
+			record_journal_event(beat.get("victory_journal"), chapter["act"])
 			enemy = 0
 		if "encounter" in beat and not enemy and not group:
 			# A beat may turn a scene NPC hostile; otherwise, use the demo CRE

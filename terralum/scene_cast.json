@@ -352,6 +352,13 @@
         520
       ],
       "line": "I found a charcoal rubbing under the watchpost stair. The western arch is marked, but the stalker kept me from carrying it onward.",
+      "responses": [
+        {
+          "flag": "TLMISTWOODVICTORY",
+          "value": 1,
+          "line": "Tessa says you drove both creatures off the road. I can carry the rubbing onward now, and the watchpost stair is clear."
+        }
+      ],
       "choices": [
         {
           "label": "Mark it for repair",

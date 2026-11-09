@@ -275,6 +275,11 @@
           "text": "These tracks circle us. Two shapes are moving from the ruins, one cutting off the road while the other closes from the trees.",
           "action": "Face the ambush",
           "encounter": "Mistwood ambush",
+          "victory_journal": {
+            "flag": "TLJRN_MISTWOOD_AMBUSH",
+            "section": 2,
+            "text": "Algoreth and Tessa broke the two-foe ambush on Mistwood Road. The stalker and pale-stone prowler no longer block the approach to the Ruined Watchpost."
+          },
           "enemies": [
             {
               "name": "Mistwood stalker",
