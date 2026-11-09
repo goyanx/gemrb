@@ -76,11 +76,23 @@ def read_story():
                                       or len(spawn) != 2
                                       or any(type(value) is not int or not 0 <= value <= 32767 for value in spawn)):
                 raise ValueError(f"encounter spawn position for {chapter['area']} must be two bounded integers")
+            actor_flag = beat.get("encounter_actor_flag")
+            if actor_flag is not None and (not beat.get("encounter")
+                                           or not isinstance(actor_flag, str)
+                                           or not re.fullmatch(r"TL[A-Z][A-Z0-9_]{1,28}", actor_flag)
+                                           or actor_flag not in initialized_flags):
+                raise ValueError(f"encounter actor flag for {chapter['area']} must name an initialized TL global")
             event = beat.get("journal")
             if event is None:
                 continue
             validate_journal_event(event, journal_flags, initialized_flags)
     cast = read_cast()
+    for chapter in chapters:
+        cast_flags = {person.get("spawn_flag") for person in cast[chapter["area"]]}
+        for beat in chapter["beats"]:
+            actor_flag = beat.get("encounter_actor_flag")
+            if actor_flag is not None and actor_flag not in cast_flags:
+                raise ValueError(f"encounter actor flag {actor_flag} for {chapter['area']} has no matching scene NPC")
     for area_cast in cast.values():
         for person in area_cast:
             for choice in person.get("choices", []):
@@ -117,6 +129,10 @@ def validate_npc(person, area, require_design=False):
     if (not isinstance(position, list) or len(position) != 2
             or any(type(value) is not int or not 0 <= value <= 32767 for value in position)):
         raise ValueError(f"scene cast position for {area} must contain two bounded integer coordinates")
+    spawn_flag = person.get("spawn_flag")
+    if spawn_flag is not None and (not isinstance(spawn_flag, str)
+                                   or not re.fullmatch(r"TL[A-Z][A-Z0-9_]{1,28}", spawn_flag)):
+        raise ValueError(f"scene cast spawn flag for {area} must be a TL global name")
     choices = person.get("choices", [])
     if (not isinstance(choices, list) or len(choices) > 3
             or any(not isinstance(choice, dict)

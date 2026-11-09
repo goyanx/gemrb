@@ -364,6 +364,26 @@
         500
       ],
       "line": "I hid the scrolls because a road between worlds magnifies the purpose of whoever crosses it.",
+      "choices": [
+        {
+          "label": "Seek a road beyond this world",
+          "reply": "You tell Dorian that you seek a question worth carrying beyond this world, and will answer for the road you open.",
+          "flag": "TLLORIANPURPOSE",
+          "value": 1
+        },
+        {
+          "label": "Understand world travel",
+          "reply": "You tell Dorian that you seek knowledge of world travel, and will not mistake understanding for mastery.",
+          "flag": "TLLORIANPURPOSE",
+          "value": 2
+        },
+        {
+          "label": "Return the scrolls to Edmon",
+          "reply": "You tell Dorian that you will carry the scrolls back to King Edmon's court and answer for what they teach.",
+          "flag": "TLLORIANPURPOSE",
+          "value": 3
+        }
+      ],
       "responses": [
         {
           "flag": "TLWATCHPOST",
@@ -380,12 +400,30 @@
     },
     {
       "name": "Lorian Guardian",
-      "creature": "protagon",
+      "creature": "riddler",
       "position": [
-        930,
-        500
+        1230,
+        250
       ],
+      "spawn_flag": "TLLORIAN_GUARDIAN",
       "line": "The vault is not a prize. Prove you can leave its door closed before you ask it to open.",
+      "responses": [
+        {
+          "flag": "TLLORIANPURPOSE",
+          "value": 1,
+          "line": "You would carry a question through the arch. I will test the purpose you mean to take with you."
+        },
+        {
+          "flag": "TLLORIANPURPOSE",
+          "value": 2,
+          "line": "Knowledge can still open a door. Prove you understand the risk before asking this lock to yield."
+        },
+        {
+          "flag": "TLLORIANPURPOSE",
+          "value": 3,
+          "line": "You name a custodian and a return. The vault knows that promises are only beginnings."
+        }
+      ],
       "role": "Guardian of the sealed vault",
       "faction": "Byzantem Vault",
       "goal": "Keep the vault closed until the traveller shows restraint.",

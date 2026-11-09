@@ -53,7 +53,7 @@ These captures show the opening Alsperia Market scene running in GemRB. The wide
 
 ### Scene art
 
-Fifteen distinct generated concept backdrops preview the sixteen scene areas; one backdrop is reused. They are visual targets for the current prototype. The Hunter's Camp, Three-Cairn Fork, Mistwood Road, and Ruined Watchpost have custom searchmaps; the Mistwood stalker spawns on the authored road path. All sixteen areas still use the demo's shared WED layout and other terrain resources.
+Fifteen distinct generated concept backdrops preview the sixteen scene areas; one backdrop is reused. They are visual targets for the current prototype. The Hunter's Camp, Three-Cairn Fork, Mistwood Road, Ruined Watchpost, and Lorian Cavern have custom searchmaps. The Mistwood stalker spawns on its authored road path; in Lorian, the Guardian NPC waits beside the chest and turns hostile in place. All sixteen areas still use the demo's shared WED layout and other terrain resources.
 
 <table>
   <tr>
@@ -89,7 +89,7 @@ Fifteen distinct generated concept backdrops preview the sixteen scene areas; on
 - [Campaign plan](terralum/campaign_plan.md) — seven-act story spine and planned expansion.
 - [TODO and handoff](TODO.md) — completed, ongoing, and next work.
 
-Terralum is an in-progress prototype, not a finished or full-length RPG. The current cast reuses demo sprites and all sixteen areas still inherit the demo WED layout; Hunter's Camp, the Three-Cairn Fork, Mistwood Road, and Ruined Watchpost have custom searchmaps, while the other twelve use the generic one. Choices use a custom panel rather than native Infinity Engine DLG resources. The project guide and handoff describe current playability and verification gaps.
+Terralum is an in-progress prototype, not a finished or full-length RPG. The current cast reuses demo sprites and all sixteen areas still inherit the demo WED layout; Hunter's Camp, the Three-Cairn Fork, Mistwood Road, Ruined Watchpost, and Lorian Cavern have custom searchmaps, while the other eleven use the generic one. Choices use a custom panel rather than native Infinity Engine DLG resources. The project guide and handoff describe current playability and verification gaps.
 
 ## Supported platforms
 

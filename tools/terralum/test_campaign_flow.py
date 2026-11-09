@@ -76,6 +76,7 @@ globals_ = {"TLCHAP": 0, "TLBEAT": 0, "TLENEMY": 0, "TLCAST": 0,
             "TLJRN_BYZANTEM": 0, "TLJRN_MISTWOOD": 0, "TLJRN_HUNTER": 0, "TLJRN_HUNTER_RESOLVED": 0,
             "TLHUNTERTRACK": 0, "TLJRN_TRACKS": 0,
             "TLWAYSTONE": 0, "TLJRN_WAYSTONE": 0,
+            "TLLORIANPURPOSE": 0, "TLLORIAN_GUARDIAN": 0, "TLJRN_LORIAN_PURPOSE": 0,
             "TLJRN_SCROLLS": 0, "TLJRN_TEAR": 0,
             "TLJRN_ARCHIVE": 0, "TLJRN_ELDRADOR": 0, "TLJRN_VOYAGE": 0}
 enemy_dead = False
@@ -208,6 +209,11 @@ for chapter_index, chapter in enumerate(chapters):
             if chapter["area"] == "tl0002":
                 spawn = beat["spawn_position"]
                 assert (1, "riddler", *spawn) in [event[1] for event in events if event[0] == "spawn"]
+            elif chapter["area"] == "tl0003":
+                assert beat["encounter_actor_flag"] == "TLLORIAN_GUARDIAN"
+                assert globals_["TLENEMY"] == globals_[beat["encounter_actor_flag"]]
+                assert [event[1] for event in events if event[0] == "spawn"].count(
+                    (1, "riddler", *beat["spawn_position"])) == 1
             window.controls[4].press()
             assert globals_["TLBEAT"] == beats.index(beat)
             enemy_dead = True
@@ -228,9 +234,11 @@ assert globals_["TLECHO"] == 1
 assert len([event for event in events if event[0] == "area"]) == 15
 assert len([event for event in events if event[0] == "voice"]) == 7
 assert len([event for event in events if event[0] == "attack"]) == 2
-assert len(journal_entries) == 10
+assert len(journal_entries) == 11
 assert globals_["TLJRN_WAYSTONE"] == 1
 assert any("Three-Cairn Fork" in entry["value"] for entry in journal_entries)
+assert globals_["TLJRN_LORIAN_PURPOSE"] == 1
+assert any("answered Dorian's question" in entry["value"] for entry in journal_entries)
 assert globals_["TLJRN_HUNTER_RESOLVED"] == 1
 assert any(entry["Section"] == 2 and "Hunter's Camp decision is resolved" in entry["value"]
            for entry in journal_entries)
@@ -314,6 +322,37 @@ campaign.OnLoad()
 while timed_events:
     timed_events.pop(0)()
 assert len(journal_entries) == resolved_journal_count + 1
+
+# Dorian's purpose question is a required choice; each answer changes the
+# Guardian's response and the journal records that the answer was given.
+guardian_lines = (
+    "You would carry a question through the arch",
+    "Knowledge can still open a door",
+    "You name a custodian and a return",
+)
+for purpose_index, guardian_line in enumerate(guardian_lines):
+    window = Window()
+    events.clear()
+    timed_events.clear()
+    current_area = "tl0003"
+    enemy_dead = False
+    globals_.update({"TLCHAP": 6, "TLBEAT": 0, "TLENEMY": 0, "TLCAST": 0,
+                     "TLLORIANPURPOSE": 0, "TLJRN_LORIAN_PURPOSE": 0})
+    campaign.OnLoad()
+    while timed_events:
+        timed_events.pop(0)()
+    window.controls[4].press()
+    assert globals_["TLBEAT"] == 0
+    assert "Dorian waits for your answer" in window.controls[0].text
+    assert len([event for event in events if event[0] == "spawn"]) == len(campaign.Story.cast("tl0003"))
+    window.controls[11].press()
+    choice = campaign.Story.cast("tl0003")[0]["choices"][purpose_index]
+    assert window.controls[12 + purpose_index].text == choice["label"]
+    window.controls[12 + purpose_index].press()
+    assert globals_["TLLORIANPURPOSE"] == purpose_index + 1
+    assert choice["reply"] in window.controls[0].text
+    window.controls[11].press()
+    assert guardian_line in window.controls[0].text
 
 window = Window()
 events.clear()
@@ -419,6 +458,6 @@ for chapter_index, chapter in enumerate(chapters):
                 assert globals_[event["flag"]] == 1
                 assert any(entry["value"] == event["text"] for entry in journal_entries)
             choice_count += 1
-assert choice_count == 22
+assert choice_count == 25
 print(len(chapters), "scenes across seven acts,", sum(len(campaign.Story.cast(chapter["area"])) for chapter in chapters),
-      "named scene actors, keyboard controls, eleven authored journal events, all 22 response options, three market routes, encounter gates, fifteen transitions, and seven voice cues passed")
+      "named scene actors, keyboard controls, twelve authored journal events, all 25 response options, three market routes, encounter gates, fifteen transitions, and seven voice cues passed")

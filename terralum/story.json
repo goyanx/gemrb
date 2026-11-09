@@ -263,7 +263,14 @@
           "speaker": "Dorian",
           "text": "The chest is protected by an old guardian. It knows no ambition, only the duty to keep the door closed.",
           "action": "Confront the guardian",
-          "encounter": "Lorian guardian"
+          "encounter": "Lorian guardian",
+          "spawn_position": [1230, 250],
+          "encounter_actor_flag": "TLLORIAN_GUARDIAN",
+          "journal": {
+            "flag": "TLJRN_LORIAN_PURPOSE",
+            "section": 4,
+            "text": "In Lorian, Algoreth answered Dorian's question about the Scrolls of Byzantem. The purpose he named will accompany the scrolls on the return to King Edmon's court."
+          }
         },
         {
           "speaker": "Algoreth",

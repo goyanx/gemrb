@@ -80,6 +80,8 @@ def OnLoad():
 			actor = GemRB.CreateCreature(1, person["creature"], person["position"][0], person["position"][1])
 			GemRB.SetPlayerName(actor, person["name"], 0)
 			GemRB.SetPlayerStat(actor, IE_EA, NEUTRAL)
+			if person.get("spawn_flag"):
+				GemRB.SetGlobal(person["spawn_flag"], "GLOBAL", actor)
 		if chapter["area"] == "tl0002" and GemRB.GetGameVar("TLMARALEAD") == 2:
 			warden = GemRB.CreateCreature(1, "riddler", 850, 650)
 			GemRB.SetPlayerName(warden, "Edmon's Waywarden", 0)
@@ -212,6 +214,9 @@ def OnLoad():
 		beat_index = GemRB.GetGameVar("TLBEAT")
 		chapter = chapters[chapter_index]
 		beat = chapter["beats"][beat_index]
+		if chapter["area"] == "tl0003" and beat_index == 0 and not GemRB.GetGameVar("TLLORIANPURPOSE"):
+			message.Append("\n\nDorian waits for your answer. Speak with him before approaching the guardian.")
+			return
 		if (chapter["area"] == "tl0002" and beat.get("encounter")
 				and (GemRB.GetGameVar("TLMARALEAD") == 1 or GemRB.GetGameVar("TLLIBRARYCLUE") == 1
 				     or GemRB.GetGameVar("TLHUNTER") == 1 or GemRB.GetGameVar("TLHUNTERTRACK") == 1)):
@@ -221,15 +226,23 @@ def OnLoad():
 			return
 		enemy = GemRB.GetGameVar("TLENEMY")
 		if "encounter" in beat and not enemy:
-			# The demo humanoid supplies an open-licensed CRE template. The
-			# campaign names and hostility are assigned at spawn time.
-			spawn = beat.get("spawn_position")
-			if spawn:
-				enemy = GemRB.CreateCreature(1, "riddler", spawn[0], spawn[1])
+			# A beat may turn a scene NPC hostile; otherwise, use the demo CRE
+			# as an open-licensed template for this encounter.
+			actor_flag = beat.get("encounter_actor_flag")
+			if actor_flag:
+				enemy = GemRB.GetGameVar(actor_flag)
+				if not enemy:
+					message.Append("\n\nThe guardian is absent from the scene. Reload the area before continuing.")
+					return
 			else:
-				enemy = GemRB.CreateCreature(1, "riddler")
+				spawn = beat.get("spawn_position")
+				if spawn:
+					enemy = GemRB.CreateCreature(1, "riddler", spawn[0], spawn[1])
+				else:
+					enemy = GemRB.CreateCreature(1, "riddler")
 			GemRB.SetGlobal("TLENEMY", "GLOBAL", enemy)
-			GemRB.SetPlayerName(enemy, beat["encounter"], 0)
+			if not actor_flag:
+				GemRB.SetPlayerName(enemy, beat["encounter"], 0)
 			GemRB.SetPlayerStat(enemy, IE_EA, ENEMY)
 			GemRB.ExecuteString("Attack(Player1)", enemy)
 			message.Append("\n\nENCOUNTER: " + beat["encounter"] + " emerges. Defeat it to continue.")

@@ -14,10 +14,12 @@ This is the current work ledger for human and AI contributors. Read [AGENTS.md](
 - [x] Completed structured role, faction, goal, knowledge, voice, and provenance sheets for all 34 NPC cast entries; pack validation now rejects entries missing this design context.
 - [x] Added a victory gate to each of the three prototype encounters.
 - [x] Fixed the ARE builder counts: it now preserves the demo entrances and clears actor, region, spawn, container, item, and door counts that belonged to the demo.
-- [x] Campaign-flow mock reports 16 scene casts, 34 actors, keyboard controls, all 22 authored response options, three market routes, three encounter gates, fifteen area transitions, and seven voice cues.
+- [x] Campaign-flow mock reports 16 scene casts, 34 actors, keyboard controls, all 25 authored response options, three market routes, three encounter gates, fifteen area transitions, and seven voice cues.
 - [x] Added ten one-time story-beat journal events and an optional persistent Hunter's Camp creekside clue, including the active/resolved camp objective; the Journal panel uses GemRB's persistent journal API.
 - [x] Added Ranger Ilya's optional creekside conversation and stateful route around the Mistwood stalker; the dialogue journal event is deduplicated on repeat interaction, and the campaign mock tests the dark-lantern branch through Dorian's inscription.
 - [x] Added the Three-Cairn Fork as an adaptation scene with two named waykeepers, a two-outcome marker decision, a journaled route discovery, and changed dialogue at the Ruined Watchpost.
+- [x] Added a required three-option purpose conversation with Dorian in Lorian; it records the answer in the journal and changes the Guardian's response. The campaign mock covers all answers and verifies the player cannot skip the conversation to start the encounter.
+- [x] Authored and connectivity-checked a fifth custom `SR.BMP` for Lorian Cavern; the party, Dorian, Guardian, western arch, scroll chest approach, and authored Guardian spawn connect across the plaza.
 - [x] Authored and connectivity-checked a second custom `SR.BMP` for the Three-Cairn Fork; the player start, both NPCs, three path branches, and blocked stone/terrain footprints are covered by the map check.
 - [x] Authored and connectivity-checked a third custom `SR.BMP` for Mistwood Road; the player start, both scene NPCs, stalker spawn, southern approach, northbound road, and blocked terrain footprints are covered by the map check. The encounter now spawns at its authored world coordinate.
 - [x] Authored and connectivity-checked a fourth custom `SR.BMP` for the Ruined Watchpost; the party, Courier Pell, Waywarden Saren, plaza, southern road, north arch, and blocked perimeter ruins are covered by the map check.
@@ -30,10 +32,10 @@ This is the current work ledger for human and AI contributors. Read [AGENTS.md](
 
 ## Ongoing
 
-- [ ] **Scene dialogue slice:** Market, library, watchpost, seal gallery, council, academy courtyard, archive index, and hangar choices set persistent flags with later text outcomes. The logic is mock-tested; live input/save testing remains open. The custom choice UI is not a native GemRB DLG system.
-- [ ] **Journal verification:** eleven event flags, including the waystone discovery and optional creekside clue, plus revisit deduplication, pass the script mock; live display and save/load still need direct playtesting.
-- [ ] **Playable-scene verification:** the extended pack builds and the opening area starts in live GemRB. All four custom Mistwood maps pass script connectivity checks, but live movement is unverified. The WSLg window input path has not yet been verified. Later-area entry, player movement, actual fights, choice input, save/load, and return entry still need direct playtesting.
-- [ ] **Art and geometry:** characters currently reuse the demo's two humanoid sprites. Hunter's Camp, the Three-Cairn Fork, Mistwood Road, and the Ruined Watchpost now have custom searchmaps, but all 16 areas still inherit the AR0100 WED layout and terrain/height/light files; the other 12 also use its generic searchmap. All four custom maps pass connectivity checks, while actual in-engine movement remains unverified.
+- [ ] **Scene dialogue slice:** Market, library, watchpost, Lorian purpose test, seal gallery, council, academy courtyard, archive index, and hangar choices set persistent flags with later text outcomes. The logic is mock-tested; live input/save testing remains open. The custom choice UI is not a native GemRB DLG system.
+- [ ] **Journal verification:** twelve event flags, including the waystone discovery, Lorian purpose choice, and optional creekside clue, plus revisit deduplication, pass the script mock; live display and save/load still need direct playtesting.
+- [ ] **Playable-scene verification:** the extended pack builds and the opening area starts in live GemRB. All five custom maps pass script connectivity checks, but live movement is unverified. The WSLg window input path has not yet been verified. Later-area entry, player movement, actual fights, choice input, save/load, and return entry still need direct playtesting.
+- [ ] **Art and geometry:** characters currently reuse the demo's two humanoid sprites. Hunter's Camp, the Three-Cairn Fork, Mistwood Road, the Ruined Watchpost, and Lorian Cavern now have custom searchmaps, but all 16 areas still inherit the AR0100 WED layout and terrain/height/light files; the other 11 also use its generic searchmap. All five custom maps pass connectivity checks, while actual in-engine movement remains unverified.
 - [ ] **Campaign length:** 16 locations and 41 beats form an expanded prototype, not a long-form campaign. Act II now has a side scene about the trail marker; Acts VI and VII have archive-index and hangar preparation locations. Deeper quest arcs remain; see `terralum/campaign_plan.md`.
 
 ## To do, in priority order
@@ -48,7 +50,7 @@ This is the current work ledger for human and AI contributors. Read [AGENTS.md](
 
 ### P1 — Make every scene coherent and navigable
 
-- [ ] Extend the four custom searchmaps to the remaining 12 areas; replace shared WED geometry, entrances, terrain/height/light maps, and prove party movement in every scene.
+- [ ] Extend the five custom searchmaps to the remaining 11 areas; replace shared WED geometry, entrances, terrain/height/light maps, and prove party movement in every scene.
 - [x] Add focused searchmap checks for dimensions/palette, blocked terrain and props, and four-way connectivity from the party start to scene NPCs, encounter spawns, and exits.
 - [ ] Replace repeated placeholder NPC models with unique/generated or compatible open-licensed art and portraits. Keep provenance and license records.
 - [ ] Place actual interactable clues, containers, doors, and travel links only where they match the new scene geometry.
