@@ -23,9 +23,10 @@ class Control:
         self.press = None
         self.hotkey = None
         self.disabled = False
+        self.visible = True
 
     def __getattr__(self, name):
-        if name in ("SetFlags", "AddAlias", "SetColor", "SetAnimation", "SetBorder", "SetVisible"):
+        if name in ("SetFlags", "AddAlias", "SetColor", "SetAnimation", "SetBorder"):
             return lambda *args: None
         raise AttributeError(name)
 
@@ -37,6 +38,9 @@ class Control:
 
     def SetText(self, text):
         self.text = text
+
+    def SetVisible(self, visible):
+        self.visible = visible
 
     def Append(self, text):
         self.text += text
@@ -354,6 +358,7 @@ for chapter_index, choice_index in ((chapter_index_by_area[area], choice) for ar
     events.clear()
     timed_events.clear()
     current_area = chapter["area"]
+    globals_.update({key: 0 for key in globals_ if key.startswith("TL")})
     globals_.update({"TLCHAP": chapter_index, "TLBEAT": 0, "TLENEMY": 0, "TLCAST": 0,
                      "TLWAYSTONE": 0,
                      "TLMARALEAD": 0, "TLLIBRARYCLUE": 0, "TLWATCHPOST": 0, "TLHUNTER": 0,
@@ -369,6 +374,12 @@ for chapter_index, choice_index in ((chapter_index_by_area[area], choice) for ar
     button.press()
     assert globals_[choice["flag"]] == choice["value"]
     assert choice["reply"] in window.controls[0].text
+    if not choice.get("followup"):
+        for _ in range(len(campaign.Story.cast(chapter["area"]))):
+            window.controls[11].press()
+            if f"{campaign.Story.cast(chapter['area'])[0]['name']}:" in window.controls[0].text:
+                break
+        assert all(not window.controls[index].visible for index in (12, 13, 14))
     if chapter["area"] == "tl0015":
         window.controls[11].press()
         assert "camp should remain concealed" in window.controls[0].text
@@ -990,6 +1001,11 @@ for selected, expected_response, expected_edmon, expected_route in (
                for entry in journal_entries) == 1
     window.controls[4].press()
     assert expected_route in window.controls[0].text
+    for _ in range(len(campaign.Story.cast("tl0025"))):
+        window.controls[11].press()
+        if "Courier Pell:" in window.controls[0].text:
+            break
+    assert all(not window.controls[index].visible for index in (12, 13, 14))
     window.controls[4].press()
     assert current_area == "tl0004"
     while timed_events:

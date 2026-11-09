@@ -66,5 +66,6 @@ This file records verified implementation findings and mistakes that should info
 - **Test a kit choice where the equipment is used.** The River Crossing checks `TLTRAVELKIT` against the chosen handline route and persists a derived `TLRIVERROUTE`; dialogue can explain an attempted route, but only the matching equipment enables the safe bypass. Verify both correct and mismatched kit combinations at the later encounter.
 
 - **Shared outcome events belong to the conversation, not each branch.** For Orla's two-outcome Waywarden Relay conversation, one follow-up event records the choice once regardless of branch; attach it to the shared follow-up so the pack validator can enforce unique journal flags.
+- **Lock a resolved decision when its journal entry is one-time.** If repeat dialogue still offers the original options, the campaign flag can change while the journal preserves the first answer. Give all options in a decision one shared flag and hide that option group after the flag is set.
 
 - **A returning location needs a new scene state.** Reusing the Watchpost visual art and searchmap is appropriate for its Act III return, but give the revisit a distinct area resref and cast so earlier patrol, encounter, and route choices can change what NPCs say.

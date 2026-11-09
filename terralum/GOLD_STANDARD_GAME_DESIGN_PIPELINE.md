@@ -82,6 +82,7 @@ Recurring characters need a clear reason to return and a changed line when the w
 - Offer about three meaningful responses when a decision belongs to the player. Fewer are fine when the moment is simple; more require a clear reason.
 - Give each response an observable effect: information, relationship change, quest state, route, reward, encounter disposition, or a deliberate refusal.
 - Write speaker, condition, response, action, and resulting state together. Dialogue and implementation must describe the same event.
+- Give each option group one shared decision flag and hide it after selection. A repeat interaction must not change a branch whose journal event has already been recorded; represent later conversation as a follow-up state.
 - Never put required information in an optional line with no fallback. Give the player another route to discover essential facts.
 - Do not use a linear text panel as a substitute for interactive dialogue when the design calls for a conversation.
 

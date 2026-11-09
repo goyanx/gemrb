@@ -108,7 +108,10 @@ def OnLoad():
 				line = response["line"]
 				break
 		message.SetText("[cap]T[/cap]ERRALUM  |  " + chapters[chapter_index]["title"] + "\n" + chapters[chapter_index]["place"] + "\n\n" + person["name"] + ": " + line + "\n\n")
-		show_dialogue_choices(person, person.get("choices", []))
+		choices = person.get("choices", [])
+		if choices and GemRB.GetGameVar(choices[0]["flag"]):
+			choices = []
+		show_dialogue_choices(person, choices)
 
 	def show_dialogue_choices(person, choices):
 		for index, button in enumerate(choice_buttons):

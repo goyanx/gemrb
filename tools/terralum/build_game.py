@@ -189,6 +189,8 @@ def validate_npc(person, area, require_design=False):
     if (not isinstance(choices, list) or len(choices) > 3
             or any(not validate_choice(choice, allow_followup=True) for choice in choices)):
         raise ValueError(f"scene dialogue choices for {area} must define up to three complete options")
+    if choices and len({choice["flag"] for choice in choices}) != 1:
+        raise ValueError(f"scene dialogue choices for {area} must share one decision flag")
     responses = person.get("responses", [])
     if (not isinstance(responses, list)
             or len(responses) > 24
@@ -240,6 +242,7 @@ def validate_choice(choice, allow_followup=False):
             and journal_valid
             and isinstance(followup.get("choices"), list)
             and 1 <= len(followup["choices"]) <= 3
+            and len({choice.get("flag") for choice in followup["choices"] if isinstance(choice, dict)}) == 1
             and all(validate_choice(child) for child in followup["choices"]))
 
 
