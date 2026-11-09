@@ -127,6 +127,7 @@ def create_creature(*args):
     return next_actor
 gemrb.CreateCreature = create_creature
 gemrb.SetPlayerName = lambda actor, name, *args: events.append(("name", actor, name))
+gemrb.SetPlayerDialog = lambda actor, resref: events.append(("dialog", actor, resref))
 gemrb.SetPlayerStat = lambda *args: None
 gemrb.ExecuteString = lambda action, actor: events.append(("attack", action, actor))
 gemrb.GetPlayerStat = lambda actor, stat: 2048 if enemy_dead or actor in dead_actors else 0
@@ -1265,6 +1266,7 @@ for _ in range(4):
     window.controls[11].press()
 assert "magic knights’ armaments" in window.controls[0].text
 assert len([event for event in events if event[0] == "spawn"]) == 4
+assert [event[2] for event in events if event[0] == "dialog"] == ["ALISTAR"]
 
 hangar_index = chapter_index_by_area["tl0014"]
 alistair_lines = {
@@ -1285,6 +1287,7 @@ for (briefing, voyage), expected in alistair_lines.items():
     campaign.OnLoad()
     while timed_events:
         timed_events.pop(0)()
+    assert [event[2] for event in events if event[0] == "dialog"] == ["ALISTAR"]
     for _ in range(3):
         window.controls[11].press()
     assert expected in window.controls[0].text, window.controls[0].text

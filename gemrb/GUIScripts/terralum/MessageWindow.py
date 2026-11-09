@@ -80,6 +80,8 @@ def OnLoad():
 			actor = GemRB.CreateCreature(1, person["creature"], person["position"][0], person["position"][1])
 			GemRB.SetPlayerName(actor, person["name"], 0)
 			GemRB.SetPlayerStat(actor, IE_EA, NEUTRAL)
+			if person.get("dialog"):
+				GemRB.SetPlayerDialog(actor, person["dialog"])
 			if person.get("spawn_flag"):
 				GemRB.SetGlobal(person["spawn_flag"], "GLOBAL", actor)
 		if chapter["area"] == "tl0002" and GemRB.GetGameVar("TLMARALEAD") == 2:

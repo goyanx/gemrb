@@ -1,0 +1,206 @@
+{
+  "ALISTAR": {
+    "states": [
+      {
+        "when": [
+          {
+            "flag": "TLCHAP",
+            "value": 18
+          }
+        ],
+        "say": "I work on the magic knights’ armaments and on Alsperia’s magical craft. Neither discipline tells me what waits in Eldrador.",
+        "transitions": [
+          {
+            "text": "Ask how his work relates to this voyage.",
+            "next": 6
+          },
+          {
+            "text": "Return to the charts.",
+            "final": true
+          }
+        ]
+      },
+      {
+        "when": [
+          {
+            "flag": "TLCHAP",
+            "value": 19
+          },
+          {
+            "flag": "TLBRIEFING",
+            "value": 1
+          },
+          {
+            "flag": "TLVOYAGE",
+            "value": 1
+          }
+        ],
+        "say": "You carry Selene’s marked account and Aven chose observation. Keep the incomplete record apart from the instruments; neither tells us what waits there.",
+        "transitions": [
+          {
+            "text": "Ask whether the preparations explain the Tear.",
+            "next": 7
+          },
+          {
+            "text": "Keep the records distinct and proceed.",
+            "final": true
+          }
+        ]
+      },
+      {
+        "when": [
+          {
+            "flag": "TLCHAP",
+            "value": 19
+          },
+          {
+            "flag": "TLBRIEFING",
+            "value": 1
+          },
+          {
+            "flag": "TLVOYAGE",
+            "value": 2
+          }
+        ],
+        "say": "The marked account travels separately while Aven prepares a guarded arrival. Those preparations protect the inquiry; they do not settle the record.",
+        "transitions": [
+          {
+            "text": "Ask whether the preparations explain the Tear.",
+            "next": 8
+          },
+          {
+            "text": "Keep the records distinct and proceed.",
+            "final": true
+          }
+        ]
+      },
+      {
+        "when": [
+          {
+            "flag": "TLCHAP",
+            "value": 19
+          },
+          {
+            "flag": "TLBRIEFING",
+            "value": 2
+          },
+          {
+            "flag": "TLVOYAGE",
+            "value": 1
+          }
+        ],
+        "say": "Ealdrin carries Selene’s witness notes, and Aven chose observation. We can listen first without treating a witness account as a verdict.",
+        "transitions": [
+          {
+            "text": "Ask whether the preparations explain the Tear.",
+            "next": 9
+          },
+          {
+            "text": "Keep the records distinct and proceed.",
+            "final": true
+          }
+        ]
+      },
+      {
+        "when": [
+          {
+            "flag": "TLCHAP",
+            "value": 19
+          },
+          {
+            "flag": "TLBRIEFING",
+            "value": 2
+          },
+          {
+            "flag": "TLVOYAGE",
+            "value": 2
+          }
+        ],
+        "say": "The witness notes travel with the warding instruments aboard a guarded approach. I will keep our technical readings distinct from what Selene witnessed.",
+        "transitions": [
+          {
+            "text": "Ask whether the preparations explain the Tear.",
+            "next": 10
+          },
+          {
+            "text": "Keep the records distinct and proceed.",
+            "final": true
+          }
+        ]
+      },
+      {
+        "when": [
+          {
+            "flag": "TLCHAP",
+            "value": 19
+          }
+        ],
+        "say": "The Aethercraft carries our instruments and records. My work on the magic knights’ armaments cannot tell us what the Eldrador Tear is.",
+        "transitions": [
+          {
+            "text": "Ask whether the preparations explain the Tear.",
+            "next": 11
+          },
+          {
+            "text": "Keep the records distinct and proceed.",
+            "final": true
+          }
+        ]
+      },
+      {
+        "say": "I develop weapons and projectiles for Alsperia’s magic knights, and I am involved with the Aethercraft. I can describe our work, but it gives me no special knowledge of the Tear.",
+        "transitions": [
+          {
+            "text": "Thank you, Alistair.",
+            "final": true
+          }
+        ]
+      },
+      {
+        "say": "No. The ship and its instruments prepare us to observe and protect the expedition; they cannot establish the Tear’s origin or meaning.",
+        "transitions": [
+          {
+            "text": "Then we will keep that question open.",
+            "final": true
+          }
+        ]
+      },
+      {
+        "say": "No. The ship and its instruments prepare us to observe and protect the expedition; they cannot establish the Tear’s origin or meaning.",
+        "transitions": [
+          {
+            "text": "Then we will keep that question open.",
+            "final": true
+          }
+        ]
+      },
+      {
+        "say": "No. The ship and its instruments prepare us to observe and protect the expedition; they cannot establish the Tear’s origin or meaning.",
+        "transitions": [
+          {
+            "text": "Then we will keep that question open.",
+            "final": true
+          }
+        ]
+      },
+      {
+        "say": "No. The ship and its instruments prepare us to observe and protect the expedition; they cannot establish the Tear’s origin or meaning.",
+        "transitions": [
+          {
+            "text": "Then we will keep that question open.",
+            "final": true
+          }
+        ]
+      },
+      {
+        "say": "No. Our preparations may help us observe and protect the expedition, but they cannot establish the Tear’s origin or meaning.",
+        "transitions": [
+          {
+            "text": "Then we will keep that question open.",
+            "final": true
+          }
+        ]
+      }
+    ]
+  }
+}

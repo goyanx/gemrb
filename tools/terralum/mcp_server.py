@@ -12,7 +12,9 @@ from pathlib import Path
 
 from PIL import Image
 
-from build_game import AREAS, CAST_FILE, PROJECT, build, iter_npc_choices, read_cast, read_story, validate_cast, validate_npc
+from build_game import (AREAS, CAST_FILE, NATIVE_DIALOGUE_FILE, PROJECT, build,
+                        iter_npc_choices, read_cast, read_story, validate_cast,
+                        validate_native_dialogue, validate_npc)
 
 
 STORY_PATH = PROJECT / "story.json"
@@ -29,6 +31,8 @@ NPC_INPUT_SCHEMA = {
         "voice": {"type": "string", "minLength": 1, "maxLength": 500},
         "provenance": {"type": "string", "enum": ["canon", "user-confirmed", "adaptation", "unresolved"]},
         "creature": {"type": "string", "enum": ["protagon", "riddler"]},
+        "dialog": {"type": "string", "pattern": "^[A-Za-z0-9_]{1,8}$",
+                    "description": "Optional native Infinity Engine dialogue resref; define its states with the native-dialogue authoring tool."},
         "position": {"type": "array", "items": {"type": "integer", "minimum": 0, "maximum": 32767},
                       "minItems": 2, "maxItems": 2},
         "line": {"type": "string", "minLength": 1, "maxLength": 2000},
@@ -102,6 +106,40 @@ TOOLS = [
             "npc_index": {"type": "integer", "minimum": 0,
                          "description": "Omit to append a new NPC; provide an existing zero-based index to replace that entry."},
         }, "required": ["area", "npc"], "additionalProperties": False},
+    },
+    {
+        "name": "terralum_upsert_native_dialogue",
+        "description": "Create or replace a native Infinity Engine DLG state machine. Conditions use registered campaign flags; each state contains NPC text and player options that continue to another state or end the conversation.",
+        "inputSchema": {"type": "object", "properties": {
+            "resref": {"type": "string", "pattern": "^[A-Za-z0-9_]{1,8}$"},
+            "dialogue": {"type": "object", "properties": {
+                "states": {"type": "array", "minItems": 1, "maxItems": 255, "items": {
+                    "type": "object", "properties": {
+                        "say": {"type": "string", "minLength": 1, "maxLength": 2000},
+                        "when": {"type": "array", "minItems": 1, "maxItems": 8, "items": {
+                            "type": "object", "properties": {
+                                "flag": {"type": "string", "pattern": "^TL[A-Z][A-Z0-9_]{1,28}$"},
+                                "value": {"type": "integer"},
+                            }, "required": ["flag", "value"], "additionalProperties": False,
+                        }},
+                        "transitions": {"type": "array", "minItems": 1, "maxItems": 24, "items": {
+                            "type": "object", "properties": {
+                                "text": {"type": "string", "minLength": 1, "maxLength": 1000},
+                                "next": {"type": "integer", "minimum": 0, "maximum": 254},
+                                "final": {"type": "boolean", "const": True},
+                            }, "required": ["text"], "additionalProperties": False,
+                        }},
+                    }, "required": ["say", "transitions"], "additionalProperties": False,
+                }},
+            }, "required": ["states"], "additionalProperties": False},
+        }, "required": ["resref", "dialogue"], "additionalProperties": False},
+    },
+    {
+        "name": "terralum_get_native_dialogue",
+        "description": "Read a native Infinity Engine DLG state machine by resource resref.",
+        "inputSchema": {"type": "object", "properties": {
+            "resref": {"type": "string", "pattern": "^[A-Za-z0-9_]{1,8}$"},
+        }, "required": ["resref"], "additionalProperties": False},
     },
     {
         "name": "terralum_register_campaign_flag",
@@ -190,6 +228,16 @@ def call_tool(name, arguments):
         if area not in AREAS:
             raise ValueError("Unknown area")
         return result({"area": area, "npcs": read_cast()[area]})
+    if name == "terralum_get_native_dialogue":
+        resref = arguments.get("resref")
+        if not isinstance(resref, str) or not re.fullmatch(r"[A-Za-z0-9_]{1,8}", resref):
+            raise ValueError("resref must be an Infinity Engine resource name of at most eight characters")
+        dialogues = json.loads(NATIVE_DIALOGUE_FILE.read_text(encoding="utf-8"))
+        key = resref.upper()
+        if key not in {name.upper() for name in dialogues}:
+            raise ValueError(f"Unknown native dialogue {key}")
+        dialogue = next(value for name, value in dialogues.items() if name.upper() == key)
+        return result({"resref": key, "dialogue": dialogue})
     if name == "terralum_upsert_scene_npc":
         area = arguments.get("area")
         npc = arguments.get("npc")
@@ -199,6 +247,11 @@ def call_tool(name, arguments):
         if npc_index is not None and (type(npc_index) is not int or npc_index < 0):
             raise ValueError("npc_index must be a nonnegative zero-based index")
         validate_npc(npc, area, require_design=True)
+        if npc.get("dialog"):
+            dialogue_resrefs = {entry.upper() for entry in json.loads(
+                NATIVE_DIALOGUE_FILE.read_text(encoding="utf-8"))}
+            if npc["dialog"].upper() not in dialogue_resrefs:
+                raise ValueError(f"native dialogue {npc['dialog']} must be authored before binding it to an NPC")
         setup = SETUP_PATH.read_text(encoding="utf-8")
         registered_flags = set(re.findall(r'GemRB\.SetGlobal\("(TL[A-Z0-9_]+)", "GLOBAL", 0\)', setup))
         npc_flags = set()
@@ -234,6 +287,24 @@ def call_tool(name, arguments):
         temporary.write_text(json.dumps(cast, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
         temporary.replace(CAST_FILE)
         return result({"area": area, "npc_index": cast[area].index(candidate), "npc": candidate})
+    if name == "terralum_upsert_native_dialogue":
+        resref = arguments.get("resref")
+        dialogue = arguments.get("dialogue")
+        if not isinstance(resref, str) or not re.fullmatch(r"[A-Za-z0-9_]{1,8}", resref):
+            raise ValueError("resref must be an Infinity Engine resource name of at most eight characters")
+        key = resref.upper()
+        setup = SETUP_PATH.read_text(encoding="utf-8")
+        initialized_flags = set(re.findall(r'GemRB\.SetGlobal\("(TL[A-Z0-9_]+)", "GLOBAL", 0\)', setup))
+        validate_native_dialogue(key, dialogue, initialized_flags)
+        dialogues = json.loads(NATIVE_DIALOGUE_FILE.read_text(encoding="utf-8"))
+        dialogues = {name.upper(): value for name, value in dialogues.items() if name.upper() != key}
+        dialogues[key] = dialogue
+        for name, value in dialogues.items():
+            validate_native_dialogue(name, value, initialized_flags)
+        temporary = NATIVE_DIALOGUE_FILE.with_suffix(NATIVE_DIALOGUE_FILE.suffix + ".tmp")
+        temporary.write_text(json.dumps(dialogues, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+        temporary.replace(NATIVE_DIALOGUE_FILE)
+        return result({"resref": key, "states": len(dialogue["states"]), "resource": "override/" + key.lower() + ".dlg"})
     if name == "terralum_register_campaign_flag":
         flag = arguments.get("flag")
         if not isinstance(flag, str) or not re.fullmatch(r"TL[A-Z][A-Z0-9_]{1,28}", flag):

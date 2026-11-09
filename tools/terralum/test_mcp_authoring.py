@@ -27,22 +27,30 @@ class SceneCastAuthoringTests(unittest.TestCase):
         self.original_server_cast_path = mcp_server.CAST_FILE
         self.original_setup_path = mcp_server.SETUP_PATH
         self.original_story_path = mcp_server.STORY_PATH
+        self.original_native_dialogue_path = build_game.NATIVE_DIALOGUE_FILE
+        self.original_server_native_dialogue_path = mcp_server.NATIVE_DIALOGUE_FILE
         self.cast_path = self.temp_path / "scene_cast.json"
         shutil.copy2(self.original_cast_path, self.cast_path)
         self.setup_path = self.temp_path / "SetupGame.py"
         shutil.copy2(self.original_setup_path, self.setup_path)
         self.story_path = self.temp_path / "story.json"
         shutil.copy2(self.original_story_path, self.story_path)
+        self.native_dialogue_path = self.temp_path / "native_dialogues.json"
+        shutil.copy2(self.original_native_dialogue_path, self.native_dialogue_path)
         build_game.CAST_FILE = self.cast_path
         mcp_server.CAST_FILE = self.cast_path
         mcp_server.SETUP_PATH = self.setup_path
         mcp_server.STORY_PATH = self.story_path
+        build_game.NATIVE_DIALOGUE_FILE = self.native_dialogue_path
+        mcp_server.NATIVE_DIALOGUE_FILE = self.native_dialogue_path
 
     def tearDown(self):
         build_game.CAST_FILE = self.original_cast_path
         mcp_server.CAST_FILE = self.original_server_cast_path
         mcp_server.SETUP_PATH = self.original_setup_path
         mcp_server.STORY_PATH = self.original_story_path
+        build_game.NATIVE_DIALOGUE_FILE = self.original_native_dialogue_path
+        mcp_server.NATIVE_DIALOGUE_FILE = self.original_server_native_dialogue_path
         self.temp_dir.cleanup()
 
     @staticmethod
@@ -179,6 +187,30 @@ class SceneCastAuthoringTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "register campaign flags"):
             mcp_server.call_tool("terralum_upsert_scene_npc", {
                 "area": "tl0001", "npc": invalid,
+            })
+
+    def test_native_dialogue_authoring_and_npc_binding(self):
+        dialogue = {
+            "states": [
+                {"when": [{"flag": "TLCHAP", "value": 18}], "say": "First state.",
+                 "transitions": [{"text": "Continue.", "next": 1}]},
+                {"say": "Follow-up state.", "transitions": [{"text": "Close.", "final": True}]},
+            ]
+        }
+        authored = self.payload(mcp_server.call_tool("terralum_upsert_native_dialogue", {
+            "resref": "TestDlg", "dialogue": dialogue,
+        }))
+        self.assertEqual(authored["resref"], "TESTDLG")
+        self.assertEqual(authored["states"], 2)
+        self.assertEqual(build_game.read_native_dialogues()["TESTDLG"], dialogue)
+        fetched = self.payload(mcp_server.call_tool("terralum_get_native_dialogue", {"resref": "testdlg"}))
+        self.assertEqual(fetched["dialogue"], dialogue)
+
+        invalid = json.loads(json.dumps(dialogue))
+        invalid["states"][0]["when"][0]["flag"] = "TLNOTREGISTERED"
+        with self.assertRaisesRegex(ValueError, "uninitialized entry conditions"):
+            mcp_server.call_tool("terralum_upsert_native_dialogue", {
+                "resref": "BADDLG", "dialogue": invalid,
             })
 
     def test_design_metadata_and_area_cast_invariants_are_required(self):

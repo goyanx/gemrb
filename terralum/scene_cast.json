@@ -1301,7 +1301,8 @@
           ],
           "line": "The witness notes travel with the warding instruments aboard a guarded approach. I will keep our technical readings distinct from what Selene witnessed."
         }
-      ]
+      ],
+      "dialog": "ALISTAR"
     }
   ],
   "tl0018": [
@@ -1517,7 +1518,8 @@
       "goal": "Support the expedition while keeping engineering observations distinct from claims about the Tear.",
       "knowledge": "Develops weapons and projectiles for Alsperia’s magic knights and is involved with the Aethercraft; has no confirmed knowledge of Eldrador’s Tear.",
       "voice": "Inventive and exact, separating technical observations from conclusions.",
-      "provenance": "canon"
+      "provenance": "canon",
+      "dialog": "ALISTAR"
     }
   ],
   "tl0022": [

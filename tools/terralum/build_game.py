@@ -20,6 +20,7 @@ SOURCE = ROOT / "demo"
 PROJECT = ROOT / "terralum"
 OUTPUT = PROJECT / "build" / "game"
 CAST_FILE = PROJECT / "scene_cast.json"
+NATIVE_DIALOGUE_FILE = PROJECT / "native_dialogues.json"
 SEARCHMAP_FILE = PROJECT / "area_searchmaps.json"
 AREA_IMAGE = PROJECT / "art" / "observatory_courtyard.png"
 SETUP_FILE = ROOT / "gemrb" / "GUIScripts" / "terralum" / "SetupGame.py"
@@ -128,6 +129,7 @@ def read_story():
                 if event is not None:
                     validate_journal_event(event, journal_flags, initialized_flags)
     cast = read_cast()
+    read_native_dialogues()
     for chapter in chapters:
         cast_flags = {person.get("spawn_flag") for person in cast[chapter["area"]]}
         for beat in chapter["beats"]:
@@ -192,6 +194,9 @@ def validate_npc(person, area, require_design=False):
     if spawn_flag is not None and (not isinstance(spawn_flag, str)
                                    or not re.fullmatch(r"TL[A-Z][A-Z0-9_]{1,28}", spawn_flag)):
         raise ValueError(f"scene cast spawn flag for {area} must be a TL global name")
+    dialog = person.get("dialog")
+    if dialog is not None and (not isinstance(dialog, str) or not re.fullmatch(r"[A-Za-z0-9_]{1,8}", dialog)):
+        raise ValueError(f"scene cast dialogue resource for {area} must be a resref of at most eight characters")
     choices = person.get("choices", [])
     if (not isinstance(choices, list) or len(choices) > 3
             or any(not validate_choice(choice, allow_followup=True) for choice in choices)):
@@ -286,6 +291,151 @@ def read_cast():
     return validate_cast(json.loads(CAST_FILE.read_text(encoding="utf-8")))
 
 
+def validate_native_dialogue(resref, dialogue, initialized_flags):
+    if not isinstance(resref, str) or not re.fullmatch(r"[A-Z0-9_]{1,8}", resref):
+        raise ValueError("native dialogue resource names must be uppercase resrefs of at most eight characters")
+    states = dialogue.get("states") if isinstance(dialogue, dict) else None
+    if (not isinstance(states, list) or not states or len(states) > 255
+            or not isinstance(states[0], dict) or not states[0].get("when")):
+        raise ValueError(f"native dialogue {resref} needs an ordered state list beginning with a conditional entry state")
+    reachable = set()
+    for state_index, state in enumerate(states):
+        if (not isinstance(state, dict) or not isinstance(state.get("say"), str)
+                or not state["say"].strip() or len(state["say"]) > 2000):
+            raise ValueError(f"native dialogue {resref} state {state_index} needs a nonempty actor line")
+        conditions = state.get("when")
+        if conditions is not None:
+            if (not isinstance(conditions, list) or not conditions or len(conditions) > 8
+                    or any(not isinstance(condition, dict)
+                           or not isinstance(condition.get("flag"), str)
+                           or not re.fullmatch(r"TL[A-Z][A-Z0-9_]{1,28}", condition["flag"])
+                           or condition["flag"] not in initialized_flags
+                           or type(condition.get("value")) is not int for condition in conditions)
+                    or len({condition["flag"] for condition in conditions}) != len(conditions)):
+                raise ValueError(f"native dialogue {resref} state {state_index} has invalid or uninitialized entry conditions")
+        transitions = state.get("transitions")
+        if not isinstance(transitions, list) or not 1 <= len(transitions) <= 24:
+            raise ValueError(f"native dialogue {resref} state {state_index} needs one to twenty-four transitions")
+        for transition in transitions:
+            if (not isinstance(transition, dict) or not isinstance(transition.get("text"), str)
+                    or not transition["text"].strip() or len(transition["text"]) > 1000
+                    or ("final" in transition) == ("next" in transition)):
+                raise ValueError(f"native dialogue {resref} state {state_index} has an incomplete transition")
+            if "next" in transition:
+                if type(transition["next"]) is not int or not 0 <= transition["next"] < len(states):
+                    raise ValueError(f"native dialogue {resref} transition points to a missing state")
+                reachable.add(transition["next"])
+            elif transition["final"] is not True:
+                raise ValueError(f"native dialogue {resref} final transitions must set final to true")
+    for state_index, state in enumerate(states):
+        if "when" not in state and state_index not in reachable:
+            raise ValueError(f"native dialogue {resref} unconditioned state {state_index} is unreachable")
+    return dialogue
+
+
+def read_native_dialogues():
+    dialogues = json.loads(NATIVE_DIALOGUE_FILE.read_text(encoding="utf-8"))
+    if not isinstance(dialogues, dict):
+        raise ValueError("native_dialogues.json must contain an object keyed by resource resref")
+    setup_text = SETUP_FILE.read_text(encoding="utf-8")
+    initialized_flags = set(re.findall(r'GemRB\.SetGlobal\("(TL[A-Z0-9_]+)", "GLOBAL", 0\)', setup_text))
+    result = {}
+    for resref, dialogue in dialogues.items():
+        key = resref.upper()
+        if key in result:
+            raise ValueError(f"native dialogue resrefs must be unique ignoring case: {resref}")
+        result[key] = validate_native_dialogue(key, dialogue, initialized_flags)
+    cast = read_cast()
+    for area_cast in cast.values():
+        for person in area_cast:
+            ref = person.get("dialog")
+            if ref and ref.upper() not in result:
+                raise ValueError(f"NPC {person['name']} references missing native dialogue {ref}")
+    return result
+
+
+def write_native_dialogues(dialogues):
+    """Compile authored dialogue state machines and append their TLK strings."""
+    if not dialogues:
+        return
+    tlk_path = OUTPUT / "dialog.tlk"
+    converter_path = str(ROOT / "tools" / "tlk_convert")
+    sys.path.insert(0, converter_path)
+    try:
+        from tlk import Tlk
+
+        with tlk_path.open("rb") as source:
+            talk_table = Tlk(source)
+        strrefs = {}
+
+        def add_text(text):
+            if text not in strrefs:
+                strrefs[text] = len(talk_table)
+                talk_table.append({"flag": 1, "sound_name": b"\0" * 8, "volume": 0, "pitch": 0,
+                                   "offset": 0, "length": 0, "string": text.encode("utf-8")})
+            return strrefs[text]
+
+        for resref, dialogue in dialogues.items():
+            states = dialogue["states"]
+            trigger_strings = []
+            trigger_indexes = []
+            for state in states:
+                conditions = state.get("when")
+                if conditions is None:
+                    trigger_indexes.append(0xFFFFFFFF)
+                    continue
+                trigger_indexes.append(len(trigger_strings))
+                trigger_strings.append(" ".join(
+                    f'Global("{condition["flag"]}","GLOBAL",{condition["value"]})'
+                    for condition in conditions
+                ).encode("ascii") + b"\r\n")
+
+            flat_transitions = []
+            state_rows = []
+            for state_index, state in enumerate(states):
+                first_transition = len(flat_transitions)
+                for transition in state["transitions"]:
+                    flags = 0x01
+                    next_state = 0
+                    if transition.get("final") is True:
+                        flags |= 0x08
+                    else:
+                        next_state = transition["next"]
+                    flat_transitions.append((flags, add_text(transition["text"]), next_state))
+                state_rows.append((add_text(state["say"]), first_transition,
+                                   len(state["transitions"]), trigger_indexes[state_index]))
+
+            states_offset = 52
+            transitions_offset = states_offset + 16 * len(state_rows)
+            state_triggers_offset = transitions_offset + 32 * len(flat_transitions)
+            transition_triggers_offset = state_triggers_offset + 8 * len(trigger_strings)
+            actions_offset = transition_triggers_offset
+            string_data_offset = actions_offset
+            trigger_table = bytearray()
+            trigger_data = bytearray()
+            for trigger in trigger_strings:
+                trigger_table.extend(struct.pack("<II", string_data_offset + len(trigger_data), len(trigger)))
+                trigger_data.extend(trigger)
+            header = struct.pack(
+                "<8s11I", b"DLG V1.0", len(state_rows), states_offset,
+                len(flat_transitions), transitions_offset,
+                state_triggers_offset, len(trigger_strings),
+                transition_triggers_offset, 0, actions_offset, 0, 0,
+            )
+            state_table = b"".join(struct.pack("<4I", *row) for row in state_rows)
+            transition_table = b"".join(
+                struct.pack("<5I8sI", flags, text_ref, 0, 0, 0, b"\0" * 8, next_state)
+                for flags, text_ref, next_state in flat_transitions
+            )
+            target = OUTPUT / "override" / f"{resref.lower()}.dlg"
+            target.write_bytes(header + state_table + transition_table + trigger_table + trigger_data)
+
+        with tlk_path.open("wb") as target:
+            talk_table.save(target)
+    finally:
+        sys.path.remove(converter_path)
+
+
 def read_searchmaps():
     """Load and validate scene-specific walkable and blocked searchmap polygons."""
     specs = json.loads(SEARCHMAP_FILE.read_text(encoding="utf-8"))
@@ -377,10 +527,12 @@ def write_tis(image_path, reference_path, target_path):
 
 def build():
     story = read_story()
+    native_dialogues = read_native_dialogues()
     searchmaps = read_searchmaps()
     if OUTPUT.exists():
         shutil.rmtree(OUTPUT)
     shutil.copytree(SOURCE, OUTPUT)
+    write_native_dialogues(native_dialogues)
     image = write_tis(AREA_IMAGE, SOURCE / "override" / "ar0100.tis", OUTPUT / "override" / "ar0100.tis")
     image.save(OUTPUT / "override" / "ar0100.png")
 
