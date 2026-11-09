@@ -29,9 +29,9 @@ This is the current work ledger for human and AI contributors. Read [AGENTS.md](
 ### P0 — Make one scene a real RPG conversation
 
 - [ ] Playtest the Alsperia Market conversation buttons in live GemRB and confirm choices persist after save/load.
-- [ ] Extend branching conversations and durable flag effects to the remaining acts, using the market route choice as the tested pattern.
+- [ ] Deepen the current one-turn choice scenes with gated topics, multi-step conversations, and journal effects; live-test each branch.
 - [ ] Give the market quest a readable journal entry and robust failure/skip paths beyond the current route and ambush outcomes.
-- [ ] Add scene-cast data authoring and validation to the MCP tools so coders can safely create/update NPCs and dialogue.
+- [x] Added MCP tools to inspect scene casts, add or replace richly specified NPCs, and register dialogue flags; malformed cast data is rejected before it is written.
 - [ ] Test the dialogue and state changes in live GemRB, including save/load and repeat area entry; retain the current mock as a fast logic check.
 
 ### P1 — Make every scene coherent and navigable

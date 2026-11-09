@@ -20,9 +20,13 @@ From the repository root:
 
 ```powershell
 python -m pip install Pillow
+python tools/terralum/test_campaign_flow.py
+python tools/terralum/test_mcp_authoring.py
 python tools/terralum/build_game.py
 ./build/gemrb/gemrb -c terralum/build/terralum-wsl.cfg
 ```
+
+The campaign-flow mock checks scene progression and response effects. The MCP test checks JSON-RPC discovery, cast authoring, and campaign-flag registration; neither replaces a live playthrough.
 
 The last command uses the WSL build in this checkout. On Windows with a native GemRB build, use `terralum/build/terralum.cfg`. `terralum/play.ps1` builds and launches through WSL. The assembled pack under `terralum/build/` is ignored by Git.
 
@@ -36,7 +40,7 @@ The audio renderer also creates three original looping ambient tracks. It needs 
 
 ## Author with an AI coder
 
-Run `tools/terralum/mcp_server.py` as a stdio Model Context Protocol server. Its tools inspect the project, edit the title or hero name, edit a scene beat, import art for a built area, and rebuild the pack. NPC and scene-cast authoring tools are still on the TODO list. For example:
+Run `tools/terralum/mcp_server.py` as a stdio Model Context Protocol server. Its tools inspect the project and per-scene cast, edit story beats, register initialized campaign flags, add or replace NPCs with role, goal, knowledge, voice, and provenance fields, import area art, and rebuild the pack. New NPC dialogue can reference only flags registered at game start. For example:
 
 ```json
 {

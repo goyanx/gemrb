@@ -5,17 +5,51 @@
 """Small stdio MCP authoring server for the Terralum game pack."""
 
 import json
+import re
 import shutil
 import sys
 from pathlib import Path
 
 from PIL import Image
 
-from build_game import AREAS, PROJECT, build, read_story
+from build_game import AREAS, CAST_FILE, PROJECT, build, read_cast, read_story, validate_cast, validate_npc
 
 
 STORY_PATH = PROJECT / "story.json"
+SETUP_PATH = PROJECT.parent / "gemrb" / "GUIScripts" / "terralum" / "SetupGame.py"
 STANDARD_PATH = PROJECT / "GOLD_STANDARD_GAME_DESIGN_PIPELINE.md"
+NPC_INPUT_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "name": {"type": "string", "minLength": 1, "maxLength": 120},
+        "role": {"type": "string", "minLength": 1, "maxLength": 300},
+        "goal": {"type": "string", "minLength": 1, "maxLength": 1000},
+        "knowledge": {"type": "string", "minLength": 1, "maxLength": 1000},
+        "voice": {"type": "string", "minLength": 1, "maxLength": 500},
+        "provenance": {"type": "string", "enum": ["canon", "user-confirmed", "adaptation", "unresolved"]},
+        "creature": {"type": "string", "enum": ["protagon", "riddler"]},
+        "position": {"type": "array", "items": {"type": "integer", "minimum": 0, "maximum": 32767},
+                      "minItems": 2, "maxItems": 2},
+        "line": {"type": "string", "minLength": 1, "maxLength": 2000},
+        "choices": {"type": "array", "maxItems": 3, "items": {
+            "type": "object", "properties": {
+                "label": {"type": "string", "minLength": 1, "maxLength": 200},
+                "reply": {"type": "string", "minLength": 1, "maxLength": 2000},
+                "flag": {"type": "string", "pattern": "^TL[A-Z][A-Z0-9_]{1,28}$"},
+                "value": {"type": "integer"},
+            }, "required": ["label", "reply", "flag", "value"], "additionalProperties": False,
+        }},
+        "responses": {"type": "array", "maxItems": 24, "items": {
+            "type": "object", "properties": {
+                "flag": {"type": "string", "pattern": "^TL[A-Z][A-Z0-9_]{1,28}$"},
+                "value": {"type": "integer"},
+                "line": {"type": "string", "minLength": 1, "maxLength": 2000},
+            }, "required": ["flag", "value", "line"], "additionalProperties": False,
+        }},
+    },
+    "required": ["name", "role", "goal", "knowledge", "voice", "provenance", "creature", "position", "line"],
+    "additionalProperties": False,
+}
 TOOLS = [
     {
         "name": "terralum_get_design_standard",
@@ -26,6 +60,30 @@ TOOLS = [
         "name": "terralum_get_project",
         "description": "Inspect Terralum's chapters, locations, and generated game pack.",
         "inputSchema": {"type": "object", "properties": {}, "additionalProperties": False},
+    },
+    {
+        "name": "terralum_get_scene_cast",
+        "description": "Read the named NPC cast and dialogue authored for one Terralum scene area.",
+        "inputSchema": {"type": "object", "properties": {
+            "area": {"type": "string", "enum": list(AREAS)},
+        }, "required": ["area"], "additionalProperties": False},
+    },
+    {
+        "name": "terralum_upsert_scene_npc",
+        "description": "Add a scene NPC, or replace an NPC at its zero-based scene-cast index. Include the design-standard role, goal, knowledge, voice, and provenance along with in-game actor and dialogue data.",
+        "inputSchema": {"type": "object", "properties": {
+            "area": {"type": "string", "enum": list(AREAS)},
+            "npc": NPC_INPUT_SCHEMA,
+            "npc_index": {"type": "integer", "minimum": 0,
+                         "description": "Omit to append a new NPC; provide an existing zero-based index to replace that entry."},
+        }, "required": ["area", "npc"], "additionalProperties": False},
+    },
+    {
+        "name": "terralum_register_campaign_flag",
+        "description": "Initialize a new Terralum campaign flag to zero at game start so authored NPC choices and scene routes can safely use it.",
+        "inputSchema": {"type": "object", "properties": {
+            "flag": {"type": "string", "pattern": "^TL[A-Z][A-Z0-9_]{1,28}$"},
+        }, "required": ["flag"], "additionalProperties": False},
     },
     {
         "name": "terralum_update_story",
@@ -88,6 +146,60 @@ def call_tool(name, arguments):
             "areas": {area: str(PROJECT / "art" / image) for area, image in AREAS.items()},
             "game_built": (PROJECT / "build" / "game" / "chitin.key").is_file(),
         })
+    if name == "terralum_get_scene_cast":
+        area = arguments.get("area")
+        if area not in AREAS:
+            raise ValueError("Unknown area")
+        return result({"area": area, "npcs": read_cast()[area]})
+    if name == "terralum_upsert_scene_npc":
+        area = arguments.get("area")
+        npc = arguments.get("npc")
+        npc_index = arguments.get("npc_index")
+        if area not in AREAS:
+            raise ValueError("Unknown area")
+        if npc_index is not None and (type(npc_index) is not int or npc_index < 0):
+            raise ValueError("npc_index must be a nonnegative zero-based index")
+        validate_npc(npc, area, require_design=True)
+        setup = SETUP_PATH.read_text(encoding="utf-8")
+        registered_flags = set(re.findall(r'GemRB\.SetGlobal\("(TL[A-Z0-9_]+)", "GLOBAL", 0\)', setup))
+        npc_flags = {entry["flag"] for field in ("choices", "responses")
+                     for entry in npc.get(field, [])}
+        if missing_flags := npc_flags - registered_flags:
+            missing = ", ".join(sorted(missing_flags))
+            raise ValueError(f"register campaign flags before using them in scene dialogue: {missing}")
+        cast = read_cast()
+        candidate = dict(npc)
+        for key in ("name", "role", "goal", "knowledge", "voice", "line"):
+            candidate[key] = candidate[key].strip()
+        if npc_index is None:
+            if any(person["name"].casefold() == candidate["name"].casefold() for person in cast[area]):
+                raise ValueError("NPC name already exists in this area; provide its npc_index to replace it")
+            cast[area] = [*cast[area], candidate]
+        else:
+            if npc_index >= len(cast[area]):
+                raise ValueError("npc_index is outside this scene cast")
+            if any(index != npc_index and person["name"].casefold() == candidate["name"].casefold()
+                   for index, person in enumerate(cast[area])):
+                raise ValueError("NPC name already exists at another index in this area")
+            cast[area][npc_index] = candidate
+        validate_cast(cast)
+        temporary = CAST_FILE.with_suffix(CAST_FILE.suffix + ".tmp")
+        temporary.write_text(json.dumps(cast, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+        temporary.replace(CAST_FILE)
+        return result({"area": area, "npc_index": cast[area].index(candidate), "npc": candidate})
+    if name == "terralum_register_campaign_flag":
+        flag = arguments.get("flag")
+        if not isinstance(flag, str) or not re.fullmatch(r"TL[A-Z][A-Z0-9_]{1,28}", flag):
+            raise ValueError("flag must begin with TL and use uppercase letters, digits, or underscores")
+        setup = SETUP_PATH.read_text(encoding="utf-8")
+        declaration = f'GemRB.SetGlobal("{flag}", "GLOBAL", 0)'
+        if declaration in setup:
+            return result({"flag": flag, "registered": False, "already_initialized": True})
+        anchor = "\tGemRB.EnterGame()"
+        if anchor not in setup:
+            raise ValueError("could not find the game-start initialization point in SetupGame.py")
+        SETUP_PATH.write_text(setup.replace(anchor, f"\t{declaration}\n{anchor}", 1), encoding="utf-8")
+        return result({"flag": flag, "registered": True, "initial_value": 0})
     if name == "terralum_update_story":
         field = arguments.get("field")
         value = arguments.get("text")
@@ -140,7 +252,7 @@ def handle(message):
         payload = {
             "protocolVersion": "2025-06-18",
             "capabilities": {"tools": {"listChanged": False}},
-            "serverInfo": {"name": "terralum-authoring", "version": "0.1.0"},
+            "serverInfo": {"name": "terralum-authoring", "version": "0.2.0"},
         }
     elif method == "tools/list":
         payload = {"tools": TOOLS}

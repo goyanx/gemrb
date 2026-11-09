@@ -62,22 +62,74 @@ def read_story():
             raise ValueError("each chapter needs a built area and story beats")
         if not all(beat.get("speaker") and beat.get("text") and beat.get("action") for beat in chapter["beats"]):
             raise ValueError("each story beat needs a speaker, text, and action")
-    cast = json.loads(CAST_FILE.read_text(encoding="utf-8"))
+    read_cast()
+    return story
+
+
+def validate_npc(person, area, require_design=False):
+    if not isinstance(person, dict):
+        raise ValueError(f"scene cast for {area} contains a non-object NPC")
+    limits = {"name": 120, "line": 2000, "role": 300, "goal": 1000,
+              "knowledge": 1000, "voice": 500}
+    if (not isinstance(person.get("name"), str) or not person["name"].strip() or len(person["name"]) > 120
+            or not isinstance(person.get("line"), str) or not person["line"].strip() or len(person["line"]) > 2000
+            or person.get("creature") not in ("protagon", "riddler")):
+        raise ValueError(f"scene cast for {area} has an incomplete NPC")
+    position = person.get("position")
+    if (not isinstance(position, list) or len(position) != 2
+            or any(type(value) is not int or not 0 <= value <= 32767 for value in position)):
+        raise ValueError(f"scene cast position for {area} must contain two bounded integer coordinates")
+    choices = person.get("choices", [])
+    if (not isinstance(choices, list) or len(choices) > 3
+            or any(not isinstance(choice, dict)
+                   or not isinstance(choice.get("label"), str) or not choice["label"].strip() or len(choice["label"]) > 200
+                   or not isinstance(choice.get("reply"), str) or not choice["reply"].strip() or len(choice["reply"]) > 2000
+                   or not isinstance(choice.get("flag"), str)
+                   or not re.fullmatch(r"TL[A-Z][A-Z0-9_]{1,28}", choice["flag"])
+                   or type(choice.get("value")) is not int for choice in choices)):
+        raise ValueError(f"scene dialogue choices for {area} must define up to three complete options")
+    responses = person.get("responses", [])
+    if (not isinstance(responses, list)
+            or len(responses) > 24
+            or any(not isinstance(response, dict)
+                   or not isinstance(response.get("line"), str) or not response["line"].strip()
+                   or len(response["line"]) > 2000
+                   or not isinstance(response.get("flag"), str)
+                   or not re.fullmatch(r"TL[A-Z][A-Z0-9_]{1,28}", response["flag"])
+                   or type(response.get("value")) is not int for response in responses)):
+        raise ValueError(f"scene dialogue responses for {area} must define a flag, value, and line")
+    route_lines = person.get("route_lines", {})
+    if not isinstance(route_lines, dict) or any(not str(key).isdigit() or not isinstance(value, str) or not value.strip()
+                                                for key, value in route_lines.items()):
+        raise ValueError(f"scene route lines for {area} must map numeric values to text")
+    if require_design:
+        for field in ("role", "goal", "knowledge", "voice"):
+            if (not isinstance(person.get(field), str) or not person[field].strip()
+                    or len(person[field]) > limits[field]):
+                raise ValueError(f"new NPC for {area} needs a nonempty {field}")
+        if person.get("provenance") not in ("canon", "user-confirmed", "adaptation", "unresolved"):
+            raise ValueError(f"new NPC for {area} needs a recognized provenance label")
+
+
+def validate_cast(cast):
+    if not isinstance(cast, dict):
+        raise ValueError("scene_cast.json must contain an object keyed by area")
+    if set(cast) != set(AREAS):
+        raise ValueError("scene_cast.json must define exactly the built scene areas")
     for area in AREAS:
         people = cast.get(area, [])
-        if len(people) < 2:
+        if not isinstance(people, list) or len(people) < 2:
             raise ValueError(f"scene cast for {area} must contain at least two NPCs")
         for person in people:
-            if not person.get("name") or not person.get("line") or person.get("creature") not in ("protagon", "riddler"):
-                raise ValueError(f"scene cast for {area} has an incomplete NPC")
-            if len(person.get("position", [])) != 2 or any(not isinstance(value, int) for value in person["position"]):
-                raise ValueError(f"scene cast position for {area} must contain two integer coordinates")
-            choices = person.get("choices", [])
-            if len(choices) > 3 or any(not choice.get("label") or not choice.get("reply")
-                                        or not choice.get("flag") or type(choice.get("value")) is not int
-                                        for choice in choices):
-                raise ValueError(f"scene dialogue choices for {area} must define up to three complete options")
-    return story
+            validate_npc(person, area)
+        names = [person["name"].strip().casefold() for person in people]
+        if len(names) != len(set(names)):
+            raise ValueError(f"scene cast for {area} must contain unique NPC names")
+    return cast
+
+
+def read_cast():
+    return validate_cast(json.loads(CAST_FILE.read_text(encoding="utf-8")))
 
 
 def write_tis(image_path, reference_path, target_path):
