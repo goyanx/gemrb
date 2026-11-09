@@ -24,6 +24,46 @@ assert len(passability_row) == 16
 passability = [bool(int(bits) & 1) for bits in passability_row]
 
 expected = {
+    "tl0001": {
+        "routes": [(50, 8), (50, 90), (8, 48), (92, 48)],
+        "blocked": [(25, 32), (73, 32), (25, 65), (73, 65)],
+        "description": "market square, covered stalls, and four city approaches",
+    },
+    "tl0004": {
+        "routes": [(50, 8), (50, 90)],
+        "blocked": [(22, 28), (77, 28), (22, 66), (77, 66)],
+        "description": "royal audience floor, side galleries, and north/south court approaches",
+    },
+    "tl0005": {
+        "routes": [(50, 8), (50, 90), (14, 48), (86, 48)],
+        "blocked": [(30, 31), (70, 31), (30, 64), (70, 64)],
+        "description": "observatory vault, ward pillars, and four sealed approaches",
+    },
+    "tl0007": {
+        "routes": [(50, 8), (50, 90), (7, 48), (93, 48)],
+        "blocked": [(23, 33), (77, 33), (23, 64), (77, 64)],
+        "description": "skyport apron, loading bays, and four gate approaches",
+    },
+    "tl0008": {
+        "routes": [(50, 8), (50, 90)],
+        "blocked": [(24, 40), (76, 40), (39, 29), (60, 29)],
+        "description": "library reading floor, archive stacks, and north/south aisles",
+    },
+    "tl0012": {
+        "routes": [(50, 8), (50, 90), (10, 48), (90, 48)],
+        "blocked": [(25, 33), (75, 33), (25, 64), (75, 64)],
+        "description": "academy courtyard, ward stations, and four academy approaches",
+    },
+    "tl0013": {
+        "routes": [(50, 8), (50, 90)],
+        "blocked": [(23, 40), (77, 40), (39, 28), (61, 28)],
+        "description": "Index Hall central aisle, catalog stacks, and north/south archive approaches",
+    },
+    "tl0014": {
+        "routes": [(50, 8), (50, 90), (7, 48), (92, 48)],
+        "blocked": [(24, 33), (77, 33), (24, 64), (77, 64)],
+        "description": "Aethercraft hangar floor, equipment bays, and four hangar approaches",
+    },
     "tl0002": {
         "routes": [(84, 7), (44, 92)],
         "blocked": [(8, 40), (27, 82), (72, 82), (92, 42), (54, 25)],

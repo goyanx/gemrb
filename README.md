@@ -55,7 +55,7 @@ The opening Market scene is a live capture from GemRB. It shows the player party
 
 ### Campaign location gallery
 
-Twenty-three distinct generated concept backdrops preview the twenty-five scene areas. The Deep Archives and the returning Mistwood Watchpost reuse their existing location art. They are visual targets for the current prototype. The Royal Stables, Dispatch Archive, Council Chamber, Hunter's Camp, River Crossing, Three-Cairn Fork, Mistwood Road, Ruined Watchpost and its return visit, Lorian Cavern, Seal Gallery, Deep Archives, Expedition Chart Room, Containment Annex, Eldrador Landing Quay, and Lower Sanctuary Threshold have custom searchmaps; the Waywarden Relay also has a custom searchmap. All twenty-five areas still use the demo's shared WED layout and other terrain resources.
+Twenty-three distinct generated concept backdrops preview the twenty-five scene areas. The Deep Archives and the returning Mistwood Watchpost reuse their existing location art. They are visual targets for the current prototype. All twenty-five scenes have custom data-authored searchmaps, including the Market, Royal Court, Observatory Vault, Skyport, Library, Academy Courtyard, Index Hall, and Hangar. All twenty-five areas still use the demo's shared WED layout and other terrain resources.
 
 <table>
   <tr>
@@ -109,7 +109,7 @@ Twenty-three distinct generated concept backdrops preview the twenty-five scene 
 - [Campaign plan](terralum/campaign_plan.md) — seven-act story spine and planned expansion.
 - [TODO and handoff](TODO.md) — completed, ongoing, and next work.
 
-Terralum is an in-progress prototype, not a finished or full-length RPG. The current cast reuses demo sprites and all twenty-five areas still inherit the demo WED layout; seventeen areas have custom searchmaps, while the other eight use the generic one. Choices use a custom panel rather than native Infinity Engine DLG resources. The project guide and handoff describe current playability and verification gaps.
+Terralum is an in-progress prototype, not a finished or full-length RPG. The current cast reuses demo sprites and all twenty-five areas still inherit the demo WED layout; all twenty-five areas now have custom searchmaps, with structural connectivity checks for each. Choices use a custom panel rather than native Infinity Engine DLG resources. The project guide and handoff describe current playability and verification gaps.
 
 ## Supported platforms
 

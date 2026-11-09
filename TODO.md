@@ -48,8 +48,8 @@ This is the current work ledger for human and AI contributors. Read [AGENTS.md](
 
 - [ ] **Scene dialogue slice:** Market, library, Royal Dispatch Archive, Royal Stables, River Crossing, Watchpost and return, Waywarden Relay, Lorian purpose test, seal gallery, Deep Archives, council, academy courtyard, Index Hall, Expedition Chart Room, hangar, Eldrador Landing Quay, and Lower Sanctuary Threshold choices set persistent flags with later text outcomes. The logic is mock-tested; live input/save testing remains open. The custom choice UI is not a native GemRB DLG system.
 - [ ] **Journal verification:** twenty-six event flags, including the Act III return-road record, Act IV evidence docket, academy warding decision, Eldrador evidence/protocol choices, and conditional Mistwood and Deep Archive encounter victories, pass script mocks; live display and save/load still need direct playtesting.
-- [ ] **Playable-scene verification:** the extended pack builds and GemRB starts against it. All seventeen custom maps pass script connectivity checks, but movement is unverified. Current WSLg window enumeration returns duplicate same-titled GemRB candidates with stale IDs, so no UI input was sent to an uncertain target. Later-area entry, player movement, actual fights, choice input, save/load, and return entry still need direct playtesting.
-- [ ] **Art and geometry:** Characters currently reuse the demo's two humanoid sprites. Seventeen named scenes now have custom searchmaps, but all 25 areas still inherit the AR0100 WED layout and terrain/height/light files; the other 8 also use its generic searchmap. Actual in-engine movement remains unverified.
+- [ ] **Playable-scene verification:** the extended pack builds and GemRB starts against it. All 25 custom maps pass script connectivity checks, but movement is unverified. Current WSLg enumeration returns two same-titled GemRB windows, so no UI input was sent to an ambiguous target. Later-area entry, player movement, actual fights, choice input, save/load, and return entry still need direct playtesting.
+- [ ] **Art and geometry:** Characters currently reuse the demo's two humanoid sprites. All 25 named scenes now have custom searchmaps, but every area still inherits the AR0100 WED layout and terrain/height/light files. Actual in-engine movement remains unverified.
 - [ ] **Campaign length:** 25 locations and 63 beats form an expanded prototype, not a long-form campaign. Act I/II add trail, courier, route-record, and Waywarden Relay quests; Act III adds a returning Watchpost scene with route-preservation consequences; Act IV now has an evidence docket; Act V adds a warding choice; Act VI adds an optional Index Warden challenge; Act VII covers departure, Eldrador evidence gathering, and a cautious sanctuary approach while leaving the Tear unresolved. Deeper quest arcs remain; see `terralum/campaign_plan.md`.
 
 ## To do, in priority order
@@ -66,7 +66,8 @@ This is the current work ledger for human and AI contributors. Read [AGENTS.md](
 
 ### P1 — Make every scene coherent and navigable
 
-- [ ] Extend the seventeen custom searchmaps to the remaining 8 areas; replace shared WED geometry, entrances, terrain/height/light maps, and prove party movement in every scene.
+- [x] Added and connectivity-checked custom searchmaps for all 25 scenes, including the Market, Court, Observatory Vault, Skyport, Library, Academy Courtyard, Index Hall, and Hangar.
+- [ ] Replace shared WED geometry, entrances, terrain/height/light maps, and prove party movement in every scene.
 - [x] Add focused searchmap checks for dimensions/palette, blocked terrain and props, and four-way connectivity from the party start to scene NPCs, encounter spawns, and exits.
 - [ ] Replace repeated placeholder NPC models with unique/generated or compatible open-licensed art and portraits. Keep provenance and license records.
 - [ ] Place actual interactable clues, containers, doors, and travel links only where they match the new scene geometry.
