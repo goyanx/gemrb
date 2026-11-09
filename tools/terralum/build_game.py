@@ -21,6 +21,7 @@ PROJECT = ROOT / "terralum"
 OUTPUT = PROJECT / "build" / "game"
 CAST_FILE = PROJECT / "scene_cast.json"
 AREA_IMAGE = PROJECT / "art" / "observatory_courtyard.png"
+SETUP_FILE = ROOT / "gemrb" / "GUIScripts" / "terralum" / "SetupGame.py"
 AREAS = {
     "tl0001": "alsperia_market.png",
     "tl0008": "deep_archives.png",
@@ -56,12 +57,30 @@ def read_story():
     scene_areas = [chapter.get("area") for chapter in chapters]
     if len(scene_areas) != len(set(scene_areas)) or set(scene_areas) != set(AREAS):
         raise ValueError("story.json must define each built area exactly once")
+    journal_flags = set()
+    setup_text = SETUP_FILE.read_text(encoding="utf-8")
+    initialized_flags = set(re.findall(r'GemRB\.SetGlobal\("(TL[A-Z0-9_]+)", "GLOBAL", 0\)', setup_text))
     for chapter in chapters:
         if (chapter.get("area") not in AREAS or not chapter.get("beats")
                 or type(chapter.get("act")) is not int or not 1 <= chapter["act"] <= 7):
             raise ValueError("each chapter needs a built area and story beats")
         if not all(beat.get("speaker") and beat.get("text") and beat.get("action") for beat in chapter["beats"]):
             raise ValueError("each story beat needs a speaker, text, and action")
+        for beat in chapter["beats"]:
+            event = beat.get("journal")
+            if event is None:
+                continue
+            if (not isinstance(event, dict) or not isinstance(event.get("flag"), str)
+                    or not re.fullmatch(r"TL[A-Z][A-Z0-9_]{1,28}", event["flag"])
+                    or not isinstance(event.get("text"), str) or not event["text"].strip()
+                    or len(event["text"]) > 2000 or type(event.get("section")) is not int
+                    or event["section"] not in (1, 2, 4)):
+                raise ValueError("journal events need a unique TL flag, text, and section 1, 2, or 4")
+            if event["flag"] in journal_flags:
+                raise ValueError(f"journal event flag {event['flag']} is used more than once")
+            if event["flag"] not in initialized_flags:
+                raise ValueError(f"journal event flag {event['flag']} must be initialized in SetupGame.py")
+            journal_flags.add(event["flag"])
     read_cast()
     return story
 

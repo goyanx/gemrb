@@ -14,12 +14,14 @@ This is the current work ledger for human and AI contributors. Read [AGENTS.md](
 - [x] Added a victory gate to each of the three prototype encounters.
 - [x] Fixed the ARE builder counts: it now preserves the demo entrances and clears actor, region, spawn, container, item, and door counts that belonged to the demo.
 - [x] Campaign-flow mock reports 14 scene casts, 29 actors, keyboard controls, all 17 authored response options, three market routes, three encounter gates, thirteen area transitions, and seven voice cues.
+- [x] Added seven one-time journal events across the early scroll quest and later Tear research, with an in-game Journal panel backed by GemRB's persistent journal API.
 - [x] Built and launched the WSL GemRB pack with direct startup. The opening scene shows three NPCs beside the player; live startup loaded actors and city ambience with no Python traceback.
 - [x] Fork remote `goyanx/gemrb` and branch `terralum-first-slice` are configured; each accepted slice is committed, commented on, and pushed as shown in branch history.
 
 ## Ongoing
 
 - [ ] **Scene dialogue slice:** Market, library, watchpost, seal gallery, council, academy courtyard, archive index, and hangar choices set persistent flags with later text outcomes. The logic is mock-tested; live input/save testing remains open. The custom choice UI is not a native GemRB DLG system.
+- [ ] **Journal verification:** the log panel and seven event flags pass the script mock; live display, save/load, and revisit deduplication still need direct playtesting.
 - [ ] **Playable-scene verification:** the extended pack builds and the opening area starts in live GemRB. The WSLg window input path has not yet been verified. Later-area entry, player movement, actual fights, choice input, save/load, and return entry still need direct playtesting.
 - [ ] **Art and geometry:** characters currently reuse the demo's two humanoid sprites; all 14 areas still share the AR0100 template walkmesh and terrain files despite their distinct/reused backdrops.
 - [ ] **Campaign length:** 14 locations and 37 beats form an expanded prototype, not a long-form campaign. Acts VI and VII now have archive-index and hangar preparation locations; deeper quest arcs remain; see `terralum/campaign_plan.md`.
@@ -30,7 +32,7 @@ This is the current work ledger for human and AI contributors. Read [AGENTS.md](
 
 - [ ] Playtest the Alsperia Market conversation buttons in live GemRB and confirm choices persist after save/load.
 - [ ] Deepen the current one-turn choice scenes with gated topics, multi-step conversations, and journal effects; live-test each branch.
-- [ ] Give the market quest a readable journal entry and robust failure/skip paths beyond the current route and ambush outcomes.
+- [x] Give the market quest a readable persistent journal entry; robust failure/skip paths beyond the current route and ambush outcomes remain open.
 - [x] Added MCP tools to inspect scene casts, add or replace richly specified NPCs, and register dialogue flags; malformed cast data is rejected before it is written.
 - [ ] Test the dialogue and state changes in live GemRB, including save/load and repeat area entry; retain the current mock as a fast logic check.
 

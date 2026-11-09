@@ -26,18 +26,23 @@ class SceneCastAuthoringTests(unittest.TestCase):
         self.original_cast_path = build_game.CAST_FILE
         self.original_server_cast_path = mcp_server.CAST_FILE
         self.original_setup_path = mcp_server.SETUP_PATH
+        self.original_story_path = mcp_server.STORY_PATH
         self.cast_path = self.temp_path / "scene_cast.json"
         shutil.copy2(self.original_cast_path, self.cast_path)
         self.setup_path = self.temp_path / "SetupGame.py"
         shutil.copy2(self.original_setup_path, self.setup_path)
+        self.story_path = self.temp_path / "story.json"
+        shutil.copy2(self.original_story_path, self.story_path)
         build_game.CAST_FILE = self.cast_path
         mcp_server.CAST_FILE = self.cast_path
         mcp_server.SETUP_PATH = self.setup_path
+        mcp_server.STORY_PATH = self.story_path
 
     def tearDown(self):
         build_game.CAST_FILE = self.original_cast_path
         mcp_server.CAST_FILE = self.original_server_cast_path
         mcp_server.SETUP_PATH = self.original_setup_path
+        mcp_server.STORY_PATH = self.original_story_path
         self.temp_dir.cleanup()
 
     @staticmethod
@@ -71,6 +76,23 @@ class SceneCastAuthoringTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "register campaign flags"):
             mcp_server.call_tool("terralum_upsert_scene_npc", {"area": "tl0001", "npc": self.npc()})
         self.assertEqual(self.cast_path.read_text(encoding="utf-8"), original)
+
+        with self.assertRaisesRegex(ValueError, "register the journal event flag"):
+            mcp_server.call_tool("terralum_set_journal_event", {
+                "chapter": 1, "beat": 1, "flag": "TLTESTJOURNAL",
+                "text": "An update for the test journal.", "section": 1,
+            })
+        journal_flag = self.payload(mcp_server.call_tool("terralum_register_campaign_flag", {
+            "flag": "TLTESTJOURNAL",
+        }))
+        self.assertTrue(journal_flag["registered"])
+        journal_event = self.payload(mcp_server.call_tool("terralum_set_journal_event", {
+            "chapter": 1, "beat": 1, "flag": "TLTESTJOURNAL",
+            "text": "An update for the test journal.", "section": 1,
+        }))
+        self.assertEqual(journal_event["journal"]["section"], 1)
+        saved_story = json.loads(self.story_path.read_text(encoding="utf-8"))
+        self.assertEqual(saved_story["chapters"][0]["beats"][0]["journal"]["flag"], "TLTESTJOURNAL")
 
         registered = self.payload(mcp_server.call_tool("terralum_register_campaign_flag", {"flag": "TLTEST"}))
         self.assertEqual(registered, {"flag": "TLTEST", "registered": True, "initial_value": 0})
@@ -125,6 +147,7 @@ class SceneCastAuthoringTests(unittest.TestCase):
         self.assertEqual([reply["id"] for reply in replies], [1, 2, 3])
         tool_names = {tool["name"] for tool in replies[1]["result"]["tools"]}
         self.assertIn("terralum_upsert_scene_npc", tool_names)
+        self.assertIn("terralum_set_journal_event", tool_names)
         self.assertEqual(replies[2]["result"]["content"][0]["type"], "text")
         self.assertNotIn("error", replies[2])
 

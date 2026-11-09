@@ -72,15 +72,28 @@ window = Window()
 events = []
 globals_ = {"TLCHAP": 0, "TLBEAT": 0, "TLENEMY": 0, "TLCAST": 0,
             "TLMARALEAD": 0, "TLLIBRARYCLUE": 0, "TLWATCHPOST": 0,
-            "TLGALLERY": 0, "TLCOURT": 0, "TLECHO": 0, "TLMISTWOODSAFE": 0, "TLARCHIVE": 0, "TLVOYAGE": 0}
+            "TLGALLERY": 0, "TLCOURT": 0, "TLECHO": 0, "TLMISTWOODSAFE": 0, "TLARCHIVE": 0, "TLVOYAGE": 0,
+            "TLJRN_BYZANTEM": 0, "TLJRN_MISTWOOD": 0, "TLJRN_SCROLLS": 0, "TLJRN_TEAR": 0,
+            "TLJRN_ARCHIVE": 0, "TLJRN_ELDRADOR": 0, "TLJRN_VOYAGE": 0}
 enemy_dead = False
 current_area = "tl0001"
 next_actor = 1001
 timed_events = []
+journal_entries = []
 gemrb = types.ModuleType("GemRB")
 gemrb.LoadWindow = lambda *args: window
 gemrb.GetGameVar = lambda name: globals_[name]
 gemrb.SetGlobal = lambda name, context, value: globals_.__setitem__(name, value)
+def set_journal_entry(text, section, chapter):
+    journal_entries.append({"Text": len(journal_entries) + 1, "GameTime": len(journal_entries) + 1,
+                            "Section": section, "Chapter": chapter, "value": text})
+gemrb.SetJournalEntry = set_journal_entry
+gemrb.GetJournalSize = lambda chapter, section: sum(entry["Chapter"] == chapter and entry["Section"] == section for entry in journal_entries)
+def get_journal_entry(chapter, index, section):
+    matches = [entry for entry in journal_entries if entry["Chapter"] == chapter and entry["Section"] == section]
+    return matches[index]
+gemrb.GetJournalEntry = get_journal_entry
+gemrb.GetString = lambda strref: journal_entries[strref - 1]["value"]
 gemrb.SetVar = lambda *args: None
 gemrb.LoadMusicPL = lambda name, *args: events.append(("music", name))
 def move_to_area(name):
@@ -120,10 +133,22 @@ assert window.controls[10].text == "NARRATE"
 assert window.controls[10].hotkey == ("n", 0, True)
 assert window.controls[11].text == "TALK"
 assert window.controls[11].hotkey == ("t", 0, True)
+assert window.controls[15].text == "JOURNAL"
+assert window.controls[15].hotkey == ("j", 0, True)
 assert window.controls[10].disabled is False
+assert len(journal_entries) == 1
+window.controls[15].press()
+assert "Find his route and recover the Scrolls of Byzantem" in window.controls[0].text
+assert window.controls[4].text == "CLOSE LOG"
+window.controls[15].press()
+assert "Archivist Mara" in window.controls[0].text
+assert len(journal_entries) == 1
 assert "Archivist Mara" in window.controls[0].text
 assert len([event for event in events if event[0] == "spawn"]) == len(campaign.Story.cast("tl0001"))
 window.controls[11].press()
+assert "Dorian's last travel ledger" in window.controls[0].text
+window.controls[15].press()
+assert "TERRALUM JOURNAL" not in window.controls[0].text
 assert "Dorian's last travel ledger" in window.controls[0].text
 assert window.controls[12].text == "Ask for the old route"
 assert window.controls[12].hotkey == ("1", 0, True)
@@ -189,6 +214,7 @@ assert globals_["TLECHO"] == 1
 assert len([event for event in events if event[0] == "area"]) == 13
 assert len([event for event in events if event[0] == "voice"]) == 7
 assert len([event for event in events if event[0] == "attack"]) == 2
+assert len(journal_entries) == 7
 
 # Exercise every remaining response option and its next-beat result.
 for chapter_index, choice_index in ((0, 1), (0, 2), (1, 1), (3, 1), (5, 1), (7, 1), (8, 1), (11, 1), (13, 1)):
@@ -236,4 +262,4 @@ for lead, expect_warden in ((2, True), (3, False)):
     assert globals_["TLENEMY"] > 1001
     assert any(event[:2] == ("attack", "Attack(Player1)") for event in events)
 print(len(chapters), "scenes across seven acts,", sum(len(campaign.Story.cast(chapter["area"])) for chapter in chapters),
-      "named scene actors, keyboard controls, all 17 responses, three market routes, encounter gates, thirteen transitions, and seven voice cues passed")
+      "named scene actors, keyboard controls, a persistent seven-entry quest journal, all 17 responses, three market routes, encounter gates, thirteen transitions, and seven voice cues passed")

@@ -60,6 +60,12 @@ def OnLoad():
 		_style(button)
 		button.SetVisible(False)
 		choice_buttons.append(button)
+	journal_button = window.CreateButton(15, 430, 183, 100, 34)
+	_style(journal_button)
+	journal_button.SetText("JOURNAL")
+	journal_button.SetHotKey("j", 0, True)
+	journal_state = {"open": False}
+	dialogue_state = {"has_choices": False}
 
 	chapters = Story.chapters()
 	cast_index = {"line": -1}
@@ -81,6 +87,10 @@ def OnLoad():
 		GemRB.SetGlobal("TLCAST", "GLOBAL", chapter_index + 1)
 
 	def talk_to_scene_npc():
+		if journal_state["open"]:
+			journal_state["open"] = False
+			journal_button.SetText("JOURNAL")
+			show()
 		chapter_index = GemRB.GetGameVar("TLCHAP")
 		chapter = chapters[chapter_index]
 		people = Story.cast(chapter["area"])
@@ -102,13 +112,54 @@ def OnLoad():
 				button.SetText(choice["label"])
 				button.SetHotKey(str(index + 1), 0, True)
 				button.OnPress(lambda choice=choice, person=person: choose_dialogue(person, choice))
+		dialogue_state["has_choices"] = bool(person.get("choices"))
+		journal_button.SetVisible(not bool(person.get("choices")))
 
 	def choose_dialogue(person, choice):
 		GemRB.SetGlobal(choice["flag"], "GLOBAL", choice["value"])
 		chapter = chapters[GemRB.GetGameVar("TLCHAP")]
 		message.SetText("[cap]T[/cap]ERRALUM  |  " + chapter["title"] + "\n" + chapter["place"] + "\n\n" + person["name"] + ": " + choice["reply"] + "\n\n")
+		dialogue_state["has_choices"] = False
 		for button in choice_buttons:
 			button.SetVisible(False)
+		journal_button.SetVisible(True)
+
+	def record_journal_entry(chapter, beat):
+		event = beat.get("journal")
+		if event and not GemRB.GetGameVar(event["flag"]):
+			GemRB.SetJournalEntry(event["text"], event["section"], chapter["act"])
+			GemRB.SetGlobal(event["flag"], "GLOBAL", 1)
+
+	def render_journal():
+		entries = []
+		section_names = {1: "QUEST", 2: "RESOLVED", 4: "JOURNAL"}
+		for act in sorted({chapter["act"] for chapter in chapters}):
+			for section, label in section_names.items():
+				for index in range(GemRB.GetJournalSize(act, section)):
+					entry = GemRB.GetJournalEntry(act, index, section)
+					entries.append((entry["GameTime"], act, label, GemRB.GetString(entry["Text"])))
+		entries.sort(key=lambda entry: entry[0])
+		if not entries:
+			return "TERRALUM JOURNAL\n\nNo entries yet. Begin the search in Alsperia."
+		lines = ["TERRALUM JOURNAL", ""]
+		for _, act, label, text in entries:
+			lines.extend((f"ACT {act}  |  {label}", text, ""))
+		lines.append("Press J or CLOSE LOG to return to the scene.")
+		return "\n".join(lines)
+
+	def toggle_journal():
+		if not journal_state["open"] and dialogue_state["has_choices"]:
+			return
+		journal_state["open"] = not journal_state["open"]
+		if journal_state["open"]:
+			journal_button.SetText("CLOSE")
+			message.SetText(render_journal())
+			action.SetText("CLOSE LOG")
+			action.OnPress(toggle_journal)
+			return
+		journal_button.SetText("JOURNAL")
+		action.OnPress(advance)
+		show()
 	def enemy_alive(enemy):
 		try:
 			return not GemRB.GetPlayerStat(enemy, IE_STATE_ID) & STATE_DEAD
@@ -126,6 +177,12 @@ def OnLoad():
 		beat_index = GemRB.GetGameVar("TLBEAT")
 		chapter = chapters[chapter_index]
 		beat = chapter["beats"][beat_index]
+		record_journal_entry(chapter, beat)
+		journal_button.SetVisible(True)
+		journal_button.SetText("JOURNAL")
+		dialogue_state["has_choices"] = False
+		for button in choice_buttons:
+			button.SetVisible(False)
 		beat_text = beat["text"]
 		if chapter["area"] == "tl0002" and beat_index == 0:
 			lead = GemRB.GetGameVar("TLMARALEAD")
@@ -144,6 +201,7 @@ def OnLoad():
 				break
 		message.SetText("[cap]T[/cap]ERRALUM  |  " + chapter["title"] + "\n" + chapter["place"] + "\n\n" + beat["speaker"] + ": " + beat_text + "\n\n")
 		action.SetText(beat["action"].upper() if len(beat["action"]) < 11 else "CONTINUE")
+		action.OnPress(advance)
 		voice.SetDisabled(not chapter.get("voice"))
 
 	def advance():
@@ -197,6 +255,7 @@ def OnLoad():
 		show()
 
 	action.OnPress(advance)
+	journal_button.OnPress(toggle_journal)
 	voice.OnPress(narrate)
 	talk.OnPress(talk_to_scene_npc)
 	action.SetHotKey(GEM_RETURN, 0, True)

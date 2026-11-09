@@ -14,7 +14,12 @@
         {
           "speaker": "Archivist Mara",
           "text": "Dorian the Seer was the scrolls' last keeper. He went west through Mistwood. The Caverns of Lorian hold the scrolls, but the old trail is lost.",
-          "action": "Seek the court"
+          "action": "Seek the court",
+          "journal": {
+            "flag": "TLJRN_BYZANTEM",
+            "section": 1,
+            "text": "Archivist Mara says Dorian travelled west through Mistwood. Find his route and recover the Scrolls of Byzantem from the Caverns of Lorian."
+          }
         },
         {
           "speaker": "King Edmon",
@@ -68,7 +73,12 @@
         {
           "speaker": "Scout Tessa",
           "text": "I know this road. The moss hides snares; follow the pale stones and keep your spellbook ready.",
-          "action": "Follow Tessa"
+          "action": "Follow Tessa",
+          "journal": {
+            "flag": "TLJRN_MISTWOOD",
+            "section": 4,
+            "text": "The party has reached Mistwood. Mara’s ledger and Inessa’s copied index can guide them along the pale stones toward Lorian."
+          }
         },
         {
           "speaker": "Tessa",
@@ -139,7 +149,12 @@
         {
           "speaker": "Algoreth",
           "text": "The silver lid yields. The scrolls of Byzantem hold the secret of world travelling. Algoreth carries them back toward Alsperia.",
-          "action": "Claim the scrolls"
+          "action": "Claim the scrolls",
+          "journal": {
+            "flag": "TLJRN_SCROLLS",
+            "section": 4,
+            "text": "Algoreth recovered the Scrolls of Byzantem from Lorian. The party turns back toward Alsperia to report what they found."
+          }
         }
       ]
     },
@@ -308,7 +323,12 @@
         {
           "speaker": "Algoreth",
           "text": "Power shall endure only in form. Form shall endure only in purpose. Purpose shall endure only where being does not devour itself.",
-          "action": "Seal the Tear"
+          "action": "Seal the Tear",
+          "journal": {
+            "flag": "TLJRN_TEAR",
+            "section": 4,
+            "text": "The false Algoreth spoke from the academy Tear. Algoreth sealed the breach with a boundary of form and purpose; the false self remains contained."
+          }
         }
       ]
     },
@@ -367,7 +387,12 @@
               "value": 2,
               "text": "Selene keeps the sealed account in the archive. Ealdrin will rely on a witness statement and ask questions in Eldrador."
             }
-          ]
+          ],
+          "journal": {
+            "flag": "TLJRN_ARCHIVE",
+            "section": 4,
+            "text": "The Deep Archive account connects Tears with powers confronting their own limits. Alisande and Ealdrin prepare to compare the record with the Eldrador signs."
+          }
         }
       ]
     },
@@ -383,7 +408,12 @@
         {
           "speaker": "Queen Vaelthira",
           "text": "Our sanctuary's Tear speaks with a familiar voice. I ask you to see it, not to destroy it blindly.",
-          "action": "Hear Seraphina"
+          "action": "Hear Seraphina",
+          "journal": {
+            "flag": "TLJRN_ELDRADOR",
+            "section": 4,
+            "text": "Queen Vaelthira invites the party to investigate another unstable Tear. Its outcome is not known."
+          }
         },
         {
           "speaker": "Seraphina Everglow",
@@ -431,7 +461,12 @@
               "value": 2,
               "text": "The crew prioritizes protective wards. The Aethercraft leaves the archive account in the court vault and prepares for a guarded arrival."
             }
-          ]
+          ],
+          "journal": {
+            "flag": "TLJRN_VOYAGE",
+            "section": 4,
+            "text": "The Aethercraft is prepared to depart. The chosen records and protective measures will shape the approach; the Tear itself remains unknown."
+          }
         }
       ]
     }

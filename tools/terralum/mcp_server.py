@@ -86,6 +86,18 @@ TOOLS = [
         }, "required": ["flag"], "additionalProperties": False},
     },
     {
+        "name": "terralum_set_journal_event",
+        "description": "Attach a persistent journal entry to a scene beat. Register its campaign flag first; section 1 is an active quest, 2 is a resolved quest, and 4 is the journal timeline.",
+        "inputSchema": {"type": "object", "properties": {
+            "chapter": {"type": "integer", "minimum": 1, "maximum": 14,
+                         "description": "One-based scene index in story.json."},
+            "beat": {"type": "integer", "minimum": 1},
+            "flag": {"type": "string", "pattern": "^TL[A-Z][A-Z0-9_]{1,28}$"},
+            "text": {"type": "string", "minLength": 1, "maxLength": 2000},
+            "section": {"type": "integer", "enum": [1, 2, 4]},
+        }, "required": ["chapter", "beat", "flag", "text", "section"], "additionalProperties": False},
+    },
+    {
         "name": "terralum_update_story",
         "description": "Update the campaign title or default hero name.",
         "inputSchema": {
@@ -200,6 +212,35 @@ def call_tool(name, arguments):
             raise ValueError("could not find the game-start initialization point in SetupGame.py")
         SETUP_PATH.write_text(setup.replace(anchor, f"\t{declaration}\n{anchor}", 1), encoding="utf-8")
         return result({"flag": flag, "registered": True, "initial_value": 0})
+    if name == "terralum_set_journal_event":
+        chapter_index = arguments.get("chapter")
+        beat_index = arguments.get("beat")
+        flag = arguments.get("flag")
+        text = arguments.get("text")
+        section = arguments.get("section")
+        story = read_story()
+        if (type(chapter_index) is not int or not 1 <= chapter_index <= len(story["chapters"])
+                or type(beat_index) is not int
+                or not 1 <= beat_index <= len(story["chapters"][chapter_index - 1]["beats"])
+                or not isinstance(flag, str) or not re.fullmatch(r"TL[A-Z][A-Z0-9_]{1,28}", flag)
+                or not isinstance(text, str) or not text.strip() or len(text) > 2000
+                or type(section) is not int or section not in (1, 2, 4)):
+            raise ValueError("Invalid scene beat, campaign flag, journal text, or journal section")
+        setup = SETUP_PATH.read_text(encoding="utf-8")
+        if f'GemRB.SetGlobal("{flag}", "GLOBAL", 0)' not in setup:
+            raise ValueError("register the journal event flag before adding the event")
+        for scene_number, scene in enumerate(story["chapters"], start=1):
+            for beat_number, beat_data in enumerate(scene["beats"], start=1):
+                existing = beat_data.get("journal") or {}
+                if (existing.get("flag") == flag
+                        and (scene_number != chapter_index or beat_number != beat_index)):
+                    raise ValueError("journal event flags must be unique across story beats")
+        event = {"flag": flag, "section": section, "text": text.strip()}
+        story["chapters"][chapter_index - 1]["beats"][beat_index - 1]["journal"] = event
+        temporary = STORY_PATH.with_suffix(STORY_PATH.suffix + ".tmp")
+        temporary.write_text(json.dumps(story, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+        temporary.replace(STORY_PATH)
+        return result({"chapter": chapter_index, "beat": beat_index, "journal": event})
     if name == "terralum_update_story":
         field = arguments.get("field")
         value = arguments.get("text")
