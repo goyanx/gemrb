@@ -3,6 +3,7 @@
     {
       "name": "Archivist Mara",
       "creature": "riddler",
+      "dialog": "MARA",
       "position": [
         690,
         520

@@ -193,7 +193,9 @@ class SceneCastAuthoringTests(unittest.TestCase):
         dialogue = {
             "states": [
                 {"when": [{"flag": "TLCHAP", "value": 18}], "say": "First state.",
-                 "transitions": [{"text": "Continue.", "next": 1}]},
+                 "transitions": [{"text": "Continue.", "next": 1,
+                                  "set": [{"flag": "TLMARALEAD", "value": 1}],
+                                  "journal": "The route decision was recorded."}]},
                 {"say": "Follow-up state.", "transitions": [{"text": "Close.", "final": True}]},
             ]
         }
@@ -211,6 +213,13 @@ class SceneCastAuthoringTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "uninitialized entry conditions"):
             mcp_server.call_tool("terralum_upsert_native_dialogue", {
                 "resref": "BADDLG", "dialogue": invalid,
+            })
+
+        invalid = json.loads(json.dumps(dialogue))
+        invalid["states"][0]["transitions"][0]["set"][0]["flag"] = "TLNOTREGISTERED"
+        with self.assertRaisesRegex(ValueError, "invalid or uninitialized flag writes"):
+            mcp_server.call_tool("terralum_upsert_native_dialogue", {
+                "resref": "BADACT", "dialogue": invalid,
             })
 
     def test_design_metadata_and_area_cast_invariants_are_required(self):

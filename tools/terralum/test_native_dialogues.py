@@ -40,22 +40,47 @@ class NativeDialogueResourceTests(unittest.TestCase):
             header = struct.unpack_from("<8s11I", data)
             self.assertEqual(header[0], b"DLG V1.0")
             state_count, states_offset, transition_count, transitions_offset = header[1:5]
+            state_triggers_offset, state_trigger_count = header[5:7]
             self.assertEqual(state_count, len(dialogue["states"]))
             self.assertIn((resref.lower().encode("ascii").ljust(8, b"\0"), 0x3F3), resources)
             states = [struct.unpack_from("<4I", data, states_offset + i * 16)
                       for i in range(state_count)]
             transitions = [struct.unpack_from("<5I8sI", data, transitions_offset + i * 32)
                            for i in range(transition_count)]
-            for index, (say_ref, first, count, _trigger) in enumerate(states):
+            actions_offset, action_count = header[9:11]
+            actions = [struct.unpack_from("<II", data, actions_offset + index * 8)
+                       for index in range(action_count)]
+            action_scripts = [data[offset:offset + length].decode("ascii") for offset, length in actions]
+            for index, (say_ref, first, count, trigger_index) in enumerate(states):
                 self.assertEqual(talk_table[say_ref]["string"].decode("utf-8"), dialogue["states"][index]["say"])
                 self.assertLessEqual(first + count, transition_count)
+                if "when" in dialogue["states"][index]:
+                    self.assertLess(trigger_index, state_trigger_count)
+                    offset, length = struct.unpack_from("<II", data, state_triggers_offset + trigger_index * 8)
+                    condition_text = data[offset:offset + length].decode("ascii")
+                    for condition in dialogue["states"][index]["when"]:
+                        self.assertIn(f'Global("{condition["flag"]}","GLOBAL",{condition["value"]})',
+                                      condition_text)
                 for local, transition in enumerate(transitions[first:first + count]):
-                    self.assertEqual(talk_table[transition[1]]["string"].decode("utf-8"),
-                                     dialogue["states"][index]["transitions"][local]["text"])
+                    authored_transition = dialogue["states"][index]["transitions"][local]
+                    self.assertEqual(talk_table[transition[1]]["string"].decode("utf-8"), authored_transition["text"])
                     if not transition[0] & 0x08:
                         self.assertLess(transition[6], state_count)
+                    if "journal" in authored_transition:
+                        self.assertTrue(transition[0] & 0x10)
+                        self.assertEqual(talk_table[transition[2]]["string"].decode("utf-8"),
+                                         authored_transition["journal"])
+                    if "set" in authored_transition:
+                        self.assertTrue(transition[0] & 0x04)
+                        self.assertLess(transition[4], action_count)
+                        for write in authored_transition["set"]:
+                            self.assertIn(
+                                f'SetGlobal("{write["flag"]}","GLOBAL",{write["value"]})',
+                                action_scripts[transition[4]],
+                            )
         self.assertEqual(bindings["KINGEDM"], ("tl0001", "King Edmon"))
         self.assertEqual(bindings["ALISAND"], ("tl0001", "Queen Alisande"))
+        self.assertEqual(bindings["MARA"], ("tl0001", "Archivist Mara"))
 
     def test_compiled_alistair_dialogue_and_tlk(self):
         pack = Path(os.environ.get("TERRALUM_GAME_OUTPUT", PROJECT / "build" / "game")).resolve()

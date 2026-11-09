@@ -109,7 +109,7 @@ TOOLS = [
     },
     {
         "name": "terralum_upsert_native_dialogue",
-        "description": "Create or replace a native Infinity Engine DLG state machine. Conditions use registered campaign flags; each state contains NPC text and player options that continue to another state or end the conversation.",
+        "description": "Create or replace a native Infinity Engine DLG state machine. Conditions use registered campaign flags; player options can write registered campaign flags and add a journal entry before continuing or ending the conversation.",
         "inputSchema": {"type": "object", "properties": {
             "resref": {"type": "string", "pattern": "^[A-Za-z0-9_]{1,8}$"},
             "dialogue": {"type": "object", "properties": {
@@ -127,6 +127,13 @@ TOOLS = [
                                 "text": {"type": "string", "minLength": 1, "maxLength": 1000},
                                 "next": {"type": "integer", "minimum": 0, "maximum": 254},
                                 "final": {"type": "boolean", "const": True},
+                                "set": {"type": "array", "maxItems": 8, "items": {
+                                    "type": "object", "properties": {
+                                        "flag": {"type": "string", "pattern": "^TL[A-Z][A-Z0-9_]{1,28}$"},
+                                        "value": {"type": "integer"},
+                                    }, "required": ["flag", "value"], "additionalProperties": False,
+                                }},
+                                "journal": {"type": "string", "minLength": 1, "maxLength": 2000},
                             }, "required": ["text"], "additionalProperties": False,
                         }},
                     }, "required": ["say", "transitions"], "additionalProperties": False,

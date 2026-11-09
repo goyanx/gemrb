@@ -1,4 +1,88 @@
 {
+  "MARA": {
+    "states": [
+      {
+        "when": [
+          {"flag": "TLCHAP", "value": 0},
+          {"flag": "TLMARALEAD", "value": 0},
+          {"flag": "TLJRN_MARA", "value": 0}
+        ],
+        "say": "Dorian's last travel ledger is in the library. Its pale-stone marks point west, but they cannot tell us whether the waystones still stand.",
+        "transitions": [
+          {"text": "Ask Mara to show you Dorian's route.", "next": 1,
+           "set": [{"flag": "TLMARALEAD", "value": 1}]},
+          {"text": "Ask the king for aid instead.", "next": 4,
+           "set": [{"flag": "TLMARALEAD", "value": 2}]},
+          {"text": "Leave the ledger for another time.", "next": 5,
+           "set": [{"flag": "TLMARALEAD", "value": 3}]}
+        ]
+      },
+      {
+        "say": "These marks may help Inessa restore the damaged library index. Should I copy them onto a separate sheet, or keep Dorian's ledger sealed for the court?",
+        "transitions": [
+          {"text": "Copy the landmarks for Inessa.", "next": 2,
+           "journal": "Algoreth and Archivist Mara agreed how to handle Dorian's western route ledger. The library will respond to the record's selected handling.",
+           "set": [{"flag": "TLMARADETAIL", "value": 1}, {"flag": "TLJRN_MARA", "value": 1}]},
+          {"text": "Keep the ledger sealed for the court.", "next": 3,
+           "journal": "Algoreth and Archivist Mara agreed how to handle Dorian's western route ledger. The library will respond to the record's selected handling.",
+           "set": [{"flag": "TLMARADETAIL", "value": 2}, {"flag": "TLJRN_MARA", "value": 1}]}
+        ]
+      },
+      {
+        "say": "I have copied the landmarks onto a separate sheet for Inessa. The original ledger remains sealed in the court archive.",
+        "transitions": [{"text": "We will compare the copy with the library index.", "final": true}]
+      },
+      {
+        "say": "The ledger will remain sealed for the court. Inessa can compare its record in the archive, but no marked copy will travel ahead of us.",
+        "transitions": [{"text": "We will preserve the record and its limits.", "final": true}]
+      },
+      {
+        "say": "Edmon can authorize help from the crown. Tell him where the road leads and what the expedition needs.",
+        "transitions": [{"text": "I will speak with the king.", "final": true}]
+      },
+      {
+        "say": "Very well. The route remains in the court's records until you are ready to pursue it.",
+        "transitions": [{"text": "I will return if we need the ledger.", "final": true}]
+      },
+      {
+        "when": [
+          {"flag": "TLCHAP", "value": 0}, {"flag": "TLMARALEAD", "value": 1},
+          {"flag": "TLMARADETAIL", "value": 0}
+        ],
+        "say": "We have the route. The library can use a copy of its pale-stone landmarks, or I can keep the original ledger sealed for the court.",
+        "transitions": [
+          {"text": "Choose how to preserve Dorian's route.", "next": 1},
+          {"text": "Leave the ledger decision open.", "final": true}
+        ]
+      },
+      {
+        "when": [
+          {"flag": "TLCHAP", "value": 0}, {"flag": "TLMARALEAD", "value": 1},
+          {"flag": "TLMARADETAIL", "value": 1}
+        ],
+        "say": "The landmarks were copied for Inessa, while the original remains in the court archive. She can compare the separate sheet with the damaged index.",
+        "transitions": [{"text": "Thank Mara for keeping both records clear.", "final": true}]
+      },
+      {
+        "when": [
+          {"flag": "TLCHAP", "value": 0}, {"flag": "TLMARALEAD", "value": 1},
+          {"flag": "TLMARADETAIL", "value": 2}
+        ],
+        "say": "The ledger remains sealed for the court. Inessa may compare its record in the archive, but the marked route will not travel separately.",
+        "transitions": [{"text": "Thank Mara for preserving the record.", "final": true}]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 0}, {"flag": "TLMARALEAD", "value": 2}],
+        "say": "I suggested you seek the king's aid. Edmon can weigh the request against the crown's duties.",
+        "transitions": [{"text": "I will speak with Edmon.", "final": true}]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 0}, {"flag": "TLMARALEAD", "value": 3}],
+        "say": "You chose to leave Dorian's route for later. The ledger remains here if the expedition needs it.",
+        "transitions": [{"text": "That is all for now.", "final": true}]
+      }
+    ]
+  },
   "KINGEDM": {
     "states": [
       {

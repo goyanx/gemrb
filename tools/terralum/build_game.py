@@ -322,6 +322,19 @@ def validate_native_dialogue(resref, dialogue, initialized_flags):
                     or not transition["text"].strip() or len(transition["text"]) > 1000
                     or ("final" in transition) == ("next" in transition)):
                 raise ValueError(f"native dialogue {resref} state {state_index} has an incomplete transition")
+            journal = transition.get("journal")
+            if journal is not None and (not isinstance(journal, str) or not journal.strip() or len(journal) > 2000):
+                raise ValueError(f"native dialogue {resref} state {state_index} has invalid journal text")
+            writes = transition.get("set", [])
+            if (not isinstance(writes, list) or len(writes) > 8
+                    or any(not isinstance(write, dict)
+                           or not isinstance(write.get("flag"), str)
+                           or not re.fullmatch(r"TL[A-Z][A-Z0-9_]{1,28}", write["flag"])
+                           or write["flag"] not in initialized_flags
+                           or type(write.get("value")) is not int
+                           or not -2147483648 <= write["value"] <= 2147483647
+                           for write in writes)):
+                raise ValueError(f"native dialogue {resref} state {state_index} has invalid or uninitialized flag writes")
             if "next" in transition:
                 if type(transition["next"]) is not int or not 0 <= transition["next"] < len(states):
                     raise ValueError(f"native dialogue {resref} transition points to a missing state")
@@ -392,17 +405,32 @@ def write_native_dialogues(dialogues):
                 ).encode("ascii") + b"\r\n")
 
             flat_transitions = []
+            action_payloads = []
             state_rows = []
             for state_index, state in enumerate(states):
                 first_transition = len(flat_transitions)
                 for transition in state["transitions"]:
                     flags = 0x01
                     next_state = 0
+                    journal_ref = 0
+                    if "journal" in transition:
+                        flags |= 0x10
+                        journal_ref = add_text(transition["journal"])
+                    writes = transition.get("set", [])
+                    action_index = 0
+                    if writes:
+                        flags |= 0x04
+                        action_index = len(action_payloads)
+                        action_payloads.append("\r\n".join(
+                            f'SetGlobal("{write["flag"]}","GLOBAL",{write["value"]})'
+                            for write in writes
+                        ).encode("ascii") + b"\r\n")
                     if transition.get("final") is True:
                         flags |= 0x08
                     else:
                         next_state = transition["next"]
-                    flat_transitions.append((flags, add_text(transition["text"]), next_state))
+                    flat_transitions.append((flags, add_text(transition["text"]), journal_ref,
+                                             action_index, next_state))
                 state_rows.append((add_text(state["say"]), first_transition,
                                    len(state["transitions"]), trigger_indexes[state_index]))
 
@@ -411,25 +439,33 @@ def write_native_dialogues(dialogues):
             state_triggers_offset = transitions_offset + 32 * len(flat_transitions)
             transition_triggers_offset = state_triggers_offset + 8 * len(trigger_strings)
             actions_offset = transition_triggers_offset
-            string_data_offset = actions_offset
+            action_data_offset = actions_offset + 8 * len(action_payloads)
+            trigger_data_offset = action_data_offset + sum(len(payload) for payload in action_payloads)
             trigger_table = bytearray()
             trigger_data = bytearray()
             for trigger in trigger_strings:
-                trigger_table.extend(struct.pack("<II", string_data_offset + len(trigger_data), len(trigger)))
+                trigger_table.extend(struct.pack("<II", trigger_data_offset + len(trigger_data), len(trigger)))
                 trigger_data.extend(trigger)
+            action_table = bytearray()
+            action_data = bytearray()
+            for payload in action_payloads:
+                action_table.extend(struct.pack("<II", action_data_offset + len(action_data), len(payload)))
+                action_data.extend(payload)
             header = struct.pack(
                 "<8s11I", b"DLG V1.0", len(state_rows), states_offset,
                 len(flat_transitions), transitions_offset,
                 state_triggers_offset, len(trigger_strings),
-                transition_triggers_offset, 0, actions_offset, 0, 0,
+                transition_triggers_offset, 0, actions_offset, len(action_payloads), 0,
             )
             state_table = b"".join(struct.pack("<4I", *row) for row in state_rows)
             transition_table = b"".join(
-                struct.pack("<5I8sI", flags, text_ref, 0, 0, 0, b"\0" * 8, next_state)
-                for flags, text_ref, next_state in flat_transitions
+                struct.pack("<5I8sI", flags, text_ref, journal_ref, 0, action_index,
+                            b"\0" * 8, next_state)
+                for flags, text_ref, journal_ref, action_index, next_state in flat_transitions
             )
             target = OUTPUT / "override" / f"{resref.lower()}.dlg"
-            target.write_bytes(header + state_table + transition_table + trigger_table + trigger_data)
+            target.write_bytes(header + state_table + transition_table + trigger_table + action_table
+                               + action_data + trigger_data)
 
         with tlk_path.open("wb") as target:
             talk_table.save(target)

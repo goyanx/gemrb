@@ -16,7 +16,7 @@ scene_production_plan.md tracks the BG2-inspired delivery slices. campaign_plan.
 
 ## Build and play
 
-Native Infinity Engine DLG conversations currently cover King Edmon and Queen Alisande in the opening scene and Alistair in the Chart Room and Hangar. Other authored NPC choices still use the campaign panel. DLG resources are compiled with `dialog.tlk` strings and checked by `test_native_dialogues.py`; click interaction and save/load still need live playtesting.
+Native Infinity Engine DLG conversations currently cover Archivist Mara, King Edmon, and Queen Alisande in the opening scene and Alistair in the Chart Room and Hangar. Mara's two-stage DLG sets the same route and ledger globals as the custom panel, writes one shared journal entry, and feeds Scholar Inessa's later response. Other authored NPC choices still use the campaign panel. DLG resources are compiled with `dialog.tlk` strings and checked by `test_native_dialogues.py`; click interaction and save/load still need live playtesting.
 
 From the repository root:
 
@@ -33,6 +33,8 @@ python tools/terralum/test_native_dialogues.py
 The campaign-flow mock checks scene progression and response effects. The MCP test checks JSON-RPC discovery, cast authoring, and campaign-flag registration; neither replaces a live playthrough.
 
 The last command uses the WSL build in this checkout. On Windows with a native GemRB build, use `terralum/build/terralum.cfg`. `terralum/play.ps1` builds and launches through WSL and stops if another GemRB process is already running, preventing ambiguous duplicate game windows. The assembled pack under `terralum/build/` is ignored by Git.
+
+If a running GemRB session has the standard pack open, set `TERRALUM_GAME_OUTPUT` to an isolated output folder before running `build_game.py` and `test_native_dialogues.py`. The builder places the matching Windows and WSL config files next to that pack and leaves the normal launch config untouched.
 
 The voice clips under `terralum/audio/` were rendered locally with Kokoro ONNX using the `af_heart` woman voice. To regenerate them, use the standalone Kokoro Python environment and provide local model and voice files:
 
