@@ -34,6 +34,11 @@ expected = {
         "blocked": [(10, 35), (93, 42), (60, 44), (24, 66), (80, 78)],
         "description": "north trail and stepping-stone route",
     },
+    "tl0009": {
+        "routes": [(59, 5), (50, 92)],
+        "blocked": [(8, 50), (20, 84), (82, 84), (96, 45), (27, 29), (78, 41)],
+        "description": "north portal approach, southern road, and watchpost plaza",
+    },
     "tl0016": {
         "routes": [(24, 5), (95, 27), (72, 92)],
         "blocked": [(5, 45), (56, 20), (90, 76), (30, 88)],

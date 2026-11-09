@@ -20,6 +20,7 @@ This is the current work ledger for human and AI contributors. Read [AGENTS.md](
 - [x] Added the Three-Cairn Fork as an adaptation scene with two named waykeepers, a two-outcome marker decision, a journaled route discovery, and changed dialogue at the Ruined Watchpost.
 - [x] Authored and connectivity-checked a second custom `SR.BMP` for the Three-Cairn Fork; the player start, both NPCs, three path branches, and blocked stone/terrain footprints are covered by the map check.
 - [x] Authored and connectivity-checked a third custom `SR.BMP` for Mistwood Road; the player start, both scene NPCs, stalker spawn, southern approach, northbound road, and blocked terrain footprints are covered by the map check. The encounter now spawns at its authored world coordinate.
+- [x] Authored and connectivity-checked a fourth custom `SR.BMP` for the Ruined Watchpost; the party, Courier Pell, Waywarden Saren, plaza, southern road, north arch, and blocked perimeter ruins are covered by the map check.
 - [x] Expanded Act II with a Mistwood Hunter's Camp, two adaptation NPCs, a lantern choice, active and resolved journal events, and a quiet-trail route that can bypass the later stalker ambush.
 - [x] Fixed the safe-route skip to continue into Dorian's inscription beat, show route-specific text, and resolve the camp objective once in the journal.
 - [x] Authored the Hunter's Camp's first scene-specific `SR.BMP`: a connected clearing and trails, blocked shelter/cart/firepit/rock footprints, and reachable start/NPC positions. The map is declared in `terralum/area_searchmaps.json` and built from GemRB's indexed searchmap template.
@@ -31,8 +32,8 @@ This is the current work ledger for human and AI contributors. Read [AGENTS.md](
 
 - [ ] **Scene dialogue slice:** Market, library, watchpost, seal gallery, council, academy courtyard, archive index, and hangar choices set persistent flags with later text outcomes. The logic is mock-tested; live input/save testing remains open. The custom choice UI is not a native GemRB DLG system.
 - [ ] **Journal verification:** eleven event flags, including the waystone discovery and optional creekside clue, plus revisit deduplication, pass the script mock; live display and save/load still need direct playtesting.
-- [ ] **Playable-scene verification:** the extended pack builds and the opening area starts in live GemRB. All three custom Mistwood maps pass script connectivity checks, but live movement is unverified. The WSLg window input path has not yet been verified. Later-area entry, player movement, actual fights, choice input, save/load, and return entry still need direct playtesting.
-- [ ] **Art and geometry:** characters currently reuse the demo's two humanoid sprites. Hunter's Camp, the Three-Cairn Fork, and Mistwood Road now have custom searchmaps, but all 16 areas still inherit the AR0100 WED layout and terrain/height/light files; the other 13 also use its generic searchmap. All three custom maps pass connectivity checks, while actual in-engine movement remains unverified.
+- [ ] **Playable-scene verification:** the extended pack builds and the opening area starts in live GemRB. All four custom Mistwood maps pass script connectivity checks, but live movement is unverified. The WSLg window input path has not yet been verified. Later-area entry, player movement, actual fights, choice input, save/load, and return entry still need direct playtesting.
+- [ ] **Art and geometry:** characters currently reuse the demo's two humanoid sprites. Hunter's Camp, the Three-Cairn Fork, Mistwood Road, and the Ruined Watchpost now have custom searchmaps, but all 16 areas still inherit the AR0100 WED layout and terrain/height/light files; the other 12 also use its generic searchmap. All four custom maps pass connectivity checks, while actual in-engine movement remains unverified.
 - [ ] **Campaign length:** 16 locations and 41 beats form an expanded prototype, not a long-form campaign. Act II now has a side scene about the trail marker; Acts VI and VII have archive-index and hangar preparation locations. Deeper quest arcs remain; see `terralum/campaign_plan.md`.
 
 ## To do, in priority order
@@ -47,7 +48,7 @@ This is the current work ledger for human and AI contributors. Read [AGENTS.md](
 
 ### P1 — Make every scene coherent and navigable
 
-- [ ] Extend the three custom searchmaps to the remaining 13 areas; replace shared WED geometry, entrances, terrain/height/light maps, and prove party movement in every scene.
+- [ ] Extend the four custom searchmaps to the remaining 12 areas; replace shared WED geometry, entrances, terrain/height/light maps, and prove party movement in every scene.
 - [x] Add focused searchmap checks for dimensions/palette, blocked terrain and props, and four-way connectivity from the party start to scene NPCs, encounter spawns, and exits.
 - [ ] Replace repeated placeholder NPC models with unique/generated or compatible open-licensed art and portraits. Keep provenance and license records.
 - [ ] Place actual interactable clues, containers, doors, and travel links only where they match the new scene geometry.
