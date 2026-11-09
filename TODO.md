@@ -13,8 +13,9 @@ This is the current work ledger for human and AI contributors. Read [AGENTS.md](
 - [x] Added 41 named, scene-specific NPC placements across 19 areas; added Talk, Narrate, Continue, and numbered-response keyboard shortcuts alongside visible controls. Current sprites reuse two demo templates.
 - [x] Completed structured role, faction, goal, knowledge, voice, and provenance sheets for all 41 NPC cast entries; pack validation now rejects entries missing this design context.
 - [x] Added a victory gate to each of the three prototype encounters.
+- [x] Expanded the Mistwood Road gate into a two-foe authored encounter group; each enemy has its own connected spawn point and persistent actor flag, and the campaign mock verifies both attack orders and the group victory gate.
 - [x] Fixed the ARE builder counts: it now preserves the demo entrances and clears actor, region, spawn, container, item, and door counts that belonged to the demo.
-- [x] Campaign-flow mock reports 19 scene casts, 41 actor placements, keyboard controls, all 31 authored response options, three market routes, three encounter gates, eighteen area transitions, and seven voice cues.
+- [x] Campaign-flow mock reports 19 scene casts, 41 actor placements, keyboard controls, all 31 authored response options, three market routes, three encounter gates, four hostile actors across those encounters, eighteen area transitions, and seven voice cues.
 - [x] Added campaign journal entries for story beats and dialogue choices, plus the active/resolved Hunter's Camp objective; entries use GemRB's persistent journal API and are guarded against duplicate records.
 - [x] Added Ranger Ilya's optional creekside conversation and stateful route around the Mistwood stalker; the dialogue journal event is deduplicated on repeat interaction, and the campaign mock tests the dark-lantern branch through Dorian's inscription.
 - [x] Added the Three-Cairn Fork as an adaptation scene with two named waykeepers, a two-outcome marker decision, a journaled route discovery, and changed dialogue at the Ruined Watchpost.
@@ -58,7 +59,7 @@ This is the current work ledger for human and AI contributors. Read [AGENTS.md](
 - [x] Add focused searchmap checks for dimensions/palette, blocked terrain and props, and four-way connectivity from the party start to scene NPCs, encounter spawns, and exits.
 - [ ] Replace repeated placeholder NPC models with unique/generated or compatible open-licensed art and portraits. Keep provenance and license records.
 - [ ] Place actual interactable clues, containers, doors, and travel links only where they match the new scene geometry.
-- [ ] Turn encounters into authored tactical events with clues, sensible placement, AI, balance, victory/failure outcomes, and quest-state effects. The Mistwood stalker now uses a connected, authored spawn coordinate.
+- [ ] Turn encounters into fully authored tactical events with clues, distinct enemy behavior and art, balance, failure outcomes, and quest-state effects. Mistwood now has a connected two-foe ambush with persistent actor IDs and a group victory gate; live combat and balance remain unverified.
 - [ ] Review the 41 complete cast sheets against live scenes; deepen return-state dialogue and recurring NPC continuity where appropriate.
 
 ### P2 — Expand the campaign

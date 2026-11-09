@@ -70,7 +70,8 @@ class Window:
 
 window = Window()
 events = []
-globals_ = {"TLCHAP": 0, "TLBEAT": 0, "TLENEMY": 0, "TLCAST": 0,
+globals_ = {"TLCHAP": 0, "TLBEAT": 0, "TLENEMY": 0, "TLENEMY_STALKER": 0,
+            "TLENEMY_PROWLER": 0, "TLCAST": 0,
             "TLMARALEAD": 0, "TLLIBRARYCLUE": 0, "TLWATCHPOST": 0, "TLHUNTER": 0,
             "TLGALLERY": 0, "TLCOURT": 0, "TLECHO": 0, "TLMISTWOODSAFE": 0, "TLARCHIVE": 0, "TLVOYAGE": 0,
             "TLJRN_BYZANTEM": 0, "TLJRN_MISTWOOD": 0, "TLJRN_HUNTER": 0, "TLJRN_HUNTER_RESOLVED": 0,
@@ -81,6 +82,7 @@ globals_ = {"TLCHAP": 0, "TLBEAT": 0, "TLENEMY": 0, "TLCAST": 0,
             "TLJRN_SCROLLS": 0, "TLJRN_TEAR": 0,
             "TLJRN_ARCHIVE": 0, "TLJRN_ELDRADOR": 0, "TLJRN_VOYAGE": 0}
 enemy_dead = False
+dead_actors = set()
 current_area = "tl0001"
 next_actor = 1001
 timed_events = []
@@ -118,7 +120,7 @@ gemrb.CreateCreature = create_creature
 gemrb.SetPlayerName = lambda actor, name, *args: events.append(("name", actor, name))
 gemrb.SetPlayerStat = lambda *args: None
 gemrb.ExecuteString = lambda action, actor: events.append(("attack", action, actor))
-gemrb.GetPlayerStat = lambda actor, stat: 2048 if enemy_dead else 0
+gemrb.GetPlayerStat = lambda actor, stat: 2048 if enemy_dead or actor in dead_actors else 0
 gemrb.GamePause = lambda *args: None
 sys.modules["GemRB"] = gemrb
 for name, symbol in (("GUICommon", "GetWindowPack"), ("GUIMA", "OpenMapWindow"), ("GUIINV", "OpenInventoryWindow")):
@@ -285,7 +287,8 @@ for lead, expect_warden in ((2, True), (3, False)):
     timed_events.clear()
     current_area = "tl0002"
     enemy_dead = False
-    globals_.update({"TLCHAP": chapter_index_by_area["tl0002"], "TLBEAT": 1, "TLENEMY": 0, "TLCAST": 0,
+    globals_.update({"TLCHAP": chapter_index_by_area["tl0002"], "TLBEAT": 1, "TLENEMY": 0,
+                     "TLENEMY_STALKER": 0, "TLENEMY_PROWLER": 0, "TLCAST": 0,
                      "TLMARALEAD": lead, "TLLIBRARYCLUE": 2, "TLROYALORDER": 0, "TLMISTWOODSAFE": 0})
     campaign.OnLoad()
     while timed_events:
@@ -304,7 +307,9 @@ events.clear()
 timed_events.clear()
 current_area = "tl0002"
 enemy_dead = False
-globals_.update({"TLCHAP": chapter_index_by_area["tl0002"], "TLBEAT": 1, "TLENEMY": 0, "TLCAST": 0,
+dead_actors.clear()
+globals_.update({"TLCHAP": chapter_index_by_area["tl0002"], "TLBEAT": 1, "TLENEMY": 0,
+                     "TLENEMY_STALKER": 0, "TLENEMY_PROWLER": 0, "TLCAST": 0,
                  "TLMARALEAD": 3, "TLLIBRARYCLUE": 2, "TLHUNTER": 1, "TLTRAVELKIT": 1, "TLMISTWOODSAFE": 0,
                  "TLJRN_HUNTER_RESOLVED": 0})
 campaign.OnLoad()
@@ -321,7 +326,8 @@ assert len(journal_entries) == resolved_journal_count + 1
 window = Window()
 events.clear()
 timed_events.clear()
-globals_.update({"TLCHAP": chapter_index_by_area["tl0002"], "TLBEAT": 2, "TLENEMY": 0, "TLCAST": 0})
+globals_.update({"TLCHAP": chapter_index_by_area["tl0002"], "TLBEAT": 2, "TLENEMY": 0,
+                     "TLENEMY_STALKER": 0, "TLENEMY_PROWLER": 0, "TLCAST": 0})
 campaign.OnLoad()
 while timed_events:
     timed_events.pop(0)()
@@ -418,7 +424,8 @@ for gallery_value, court_line in gallery_outcomes:
 window = Window()
 events.clear()
 timed_events.clear()
-globals_.update({"TLCHAP": chapter_index_by_area["tl0002"], "TLBEAT": 1, "TLENEMY": 0, "TLCAST": 0,
+globals_.update({"TLCHAP": chapter_index_by_area["tl0002"], "TLBEAT": 1, "TLENEMY": 0,
+                     "TLENEMY_STALKER": 0, "TLENEMY_PROWLER": 0, "TLCAST": 0,
                  "TLMARALEAD": 3, "TLLIBRARYCLUE": 2, "TLHUNTER": 2, "TLMISTWOODSAFE": 0, "TLTRAVELKIT": 2})
 campaign.OnLoad()
 while timed_events:
@@ -462,7 +469,8 @@ window = Window()
 events.clear()
 timed_events.clear()
 current_area = "tl0002"
-globals_.update({"TLCHAP": chapter_index_by_area["tl0002"], "TLBEAT": 1, "TLENEMY": 0, "TLCAST": 0,
+globals_.update({"TLCHAP": chapter_index_by_area["tl0002"], "TLBEAT": 1, "TLENEMY": 0,
+                     "TLENEMY_STALKER": 0, "TLENEMY_PROWLER": 0, "TLCAST": 0,
                  "TLMISTWOODSAFE": 0, "TLTRAVELKIT": 2})
 campaign.OnLoad()
 while timed_events:
@@ -505,7 +513,7 @@ for order, expected in ((1, "Leora copies the current watchpost patrol turn"), (
     timed_events.clear()
     current_area = "tl0002"
     globals_.update({"TLCHAP": chapter_index_by_area["tl0002"], "TLBEAT": 1, "TLENEMY": 0,
-                     "TLCAST": 0, "TLMARALEAD": 2, "TLLIBRARYCLUE": 2,
+                     "TLENEMY_STALKER": 0, "TLENEMY_PROWLER": 0, "TLCAST": 0, "TLMARALEAD": 2, "TLLIBRARYCLUE": 2,
                      "TLROYALORDER": order, "TLTRAVELKIT": 0, "TLHUNTER": 2,
                      "TLHUNTERTRACK": 0, "TLMISTWOODSAFE": 0})
     campaign.OnLoad()
@@ -592,7 +600,8 @@ for kit, crossing_choice, expected_route in ((2, 1, 1), (1, 1, 2), (2, 2, 2)):
     events.clear()
     timed_events.clear()
     current_area = "tl0002"
-    globals_.update({"TLCHAP": road_index, "TLBEAT": 1, "TLENEMY": 0, "TLCAST": 0,
+    globals_.update({"TLCHAP": road_index, "TLBEAT": 1, "TLENEMY": 0,
+                     "TLENEMY_STALKER": 0, "TLENEMY_PROWLER": 0, "TLCAST": 0,
                      "TLMARALEAD": 3, "TLLIBRARYCLUE": 2, "TLHUNTER": 2,
                      "TLHUNTERTRACK": 0, "TLTRAVELKIT": kit, "TLRIVERROUTE": expected_route,
                      "TLROYALORDER": 0, "TLMISTWOODSAFE": 0})
@@ -616,6 +625,42 @@ for kit, crossing_choice, expected_route in ((2, 1, 1), (1, 1, 2), (2, 2, 2)):
     window.controls[11].press()
     assert ("handline kept the dispatch dry" if expected_route == 1 else
             "exposed ford") in window.controls[0].text
+
+# A dangerous road route now spawns a small authored group. Both actors persist
+# by global ID, the party cannot continue while either one stands, and the beat
+# resolves only after the entire group is defeated.
+window = Window()
+events.clear()
+timed_events.clear()
+current_area = "tl0002"
+enemy_dead = False
+globals_.update({"TLCHAP": chapter_index_by_area["tl0002"], "TLBEAT": 1, "TLENEMY": 0,
+                 "TLENEMY_STALKER": 0, "TLENEMY_PROWLER": 0, "TLCAST": 0,
+                 "TLMARALEAD": 3, "TLLIBRARYCLUE": 2, "TLHUNTER": 2,
+                 "TLHUNTERTRACK": 0, "TLTRAVELKIT": 0, "TLROYALORDER": 0,
+                 "TLRIVERROUTE": 0, "TLMISTWOODSAFE": 0})
+campaign.OnLoad()
+while timed_events:
+    timed_events.pop(0)()
+window.controls[4].press()
+assert [event[1] for event in events if event[0] == "spawn"][-2:] == [
+    (1, "riddler", 1008, 444), (1, "protagon", 1120, 560)]
+assert globals_["TLENEMY_STALKER"] > 1001
+assert globals_["TLENEMY_PROWLER"] > globals_["TLENEMY_STALKER"]
+assert globals_["TLENEMY"] == globals_["TLENEMY_STALKER"]
+assert sum(event[0] == "attack" for event in events) == 2
+window.controls[4].press()
+assert globals_["TLBEAT"] == 1
+assert "Mistwood stalker and Pale-stone prowler" in window.controls[0].text
+dead_actors.add(globals_["TLENEMY_STALKER"])
+window.controls[4].press()
+assert globals_["TLBEAT"] == 1
+assert "Defeat Pale-stone prowler to continue" in window.controls[0].text
+dead_actors.add(globals_["TLENEMY_PROWLER"])
+window.controls[4].press()
+assert globals_["TLBEAT"] == 2
+assert globals_["TLENEMY_STALKER"] == globals_["TLENEMY_PROWLER"] == globals_["TLENEMY"] == 0
+dead_actors.clear()
 
 # Both waystone decisions must alter what Tessa says after reaching the watchpost.
 watchpost_index = next(index for index, chapter in enumerate(chapters) if chapter["area"] == "tl0009")

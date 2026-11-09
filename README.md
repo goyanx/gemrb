@@ -55,7 +55,7 @@ The opening Market scene is a live capture from the game. It shows the player pa
 
 ### Scene art
 
-Eighteen distinct generated concept backdrops preview the nineteen scene areas; one backdrop is reused. They are visual targets for the current prototype. The Royal Stables, Dispatch Archive, Hunter's Camp, River Crossing, Three-Cairn Fork, Mistwood Road, Ruined Watchpost, Lorian Cavern, and Seal Gallery have custom searchmaps. The Royal Stables, Dispatch Archive, and River Crossing concept art appear in the gallery below; the live GemRB captures above show the current Market scene. The Mistwood stalker spawns on its authored road path; in Lorian, the Guardian NPC waits beside the chest and turns hostile in place. All nineteen areas still use the demo's shared WED layout and other terrain resources.
+Eighteen distinct generated concept backdrops preview the nineteen scene areas; one backdrop is reused. They are visual targets for the current prototype. The Royal Stables, Dispatch Archive, Hunter's Camp, River Crossing, Three-Cairn Fork, Mistwood Road, Ruined Watchpost, Lorian Cavern, and Seal Gallery have custom searchmaps. The Royal Stables, Dispatch Archive, and River Crossing concept art appear in the gallery below; the live GemRB captures above show the current Market scene. The Mistwood ambush has two enemies at authored, connected road positions; in Lorian, the Guardian NPC waits beside the chest and turns hostile in place. All nineteen areas still use the demo's shared WED layout and other terrain resources.
 
 <table>
   <tr>

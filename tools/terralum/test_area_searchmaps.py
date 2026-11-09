@@ -90,8 +90,10 @@ for area, map_spec in searchmap_specs.items():
 
     start = to_cell((800, 585))
     npcs = [to_cell(person["position"]) for person in cast_by_area[area]]
-    encounter_positions = [to_cell(beat["spawn_position"])
-                           for beat in chapters_by_area[area]["beats"] if beat.get("spawn_position")]
+    encounter_positions = [to_cell(position)
+                           for beat in chapters_by_area[area]["beats"]
+                           for position in ([beat["spawn_position"]] if beat.get("spawn_position") else [])
+                           + [member["position"] for member in beat.get("enemies", [])]]
     targets = [start, *npcs, *encounter_positions, *expected[area]["routes"]]
     assert all(walkable(cell) for cell in targets), f"{area}: start or actor on blocked cell: {targets}"
 

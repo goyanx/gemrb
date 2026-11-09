@@ -65,6 +65,7 @@ def read_story():
     if len(scene_areas) != len(set(scene_areas)) or set(scene_areas) != set(AREAS):
         raise ValueError("story.json must define each built area exactly once")
     journal_flags = set()
+    encounter_flags = set()
     setup_text = SETUP_FILE.read_text(encoding="utf-8")
     initialized_flags = set(re.findall(r'GemRB\.SetGlobal\("(TL[A-Z0-9_]+)", "GLOBAL", 0\)', setup_text))
     for chapter in chapters:
@@ -74,6 +75,24 @@ def read_story():
         if not all(beat.get("speaker") and beat.get("text") and beat.get("action") for beat in chapter["beats"]):
             raise ValueError("each story beat needs a speaker, text, and action")
         for beat in chapter["beats"]:
+            enemies = beat.get("enemies")
+            if enemies is not None:
+                if (not beat.get("encounter") or not isinstance(enemies, list)
+                        or not 1 <= len(enemies) <= 3 or beat.get("spawn_position")
+                        or beat.get("encounter_actor_flag")):
+                    raise ValueError(f"enemy groups for {chapter['area']} need an encounter and one to three members")
+                for member in enemies:
+                    position = member.get("position") if isinstance(member, dict) else None
+                    flag = member.get("flag") if isinstance(member, dict) else None
+                    if (not isinstance(member, dict) or not isinstance(member.get("name"), str)
+                            or not member["name"].strip() or len(member["name"]) > 120
+                            or member.get("creature") not in ("protagon", "riddler")
+                            or not isinstance(position, list) or len(position) != 2
+                            or any(type(value) is not int or not 0 <= value <= 32767 for value in position)
+                            or not isinstance(flag, str) or not re.fullmatch(r"TL[A-Z][A-Z0-9_]{1,28}", flag)
+                            or flag not in initialized_flags or flag in encounter_flags):
+                        raise ValueError(f"enemy group member for {chapter['area']} needs a name, supported creature, position, and unique initialized TL flag")
+                    encounter_flags.add(flag)
             spawn = beat.get("spawn_position")
             if spawn is not None and (not beat.get("encounter") or not isinstance(spawn, list)
                                       or len(spawn) != 2

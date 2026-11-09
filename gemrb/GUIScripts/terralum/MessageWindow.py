@@ -244,7 +244,35 @@ def OnLoad():
 			show()
 			return
 		enemy = GemRB.GetGameVar("TLENEMY")
-		if "encounter" in beat and not enemy:
+		group = beat.get("enemies", [])
+		if group:
+			group_actors = []
+			spawned_names = []
+			for member in group:
+				actor = GemRB.GetGameVar(member["flag"])
+				if not actor:
+					position = member["position"]
+					actor = GemRB.CreateCreature(1, member["creature"], position[0], position[1])
+					GemRB.SetGlobal(member["flag"], "GLOBAL", actor)
+					GemRB.SetPlayerName(actor, member["name"], 0)
+					GemRB.SetPlayerStat(actor, IE_EA, ENEMY)
+					GemRB.ExecuteString("Attack(Player1)", actor)
+					spawned_names.append(member["name"])
+				group_actors.append((member["name"], actor))
+			if spawned_names:
+				if not enemy:
+					GemRB.SetGlobal("TLENEMY", "GLOBAL", group_actors[0][1])
+				message.Append("\n\nENCOUNTER: " + " and ".join(spawned_names) + " attack. Defeat them to continue.")
+				return
+			living = [name for name, actor in group_actors if enemy_alive(actor)]
+			if living:
+				message.Append("\n\nENCOUNTER: Defeat " + " and ".join(living) + " to continue.")
+				return
+			for member in group:
+				GemRB.SetGlobal(member["flag"], "GLOBAL", 0)
+			GemRB.SetGlobal("TLENEMY", "GLOBAL", 0)
+			enemy = 0
+		if "encounter" in beat and not enemy and not group:
 			# A beat may turn a scene NPC hostile; otherwise, use the demo CRE
 			# as an open-licensed template for this encounter.
 			actor_flag = beat.get("encounter_actor_flag")
@@ -267,7 +295,7 @@ def OnLoad():
 			message.Append("\n\nENCOUNTER: " + beat["encounter"] + " emerges. Defeat it to continue.")
 			action.SetText("CONTINUE")
 			return
-		if "encounter" in beat and enemy_alive(enemy):
+		if "encounter" in beat and not group and enemy_alive(enemy):
 			message.Append("\n\n" + beat["encounter"] + " still stands. Defeat it to continue.")
 			return
 		GemRB.SetGlobal("TLENEMY", "GLOBAL", 0)

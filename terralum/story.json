@@ -272,10 +272,23 @@
         },
         {
           "speaker": "Tessa",
-          "text": "These tracks circle us. Something from the ruins hunts travellers after dusk.",
+          "text": "These tracks circle us. Two shapes are moving from the ruins, one cutting off the road while the other closes from the trees.",
           "action": "Face the ambush",
-          "encounter": "Mistwood stalker",
-          "spawn_position": [1008, 444]
+          "encounter": "Mistwood ambush",
+          "enemies": [
+            {
+              "name": "Mistwood stalker",
+              "creature": "riddler",
+              "position": [1008, 444],
+              "flag": "TLENEMY_STALKER"
+            },
+            {
+              "name": "Pale-stone prowler",
+              "creature": "protagon",
+              "position": [1120, 560],
+              "flag": "TLENEMY_PROWLER"
+            }
+          ]
         },
         {
           "speaker": "Dorian's inscription",

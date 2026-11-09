@@ -22,6 +22,8 @@ def OnLoad():
 	GemRB.SetGlobal("TLCHAP", "GLOBAL", 0)
 	GemRB.SetGlobal("TLBEAT", "GLOBAL", 0)
 	GemRB.SetGlobal("TLENEMY", "GLOBAL", 0)
+	GemRB.SetGlobal("TLENEMY_STALKER", "GLOBAL", 0)
+	GemRB.SetGlobal("TLENEMY_PROWLER", "GLOBAL", 0)
 	GemRB.SetGlobal("TLCAST", "GLOBAL", 0)
 	GemRB.SetGlobal("TLMARALEAD", "GLOBAL", 0)
 	GemRB.SetGlobal("TLLIBRARYCLUE", "GLOBAL", 0)
