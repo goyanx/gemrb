@@ -23,6 +23,7 @@ NPC_INPUT_SCHEMA = {
     "properties": {
         "name": {"type": "string", "minLength": 1, "maxLength": 120},
         "role": {"type": "string", "minLength": 1, "maxLength": 300},
+        "faction": {"type": "string", "minLength": 1, "maxLength": 180},
         "goal": {"type": "string", "minLength": 1, "maxLength": 1000},
         "knowledge": {"type": "string", "minLength": 1, "maxLength": 1000},
         "voice": {"type": "string", "minLength": 1, "maxLength": 500},
@@ -47,7 +48,7 @@ NPC_INPUT_SCHEMA = {
             }, "required": ["flag", "value", "line"], "additionalProperties": False,
         }},
     },
-    "required": ["name", "role", "goal", "knowledge", "voice", "provenance", "creature", "position", "line"],
+    "required": ["name", "role", "faction", "goal", "knowledge", "voice", "provenance", "creature", "position", "line"],
     "additionalProperties": False,
 }
 TOOLS = [
@@ -70,7 +71,7 @@ TOOLS = [
     },
     {
         "name": "terralum_upsert_scene_npc",
-        "description": "Add a scene NPC, or replace an NPC at its zero-based scene-cast index. Include the design-standard role, goal, knowledge, voice, and provenance along with in-game actor and dialogue data.",
+        "description": "Add a scene NPC, or replace an NPC at its zero-based scene-cast index. Include the design-standard role, faction, goal, knowledge, voice, and provenance along with in-game actor and dialogue data.",
         "inputSchema": {"type": "object", "properties": {
             "area": {"type": "string", "enum": list(AREAS)},
             "npc": NPC_INPUT_SCHEMA,

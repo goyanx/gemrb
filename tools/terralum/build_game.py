@@ -89,7 +89,7 @@ def read_story():
 def validate_npc(person, area, require_design=False):
     if not isinstance(person, dict):
         raise ValueError(f"scene cast for {area} contains a non-object NPC")
-    limits = {"name": 120, "line": 2000, "role": 300, "goal": 1000,
+    limits = {"name": 120, "line": 2000, "role": 300, "faction": 180, "goal": 1000,
               "knowledge": 1000, "voice": 500}
     if (not isinstance(person.get("name"), str) or not person["name"].strip() or len(person["name"]) > 120
             or not isinstance(person.get("line"), str) or not person["line"].strip() or len(person["line"]) > 2000
@@ -123,12 +123,12 @@ def validate_npc(person, area, require_design=False):
                                                 for key, value in route_lines.items()):
         raise ValueError(f"scene route lines for {area} must map numeric values to text")
     if require_design:
-        for field in ("role", "goal", "knowledge", "voice"):
+        for field in ("role", "faction", "goal", "knowledge", "voice"):
             if (not isinstance(person.get(field), str) or not person[field].strip()
                     or len(person[field]) > limits[field]):
-                raise ValueError(f"new NPC for {area} needs a nonempty {field}")
+                raise ValueError(f"NPC cast entry for {area} needs a nonempty {field}")
         if person.get("provenance") not in ("canon", "user-confirmed", "adaptation", "unresolved"):
-            raise ValueError(f"new NPC for {area} needs a recognized provenance label")
+            raise ValueError(f"NPC cast entry for {area} needs a recognized provenance label")
 
 
 def validate_cast(cast):
@@ -141,7 +141,7 @@ def validate_cast(cast):
         if not isinstance(people, list) or len(people) < 2:
             raise ValueError(f"scene cast for {area} must contain at least two NPCs")
         for person in people:
-            validate_npc(person, area)
+            validate_npc(person, area, require_design=True)
         names = [person["name"].strip().casefold() for person in people]
         if len(names) != len(set(names)):
             raise ValueError(f"scene cast for {area} must contain unique NPC names")

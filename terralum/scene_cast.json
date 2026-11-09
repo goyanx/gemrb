@@ -27,7 +27,13 @@
           "flag": "TLMARALEAD",
           "value": 3
         }
-      ]
+      ],
+      "role": "Royal archivist",
+      "faction": "Alsperia Records",
+      "goal": "Recover Dorian's route ledger and send Algoreth to the court with a usable lead.",
+      "knowledge": "Knows where the ledger points and which library record may corroborate it; does not know what awaits in Lorian.",
+      "voice": "Precise and helpful, careful to distinguish a record from a conclusion.",
+      "provenance": "adaptation"
     },
     {
       "name": "King Edmon",
@@ -36,7 +42,13 @@
         930,
         500
       ],
-      "line": "I am Alsperia's original king. I grant you a map and shelter; return with knowledge, not conquest."
+      "line": "I am Alsperia's original king. I grant you a map and shelter; return with knowledge, not conquest.",
+      "role": "Original King of Alsperia",
+      "faction": "Alsperia Crown",
+      "goal": "Support the journey to Lorian while making clear that Algoreth travels under the crown's trust.",
+      "knowledge": "Knows the royal road and can provide a map, horse, and shelter; has not seen the Byzantem scrolls.",
+      "voice": "Measured and authoritative, welcoming without promising what he cannot know.",
+      "provenance": "user-confirmed"
     },
     {
       "name": "Queen Alisande",
@@ -45,7 +57,13 @@
         870,
         620
       ],
-      "line": "Edmon is my husband and king. His trust opens this road, and I expect you to honor it."
+      "line": "Edmon is my husband and king. His trust opens this road, and I expect you to honor it.",
+      "role": "Queen of Alsperia",
+      "faction": "Alsperia Crown",
+      "goal": "Protect the trust behind the expedition and ensure the scrolls are treated as a public responsibility.",
+      "knowledge": "Knows the court's obligations and the people affected by royal decisions; her knowledge of the road is limited to the records before her.",
+      "voice": "Warm, composed, and direct about responsibility.",
+      "provenance": "user-confirmed"
     }
   ],
   "tl0008": [
@@ -70,7 +88,13 @@
           "flag": "TLLIBRARYCLUE",
           "value": 2
         }
-      ]
+      ],
+      "role": "Royal library scholar",
+      "faction": "Alsperia Library",
+      "goal": "Restore the western route index before it is carried into Mistwood.",
+      "knowledge": "Can compare the damaged index with the court copy; cannot guarantee that old waystones remain in place.",
+      "voice": "Analytical and patient, explaining uncertainty in concrete terms.",
+      "provenance": "adaptation"
     },
     {
       "name": "Royal Scribe Oren",
@@ -79,15 +103,21 @@
         930,
         500
       ],
-      "line": "Dorian's name appears in the oldest catalog. The entry says he feared the purpose of the traveller more than the road itself."
+      "line": "Dorian's name appears in the oldest catalog. The entry says he feared the purpose of the traveller more than the road itself.",
+      "role": "Keeper of the royal catalogue",
+      "faction": "Alsperia Library",
+      "goal": "Find the oldest reliable entry about Dorian and warn the party to attend to its meaning.",
+      "knowledge": "Knows what the catalogue says and where it was copied from; has no firsthand knowledge of Dorian.",
+      "voice": "Formal and exact, with a scholar's respect for source records.",
+      "provenance": "adaptation"
     }
   ],
   "tl0015": [
     {
       "name": "Scout Tessa",
-      "role": "Royal scout and guide on the road to Lorian.",
-      "goal": "Help the hunters mark a safe bend while keeping the camp hidden from the stalker.",
-      "knowledge": "Knows the trail and the lantern's signal; does not know what follows the party or why.",
+      "role": "Royal scout and Mistwood guide",
+      "goal": "Lead the party along the safest known trail while limiting the watcher's opportunity to follow.",
+      "knowledge": "Knows the road, pale stones, and hunters' lantern signal; does not know the stalker's origin or intent.",
       "voice": "Practical, alert, and economical with words.",
       "provenance": "adaptation",
       "creature": "protagon",
@@ -109,14 +139,15 @@
           "flag": "TLHUNTER",
           "value": 2
         }
-      ]
+      ],
+      "faction": "Alsperia Expedition"
     },
     {
       "name": "Hunter Fen",
-      "role": "Local trail keeper at the Mistwood camp.",
-      "goal": "Keep the camp safe while giving travellers a usable route through the old wood.",
+      "role": "Local trail keeper",
+      "goal": "Protect the camp while giving travellers a usable route through the old wood.",
       "knowledge": "Knows the marked path and how far the shuttered lantern can be seen; has not met the stalker.",
-      "voice": "Cautious and observant, describing concrete signs instead of guesses.",
+      "voice": "Cautious and observant, describing signs instead of guesses.",
       "provenance": "adaptation",
       "creature": "riddler",
       "position": [
@@ -135,7 +166,8 @@
           "value": 2,
           "line": "The lantern stays dark. I cannot promise the stalker has left the road, but the camp should remain concealed."
         }
-      ]
+      ],
+      "faction": "Mistwood Hunters"
     }
   ],
   "tl0002": [
@@ -167,7 +199,13 @@
           "value": 2,
           "line": "We kept the camp concealed, but its lantern gives us no signal. Stay alert; the stalker's path is uncertain."
         }
-      ]
+      ],
+      "role": "Royal scout and Mistwood guide",
+      "faction": "Alsperia Expedition",
+      "goal": "Lead the party along the safest known trail while limiting the watcher's opportunity to follow.",
+      "knowledge": "Knows the road, pale stones, and hunters' lantern signal; does not know the stalker's origin or intent.",
+      "voice": "Practical, alert, and economical with words.",
+      "provenance": "adaptation"
     },
     {
       "name": "Lost Wayfarer",
@@ -176,7 +214,13 @@
         930,
         500
       ],
-      "line": "Something circles the ruined watchpost. I heard it answer my name from the trees."
+      "line": "Something circles the ruined watchpost. I heard it answer my name from the trees.",
+      "role": "Stranded traveller",
+      "faction": "Mistwood Travellers",
+      "goal": "Warn other travellers about the presence circling the ruined watchpost.",
+      "knowledge": "Heard the stalker answer a name in the trees; cannot identify it or explain how it speaks.",
+      "voice": "Shaken and guarded, speaking in short sensory details.",
+      "provenance": "adaptation"
     }
   ],
   "tl0009": [
@@ -201,7 +245,13 @@
           "flag": "TLWATCHPOST",
           "value": 2
         }
-      ]
+      ],
+      "role": "Royal road courier",
+      "faction": "Alsperia Courier Service",
+      "goal": "Deliver the charcoal rubbing and leave the watchpost safer for the next traveller.",
+      "knowledge": "Found the rubbing under the stair and knows the stalker blocked the route; has not reached Lorian.",
+      "voice": "Quick and matter-of-fact, focused on the message in hand.",
+      "provenance": "adaptation"
     },
     {
       "name": "Waywarden Saren",
@@ -210,7 +260,13 @@
         930,
         500
       ],
-      "line": "Edmon's seal sent me to count the road markers. A patrol can guard a path, but only a traveller can decide where it leads."
+      "line": "Edmon's seal sent me to count the road markers. A patrol can guard a path, but only a traveller can decide where it leads.",
+      "role": "Royal road warden",
+      "faction": "Edmon's Waywardens",
+      "goal": "Survey the markers under Edmon's seal without choosing the traveller's destination.",
+      "knowledge": "Knows the patrol route and royal orders; understands that guarding a road does not decide what it is for.",
+      "voice": "Disciplined and restrained, separating duty from judgment.",
+      "provenance": "adaptation"
     }
   ],
   "tl0003": [
@@ -228,7 +284,13 @@
           "value": 1,
           "line": "Tessa's repaired watchpost marks the western arch. The scrolls will be easier to carry home without losing the return path."
         }
-      ]
+      ],
+      "role": "Seer and last keeper of the Byzantem scrolls",
+      "faction": "Lorian Keepers",
+      "goal": "Test why Algoreth seeks the scrolls before allowing the vault story to proceed.",
+      "knowledge": "Knows he hid the scrolls and that world-travel magnifies the traveller's purpose; the available source does not establish his later history.",
+      "voice": "Cryptic but concise, asking the player to examine motive rather than accept a prophecy.",
+      "provenance": "canon"
     },
     {
       "name": "Lorian Guardian",
@@ -237,7 +299,13 @@
         930,
         500
       ],
-      "line": "The vault is not a prize. Prove you can leave its door closed before you ask it to open."
+      "line": "The vault is not a prize. Prove you can leave its door closed before you ask it to open.",
+      "role": "Guardian of the sealed vault",
+      "faction": "Byzantem Vault",
+      "goal": "Keep the vault closed until the traveller shows restraint.",
+      "knowledge": "Knows its duty and the vault warning; does not judge the wider history of the scrolls.",
+      "voice": "Impersonal and unwavering, speaking in terms of duty and proof.",
+      "provenance": "adaptation"
     }
   ],
   "tl0010": [
@@ -262,7 +330,13 @@
           "flag": "TLGALLERY",
           "value": 2
         }
-      ]
+      ],
+      "role": "Keeper of the seal gallery",
+      "faction": "Byzantem Vault",
+      "goal": "Protect the sealed niches and make the three marks understandable to the traveller.",
+      "knowledge": "Knows the gallery marks passage, return, and restraint; will not reveal what lies behind unopened niches.",
+      "voice": "Patient and exact, treating the warning as a question.",
+      "provenance": "adaptation"
     },
     {
       "name": "Dorian's Echo",
@@ -271,7 +345,13 @@
         930,
         500
       ],
-      "line": "A warning is not a lock. It is a question the traveller must answer before choosing to cross."
+      "line": "A warning is not a lock. It is a question the traveller must answer before choosing to cross.",
+      "role": "Echo bound to the gallery inscription",
+      "faction": "Byzantem Vault",
+      "goal": "Make the traveller interpret the warning before choosing to cross.",
+      "knowledge": "Repeats the inscription's challenge but is not established as Dorian himself or as a complete record of his memory.",
+      "voice": "Reflective and spare, phrased as questions and cautions.",
+      "provenance": "adaptation"
     }
   ],
   "tl0004": [
@@ -282,7 +362,13 @@
         690,
         520
       ],
-      "line": "You have returned with the scrolls. Tell the court what they can do, and what they must not do."
+      "line": "You have returned with the scrolls. Tell the court what they can do, and what they must not do.",
+      "role": "Original King of Alsperia",
+      "faction": "Alsperia Crown",
+      "goal": "Hear Algoreth's account and learn what the recovered scrolls can and cannot do.",
+      "knowledge": "Knows Algoreth returned with the scrolls after travelling under royal protection; he does not yet know what they contain.",
+      "voice": "Measured and authoritative, welcoming without promising what he cannot know.",
+      "provenance": "user-confirmed"
     },
     {
       "name": "Queen Alisande",
@@ -291,7 +377,13 @@
         930,
         500
       ],
-      "line": "Knowledge won in darkness deserves careful study. I will argue for patience before the nobles."
+      "line": "Knowledge won in darkness deserves careful study. I will argue for patience before the nobles.",
+      "role": "Queen of Alsperia",
+      "faction": "Alsperia Crown",
+      "goal": "Protect the trust behind the expedition and ensure the scrolls are treated as a public responsibility.",
+      "knowledge": "Knows the court's obligations and the people affected by royal decisions; her knowledge of the road is limited to the records before her.",
+      "voice": "Warm, composed, and direct about responsibility.",
+      "provenance": "user-confirmed"
     }
   ],
   "tl0011": [
@@ -316,7 +408,13 @@
           "flag": "TLCOURT",
           "value": 2
         }
-      ]
+      ],
+      "role": "Captain of the royal guard",
+      "faction": "Alsperia Crown Guard",
+      "goal": "Recommend a road policy the court can enforce without letting soldiers decide the scrolls' purpose.",
+      "knowledge": "Knows what the guard can protect and the limits of military authority; has not studied the scrolls.",
+      "voice": "Blunt, civic-minded, and wary of power without accountability.",
+      "provenance": "adaptation"
     },
     {
       "name": "Queen Alisande",
@@ -325,7 +423,13 @@
         930,
         500
       ],
-      "line": "Edmon and I will hear the witnesses before the court seals its account. The people who could be harmed deserve a voice."
+      "line": "Edmon and I will hear the witnesses before the court seals its account. The people who could be harmed deserve a voice.",
+      "role": "Queen of Alsperia",
+      "faction": "Alsperia Crown",
+      "goal": "Hear the witnesses with Edmon before the court decides how to safeguard the scrolls.",
+      "knowledge": "Knows the court must weigh public risk and the royal record; Edmon is her husband and the original king in this early period.",
+      "voice": "Warm, composed, and direct about responsibility.",
+      "provenance": "user-confirmed"
     }
   ],
   "tl0012": [
@@ -350,7 +454,13 @@
           "flag": "TLECHO",
           "value": 2
         }
-      ]
+      ],
+      "role": "Eastern Academy ward warden",
+      "faction": "Eastern Academy",
+      "goal": "Keep the courtyard perimeter stable long enough for the party to investigate the vault.",
+      "knowledge": "Can reinforce the outer ward or record the pulse; cannot yet explain the voice beneath the academy.",
+      "voice": "Focused and urgent, reporting observable changes.",
+      "provenance": "adaptation"
     },
     {
       "name": "Magister Vael",
@@ -371,7 +481,13 @@
           "value": 2,
           "line": "Celene's pulse record may reveal how the echo repeats. Descend and compare it with the vault."
         }
-      ]
+      ],
+      "role": "Magister of the Eastern Academy",
+      "faction": "Eastern Academy",
+      "goal": "Connect the courtyard pulse to the disturbance in the sealed vault.",
+      "knowledge": "Has measured the pulse and seen the vault react; the source of the echo remains unknown.",
+      "voice": "Scholarly and controlled, becoming terse when the ward is at risk.",
+      "provenance": "canon"
     }
   ],
   "tl0005": [
@@ -382,7 +498,13 @@
         690,
         520
       ],
-      "line": "The observatory wards bend toward the breach. The sealed lecture vault is answering voices from below."
+      "line": "The observatory wards bend toward the breach. The sealed lecture vault is answering voices from below.",
+      "role": "Magister of the Eastern Academy",
+      "faction": "Eastern Academy",
+      "goal": "Connect the courtyard pulse to the disturbance in the sealed vault.",
+      "knowledge": "Has measured the pulse and seen the vault react; the source of the echo remains unknown.",
+      "voice": "Scholarly and controlled, becoming terse when the ward is at risk.",
+      "provenance": "canon"
     },
     {
       "name": "Queen Alisande",
@@ -391,7 +513,13 @@
         930,
         500
       ],
-      "line": "I will hold the wardens at the perimeter. Do not mistake the echo for a command."
+      "line": "I will hold the wardens at the perimeter. Do not mistake the echo for a command.",
+      "role": "Queen of Alsperia and co-ruler beside Algoreth",
+      "faction": "Alsperia Crown",
+      "goal": "Hold the academy perimeter while Algoreth investigates the echo beneath the vault.",
+      "knowledge": "Knows the Tear of Chaos is contained and the false Algoreth remains within it; the intervening years and the nature of other Tears remain unresolved.",
+      "voice": "Warm, composed, and direct about responsibility.",
+      "provenance": "canon"
     }
   ],
   "tl0006": [
@@ -402,7 +530,13 @@
         690,
         520
       ],
-      "line": "This living record says a Tear may answer a powerful mind that questions its own limits."
+      "line": "This living record says a Tear may answer a powerful mind that questions its own limits.",
+      "role": "Scholar of the Deep Archives",
+      "faction": "Deep Archives Expedition",
+      "goal": "Compare the archive record with the Eldrador signs without treating either as a settled explanation.",
+      "knowledge": "Knows the surviving account links powers to questions about their limits; does not know whether the Deep and Eternal Archives are the same place.",
+      "voice": "Thoughtful and skeptical, separating evidence from interpretation.",
+      "provenance": "canon"
     },
     {
       "name": "Queen Alisande",
@@ -411,7 +545,13 @@
         930,
         500
       ],
-      "line": "We need scholars and warders before we follow the second Tear. I will not leave the record unread."
+      "line": "We need scholars and warders before we follow the second Tear. I will not leave the record unread.",
+      "role": "Queen of Alsperia and co-ruler beside Algoreth",
+      "faction": "Alsperia Crown",
+      "goal": "Keep the research into other Tears supported by scholars and warders, and remain with Algoreth.",
+      "knowledge": "Knows the Tear of Chaos is contained and the false Algoreth remains within it; the intervening years and the nature of other Tears remain unresolved.",
+      "voice": "Warm, composed, and direct about responsibility.",
+      "provenance": "canon"
     }
   ],
   "tl0007": [
@@ -434,7 +574,13 @@
           "value": 2,
           "line": "You chose to preserve the original and question its witness. I will answer what our wardens have observed directly."
         }
-      ]
+      ],
+      "role": "Queen of Eldrador",
+      "faction": "Eldrador Crown",
+      "goal": "Invite a careful investigation of the sanctuary Tear before anyone decides how to respond.",
+      "knowledge": "Knows what her wardens observed and that the Tear speaks with a familiar voice; its cause and outcome remain unknown.",
+      "voice": "Regal and deliberate, asking for study before action.",
+      "provenance": "canon"
     },
     {
       "name": "Seraphina Everglow",
@@ -455,7 +601,13 @@
           "value": 2,
           "line": "The original remains safe in Alsperia. I have space aboard for our notes from the witness."
         }
-      ]
+      ],
+      "role": "Aethercraft expedition scholar",
+      "faction": "Eldrador Expedition",
+      "goal": "Prepare instruments and ward diagrams while leaving room to change course after seeing the Tear.",
+      "knowledge": "Knows the diagrams and instruments aboard the ship; has not examined Eldrador's Tear directly.",
+      "voice": "Clear and reassuring, giving practical details without claiming certainty.",
+      "provenance": "canon"
     }
   ],
   "tl0013": [
@@ -480,7 +632,13 @@
           "flag": "TLARCHIVE",
           "value": 2
         }
-      ]
+      ],
+      "role": "Archivist of the Index Hall",
+      "faction": "Deep Archives",
+      "goal": "Protect the original sealed account while helping Ealdrin prepare a responsible copy or witness record.",
+      "knowledge": "Knows the index entry and the living witness; does not claim the account resolves the nature of the Tears.",
+      "voice": "Careful and protective of fragile records.",
+      "provenance": "adaptation"
     },
     {
       "name": "Ealdrin",
@@ -489,7 +647,13 @@
         930,
         500
       ],
-      "line": "An archive record can shape a question, but it cannot tell us what another Tear means. We must listen when we arrive."
+      "line": "An archive record can shape a question, but it cannot tell us what another Tear means. We must listen when we arrive.",
+      "role": "Scholar of the Deep Archives",
+      "faction": "Deep Archives Expedition",
+      "goal": "Choose a responsible way to prepare the Index Hall record for the Eldrador inquiry.",
+      "knowledge": "Knows the index names a sealed account and a living witness; he will compare either source with the Eldrador signs.",
+      "voice": "Thoughtful and skeptical, separating evidence from interpretation.",
+      "provenance": "canon"
     }
   ],
   "tl0014": [
@@ -514,7 +678,13 @@
           "flag": "TLVOYAGE",
           "value": 2
         }
-      ]
+      ],
+      "role": "Aethercraft flight marshal",
+      "faction": "Alsperia Skyport",
+      "goal": "Prepare the ship for either a quiet observation approach or a guarded arrival.",
+      "knowledge": "Knows the ship and its instruments; cannot predict what the Eldrador sanctuary will require.",
+      "voice": "Practical, calm, and explicit about trade-offs.",
+      "provenance": "adaptation"
     },
     {
       "name": "Seraphina Everglow",
@@ -535,7 +705,13 @@
           "value": 2,
           "line": "Aven has loaded the warding instruments. We will arrive prepared to protect the crew."
         }
-      ]
+      ],
+      "role": "Aethercraft expedition scholar",
+      "faction": "Eldrador Expedition",
+      "goal": "Prepare instruments and ward diagrams while leaving room to change course after seeing the Tear.",
+      "knowledge": "Knows the diagrams and instruments aboard the ship; has not examined Eldrador's Tear directly.",
+      "voice": "Clear and reassuring, giving practical details without claiming certainty.",
+      "provenance": "canon"
     }
   ]
 }

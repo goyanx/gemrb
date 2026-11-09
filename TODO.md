@@ -11,6 +11,7 @@ This is the current work ledger for human and AI contributors. Read [AGENTS.md](
 - [x] Built a 15-scene campaign slice across the seven-act spine, adding the Mistwood Hunter's Camp before the road and watchpost. Story provenance and uncertainties are noted in `terralum/lore_notes.md`.
 - [x] Added generated backdrops for the 15 scene resources (some reuse a previously generated image), seven act-entry Kokoro narration clips, and three looping ambient music tracks.
 - [x] Added 31 named, scene-specific NPC actors across 15 areas; added Talk, Narrate, Continue, and numbered-response keyboard shortcuts alongside visible controls. Current sprites reuse two demo templates.
+- [x] Completed structured role, faction, goal, knowledge, voice, and provenance sheets for all 31 NPC cast entries; pack validation now rejects entries missing this design context.
 - [x] Added a victory gate to each of the three prototype encounters.
 - [x] Fixed the ARE builder counts: it now preserves the demo entrances and clears actor, region, spawn, container, item, and door counts that belonged to the demo.
 - [x] Campaign-flow mock reports 15 scene casts, 31 actors, keyboard controls, all 19 authored response options, three market routes, three encounter gates, fourteen area transitions, and seven voice cues.
@@ -43,7 +44,7 @@ This is the current work ledger for human and AI contributors. Read [AGENTS.md](
 - [ ] Replace repeated placeholder NPC models with unique/generated or compatible open-licensed art and portraits. Keep provenance and license records.
 - [ ] Place actual interactable clues, containers, doors, and travel links only where they match the new scene geometry.
 - [ ] Turn encounters into authored tactical events with clues, sensible placement, AI, balance, victory/failure outcomes, and quest-state effects.
-- [ ] Review all 29 NPCs for canonical/adaptation labels, motivation, scene role, and later continuity; add return-state dialogue where appropriate.
+- [ ] Review the 31 complete cast sheets against live scenes; deepen return-state dialogue and recurring NPC continuity where appropriate.
 
 ### P2 — Expand the campaign
 

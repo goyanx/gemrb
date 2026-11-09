@@ -163,6 +163,9 @@ for chapter_index, chapter in enumerate(chapters):
     assert current_area == chapter["area"]
     people = campaign.Story.cast(chapter["area"])
     assert len(people) >= 2
+    assert all(all(person.get(field) for field in
+                   ("role", "faction", "goal", "knowledge", "voice", "provenance"))
+               for person in people)
     assert window.controls[10].disabled is (not bool(chapter["voice"]))
     if chapter_index:
         window.controls[11].press()

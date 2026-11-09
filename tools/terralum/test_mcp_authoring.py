@@ -54,6 +54,7 @@ class SceneCastAuthoringTests(unittest.TestCase):
         return {
             "name": name,
             "role": "Archive guide",
+            "faction": "Deep Archives",
             "goal": "Help the party prepare without deciding what the Tear means.",
             "knowledge": "Knows the Index Hall records but has not visited Eldrador.",
             "voice": "Measured and precise, with short practical sentences.",
@@ -122,6 +123,10 @@ class SceneCastAuthoringTests(unittest.TestCase):
         npc = self.npc()
         del npc["goal"]
         with self.assertRaisesRegex(ValueError, "needs a nonempty goal"):
+            mcp_server.call_tool("terralum_upsert_scene_npc", {"area": "tl0001", "npc": npc})
+        npc = self.npc()
+        del npc["faction"]
+        with self.assertRaisesRegex(ValueError, "needs a nonempty faction"):
             mcp_server.call_tool("terralum_upsert_scene_npc", {"area": "tl0001", "npc": npc})
         with self.assertRaisesRegex(ValueError, "Unknown area"):
             mcp_server.call_tool("terralum_get_scene_cast", {"area": "tl9999"})

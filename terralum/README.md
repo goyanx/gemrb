@@ -40,7 +40,7 @@ The audio renderer also creates three original looping ambient tracks. It needs 
 
 ## Author with an AI coder
 
-Run `tools/terralum/mcp_server.py` as a stdio Model Context Protocol server. Its tools inspect the project and per-scene cast, edit story beats, register initialized campaign flags, set journal events, add or replace NPCs with role, goal, knowledge, voice, and provenance fields, import area art, and rebuild the pack. New NPC dialogue and journal events can reference only flags registered at game start. For example:
+Run `tools/terralum/mcp_server.py` as a stdio Model Context Protocol server. Its tools inspect the project and per-scene cast, edit story beats, register initialized campaign flags, set journal events, add or replace NPCs with role, faction, goal, knowledge, voice, and provenance fields, import area art, and rebuild the pack. New NPC dialogue and journal events can reference only flags registered at game start. For example:
 
 ```json
 {
