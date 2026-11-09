@@ -74,7 +74,7 @@ globals_ = {"TLCHAP": 0, "TLBEAT": 0, "TLENEMY": 0, "TLCAST": 0,
             "TLMARALEAD": 0, "TLLIBRARYCLUE": 0, "TLWATCHPOST": 0, "TLHUNTER": 0,
             "TLGALLERY": 0, "TLCOURT": 0, "TLECHO": 0, "TLMISTWOODSAFE": 0, "TLARCHIVE": 0, "TLVOYAGE": 0,
             "TLJRN_BYZANTEM": 0, "TLJRN_MISTWOOD": 0, "TLJRN_HUNTER": 0, "TLJRN_HUNTER_RESOLVED": 0,
-            "TLHUNTERTRACK": 0, "TLJRN_TRACKS": 0, "TLTRAVELKIT": 0, "TLJRN_TRAVELKIT": 0,
+            "TLHUNTERTRACK": 0, "TLJRN_TRACKS": 0, "TLTRAVELKIT": 0, "TLJRN_TRAVELKIT": 0, "TLROYALORDER": 0, "TLJRN_ROYALORDER": 0,
             "TLWAYSTONE": 0, "TLJRN_WAYSTONE": 0,
             "TLLORIANPURPOSE": 0, "TLLORIAN_GUARDIAN": 0, "TLJRN_LORIAN_PURPOSE": 0,
             "TLJRN_GALLERY_RESOLUTION": 0,
@@ -162,7 +162,7 @@ assert globals_["TLMARALEAD"] == 1
 assert "safe path" in window.controls[0].text
 chapters = campaign.Story.chapters()
 chapter_index_by_area = {chapter["area"]: index for index, chapter in enumerate(chapters)}
-assert len(chapters) == 17
+assert len(chapters) == 18
 assert sorted({chapter["act"] for chapter in chapters}) == list(range(1, 8))
 for chapter_index, chapter in enumerate(chapters):
     assert globals_["TLCHAP"] == chapter_index
@@ -181,7 +181,7 @@ for chapter_index, chapter in enumerate(chapters):
             window.controls[11].press()
             assert "archive copy is aboard" in window.controls[0].text
         if chapter["area"] == "tl0002" and globals_["TLLIBRARYCLUE"] == 1:
-            assert "Inessa's copied rune index" in window.controls[0].text
+            assert "Leora’s copied schedule gives me the patrol turn" in window.controls[0].text
         if people[0].get("choices"):
             selected = people[0]["choices"][0]
             choice_button = window.controls[12]
@@ -233,10 +233,10 @@ assert globals_["TLWATCHPOST"] == 1
 assert globals_["TLGALLERY"] == 1
 assert globals_["TLCOURT"] == 1
 assert globals_["TLECHO"] == 1
-assert len([event for event in events if event[0] == "area"]) == 16
+assert len([event for event in events if event[0] == "area"]) == 17
 assert len([event for event in events if event[0] == "voice"]) == 7
 assert len([event for event in events if event[0] == "attack"]) == 2
-assert len(journal_entries) == 13
+assert len(journal_entries) == 14
 assert globals_["TLJRN_WAYSTONE"] == 1
 assert any("Three-Cairn Fork" in entry["value"] for entry in journal_entries)
 assert globals_["TLJRN_LORIAN_PURPOSE"] == 1
@@ -286,7 +286,7 @@ for lead, expect_warden in ((2, True), (3, False)):
     current_area = "tl0002"
     enemy_dead = False
     globals_.update({"TLCHAP": chapter_index_by_area["tl0002"], "TLBEAT": 1, "TLENEMY": 0, "TLCAST": 0,
-                     "TLMARALEAD": lead, "TLLIBRARYCLUE": 2, "TLMISTWOODSAFE": 0})
+                     "TLMARALEAD": lead, "TLLIBRARYCLUE": 2, "TLROYALORDER": 0, "TLMISTWOODSAFE": 0})
     campaign.OnLoad()
     while timed_events:
         timed_events.pop(0)()
@@ -474,6 +474,50 @@ assert "Ilya's creekside tracks" in window.controls[0].text
 assert not any(event[0] == "attack" for event in events)
 assert globals_["TLJRN_HUNTER_RESOLVED"] == 1
 
+# The dispatch archive is a required, journaled choice. A copied schedule
+# makes Mara's sealed-order route a safe patrol diversion; a sealed schedule
+# leaves that route exposed.
+for order, expected in ((1, "Leora copies the current watchpost patrol turn"), (2, "leave the dispatch under crown seal")):
+    window = Window()
+    events.clear()
+    timed_events.clear()
+    current_area = "tl0018"
+    globals_.update({"TLCHAP": chapter_index_by_area["tl0018"], "TLBEAT": 0, "TLENEMY": 0,
+                     "TLCAST": 0, "TLROYALORDER": 0, "TLJRN_ROYALORDER": 0})
+    campaign.OnLoad()
+    while timed_events:
+        timed_events.pop(0)()
+    window.controls[4].press()
+    assert globals_["TLBEAT"] == 0
+    assert "Archivist Leora" in window.controls[0].text
+    window.controls[11].press()
+    window.controls[12 + order - 1].press()
+    assert globals_["TLROYALORDER"] == order
+    assert globals_["TLJRN_ROYALORDER"] == 0
+    assert expected in window.controls[0].text
+    journal_count = len(journal_entries)
+    window.controls[4].press()
+    assert globals_["TLBEAT"] == 1
+    assert globals_["TLJRN_ROYALORDER"] == 1
+    assert len(journal_entries) == journal_count + 1
+    window = Window()
+    events.clear()
+    timed_events.clear()
+    current_area = "tl0002"
+    globals_.update({"TLCHAP": chapter_index_by_area["tl0002"], "TLBEAT": 1, "TLENEMY": 0,
+                     "TLCAST": 0, "TLMARALEAD": 2, "TLLIBRARYCLUE": 2,
+                     "TLROYALORDER": order, "TLTRAVELKIT": 0, "TLHUNTER": 2,
+                     "TLHUNTERTRACK": 0, "TLMISTWOODSAFE": 0})
+    campaign.OnLoad()
+    while timed_events:
+        timed_events.pop(0)()
+    window.controls[11].press()
+    assert ("copied schedule gives me the patrol turn" if order == 1 else
+            "schedule stayed sealed") in window.controls[0].text
+    window.controls[4].press()
+    assert (globals_["TLMISTWOODSAFE"] == 1) is (order == 1)
+    assert (globals_["TLENEMY"] == 0) is (order == 1)
+
 # The Royal Stables require a kit choice, journal it once, and make Tavin
 # acknowledge both outcomes.
 for kit, expected_reply in ((1, "The spare oil is packed"), (2, "The rope and rations are packed")):
@@ -553,6 +597,6 @@ for chapter_index, chapter in enumerate(chapters):
                 assert globals_[event["flag"]] == 1
                 assert any(entry["value"] == event["text"] for entry in journal_entries)
             choice_count += 1
-assert choice_count == 27
+assert choice_count == 29
 print(len(chapters), "scenes across seven acts,", sum(len(campaign.Story.cast(chapter["area"])) for chapter in chapters),
-      "named scene actors, keyboard controls, fourteen authored journal events, all 27 response options, three market routes, encounter gates, sixteen transitions, and seven voice cues passed")
+      "named scene actors, keyboard controls, fifteen authored journal events, all 29 response options, three market routes, encounter gates, seventeen transitions, and seven voice cues passed")

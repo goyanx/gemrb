@@ -295,6 +295,16 @@
       },
       "responses": [
         {
+          "flag": "TLROYALORDER",
+          "value": 1,
+          "line": "Leora’s copied schedule gives me the patrol turn. I can lead the Waywarden clear of the stalker’s road."
+        },
+        {
+          "flag": "TLROYALORDER",
+          "value": 2,
+          "line": "The schedule stayed sealed. If the Waywarden comes, we will have to judge his patrol by what we see."
+        },
+        {
           "flag": "TLLIBRARYCLUE",
           "value": 1,
           "line": "Inessa's copied rune index matches the pale stones. We can skirt the watchpost if the stalker is near."
@@ -930,6 +940,64 @@
       "knowledge": "Knows the diagrams and instruments aboard the ship; has not examined Eldrador's Tear directly.",
       "voice": "Clear and reassuring, giving practical details without claiming certainty.",
       "provenance": "canon"
+    }
+  ],
+  "tl0018": [
+    {
+      "name": "Archivist Leora",
+      "creature": "protagon",
+      "position": [
+        320,
+        620
+      ],
+      "line": "The west-road patrol schedule is current. I can copy it for the journey, or keep the sealed original here.",
+      "choices": [
+        {
+          "label": "Copy the patrol schedule",
+          "reply": "Leora copies the current watchpost patrol turn onto a travel sheet. The original stays sealed in the archive.",
+          "flag": "TLROYALORDER",
+          "value": 1
+        },
+        {
+          "label": "Leave the schedule sealed",
+          "reply": "You leave the dispatch under crown seal. The Waywarden may still meet you, but you have no copy of his patrol timing.",
+          "flag": "TLROYALORDER",
+          "value": 2
+        }
+      ],
+      "role": "Crown dispatch archivist",
+      "faction": "Alsperia Crown Archive",
+      "goal": "Protect the original patrol record while preparing the expedition to travel under the crown’s authority.",
+      "knowledge": "Knows the current patrol schedule and its authorized copy rules; does not know what waits in Mistwood.",
+      "voice": "Careful and procedural, balancing public safety with protection of royal records.",
+      "provenance": "adaptation"
+    },
+    {
+      "name": "Page Nerin",
+      "creature": "riddler",
+      "position": [
+        1300,
+        620
+      ],
+      "line": "The patrol turns at the old watchpost. The map table shows where a lawful diversion could draw danger away from the road.",
+      "responses": [
+        {
+          "flag": "TLROYALORDER",
+          "value": 1,
+          "line": "With the schedule copied, Tessa can time the Waywarden’s patrol to clear the stalker’s road."
+        },
+        {
+          "flag": "TLROYALORDER",
+          "value": 2,
+          "line": "Without a copy, the patrol timing remains a guess. Do not promise the road will be clear."
+        }
+      ],
+      "role": "Junior dispatch clerk",
+      "faction": "Alsperia Crown Archive",
+      "goal": "Keep the archive’s field maps legible and help authorized travellers understand the patrol marks.",
+      "knowledge": "Knows the map table’s route marks and where schedules are stored; has not travelled west himself.",
+      "voice": "Curious and clear, eager to explain what a map can and cannot prove.",
+      "provenance": "adaptation"
     }
   ]
 }

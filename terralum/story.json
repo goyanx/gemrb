@@ -62,6 +62,44 @@
       ]
     },
     {
+      "title": "I. The Royal Audience — Dispatch Archive",
+      "act": 1,
+      "area": "tl0018",
+      "place": "Alsperia Royal Dispatch Archive",
+      "music": "tlcity.mus",
+      "voice": "",
+      "narration": "In the crown dispatch archive, forest patrol maps are kept beside sealed royal orders. The expedition can ask for a copy of the watchpost schedule or leave the record under seal.",
+      "beats": [
+        {
+          "speaker": "Archivist Leora",
+          "text": "The west-road schedule is current, but the original belongs to the crown. I can copy its patrol times for your journey, or preserve the sealed record.",
+          "action": "Review dispatch"
+        },
+        {
+          "speaker": "Algoreth",
+          "text": "The dispatch will shape how Edmon’s Waywarden meets us in Mistwood.",
+          "action": "Leave archive",
+          "journal": {
+            "flag": "TLJRN_ROYALORDER",
+            "section": 4,
+            "text": "In Alsperia’s dispatch archive, Algoreth decided whether to carry a copy of Edmon’s current patrol schedule into Mistwood."
+          },
+          "routes": [
+            {
+              "flag": "TLROYALORDER",
+              "value": 1,
+              "text": "The copied schedule confirms the patrol turn. If Edmon’s Waywarden joins us, Tessa can guide his patrol clear of the stalker’s road."
+            },
+            {
+              "flag": "TLROYALORDER",
+              "value": 2,
+              "text": "The sealed schedule stays in the archive. Edmon’s Waywarden may still join us, but we cannot plan his patrol route."
+            }
+          ]
+        }
+      ]
+    },
+    {
       "title": "I. The Royal Audience — Royal Stables",
       "act": 1,
       "area": "tl0017",
