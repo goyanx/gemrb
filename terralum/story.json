@@ -127,7 +127,34 @@
         {
           "speaker": "Dorian's inscription",
           "text": "The path between worlds answers neither conquest nor fear. Carry a question worth the crossing.",
-          "action": "Enter Lorian"
+          "action": "Enter Lorian",
+          "routes": [
+            {
+              "flag": "TLMARALEAD",
+              "value": 1,
+              "text": "Following Mara's ledger, the party skirts the stalker's ambush along the pale stones. Dorian's warning points onward to the watchpost."
+            },
+            {
+              "flag": "TLLIBRARYCLUE",
+              "value": 1,
+              "text": "Inessa's copied index confirms the pale stones, and the party avoids the stalker's patrol. Dorian's warning points past the watchpost toward Lorian."
+            },
+            {
+              "flag": "TLHUNTER",
+              "value": 1,
+              "text": "The hunters' shuttered lantern marked a quiet bend around the stalker. Dorian's warning points onward to the watchpost."
+            },
+            {
+              "flag": "TLHUNTER",
+              "value": 2,
+              "text": "The party kept the hunter camp dark and crossed the road under threat. Dorian's warning points onward to the watchpost."
+            }
+          ],
+          "journal": {
+            "flag": "TLJRN_HUNTER_RESOLVED",
+            "section": 2,
+            "text": "The party crossed the dangerous stretch of Mistwood road and reached the approach to the ruined watchpost. The Hunter's Camp decision is resolved; its lantern no longer guides the road."
+          }
         }
       ]
     },

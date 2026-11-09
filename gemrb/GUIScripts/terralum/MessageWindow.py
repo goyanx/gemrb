@@ -214,10 +214,7 @@ def OnLoad():
 				     or GemRB.GetGameVar("TLHUNTER") == 1)):
 			GemRB.SetGlobal("TLMISTWOODSAFE", "GLOBAL", 1)
 			GemRB.SetGlobal("TLBEAT", "GLOBAL", beat_index + 1)
-			route = ("Inessa's copied rune index" if GemRB.GetGameVar("TLLIBRARYCLUE") == 1
-			         else "the hunter's shuttered lantern" if GemRB.GetGameVar("TLHUNTER") == 1
-			         else "Mara's ledger")
-			message.SetText("[cap]T[/cap]ERRALUM  |  " + chapter["title"] + "\n" + chapter["place"] + "\n\nFollowing " + route + ", the party skirts the stalker's ambush along the pale stones.\n\n")
+			show()
 			return
 		enemy = GemRB.GetGameVar("TLENEMY")
 		if "encounter" in beat and not enemy:

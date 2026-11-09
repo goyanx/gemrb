@@ -73,7 +73,8 @@ events = []
 globals_ = {"TLCHAP": 0, "TLBEAT": 0, "TLENEMY": 0, "TLCAST": 0,
             "TLMARALEAD": 0, "TLLIBRARYCLUE": 0, "TLWATCHPOST": 0, "TLHUNTER": 0,
             "TLGALLERY": 0, "TLCOURT": 0, "TLECHO": 0, "TLMISTWOODSAFE": 0, "TLARCHIVE": 0, "TLVOYAGE": 0,
-            "TLJRN_BYZANTEM": 0, "TLJRN_MISTWOOD": 0, "TLJRN_HUNTER": 0, "TLJRN_SCROLLS": 0, "TLJRN_TEAR": 0,
+            "TLJRN_BYZANTEM": 0, "TLJRN_MISTWOOD": 0, "TLJRN_HUNTER": 0, "TLJRN_HUNTER_RESOLVED": 0,
+            "TLJRN_SCROLLS": 0, "TLJRN_TEAR": 0,
             "TLJRN_ARCHIVE": 0, "TLJRN_ELDRADOR": 0, "TLJRN_VOYAGE": 0}
 enemy_dead = False
 current_area = "tl0001"
@@ -195,6 +196,8 @@ for chapter_index, chapter in enumerate(chapters):
             if chapter["area"] == "tl0002" and (globals_["TLMARALEAD"] == 1 or globals_["TLLIBRARYCLUE"] == 1 or globals_["TLHUNTER"] == 1):
                 window.controls[4].press()
                 assert globals_["TLMISTWOODSAFE"] == 1
+                assert globals_["TLBEAT"] == beats.index(beat) + 1
+                assert "Dorian's inscription" in window.controls[0].text
                 assert "skirts the stalker's ambush" in window.controls[0].text
                 continue
             window.controls[4].press()
@@ -220,7 +223,10 @@ assert globals_["TLECHO"] == 1
 assert len([event for event in events if event[0] == "area"]) == 14
 assert len([event for event in events if event[0] == "voice"]) == 7
 assert len([event for event in events if event[0] == "attack"]) == 2
-assert len(journal_entries) == 8
+assert len(journal_entries) == 9
+assert globals_["TLJRN_HUNTER_RESOLVED"] == 1
+assert any(entry["Section"] == 2 and "Hunter's Camp decision is resolved" in entry["value"]
+           for entry in journal_entries)
 
 # Exercise every remaining response option and its next-beat result.
 for chapter_index, choice_index in ((0, 1), (0, 2), (1, 1), (2, 1), (4, 1), (6, 1), (8, 1), (9, 1), (12, 1), (14, 1)):
@@ -272,19 +278,34 @@ for lead, expect_warden in ((2, True), (3, False)):
     assert any(event[:2] == ("attack", "Attack(Player1)") for event in events)
 
 # The hunter's lantern independently bypasses the road ambush; leaving it dark does not.
+resolved_journal_count = len(journal_entries)
 window = Window()
 events.clear()
 timed_events.clear()
 current_area = "tl0002"
 enemy_dead = False
 globals_.update({"TLCHAP": 3, "TLBEAT": 1, "TLENEMY": 0, "TLCAST": 0,
-                 "TLMARALEAD": 3, "TLLIBRARYCLUE": 2, "TLHUNTER": 1, "TLMISTWOODSAFE": 0})
+                 "TLMARALEAD": 3, "TLLIBRARYCLUE": 2, "TLHUNTER": 1, "TLMISTWOODSAFE": 0,
+                 "TLJRN_HUNTER_RESOLVED": 0})
 campaign.OnLoad()
 while timed_events:
     timed_events.pop(0)()
 window.controls[4].press()
 assert globals_["TLMISTWOODSAFE"] == 1
-assert "hunter's shuttered lantern" in window.controls[0].text
+assert "hunters' shuttered lantern" in window.controls[0].text
+assert "Dorian's inscription" in window.controls[0].text
+assert globals_["TLJRN_HUNTER_RESOLVED"] == 1
+assert len(journal_entries) == resolved_journal_count + 1
+
+# Re-entering the resolved beat does not add a duplicate journal record.
+window = Window()
+events.clear()
+timed_events.clear()
+globals_.update({"TLCHAP": 3, "TLBEAT": 2, "TLENEMY": 0, "TLCAST": 0})
+campaign.OnLoad()
+while timed_events:
+    timed_events.pop(0)()
+assert len(journal_entries) == resolved_journal_count + 1
 
 window = Window()
 events.clear()
@@ -298,4 +319,4 @@ window.controls[4].press()
 assert globals_["TLMISTWOODSAFE"] == 0
 assert globals_["TLENEMY"] > 1001
 print(len(chapters), "scenes across seven acts,", sum(len(campaign.Story.cast(chapter["area"])) for chapter in chapters),
-      "named scene actors, keyboard controls, a persistent eight-entry quest journal, all 19 responses, three market routes, encounter gates, fourteen transitions, and seven voice cues passed")
+      "named scene actors, keyboard controls, a persistent nine-entry quest journal, all 19 responses, three market routes, encounter gates, fourteen transitions, and seven voice cues passed")
