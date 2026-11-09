@@ -128,7 +128,7 @@ def OnLoad():
 				choice = choices[index]
 				button.SetText(choice["label"])
 				button.SetHotKey(str(index + 1), 0, True)
-				button.OnPress(lambda choice=choice, person=person: choose_dialogue(person, choice))
+				button.OnPress(lambda _button=None, choice=choice, person=person: choose_dialogue(person, choice))
 		dialogue_state["has_choices"] = bool(choices)
 		journal_button.SetVisible(not bool(choices))
 

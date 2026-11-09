@@ -885,7 +885,9 @@ for chapter_index, chapter in enumerate(chapters):
                 window.controls[11].press()
             button = window.controls[12 + choice_index]
             assert button.text == choice["label"]
-            button.press()
+            # GemRB passes the clicked GButton to callbacks with positional
+            # parameters. Exercise that runtime behavior to catch closure bugs.
+            button.press(button)
             assert globals_[choice["flag"]] == choice["value"]
             assert choice["reply"] in window.controls[0].text
             if choice.get("journal"):
