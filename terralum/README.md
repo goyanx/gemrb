@@ -1,6 +1,6 @@
 # Terralum: Scrolls of Byzantem
 
-This project is a playable campaign prototype for [GemRB](../README.md). GemRB runs Infinity Engine games; it is not a visual editor. The game starts with Algoreth Jon Goren as a wizard seeking the scrolls of Byzantem. Fourteen scene areas now span seven acts, from the early quest to his later, documented reign and the Tear of Chaos. The act cadence takes inspiration from long fantasy RPGs, **not** Baldur's Gate II content or playtime.
+This project is a playable campaign prototype for [GemRB](../README.md). GemRB runs Infinity Engine games; it is not a visual editor. The game starts with Algoreth Jon Goren as a wizard seeking the scrolls of Byzantem. Fifteen scene areas now span seven acts, from the early quest to his later, documented reign and the Tear of Chaos. The act cadence takes inspiration from long fantasy RPGs, **not** Baldur's Gate II content or playtime.
 
 ## AI and human contributor baseline
 

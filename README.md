@@ -30,11 +30,16 @@ list of [options, tips and priorities](https://github.com/gemrb/gemrb/blob/maste
 
 ## Terralum: Scrolls of Byzantem
 
-An original fantasy campaign is taking shape inside this GemRB fork. **Terralum** follows Algoreth Jon Goren from the court of Alsperia into a search for the lost scrolls of Byzantem, then toward the later mystery of the Tears. The current slice spans seven acts and fifteen areas, with scene-specific casts, branching choices, a persistent quest journal, Kokoro narration, ambient music, and gated encounters.
+An original fantasy campaign is taking shape inside this GemRB fork. **Terralum: Scrolls of Byzantem** follows Algoreth Jon Goren from the court of Alsperia into a search for the lost scrolls, through the Mistwood and Caverns of Lorian, and onward toward the mysteries of the Tears. Its current prototype spans fifteen scene areas across a seven-act story spine, with a named cast, branching choices, a persistent quest journal, Kokoro narration, ambient music, and gated encounters.
 
-### Gameplay captures
+<p align="center">
+  <img src="terralum/screenshots/campaign-locations-concept-art.jpg" alt="Six Terralum location concepts: Alsperia Market, Mistwood Hunter Camp, Caverns of Lorian, Byzantem Seal Gallery, Deep Archives, and Aethercraft Hangar" width="94%">
+</p>
+<p align="center"><em>Location concept art — visual targets, not in-game screenshots</em></p>
 
-These captures show the opening Alsperia Market scene running in GemRB. The wider view includes the scene cast and in-game Talk, Narrate, and Continue controls.
+### Running in GemRB
+
+These captures show the opening Alsperia Market scene running in GemRB. The wide view includes the player, three local NPCs, the current story beat, and Talk, Narrate, and Continue controls. The second capture is a closer look at the scene cast.
 
 <p align="center">
   <img src="terralum/screenshots/alsperia-market-npcs.png" alt="Terralum running in GemRB: the Alsperia Market scene with the player and three local NPCs" width="86%">
