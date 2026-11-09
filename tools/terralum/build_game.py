@@ -23,12 +23,22 @@ CAST_FILE = PROJECT / "scene_cast.json"
 AREA_IMAGE = PROJECT / "art" / "observatory_courtyard.png"
 AREAS = {
     "tl0001": "alsperia_market.png",
+    "tl0008": "deep_archives.png",
     "tl0002": "mistwood_road.png",
+    "tl0009": "mistwood_ruins.png",
     "tl0003": "lorian_cavern.png",
+    "tl0010": "byzantem_arch.png",
     "tl0004": "alsperia_court.png",
+    "tl0011": "council_chamber.png",
     "tl0005": "tear_vault.png",
+    "tl0012": "observatory_courtyard.png",
     "tl0006": "deep_archives.png",
     "tl0007": "alsperia_skyport.png",
+}
+AREA_SONG_INDEX = {
+    "tl0001": 1, "tl0002": 3, "tl0003": 2, "tl0004": 1,
+    "tl0005": 2, "tl0006": 2, "tl0007": 1, "tl0008": 1,
+    "tl0009": 3, "tl0010": 2, "tl0011": 1, "tl0012": 2,
 }
 
 
@@ -38,10 +48,14 @@ def read_story():
         if not isinstance(story.get(key), str) or not story[key].strip():
             raise ValueError(f"story.json: {key} must be nonempty text")
     chapters = story.get("chapters", [])
-    if len(chapters) != 7:
-        raise ValueError("story.json must define seven chapters")
+    if len(chapters) != len(AREAS):
+        raise ValueError(f"story.json must define one scene for each of the {len(AREAS)} built areas")
+    scene_areas = [chapter.get("area") for chapter in chapters]
+    if len(scene_areas) != len(set(scene_areas)) or set(scene_areas) != set(AREAS):
+        raise ValueError("story.json must define each built area exactly once")
     for chapter in chapters:
-        if chapter.get("area") not in AREAS or not chapter.get("beats"):
+        if (chapter.get("area") not in AREAS or not chapter.get("beats")
+                or type(chapter.get("act")) is not int or not 1 <= chapter["act"] <= 7):
             raise ValueError("each chapter needs a built area and story beats")
         if not all(beat.get("speaker") and beat.get("text") and beat.get("action") for beat in chapter["beats"]):
             raise ValueError("each story beat needs a speaker, text, and action")
@@ -130,9 +144,7 @@ def build():
                 struct.pack_into("<H", data, 0x76, 0)  # item count
                 struct.pack_into("<I", data, 0xA4, 0)  # door count
                 song_offset = struct.unpack_from("<I", data, 0xBC)[0]
-                song_index = {"tl0001": 1, "tl0002": 3, "tl0003": 2,
-                              "tl0004": 1, "tl0005": 2, "tl0006": 2,
-                              "tl0007": 1}[area]
+                song_index = AREA_SONG_INDEX[area]
                 struct.pack_into("<II", data, song_offset, song_index, song_index)
             target_name = area + suffix if suffix in (".are", ".mos") else area.upper() + suffix
             (OUTPUT / "override" / target_name).write_bytes(data)

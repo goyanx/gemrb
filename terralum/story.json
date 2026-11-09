@@ -4,6 +4,7 @@
   "chapters": [
     {
       "title": "I. The Royal Audience",
+      "act": 1,
       "area": "tl0001",
       "place": "Alsperia Market",
       "music": "tlcity.mus",
@@ -28,7 +29,21 @@
       ]
     },
     {
+      "title": "I. The Royal Audience — Scholar's Gallery",
+      "act": 1,
+      "area": "tl0008",
+      "place": "Alsperia Library",
+      "music": "tlcity.mus",
+      "voice": "",
+      "narration": "The royal archive preserves Dorian's route in a damaged index. The missing marks can be recovered from a scholar's rubbing.",
+      "beats": [
+        {"speaker": "Scholar Inessa", "text": "The index was scraped where the western landmarks should be. I can restore it if we compare the court copy with the market ledger.", "action": "Study index"},
+        {"speaker": "Algoreth", "text": "The recovered marks agree with Dorian's account. We have a route to Mistwood, though the waystones may have shifted.", "action": "Leave library", "routes": [{"flag": "TLLIBRARYCLUE", "value": 1, "text": "Inessa's copied index matches the pale stones. We can skirt the ruined watchpost if the road is watched."}]}
+      ]
+    },
+    {
       "title": "II. Through Mistwood",
+      "act": 2,
       "area": "tl0002",
       "place": "Mistwood Road",
       "music": "tlwood.mus",
@@ -54,7 +69,24 @@
       ]
     },
     {
+      "title": "II. Through Mistwood — The Ruined Watchpost",
+      "act": 2,
+      "area": "tl0009",
+      "place": "Mistwood Watchpost",
+      "music": "tlwood.mus",
+      "voice": "",
+      "narration": "The old watchpost overlooks a split in the woodland road. Fresh charcoal marks point toward Lorian, while a lost courier waits among the fallen stones.",
+      "beats": [
+        {"speaker": "Courier Pell", "text": "A royal patrol passed at dawn. I found a charcoal rubbing under the stair, but the stalker kept me from carrying it onward.", "action": "Read rubbing"},
+        {"speaker": "Scout Tessa", "text": "The rubbing names the western arch. If we leave the watchpost standing, the next travellers may still find this road.", "action": "Choose trail", "routes": [
+          {"flag": "TLWATCHPOST", "value": 1, "text": "You mark the watchpost for repair. Tessa copies the western arch into her field book."},
+          {"flag": "TLWATCHPOST", "value": 2, "text": "You leave a warning for the next traveller and take the rubbing toward Lorian."}
+        ]}
+      ]
+    },
+    {
       "title": "III. The Caverns of Lorian",
+      "act": 3,
       "area": "tl0003",
       "place": "Lorian Cavern",
       "music": "tlcave.mus",
@@ -80,7 +112,24 @@
       ]
     },
     {
+      "title": "III. The Caverns of Lorian — The Seal Gallery",
+      "act": 3,
+      "area": "tl0010",
+      "place": "Byzantem Seal Gallery",
+      "music": "tlcave.mus",
+      "voice": "",
+      "narration": "Beyond the silver vault, a gallery of sealed niches tests whether the traveller can read the warning without breaking it.",
+      "beats": [
+        {"speaker": "Dorian's inscription", "text": "Three marks surround the arch: passage, return, and restraint. The door answers only when the keeper names what must remain closed.", "action": "Read marks"},
+        {"speaker": "Algoreth", "text": "The scrolls are secured for the return journey. No second gate will be opened on the strength of these pages alone.", "action": "Return home", "routes": [
+          {"flag": "TLGALLERY", "value": 1, "text": "The gallery record names restraint as the keeper's answer. Algoreth leaves every sealed niche closed."},
+          {"flag": "TLGALLERY", "value": 2, "text": "The gallery keeper refused passage. Algoreth leaves the warning unresolved and every niche closed."}
+        ]}
+      ]
+    },
+    {
       "title": "IV. Return to Alsperia",
+      "act": 4,
       "area": "tl0004",
       "place": "Alsperia Court",
       "music": "tlcity.mus",
@@ -105,7 +154,40 @@
       ]
     },
     {
+      "title": "IV. Return to Alsperia — Council Chamber",
+      "act": 4,
+      "area": "tl0011",
+      "place": "Alsperia Council Chamber",
+      "music": "tlcity.mus",
+      "voice": "",
+      "narration": "The court asks what the scrolls should mean for Alsperia. Edmon hears the witnesses before deciding how the knowledge may be kept.",
+      "beats": [
+        {"speaker": "Captain Rovan", "text": "The western road can be guarded, but soldiers cannot decide what a world-crossing spell is for. That choice belongs to the crown and its scholars.", "action": "Hear captain"},
+        {"speaker": "Queen Alisande", "text": "Edmon and I will keep the scrolls under joint court seal. Their study must answer to the people who could be harmed by their use.", "action": "Seal record", "routes": [
+          {"flag": "TLCOURT", "value": 1, "text": "The court keeps the western road open to supervised scholars and travellers."},
+          {"flag": "TLCOURT", "value": 2, "text": "The court restricts access to the scrolls until Edmon and Alisande hear a clear purpose for their use."}
+        ]}
+      ]
+    },
+    {
+      "title": "V. The Eastern Academy — Observatory Courtyard",
+      "act": 5,
+      "area": "tl0012",
+      "place": "Eastern Academy Courtyard",
+      "music": "tlcave.mus",
+      "voice": "",
+      "narration": "In the later reign, academy wardens have evacuated the observatory court. Their instruments record a pulse beneath the lecture vault.",
+      "beats": [
+        {"speaker": "Warden Celene", "text": "The breach repeats the king's last spoken thought. The ward lines hold, but the eastern stair is beginning to bend inward.", "action": "Check ward"},
+        {"speaker": "Magister Vael", "text": "I marked the pulse in the courtyard slate. The vault below answers in the same rhythm; we should descend before the next surge.", "action": "Enter vault", "routes": [
+          {"flag": "TLECHO", "value": 1, "text": "Celene's reinforced ward gives the party a narrow window to descend before the next surge."},
+          {"flag": "TLECHO", "value": 2, "text": "Celene's pulse record may explain how the echo repeats. The party carries the pattern into the vault."}
+        ]}
+      ]
+    },
+    {
       "title": "V. The Eastern Academy",
+      "act": 5,
       "area": "tl0005",
       "place": "Old Observatory Vault",
       "music": "tlcave.mus",
@@ -120,7 +202,11 @@
         {
           "speaker": "Queen Alisande",
           "text": "The wardens will hold the perimeter. Go carefully, my love. Whatever speaks below already knows your voice.",
-          "action": "Enter the vault"
+          "action": "Enter the vault",
+          "routes": [
+            {"flag": "TLECHO", "value": 1, "text": "Celene's reinforced ward gives the party time to reach the false echo before the next surge."},
+            {"flag": "TLECHO", "value": 2, "text": "The pulse record points toward the false echo. The party carries it below for comparison."}
+          ]
         },
         {
           "speaker": "Algoreth",
@@ -137,6 +223,7 @@
     },
     {
       "title": "VI. The Living Record",
+      "act": 6,
       "area": "tl0006",
       "place": "Deep Archives",
       "music": "tlcave.mus",
@@ -162,6 +249,7 @@
     },
     {
       "title": "VII. The Eldrador Expedition",
+      "act": 7,
       "area": "tl0007",
       "place": "Alsperia Skyport",
       "music": "tlcity.mus",

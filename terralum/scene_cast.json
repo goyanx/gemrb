@@ -8,17 +8,59 @@
     {"name": "King Edmon", "creature": "protagon", "position": [930, 500], "line": "I am Alsperia's original king. I grant you a map and shelter; return with knowledge, not conquest."},
     {"name": "Queen Alisande", "creature": "riddler", "position": [870, 620], "line": "Edmon is my husband and king. His trust opens this road, and I expect you to honor it."}
   ],
+  "tl0008": [
+    {"name": "Scholar Inessa", "creature": "riddler", "position": [690, 520], "line": "The route index was scraped where the western landmarks should be. I need the market ledger to restore the missing marks.", "choices": [
+      {"label": "Copy the rune index", "reply": "Inessa copies the pale-stone marks into your field notes. Tessa can use them to avoid the watchpost.", "flag": "TLLIBRARYCLUE", "value": 1},
+      {"label": "Seal the damaged leaf", "reply": "Inessa seals the fragile page. You have the court's route, but the damaged landmarks remain uncertain.", "flag": "TLLIBRARYCLUE", "value": 2}
+    ]},
+    {"name": "Royal Scribe Oren", "creature": "protagon", "position": [930, 500], "line": "Dorian's name appears in the oldest catalog. The entry says he feared the purpose of the traveller more than the road itself."}
+  ],
   "tl0002": [
-    {"name": "Scout Tessa", "creature": "protagon", "position": [680, 520], "line": "Pale stones mark the safe ground. The moss hides old snares, so watch where you step.", "route_lines": {"1": "Mara's ledger marked the pale stones correctly. We can skirt the ruined watchpost before the stalker finds us.", "2": "Edmon's waywarden is already scouting ahead. Keep to the track while he draws the stalker off."}},
+    {"name": "Scout Tessa", "creature": "protagon", "position": [680, 520], "line": "Pale stones mark the safe ground. The moss hides old snares, so watch where you step.", "route_lines": {"1": "Mara's ledger marked the pale stones correctly. We can skirt the ruined watchpost before the stalker finds us.", "2": "Edmon's waywarden is already scouting ahead. Keep to the track while he draws the stalker off."}, "responses": [
+      {"flag": "TLLIBRARYCLUE", "value": 1, "line": "Inessa's copied rune index matches the pale stones. We can skirt the watchpost if the stalker is near."}
+    ]},
     {"name": "Lost Wayfarer", "creature": "riddler", "position": [930, 500], "line": "Something circles the ruined watchpost. I heard it answer my name from the trees."}
   ],
+  "tl0009": [
+    {"name": "Courier Pell", "creature": "riddler", "position": [690, 520], "line": "I found a charcoal rubbing under the watchpost stair. The western arch is marked, but the stalker kept me from carrying it onward.", "choices": [
+      {"label": "Mark it for repair", "reply": "Pell and Tessa mark the damaged stair for repair. She copies the western arch into her field book.", "flag": "TLWATCHPOST", "value": 1},
+      {"label": "Leave a warning", "reply": "You leave a warning for the next traveller and keep the rubbing. The watchpost remains unsafe.", "flag": "TLWATCHPOST", "value": 2}
+    ]},
+    {"name": "Waywarden Saren", "creature": "protagon", "position": [930, 500], "line": "Edmon's seal sent me to count the road markers. A patrol can guard a path, but only a traveller can decide where it leads."}
+  ],
   "tl0003": [
-    {"name": "Dorian the Seer", "creature": "riddler", "position": [700, 500], "line": "I hid the scrolls because a road between worlds magnifies the purpose of whoever crosses it."},
+    {"name": "Dorian the Seer", "creature": "riddler", "position": [700, 500], "line": "I hid the scrolls because a road between worlds magnifies the purpose of whoever crosses it.", "responses": [
+      {"flag": "TLWATCHPOST", "value": 1, "line": "Tessa's repaired watchpost marks the western arch. The scrolls will be easier to carry home without losing the return path."}
+    ]},
     {"name": "Lorian Guardian", "creature": "protagon", "position": [930, 500], "line": "The vault is not a prize. Prove you can leave its door closed before you ask it to open."}
+  ],
+  "tl0010": [
+    {"name": "Gallery Keeper", "creature": "protagon", "position": [690, 520], "line": "The three marks are passage, return, and restraint. Only one keeps a traveller from opening a gate for its own sake.", "choices": [
+      {"label": "Name restraint", "reply": "The keeper accepts restraint as the answer. The gallery record can be carried without opening its sealed niches.", "flag": "TLGALLERY", "value": 1},
+      {"label": "Demand passage", "reply": "The keeper refuses the demand. The sealed niches stay shut, and the warning remains unresolved.", "flag": "TLGALLERY", "value": 2}
+    ]},
+    {"name": "Dorian's Echo", "creature": "riddler", "position": [930, 500], "line": "A warning is not a lock. It is a question the traveller must answer before choosing to cross."}
   ],
   "tl0004": [
     {"name": "King Edmon", "creature": "protagon", "position": [690, 520], "line": "You have returned with the scrolls. Tell the court what they can do, and what they must not do."},
     {"name": "Queen Alisande", "creature": "riddler", "position": [930, 500], "line": "Knowledge won in darkness deserves careful study. I will argue for patience before the nobles."}
+  ],
+  "tl0011": [
+    {"name": "Captain Rovan", "creature": "protagon", "position": [690, 520], "line": "The western road can be guarded, but soldiers cannot decide what a world-crossing spell is for.", "choices": [
+      {"label": "Keep the road open", "reply": "Rovan will keep the road open for scholars and travellers under the court's watch.", "flag": "TLCOURT", "value": 1},
+      {"label": "Restrict the scrolls", "reply": "Rovan records the court's caution. Access to the scrolls will require the king and queen's leave.", "flag": "TLCOURT", "value": 2}
+    ]},
+    {"name": "Queen Alisande", "creature": "riddler", "position": [930, 500], "line": "Edmon and I will hear the witnesses before the court seals its account. The people who could be harmed deserve a voice."}
+  ],
+  "tl0012": [
+    {"name": "Warden Celene", "creature": "riddler", "position": [690, 520], "line": "The breach repeats the king's last spoken thought. The ward lines hold, but the eastern stair is bending inward.", "choices": [
+      {"label": "Reinforce the ward", "reply": "Celene strengthens the outer ward. It may hold through one more surge while the party descends.", "flag": "TLECHO", "value": 1},
+      {"label": "Record the pulse", "reply": "Celene records the pulse without changing the ward. The pattern may help identify the echo below.", "flag": "TLECHO", "value": 2}
+    ]},
+    {"name": "Magister Vael", "creature": "protagon", "position": [930, 500], "line": "I marked the pulse in the courtyard slate. The vault below answers in the same rhythm; we should descend before the next surge.", "responses": [
+      {"flag": "TLECHO", "value": 1, "line": "Celene's reinforced ward gives us a narrow window. Descend before the next surge."},
+      {"flag": "TLECHO", "value": 2, "line": "Celene's pulse record may reveal how the echo repeats. Descend and compare it with the vault."}
+    ]}
   ],
   "tl0005": [
     {"name": "Magister Vael", "creature": "riddler", "position": [690, 520], "line": "The observatory wards bend toward the breach. The sealed lecture vault is answering voices from below."},

@@ -46,7 +46,8 @@ TOOLS = [
         "inputSchema": {
             "type": "object",
             "properties": {
-                "chapter": {"type": "integer", "minimum": 1, "maximum": 7},
+                "chapter": {"type": "integer", "minimum": 1, "maximum": 12,
+                            "description": "One-based scene index in story.json."},
                 "beat": {"type": "integer", "minimum": 1},
                 "field": {"type": "string", "enum": ["speaker", "text", "action"]},
                 "text": {"type": "string", "minLength": 1, "maxLength": 2000},
@@ -57,7 +58,7 @@ TOOLS = [
     },
     {
         "name": "terralum_import_area_art",
-        "description": "Import a generated PNG for one of the seven Terralum areas.",
+        "description": "Import a generated PNG for one of the built Terralum scene areas.",
         "inputSchema": {
             "type": "object",
             "properties": {"source_path": {"type": "string", "minLength": 1},

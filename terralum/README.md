@@ -1,6 +1,6 @@
 # Terralum: Scrolls of Byzantem
 
-This project is a playable campaign prototype for [GemRB](../README.md). GemRB runs Infinity Engine games; it is not a visual editor. The game starts with Algoreth Jon Goren as a wizard seeking the scrolls of Byzantem. Seven chapters move from that early quest to his later, documented reign and the Tear of Chaos. This is a chapter structure inspired by long fantasy RPGs, **not** Baldur's Gate II playtime or content.
+This project is a playable campaign prototype for [GemRB](../README.md). GemRB runs Infinity Engine games; it is not a visual editor. The game starts with Algoreth Jon Goren as a wizard seeking the scrolls of Byzantem. Twelve scene areas now span seven acts, from the early quest to his later, documented reign and the Tear of Chaos. The act cadence takes inspiration from long fantasy RPGs, **not** Baldur's Gate II content or playtime.
 
 ## AI and human contributor baseline
 
@@ -10,7 +10,7 @@ Read [GOLD_STANDARD_GAME_DESIGN_PIPELINE.md](GOLD_STANDARD_GAME_DESIGN_PIPELINE.
 
 The local campaign archive `C:\Users\goyan\Documents\GolemDungeon - kingdoms - kingdom-alsperia [1203075571572154459].txt` supports the early scroll quest. The user-supplied `TERRALUM_LORE_CODEX.md` supports the later Wizard King, eastern academy, Tear of Chaos, Archives and Eldrador arc. The user clarified that in the early period Queen Alisande was married to King Edmon. The sources do not recover the later transition to Algoreth's reign and marriage, so the game leaves that interval unwritten. See [`lore_notes.md`](lore_notes.md) for provenance and uncertainties. Neither source archive is copied into this repository.
 
-story.json contains seven chapter introductions and 23 dialogue beats. The seven playable locations are Alsperia Market, Mistwood Road, Lorian Cavern, Alsperia Court, Old Observatory Vault, Deep Archives, and Alsperia Skyport. scene_cast.json defines 15 named scene actors; their current sprites reuse the demo's two humanoid templates. They are placed when each area loads. Talk cycles through local NPCs, and Archivist Mara offers three responses that change the later Mistwood route or cast. The three hostile encounters require victory before the story advances. Most dialogue remains linear, and the actors need unique art, the market conversation needs live UI/save testing, and every scene needs area-specific geometry. This is a playable campaign slice, not a full length RPG campaign.
+story.json contains twelve scene introductions and 33 story beats. The areas include Alsperia Market, the library and council; Mistwood Road and its ruined watchpost; Lorian Cavern and its seal gallery; the academy courtyard and vault; the Deep Archives; and Alsperia Skyport. scene_cast.json defines 25 named scene actors; their current sprites reuse the demo's two humanoid templates. Each area spawns its own cast. Talk cycles through local NPCs; choices across six scenes set flags that affect later dialogue or route text. The three hostile encounters require victory before the story advances. The custom choices and transitions still need live input/save testing, and every area needs its own geometry. This is an expanded playable slice, not a full length RPG campaign.
 
 scene_production_plan.md tracks the BG2-inspired delivery slices. campaign_plan.md maps the seven acts to a longer quest and location plan, with archive facts separated from new material. The preserved story_scrolls_draft.json records the earlier game draft before the codex arrived; it is not the active campaign.
 
@@ -36,7 +36,7 @@ The audio renderer also creates three original looping ambient tracks. It needs 
 
 ## Author with an AI coder
 
-Run `tools/terralum/mcp_server.py` as a stdio Model Context Protocol server. Its tools inspect the project, edit the title or hero name, edit a chapter beat, import art for one of the seven areas, and rebuild the pack. For example:
+Run `tools/terralum/mcp_server.py` as a stdio Model Context Protocol server. Its tools inspect the project, edit the title or hero name, edit a scene beat, import art for a built area, and rebuild the pack. NPC and scene-cast authoring tools are still on the TODO list. For example:
 
 ```json
 {

@@ -49,9 +49,11 @@ def OnLoad():
 	voice = window.CreateButton(10, 660, 183, 100, 34)
 	_style(voice)
 	voice.SetText("NARRATE")
+	voice.SetHotKey("n", 0, True)
 	talk = window.CreateButton(11, 545, 183, 100, 34)
 	_style(talk)
 	talk.SetText("TALK")
+	talk.SetHotKey("t", 0, True)
 	choice_buttons = []
 	for index, x in enumerate((10, 183, 356)):
 		button = window.CreateButton(12 + index, x, 183, 160, 34)
@@ -80,12 +82,17 @@ def OnLoad():
 
 	def talk_to_scene_npc():
 		chapter_index = GemRB.GetGameVar("TLCHAP")
-		people = Story.cast(chapters[chapter_index]["area"])
+		chapter = chapters[chapter_index]
+		people = Story.cast(chapter["area"])
 		cast_index["line"] = (cast_index["line"] + 1) % len(people)
 		person = people[cast_index["line"]]
 		line = person.get("line")
-		if chapter_index == 1 and person.get("route_lines"):
+		if chapter["area"] == "tl0002" and person.get("route_lines"):
 			line = person["route_lines"].get(str(GemRB.GetGameVar("TLMARALEAD")), line)
+		for response in person.get("responses", []):
+			if GemRB.GetGameVar(response["flag"]) == response["value"]:
+				line = response["line"]
+				break
 		message.SetText("[cap]T[/cap]ERRALUM  |  " + chapters[chapter_index]["title"] + "\n" + chapters[chapter_index]["place"] + "\n\n" + person["name"] + ": " + line + "\n\n")
 		for index, button in enumerate(choice_buttons):
 			choices = person.get("choices", [])
@@ -93,6 +100,7 @@ def OnLoad():
 			if index < len(choices):
 				choice = choices[index]
 				button.SetText(choice["label"])
+				button.SetHotKey(str(index + 1), 0, True)
 				button.OnPress(lambda choice=choice, person=person: choose_dialogue(person, choice))
 
 	def choose_dialogue(person, choice):
@@ -110,7 +118,8 @@ def OnLoad():
 
 	def narrate():
 		chapter = chapters[GemRB.GetGameVar("TLCHAP")]
-		GemRB.PlaySound(chapter["voice"], "GUI", 0, 0, 4)
+		if chapter.get("voice"):
+			GemRB.PlaySound(chapter["voice"], "GUI", 0, 0, 4)
 
 	def show():
 		chapter_index = GemRB.GetGameVar("TLCHAP")
@@ -118,24 +127,36 @@ def OnLoad():
 		chapter = chapters[chapter_index]
 		beat = chapter["beats"][beat_index]
 		beat_text = beat["text"]
-		if chapter_index == 1 and beat_index == 0:
+		if chapter["area"] == "tl0002" and beat_index == 0:
 			lead = GemRB.GetGameVar("TLMARALEAD")
 			if lead == 1:
 				beat_text = "Mara's ledger marks the pale stones as a safe route around the ruined watchpost."
 			elif lead == 2:
 				beat_text = "Edmon's waywarden caught up with us. His patrol will draw the stalker away from the road."
+			if GemRB.GetGameVar("TLLIBRARYCLUE") == 1:
+				if lead == 2:
+					beat_text = "Inessa's index confirms the pale stones, and Edmon's waywarden leads the patrol around the watchpost."
+				else:
+					beat_text = "Inessa's copied rune index confirms the pale stones. We can skirt the ruined watchpost."
+		for route in beat.get("routes", []):
+			if GemRB.GetGameVar(route["flag"]) == route["value"]:
+				beat_text = route["text"]
+				break
 		message.SetText("[cap]T[/cap]ERRALUM  |  " + chapter["title"] + "\n" + chapter["place"] + "\n\n" + beat["speaker"] + ": " + beat_text + "\n\n")
 		action.SetText(beat["action"].upper() if len(beat["action"]) < 11 else "CONTINUE")
+		voice.SetDisabled(not chapter.get("voice"))
 
 	def advance():
 		chapter_index = GemRB.GetGameVar("TLCHAP")
 		beat_index = GemRB.GetGameVar("TLBEAT")
 		chapter = chapters[chapter_index]
 		beat = chapter["beats"][beat_index]
-		if chapter_index == 1 and beat.get("encounter") and GemRB.GetGameVar("TLMARALEAD") == 1:
+		if (chapter["area"] == "tl0002" and beat.get("encounter")
+				and (GemRB.GetGameVar("TLMARALEAD") == 1 or GemRB.GetGameVar("TLLIBRARYCLUE") == 1)):
 			GemRB.SetGlobal("TLMISTWOODSAFE", "GLOBAL", 1)
 			GemRB.SetGlobal("TLBEAT", "GLOBAL", beat_index + 1)
-			message.SetText("[cap]T[/cap]ERRALUM  |  " + chapter["title"] + "\n" + chapter["place"] + "\n\nFollowing Mara's ledger, the party skirts the stalker's ambush along the pale stones.\n\n")
+			route = "Inessa's copied rune index" if GemRB.GetGameVar("TLLIBRARYCLUE") == 1 else "Mara's ledger"
+			message.SetText("[cap]T[/cap]ERRALUM  |  " + chapter["title"] + "\n" + chapter["place"] + "\n\nFollowing " + route + ", the party skirts the stalker's ambush along the pale stones.\n\n")
 			return
 		enemy = GemRB.GetGameVar("TLENEMY")
 		if "encounter" in beat and not enemy:
@@ -164,7 +185,7 @@ def OnLoad():
 				return
 			GemRB.SetGlobal("TLCHAP", "GLOBAL", chapter_index)
 			GemRB.SetGlobal("TLBEAT", "GLOBAL", 0)
-			GemRB.SetVar("CHAPTER", chapter_index + 1)
+			GemRB.SetVar("CHAPTER", chapters[chapter_index]["act"])
 			GemRB.LoadMusicPL(chapters[chapter_index]["music"], 1)
 			GemRB.MoveToArea(chapters[chapter_index]["area"])
 			GemRB.SetTimedEvent(lambda: spawn_cast(chapter_index), 1)
@@ -178,6 +199,7 @@ def OnLoad():
 	action.OnPress(advance)
 	voice.OnPress(narrate)
 	talk.OnPress(talk_to_scene_npc)
+	action.SetHotKey(GEM_RETURN, 0, True)
 	GemRB.LoadMusicPL(chapters[GemRB.GetGameVar("TLCHAP")]["music"], 1)
 	initial_chapter = GemRB.GetGameVar("TLCHAP")
 	GemRB.SetTimedEvent(lambda: spawn_cast(initial_chapter), 1)
