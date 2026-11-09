@@ -4,6 +4,10 @@ The backgrounds were generated with the built-in image generator for this projec
 
 Shared direction: wide 1600 × 1152 playable isometric fantasy RPG area; hand-painted late 1990s pre-rendered environment style; clear walkable central floor; no characters, text, UI, or watermark; original setting and design.
 
+## Expedition Chart Room (`expedition_chart_room.png`)
+
+Generated with the built-in image generator for a distinct Act VII preparation scene. Prompt: “Create a wide 4:3 fantasy environment concept painting for an original Infinity Engine-style RPG location called the Alsperia Expedition Chart Room. This is an early-modern medieval royal observatory annex: a circular stone room under the skyport, tall arched windows showing a twilight harbor and the silhouette of an airship, a large parchment route table with maps and brass instruments, a few rolled ward diagrams, restrained blue-green candlelight and warm lantern pools, carved star compass in the floor. Human-scale, grounded medieval materials, cinematic painterly isometric background art, detailed but readable composition, natural perspective from elevated three-quarter view suitable for a classic isometric RPG pre-rendered area. Clear open walkable floor in the middle and foreground for party/NPC sprites, furnishings kept to perimeter. No people, no text, no letters, no symbols that look like writing, no UI, no border. The scene should feel thoughtful and practical, an expedition preparation room rather than a throne room or battle arena.”
+
 | File | Scene direction |
 | --- | --- |
 | `alsperia_market.png` | Alsperia market court at dawn, limestone mosaic, library and castle entrances, stalls and fountain. |

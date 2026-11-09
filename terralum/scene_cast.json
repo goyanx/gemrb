@@ -1022,7 +1022,19 @@
       "goal": "Prepare the ship for either a quiet observation approach or a guarded arrival.",
       "knowledge": "Knows the ship and its instruments; cannot predict what the Eldrador sanctuary will require.",
       "voice": "Practical, calm, and explicit about trade-offs.",
-      "provenance": "adaptation"
+      "provenance": "adaptation",
+      "responses": [
+        {
+          "flag": "TLBRIEFING",
+          "value": 1,
+          "line": "The copied account is aboard in a separate case and marked incomplete. I will keep it away from the warding array until the signs can be compared."
+        },
+        {
+          "flag": "TLBRIEFING",
+          "value": 2,
+          "line": "Ealdrin carries Selene’s witness notes; the sealed account stays in Alsperia. I will prepare for an inquiry guided by Eldrador’s testimony."
+        }
+      ]
     },
     {
       "name": "Seraphina Everglow",
@@ -1166,6 +1178,91 @@
       "knowledge": "Knows the dispatch concerns the road and patrol markers; has not read it or met the stalker.",
       "voice": "Urgent but composed, distinguishing what the document says from what it does not.",
       "provenance": "adaptation"
+    }
+  ],
+  "tl0020": [
+    {
+      "name": "Ealdrin",
+      "creature": "protagon",
+      "position": [
+        690,
+        500
+      ],
+      "line": "Selene’s account gives us evidence and a witness, but no conclusion about the Eldrador Tear.",
+      "choices": [
+        {
+          "label": "Carry the marked copy",
+          "reply": "We will carry Selene’s copy sealed apart from the instruments and mark its limits clearly.",
+          "flag": "TLBRIEFING",
+          "value": 1
+        },
+        {
+          "label": "Carry the witness notes",
+          "reply": "We will leave the copy in Alsperia and carry Selene’s witness notes instead.",
+          "flag": "TLBRIEFING",
+          "value": 2
+        }
+      ],
+      "role": "Scholar of the Deep Archives",
+      "faction": "Deep Archives Expedition",
+      "goal": "Help Algoreth choose how the expedition handles incomplete archival evidence.",
+      "knowledge": "Knows Selene’s account and witness notes; neither establishes the cause or nature of the Eldrador Tear.",
+      "voice": "Thoughtful and skeptical, distinguishing the record from its interpretation.",
+      "provenance": "canon",
+      "responses": [
+        {
+          "flag": "TLARCHIVEWARD",
+          "value": 1,
+          "line": "The Index Warden yielded a comparison leaf, not a verdict. I will carry that distinction into Eldrador."
+        },
+        {
+          "flag": "TLARCHIVEWARD",
+          "value": 2,
+          "line": "Nera kept the folio sealed. We will preserve that choice and carry only the witness account if you decide."
+        }
+      ]
+    },
+    {
+      "name": "Seraphina Everglow",
+      "creature": "riddler",
+      "position": [
+        1000,
+        480
+      ],
+      "line": "The diagrams are ready. I will keep the listening instruments apart from whichever record you choose.",
+      "responses": [
+        {
+          "flag": "TLBRIEFING",
+          "value": 1,
+          "line": "The copied account is secured in its own case, clearly marked as incomplete."
+        },
+        {
+          "flag": "TLBRIEFING",
+          "value": 2,
+          "line": "The archive copy remains here. I have made room for Selene’s witness notes and our own observations."
+        }
+      ],
+      "role": "Aethercraft expedition scholar",
+      "faction": "Eldrador Expedition",
+      "goal": "Pack the ward diagrams and listening instruments without letting assumptions shape the investigation.",
+      "knowledge": "Knows the instruments and ward diagrams; has not examined Eldrador’s Tear directly.",
+      "voice": "Clear and reassuring, with practical details and no claims of certainty.",
+      "provenance": "canon"
+    },
+    {
+      "name": "Queen Alisande",
+      "creature": "protagon",
+      "position": [
+        810,
+        720
+      ],
+      "line": "We will bring what helps us ask careful questions, and leave room for the people who know their sanctuary.",
+      "role": "Queen of Alsperia and co-ruler beside Algoreth",
+      "faction": "Alsperia Crown",
+      "goal": "Keep the expedition open to Eldrador’s witnesses while supporting Algoreth’s decision.",
+      "knowledge": "Knows the party is preparing to investigate another Tear; its nature and outcome remain unknown.",
+      "voice": "Warm, composed, and direct about shared responsibility.",
+      "provenance": "canon"
     }
   ]
 }

@@ -35,6 +35,7 @@ def OnLoad():
 	GemRB.SetGlobal("TLMISTWOODSAFE", "GLOBAL", 0)
 	GemRB.SetGlobal("TLARCHIVE", "GLOBAL", 0)
 	GemRB.SetGlobal("TLVOYAGE", "GLOBAL", 0)
+	GemRB.SetGlobal("TLBRIEFING", "GLOBAL", 0)
 	GemRB.SetGlobal("TLHUNTER", "GLOBAL", 0)
 	GemRB.SetGlobal("TLHUNTERTRACK", "GLOBAL", 0)
 	GemRB.SetGlobal("TLWAYSTONE", "GLOBAL", 0)
@@ -64,4 +65,5 @@ def OnLoad():
 	GemRB.SetGlobal("TLJRN_ARCHIVE_WARD", "GLOBAL", 0)
 	GemRB.SetGlobal("TLJRN_ELDRADOR", "GLOBAL", 0)
 	GemRB.SetGlobal("TLJRN_VOYAGE", "GLOBAL", 0)
+	GemRB.SetGlobal("TLJRN_BRIEFING", "GLOBAL", 0)
 	GemRB.EnterGame()

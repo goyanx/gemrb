@@ -237,6 +237,9 @@ def OnLoad():
 				and not GemRB.GetGameVar("TLARCHIVEWARD")):
 			message.Append("\n\nBefore calling the Index Warden, speak with Archivist Nera and decide what to do with the sealed folio.")
 			return
+		if chapter["area"] == "tl0020" and beat_index == 0 and not GemRB.GetGameVar("TLBRIEFING"):
+			message.Append("\n\nEaldrin is waiting for your decision about which record the expedition will carry.")
+			return
 		if (chapter["area"] == "tl0002" and beat.get("encounter")
 				and (GemRB.GetGameVar("TLMARALEAD") == 1 or GemRB.GetGameVar("TLLIBRARYCLUE") == 1
 				     or (GemRB.GetGameVar("TLTRAVELKIT") == 1 and GemRB.GetGameVar("TLHUNTER") == 1)

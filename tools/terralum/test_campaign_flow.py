@@ -73,7 +73,7 @@ events = []
 globals_ = {"TLCHAP": 0, "TLBEAT": 0, "TLENEMY": 0, "TLENEMY_STALKER": 0,
             "TLENEMY_PROWLER": 0, "TLCAST": 0,
             "TLMARALEAD": 0, "TLLIBRARYCLUE": 0, "TLWATCHPOST": 0, "TLHUNTER": 0,
-            "TLGALLERY": 0, "TLCOURT": 0, "TLECHO": 0, "TLMISTWOODSAFE": 0, "TLMISTWOODVICTORY": 0, "TLARCHIVE": 0, "TLVOYAGE": 0,
+            "TLGALLERY": 0, "TLCOURT": 0, "TLECHO": 0, "TLMISTWOODSAFE": 0, "TLMISTWOODVICTORY": 0, "TLARCHIVE": 0, "TLVOYAGE": 0, "TLBRIEFING": 0,
             "TLARCHIVEWARD": 0, "TLDEEP_ARCHIVE_WARDEN": 0, "TLJRN_ARCHIVE_WARD": 0,
             "TLJRN_BYZANTEM": 0, "TLJRN_MISTWOOD": 0, "TLJRN_MISTWOOD_AMBUSH": 0, "TLJRN_HUNTER": 0, "TLJRN_HUNTER_RESOLVED": 0,
             "TLHUNTERTRACK": 0, "TLJRN_TRACKS": 0, "TLTRAVELKIT": 0, "TLJRN_TRAVELKIT": 0, "TLROYALORDER": 0, "TLJRN_ROYALORDER": 0, "TLRIVER": 0, "TLRIVERROUTE": 0, "TLJRN_RIVER": 0,
@@ -81,7 +81,7 @@ globals_ = {"TLCHAP": 0, "TLBEAT": 0, "TLENEMY": 0, "TLENEMY_STALKER": 0,
             "TLLORIANPURPOSE": 0, "TLLORIAN_GUARDIAN": 0, "TLJRN_LORIAN_PURPOSE": 0,
             "TLJRN_GALLERY_RESOLUTION": 0,
             "TLJRN_SCROLLS": 0, "TLJRN_TEAR": 0,
-            "TLJRN_ARCHIVE": 0, "TLJRN_ELDRADOR": 0, "TLJRN_VOYAGE": 0}
+            "TLJRN_ARCHIVE": 0, "TLJRN_ELDRADOR": 0, "TLJRN_VOYAGE": 0, "TLJRN_BRIEFING": 0}
 enemy_dead = False
 dead_actors = set()
 current_area = "tl0001"
@@ -165,7 +165,7 @@ assert globals_["TLMARALEAD"] == 1
 assert "safe path" in window.controls[0].text
 chapters = campaign.Story.chapters()
 chapter_index_by_area = {chapter["area"]: index for index, chapter in enumerate(chapters)}
-assert len(chapters) == 19
+assert len(chapters) == 20
 assert sorted({chapter["act"] for chapter in chapters}) == list(range(1, 8))
 for chapter_index, chapter in enumerate(chapters):
     assert globals_["TLCHAP"] == chapter_index
@@ -253,10 +253,10 @@ assert globals_["TLGALLERY"] == 1
 assert globals_["TLCOURT"] == 1
 assert globals_["TLECHO"] == 1
 assert globals_["TLARCHIVEWARD"] == 2
-assert len([event for event in events if event[0] == "area"]) == 18
+assert len([event for event in events if event[0] == "area"]) == 19
 assert len([event for event in events if event[0] == "voice"]) == 7
 assert len([event for event in events if event[0] == "attack"]) == 2
-assert len(journal_entries) == 15
+assert len(journal_entries) == 16
 assert globals_["TLJRN_WAYSTONE"] == 1
 assert any("Three-Cairn Fork" in entry["value"] for entry in journal_entries)
 assert globals_["TLJRN_LORIAN_PURPOSE"] == 1
@@ -749,7 +749,7 @@ for chapter_index, chapter in enumerate(chapters):
                 assert globals_[event["flag"]] == 1
                 assert any(entry["value"] == event["text"] for entry in journal_entries)
             choice_count += 1
-assert choice_count == 33
+assert choice_count == 35
 
 # Act VI's optional archive quest offers a peaceful path and a gated warder
 # challenge. Victory records the comparison leaf and changes dialogue in the
@@ -802,5 +802,42 @@ assert "called the Index Warden" in window.controls[0].text
 window.controls[11].press()
 assert "Warden yielded the comparison leaf but no verdict" in window.controls[0].text
 
+# The Act VII chart-room decision is required, journaled, reflected in the next
+# beat and spoken differently by Flight Marshal Aven in the hangar.
+for briefing, expected_line in (
+        (1, "copied account is aboard in a separate case"),
+        (2, "Ealdrin carries Selene’s witness notes")):
+    chart_index = chapter_index_by_area["tl0020"]
+    window = Window()
+    events.clear()
+    timed_events.clear()
+    current_area = "tl0020"
+    globals_.update({"TLCHAP": chart_index, "TLBEAT": 0, "TLENEMY": 0, "TLCAST": 0,
+                     "TLBRIEFING": 0, "TLJRN_BRIEFING": 0, "TLJRN_ARCHIVE": 1,
+                     "TLARCHIVEWARD": 2})
+    campaign.OnLoad()
+    while timed_events:
+        timed_events.pop(0)()
+    window.controls[4].press()
+    assert globals_["TLBEAT"] == 0
+    assert "Ealdrin is waiting" in window.controls[0].text
+    window.controls[11].press()
+    choice = campaign.Story.cast("tl0020")[0]["choices"][briefing - 1]
+    window.controls[11 + briefing].press()
+    assert globals_["TLBRIEFING"] == briefing
+    assert choice["reply"] in window.controls[0].text
+    window.controls[4].press()
+    assert globals_["TLBEAT"] == 1
+    assert globals_["TLJRN_BRIEFING"] == 1
+    route = next(route for route in campaign.Story.chapters()[chart_index]["beats"][1]["routes"]
+                 if route["value"] == briefing)
+    assert route["text"] in window.controls[0].text
+    window.controls[4].press()
+    assert current_area == "tl0014"
+    while timed_events:
+        timed_events.pop(0)()
+    window.controls[11].press()
+    assert expected_line in window.controls[0].text
+
 print(len(chapters), "scenes across seven acts,", sum(len(campaign.Story.cast(chapter["area"])) for chapter in chapters),
-      "named scene actors, keyboard controls, authored journal events and combat aftermath, all 33 response options, three market routes, four encounter gates, eighteen transitions, and seven voice cues passed")
+      "named scene actors, keyboard controls, authored journal events and combat aftermath, all 35 response options, three market routes, four encounter gates, nineteen transitions, and seven voice cues passed")

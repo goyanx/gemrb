@@ -74,6 +74,11 @@ expected = {
         "blocked": [(5, 45), (56, 20), (90, 76), (30, 88)],
         "description": "north, east, and south trail branches",
     },
+    "tl0020": {
+        "routes": [(50, 5), (50, 90)],
+        "blocked": [(10, 45), (86, 45), (20, 73), (82, 74)],
+        "description": "expedition chart room and skyport approaches",
+    },
 }
 assert set(searchmap_specs) == set(expected)
 cast_by_area = json.loads(build_game.CAST_FILE.read_text(encoding="utf-8"))
