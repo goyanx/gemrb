@@ -54,6 +54,8 @@ def OnLoad():
 	GemRB.SetGlobal("TLJRN_BYZANTEM", "GLOBAL", 0)
 	GemRB.SetGlobal("TLJRN_MARA", "GLOBAL", 0)
 	GemRB.SetGlobal("TLJRN_COURT_RECORD", "GLOBAL", 0)
+	GemRB.SetGlobal("TLRELAY", "GLOBAL", 0)
+	GemRB.SetGlobal("TLJRN_RELAY", "GLOBAL", 0)
 	GemRB.SetGlobal("TLJRN_MISTWOOD", "GLOBAL", 0)
 	GemRB.SetGlobal("TLJRN_MISTWOOD_AMBUSH", "GLOBAL", 0)
 	GemRB.SetGlobal("TLJRN_HUNTER", "GLOBAL", 0)

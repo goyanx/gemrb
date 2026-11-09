@@ -47,6 +47,7 @@ AREAS = {
     "tl0021": "academy_warding_annex.png",
     "tl0022": "eldrador_arrival_quay.png",
     "tl0023": "eldrador_sanctuary_threshold.png",
+    "tl0024": "mistwood_waywarden_relay.png",
 }
 AREA_SONG_INDEX = {
     "tl0001": 1, "tl0002": 3, "tl0003": 2, "tl0004": 1,
@@ -55,7 +56,7 @@ AREA_SONG_INDEX = {
     "tl0013": 2, "tl0014": 1, "tl0015": 3,
     "tl0016": 3, "tl0017": 1, "tl0018": 1, "tl0019": 3, "tl0020": 1,
     "tl0021": 2,
-    "tl0022": 1, "tl0023": 2,
+    "tl0022": 1, "tl0023": 2, "tl0024": 3,
 }
 
 

@@ -384,6 +384,44 @@
       ]
     },
     {
+      "title": "II. Through Mistwood — The Waywarden Relay",
+      "act": 2,
+      "area": "tl0024",
+      "place": "Mistwood Waywarden Relay",
+      "music": "tlwood.mus",
+      "voice": "",
+      "narration": "Beyond the ruined watchpost, a covered signal lantern hangs over a fork in the pale-stone road. The relay can carry a patrol message toward Lorian, if the party chooses to call the wardens.",
+      "beats": [
+        {
+          "speaker": "Waywarden Saren",
+          "text": "This relay carries road signals west. We can ask the patrol to watch our approach, or leave the lantern shuttered and keep our passage quiet.",
+          "action": "Set the signal"
+        },
+        {
+          "speaker": "Relay Keeper Orla",
+          "text": "The lantern is ready. The route beyond the relay leads toward Lorian.",
+          "action": "Choose signal"
+        },
+        {
+          "speaker": "Waywarden Saren",
+          "text": "The west road opens beyond the relay. We will carry the choice we made toward Lorian.",
+          "action": "Take the Lorian road",
+          "routes": [
+            {
+              "flag": "TLRELAY",
+              "value": 1,
+              "text": "Saren raises the covered lantern once. The patrol receives the relay call and shadows the road toward Lorian."
+            },
+            {
+              "flag": "TLRELAY",
+              "value": 2,
+              "text": "The lantern stays shuttered. The party takes the pale-stone road without calling a patrol toward Lorian."
+            }
+          ]
+        }
+      ]
+    },
+    {
       "title": "III. The Caverns of Lorian",
       "act": 3,
       "area": "tl0003",

@@ -99,6 +99,11 @@ expected = {
         "blocked": [(8, 36), (93, 37), (50, 37), (15, 70), (85, 70)],
         "description": "lower sanctuary threshold, sealed inner gate, and outer ward ring",
     },
+    "tl0024": {
+        "routes": [(50, 5), (50, 90), (2, 48)],
+        "blocked": [(8, 30), (91, 31), (39, 38), (68, 40), (12, 70), (87, 70)],
+        "description": "Mistwood patrol relay, covered signal lantern, and north/south/west road approaches",
+    },
 }
 assert set(searchmap_specs) == set(expected)
 cast_by_area = json.loads(build_game.CAST_FILE.read_text(encoding="utf-8"))

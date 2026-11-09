@@ -1556,5 +1556,84 @@
       "voice": "Clear, patient, and evidence-focused.",
       "provenance": "canon"
     }
+  ],
+  "tl0024": [
+    {
+      "name": "Waywarden Saren",
+      "creature": "protagon",
+      "position": [
+        680,
+        620
+      ],
+      "line": "The watchpost rubbing points here. If Leora's patrol schedule was copied, I know when to raise the signal without crossing the wardens' route.",
+      "responses": [
+        {
+          "flag": "TLROYALORDER",
+          "value": 1,
+          "line": "Leora's copied schedule gives us the relay interval. I can signal the patrol without sending it across the wrong trail."
+        },
+        {
+          "flag": "TLROYALORDER",
+          "value": 2,
+          "line": "The schedule stayed sealed. I can still call the wardens, but we do not know which patrol will answer or when."
+        },
+        {
+          "flag": "TLMISTWOODVICTORY",
+          "value": 1,
+          "line": "The road is clear since the ambush. We can leave the relay quiet, or send a measured signal for the next travellers."
+        }
+      ],
+      "role": "Royal road warden",
+      "faction": "Edmon's Waywardens",
+      "goal": "Offer the party a choice between a scheduled patrol signal and a quiet approach to Lorian.",
+      "knowledge": "Knows the signal relay and patrol routes; only has the copied timing if Leora’s schedule was shared.",
+      "voice": "Disciplined and restrained, stating the limits of the information at hand.",
+      "provenance": "adaptation"
+    },
+    {
+      "name": "Relay Keeper Orla",
+      "creature": "riddler",
+      "position": [
+        980,
+        500
+      ],
+      "line": "The lantern is covered. One shuttered flash calls the west patrol; two keep the road dark.",
+      "choices": [
+        {
+          "label": "Discuss the relay",
+          "reply": "Orla explains the signal code: one covered flash calls the west patrol; a shuttered lantern keeps the road quiet.",
+          "flag": "TLRELAY",
+          "value": 1,
+          "followup": {
+            "line": "Will you call the patrol toward Lorian or keep the relay dark?",
+            "journal": {
+              "flag": "TLJRN_RELAY",
+              "section": 4,
+              "text": "At the Mistwood Waywarden Relay, Algoreth chose whether to call a patrol toward Lorian or keep the road signal dark. Saren used the dispatch schedule only if the party had copied it in Alsperia."
+            },
+            "choices": [
+              {
+                "label": "Call the west patrol",
+                "reply": "Saren gives the relay one measured flash. The wardens will shadow the road toward Lorian.",
+                "flag": "TLRELAY",
+                "value": 1
+              },
+              {
+                "label": "Keep the lantern shuttered",
+                "reply": "Orla keeps the relay dark. The party will take the pale-stone road without a patrol shadow.",
+                "flag": "TLRELAY",
+                "value": 2
+              }
+            ]
+          }
+        }
+      ],
+      "role": "Mistwood signal keeper",
+      "faction": "Edmon's Waywardens",
+      "goal": "Keep relay signals clear and avoid drawing a patrol without the traveller’s consent.",
+      "knowledge": "Knows the one-flash and two-flash signal code; does not know what is beyond Lorian’s western arch.",
+      "voice": "Practical and deliberate, giving instructions in short phrases.",
+      "provenance": "adaptation"
+    }
   ]
 }

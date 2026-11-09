@@ -85,7 +85,7 @@ globals_ = {"TLCHAP": 0, "TLBEAT": 0, "TLENEMY": 0, "TLENEMY_STALKER": 0,
             "TLELDRADOR": 0, "TLSANCTUARY": 0, "TLJRN_ARRIVAL": 0, "TLJRN_SANCTUARY": 0}
 globals_.update({"TLMARADETAIL": 0, "TLJRN_MARA": 0, "TLFOLLOWPENDING": 0,
                  "TLFOLLOWNPC": 0, "TLFOLLOWCHOICE": 0, "TLWITNESS": 0,
-                 "TLORENDOCKET": 0, "TLJRN_COURT_RECORD": 0})
+                 "TLORENDOCKET": 0, "TLJRN_COURT_RECORD": 0, "TLRELAY": 0, "TLJRN_RELAY": 0})
 enemy_dead = False
 dead_actors = set()
 current_area = "tl0001"
@@ -189,8 +189,8 @@ assert any("agreed how to handle Dorian's western route ledger" in entry["value"
            for entry in journal_entries)
 chapters = campaign.Story.chapters()
 chapter_index_by_area = {chapter["area"]: index for index, chapter in enumerate(chapters)}
-assert len(chapters) == 23
-assert sum(len(chapter["beats"]) for chapter in chapters) == 57
+assert len(chapters) == 24
+assert sum(len(chapter["beats"]) for chapter in chapters) == 60
 assert sorted({chapter["act"] for chapter in chapters}) == list(range(1, 8))
 for chapter_index, chapter in enumerate(chapters):
     assert globals_["TLCHAP"] == chapter_index
@@ -233,6 +233,21 @@ for chapter_index, chapter in enumerate(chapters):
             if globals_[route["flag"]] == route["value"]:
                 assert route["text"] in window.controls[0].text, (chapter["area"], route, window.controls[0].text)
                 break
+        if chapter["area"] == "tl0024" and beats.index(beat) == 1:
+            window.controls[4].press()
+            assert globals_["TLBEAT"] == 1
+            assert "relay is still unassigned" in window.controls[0].text
+            for _ in range(len(people)):
+                window.controls[11].press()
+                if "Relay Keeper Orla:" in window.controls[0].text:
+                    break
+            assert "Relay Keeper Orla:" in window.controls[0].text
+            window.controls[12].press()
+            assert "Will you call the patrol" in window.controls[0].text
+            window.controls[12].press()
+            assert globals_["TLRELAY"] == 1
+            assert globals_["TLJRN_RELAY"] == 1
+            assert any("chose whether to call a patrol" in entry["value"] for entry in journal_entries)
         if chapter["area"] == "tl0011" and beats.index(beat) == 1:
             window.controls[4].press()
             assert globals_["TLBEAT"] == 1
@@ -296,10 +311,10 @@ assert globals_["TLWITNESS"] == 1
 assert globals_["TLJRN_COURT_RECORD"] == 1
 assert globals_["TLECHO"] == 1
 assert globals_["TLARCHIVEWARD"] == 2
-assert len([event for event in events if event[0] == "area"]) == 22
+assert len([event for event in events if event[0] == "area"]) == 23
 assert len([event for event in events if event[0] == "voice"]) == 8
 assert len([event for event in events if event[0] == "attack"]) == 2
-assert len(journal_entries) == 21
+assert len(journal_entries) == 22
 assert globals_["TLJRN_WAYSTONE"] == 1
 assert any("Three-Cairn Fork" in entry["value"] for entry in journal_entries)
 assert globals_["TLJRN_LORIAN_PURPOSE"] == 1
@@ -793,7 +808,7 @@ for chapter_index, chapter in enumerate(chapters):
                 assert globals_[event["flag"]] == 1
                 assert any(entry["value"] == event["text"] for entry in journal_entries)
             choice_count += 1
-assert choice_count == 42
+assert choice_count == 43
 
 # Mara's staged ledger conversation records one shared journal event and carries
 # either handling choice into Scholar Inessa's later library dialogue.
@@ -858,7 +873,7 @@ for selected, expected_response in ((1, "separate landmark copy"),
 
 # Include the two nested options in the campaign-wide authored response count.
 choice_count += len(followup["choices"])
-assert choice_count == 44
+assert choice_count == 45
 
 # The Act IV council hearing requires the player to choose how Oren preserves
 # the evidence; Alisande and the closing record both acknowledge either path.
@@ -912,7 +927,7 @@ for selected, expected_response, expected_route in (
     assert expected_route in window.controls[0].text
 
 choice_count += len(council_followup["choices"])
-assert choice_count == 46
+assert choice_count == 47
 
 # Act VI's optional archive quest offers a peaceful path and a gated warder
 # challenge. Victory records the comparison leaf and changes dialogue in the
@@ -1045,6 +1060,47 @@ for warding in (1, 2):
     assert "false self remains contained" in resolution["text"]
     assert globals_["TLJRN_TEAR"] == 1
 
+# The Mistwood Relay choice records one shared journal event for either route
+# and preserves the dispatch schedule's limits in Saren's dialogue.
+relay_index = chapter_index_by_area["tl0024"]
+relay_npc = campaign.Story.cast("tl0024")[1]
+relay_followup = relay_npc["choices"][0]["followup"]
+for signal in (1, 2):
+    for schedule in (1, 2):
+        window = Window()
+        events.clear()
+        timed_events.clear()
+        journal_entries.clear()
+        current_area = "tl0024"
+        globals_.update({"TLCHAP": relay_index, "TLBEAT": 0, "TLENEMY": 0, "TLCAST": 0,
+                         "TLRELAY": 0, "TLROYALORDER": schedule, "TLJRN_RELAY": 0})
+        campaign.OnLoad()
+        while timed_events:
+            timed_events.pop(0)()
+        window.controls[4].press()
+        assert globals_["TLBEAT"] == 1
+        window.controls[4].press()
+        assert "relay is still unassigned" in window.controls[0].text
+        window.controls[11].press()
+        window.controls[11].press()
+        window.controls[12].press()
+        assert "Will you call the patrol" in window.controls[0].text
+        window.controls[11 + signal].press()
+        assert globals_["TLRELAY"] == signal
+        assert globals_["TLJRN_RELAY"] == 1
+        assert sum(1 for e in journal_entries if "chose whether to call a patrol" in e["value"]) == 1
+        window.controls[4].press()
+        route = next(route for route in campaign.Story.chapters()[relay_index]["beats"][2]["routes"]
+                     if route["value"] == signal)
+        assert route["text"] in window.controls[0].text
+        window.controls[11].press()
+        expected = next(r["line"] for r in campaign.Story.cast("tl0024")[0]["responses"]
+                        if r["flag"] == "TLROYALORDER" and r["value"] == schedule)
+        assert expected in window.controls[0].text
+
+choice_count += len(relay_followup["choices"])
+assert choice_count == 49
+
 # The Act VII Eldrador landing and sanctuary-approach adaptations preserve the
 # unresolved Tear while carrying both evidence and protocol choices forward.
 for evidence in (1, 2):
@@ -1096,4 +1152,4 @@ for evidence in (1, 2):
         assert "has not been entered or resolved" in window.controls[0].text
 
 print(len(chapters), "scenes across seven acts,", sum(len(campaign.Story.cast(chapter["area"])) for chapter in chapters),
-      "named scene actors, keyboard controls, authored journal events and combat aftermath, all 46 response options, three market routes, four encounter gates, twenty-two transitions, and seven voice cues passed")
+      "named scene actors, keyboard controls, authored journal events and combat aftermath, all 49 response options, three market routes, four encounter gates, twenty-three transitions, and seven voice cues passed")
