@@ -84,7 +84,8 @@ globals_ = {"TLCHAP": 0, "TLBEAT": 0, "TLENEMY": 0, "TLENEMY_STALKER": 0,
             "TLJRN_ARCHIVE": 0, "TLJRN_ELDRADOR": 0, "TLJRN_VOYAGE": 0, "TLJRN_BRIEFING": 0,
             "TLELDRADOR": 0, "TLSANCTUARY": 0, "TLJRN_ARRIVAL": 0, "TLJRN_SANCTUARY": 0}
 globals_.update({"TLMARADETAIL": 0, "TLJRN_MARA": 0, "TLFOLLOWPENDING": 0,
-                 "TLFOLLOWNPC": 0, "TLFOLLOWCHOICE": 0})
+                 "TLFOLLOWNPC": 0, "TLFOLLOWCHOICE": 0, "TLWITNESS": 0,
+                 "TLORENDOCKET": 0, "TLJRN_COURT_RECORD": 0})
 enemy_dead = False
 dead_actors = set()
 current_area = "tl0001"
@@ -189,6 +190,7 @@ assert any("agreed how to handle Dorian's western route ledger" in entry["value"
 chapters = campaign.Story.chapters()
 chapter_index_by_area = {chapter["area"]: index for index, chapter in enumerate(chapters)}
 assert len(chapters) == 23
+assert sum(len(chapter["beats"]) for chapter in chapters) == 57
 assert sorted({chapter["act"] for chapter in chapters}) == list(range(1, 8))
 for chapter_index, chapter in enumerate(chapters):
     assert globals_["TLCHAP"] == chapter_index
@@ -231,6 +233,22 @@ for chapter_index, chapter in enumerate(chapters):
             if globals_[route["flag"]] == route["value"]:
                 assert route["text"] in window.controls[0].text, (chapter["area"], route, window.controls[0].text)
                 break
+        if chapter["area"] == "tl0011" and beats.index(beat) == 1:
+            window.controls[4].press()
+            assert globals_["TLBEAT"] == 1
+            assert "The council docket is unfinished" in window.controls[0].text
+            for _ in range(len(people)):
+                window.controls[11].press()
+                if "Royal Scribe Oren:" in window.controls[0].text:
+                    break
+            assert "Royal Scribe Oren:" in window.controls[0].text
+            window.controls[12].press()
+            assert "Should the route and scroll accounts be placed side by side" in window.controls[0].text
+            window.controls[12].press()
+            assert globals_["TLWITNESS"] == 1
+            assert globals_["TLJRN_COURT_RECORD"] == 1
+            assert any("chose how Royal Scribe Oren would preserve" in entry["value"]
+                       for entry in journal_entries)
         if "encounter" in beat:
             if beat.get("encounter_if") and globals_[beat["encounter_if"]["flag"]] != beat["encounter_if"]["value"]:
                 window.controls[4].press()
@@ -274,12 +292,14 @@ assert globals_["TLLIBRARYCLUE"] == 1
 assert globals_["TLWATCHPOST"] == 1
 assert globals_["TLGALLERY"] == 1
 assert globals_["TLCOURT"] == 1
+assert globals_["TLWITNESS"] == 1
+assert globals_["TLJRN_COURT_RECORD"] == 1
 assert globals_["TLECHO"] == 1
 assert globals_["TLARCHIVEWARD"] == 2
 assert len([event for event in events if event[0] == "area"]) == 22
 assert len([event for event in events if event[0] == "voice"]) == 8
 assert len([event for event in events if event[0] == "attack"]) == 2
-assert len(journal_entries) == 20
+assert len(journal_entries) == 21
 assert globals_["TLJRN_WAYSTONE"] == 1
 assert any("Three-Cairn Fork" in entry["value"] for entry in journal_entries)
 assert globals_["TLJRN_LORIAN_PURPOSE"] == 1
@@ -773,7 +793,7 @@ for chapter_index, chapter in enumerate(chapters):
                 assert globals_[event["flag"]] == 1
                 assert any(entry["value"] == event["text"] for entry in journal_entries)
             choice_count += 1
-assert choice_count == 41
+assert choice_count == 42
 
 # Mara's staged ledger conversation records one shared journal event and carries
 # either handling choice into Scholar Inessa's later library dialogue.
@@ -838,7 +858,61 @@ for selected, expected_response in ((1, "separate landmark copy"),
 
 # Include the two nested options in the campaign-wide authored response count.
 choice_count += len(followup["choices"])
-assert choice_count == 43
+assert choice_count == 44
+
+# The Act IV council hearing requires the player to choose how Oren preserves
+# the evidence; Alisande and the closing record both acknowledge either path.
+council_index = chapter_index_by_area["tl0011"]
+scribe = next(person for person in campaign.Story.cast("tl0011") if person["name"] == "Royal Scribe Oren")
+council_followup = scribe["choices"][0]["followup"]
+for selected, expected_response, expected_route in (
+        (1, "paired docket keeps the route evidence distinct", "Oren places Dorian's route testimony beside"),
+        (2, "separate accounts preserve the limits", "Oren files the route testimony and scroll account separately")):
+    window = Window()
+    events.clear()
+    timed_events.clear()
+    journal_entries.clear()
+    current_area = "tl0011"
+    globals_.update({key: (1 if key.startswith("TLJRN_") else 0) for key in globals_})
+    globals_.update({"TLCHAP": council_index, "TLBEAT": 1, "TLENEMY": 0, "TLCAST": 0,
+                     "TLWITNESS": 0, "TLORENDOCKET": 0, "TLJRN_COURT_RECORD": 0,
+                     "TLFOLLOWPENDING": 0, "TLFOLLOWNPC": 0, "TLFOLLOWCHOICE": 0})
+    campaign.OnLoad()
+    while timed_events:
+        timed_events.pop(0)()
+    window.controls[4].press()
+    assert globals_["TLBEAT"] == 1
+    assert "The council docket is unfinished" in window.controls[0].text
+    for _ in range(len(campaign.Story.cast("tl0011"))):
+        window.controls[11].press()
+        if "Royal Scribe Oren:" in window.controls[0].text:
+            break
+    assert "Royal Scribe Oren:" in window.controls[0].text
+    window.controls[12].press()
+    assert council_followup["line"] in window.controls[0].text
+    window.controls[13 if selected == 2 else 12].press()
+    assert globals_["TLWITNESS"] == selected
+    assert globals_["TLJRN_COURT_RECORD"] == 1
+    assert sum("chose how Royal Scribe Oren would preserve" in entry["value"]
+               for entry in journal_entries) == 1
+
+    campaign.OnLoad()  # Reload preserves the selected evidence treatment and journal event.
+    while timed_events:
+        timed_events.pop(0)()
+    assert globals_["TLWITNESS"] == selected
+    assert globals_["TLJRN_COURT_RECORD"] == 1
+    assert sum("chose how Royal Scribe Oren would preserve" in entry["value"]
+               for entry in journal_entries) == 1
+    for _ in range(len(campaign.Story.cast("tl0011"))):
+        window.controls[11].press()
+        if "Queen Alisande:" in window.controls[0].text:
+            break
+    assert expected_response in window.controls[0].text
+    window.controls[4].press()
+    assert expected_route in window.controls[0].text
+
+choice_count += len(council_followup["choices"])
+assert choice_count == 46
 
 # Act VI's optional archive quest offers a peaceful path and a gated warder
 # challenge. Victory records the comparison leaf and changes dialogue in the
@@ -1022,4 +1096,4 @@ for evidence in (1, 2):
         assert "has not been entered or resolved" in window.controls[0].text
 
 print(len(chapters), "scenes across seven acts,", sum(len(campaign.Story.cast(chapter["area"])) for chapter in chapters),
-      "named scene actors, keyboard controls, authored journal events and combat aftermath, all 43 response options, three market routes, four encounter gates, twenty-two transitions, and seven voice cues passed")
+      "named scene actors, keyboard controls, authored journal events and combat aftermath, all 46 response options, three market routes, four encounter gates, twenty-two transitions, and seven voice cues passed")

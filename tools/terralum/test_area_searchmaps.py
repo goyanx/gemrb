@@ -44,6 +44,11 @@ expected = {
         "blocked": [(5, 8), (90, 8), (35, 45), (68, 46), (12, 86), (86, 86)],
         "description": "dispatch map room, open central floor, and north/south/west approaches",
     },
+    "tl0011": {
+        "routes": [(50, 5), (50, 90)],
+        "blocked": [(28, 38), (74, 38), (25, 62), (73, 63)],
+        "description": "council hearing floor, witness dais, and north/south court approaches",
+    },
     "tl0017": {
         "routes": [(50, 8), (50, 91)],
         "blocked": [(10, 25), (90, 20), (15, 88), (82, 84), (84, 50), (16, 59)],

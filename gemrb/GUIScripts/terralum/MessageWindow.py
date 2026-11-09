@@ -273,6 +273,9 @@ def OnLoad():
 		if chapter["area"] == "tl0003" and beat_index == 0 and not GemRB.GetGameVar("TLLORIANPURPOSE"):
 			message.Append("\n\nDorian waits for your answer. Speak with him before approaching the guardian.")
 			return
+		if chapter["area"] == "tl0011" and beat_index == 1 and not GemRB.GetGameVar("TLWITNESS"):
+			message.Append("\n\nThe council docket is unfinished. Speak with Royal Scribe Oren and decide how the route and scroll accounts should be filed.")
+			return
 		if chapter["area"] == "tl0010" and beat_index == 0 and not GemRB.GetGameVar("TLGALLERY"):
 			message.Append("\n\nThe inscription needs an answer. Speak with the Gallery Keeper before leaving the sealed niches.")
 			return

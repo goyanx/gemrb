@@ -519,6 +519,23 @@
               "text": "The court restricts access to the scrolls until Edmon and Alisande hear a clear purpose for their use."
             }
           ]
+        },
+        {
+          "speaker": "Royal Scribe Oren",
+          "text": "The docket is ready. I will preserve the evidence as you directed, without claiming it answers more than it does.",
+          "action": "Close hearing",
+          "routes": [
+            {
+              "flag": "TLWITNESS",
+              "value": 1,
+              "text": "Oren places Dorian's route testimony beside the scroll account, marking that the route proves how Algoreth reached Lorian, not the scrolls' purpose."
+            },
+            {
+              "flag": "TLWITNESS",
+              "value": 2,
+              "text": "Oren files the route testimony and scroll account separately. The docket leaves their relationship open for further study."
+            }
+          ]
         }
       ]
     },

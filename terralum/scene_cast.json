@@ -667,7 +667,64 @@
       "goal": "Hear the witnesses with Edmon before the court decides how to safeguard the scrolls.",
       "knowledge": "Knows the court must weigh public risk and the royal record; Edmon is her husband and the original king in this early period.",
       "voice": "Warm, composed, and direct about responsibility.",
-      "provenance": "user-confirmed"
+      "provenance": "user-confirmed",
+      "responses": [
+        {
+          "flag": "TLWITNESS",
+          "value": 1,
+          "line": "The paired docket keeps the route evidence distinct from the scrolls' meaning. That is a useful record for our court."
+        },
+        {
+          "flag": "TLWITNESS",
+          "value": 2,
+          "line": "The separate accounts preserve the limits of what we know. Edmon and I can review each without treating one as proof of the other."
+        }
+      ]
+    },
+    {
+      "name": "Royal Scribe Oren",
+      "creature": "protagon",
+      "position": [
+        800,
+        620
+      ],
+      "line": "The docket can preserve the route and scroll accounts without deciding what the scrolls were meant to do. How should I file your testimony?",
+      "choices": [
+        {
+          "label": "Review the council docket",
+          "reply": "Oren prepares both accounts for the royal record and asks how their relationship should be described.",
+          "flag": "TLORENDOCKET",
+          "value": 1,
+          "followup": {
+            "line": "Should the route and scroll accounts be placed side by side, or filed separately until more evidence is found?",
+            "journal": {
+              "flag": "TLJRN_COURT_RECORD",
+              "section": 4,
+              "text": "At Edmon and Alisande's council, Algoreth chose how Royal Scribe Oren would preserve the route testimony and scroll account. The docket records the limits of both witnesses without settling the scrolls' purpose."
+            },
+            "choices": [
+              {
+                "label": "Place the accounts side by side",
+                "reply": "Oren shelves Dorian's route testimony beside the scroll account, with a note that the route proves how Algoreth reached Lorian, not what the scrolls mean.",
+                "flag": "TLWITNESS",
+                "value": 1
+              },
+              {
+                "label": "File them as separate accounts",
+                "reply": "Oren files the trail testimony and scroll notes separately, leaving their relationship open for further study.",
+                "flag": "TLWITNESS",
+                "value": 2
+              }
+            ]
+          }
+        }
+      ],
+      "role": "Royal court scribe",
+      "faction": "Alsperia Crown",
+      "goal": "Preserve the council's testimony accurately without inventing a purpose for the scrolls.",
+      "knowledge": "Can compare the market ledger, Dorian's route, and Algoreth's report; cannot establish why the scrolls were created.",
+      "voice": "Careful and exact, separating what a record says from what it cannot prove.",
+      "provenance": "adaptation"
     }
   ],
   "tl0012": [
