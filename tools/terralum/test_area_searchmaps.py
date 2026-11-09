@@ -24,6 +24,11 @@ assert len(passability_row) == 16
 passability = [bool(int(bits) & 1) for bits in passability_row]
 
 expected = {
+    "tl0002": {
+        "routes": [(84, 7), (44, 92)],
+        "blocked": [(8, 40), (27, 82), (72, 82), (92, 42), (54, 25)],
+        "description": "ruined watchpost road and southern approach",
+    },
     "tl0015": {
         "routes": [(59, 10), (76, 92)],
         "blocked": [(10, 35), (93, 42), (60, 44), (24, 66), (80, 78)],
@@ -37,6 +42,8 @@ expected = {
 }
 assert set(searchmap_specs) == set(expected)
 cast_by_area = json.loads(build_game.CAST_FILE.read_text(encoding="utf-8"))
+story = build_game.read_story()
+chapters_by_area = {chapter["area"]: chapter for chapter in story["chapters"]}
 
 for area, map_spec in searchmap_specs.items():
     image = build_game.write_searchmap(build_game.SOURCE / "override" / "AR0100SR.BMP", map_spec)
@@ -53,7 +60,9 @@ for area, map_spec in searchmap_specs.items():
 
     start = to_cell((800, 585))
     npcs = [to_cell(person["position"]) for person in cast_by_area[area]]
-    targets = [start, *npcs, *expected[area]["routes"]]
+    encounter_positions = [to_cell(beat["spawn_position"])
+                           for beat in chapters_by_area[area]["beats"] if beat.get("spawn_position")]
+    targets = [start, *npcs, *encounter_positions, *expected[area]["routes"]]
     assert all(walkable(cell) for cell in targets), f"{area}: start or actor on blocked cell: {targets}"
 
     # Four-way connectivity is stricter than the engine's diagonal walk options.
@@ -68,5 +77,5 @@ for area, map_spec in searchmap_specs.items():
     assert all(cell in reachable for cell in targets), f"{area}: disconnected route: {targets}"
     assert all(not walkable(cell) for cell in expected[area]["blocked"]), f"{area}: a solid prop became walkable"
     assert len(reachable) > 1000, f"{area}: walkable region is unexpectedly small"
-    print(f"{area}: {len(reachable)} cells; start, {len(npcs)} NPCs, and {expected[area]['description']} connected")
+    print(f"{area}: {len(reachable)} cells; start, {len(npcs)} NPCs, {len(encounter_positions)} encounter spawns, and {expected[area]['description']} connected")
     image.close()

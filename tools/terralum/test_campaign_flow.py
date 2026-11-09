@@ -205,6 +205,9 @@ for chapter_index, chapter in enumerate(chapters):
             window.controls[4].press()
             assert any(event[:2] == ("attack", "Attack(Player1)") for event in events)
             assert globals_["TLENEMY"] > 1001
+            if chapter["area"] == "tl0002":
+                spawn = beat["spawn_position"]
+                assert (1, "riddler", *spawn) in [event[1] for event in events if event[0] == "spawn"]
             window.controls[4].press()
             assert globals_["TLBEAT"] == beats.index(beat)
             enemy_dead = True

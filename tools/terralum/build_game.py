@@ -71,6 +71,11 @@ def read_story():
         if not all(beat.get("speaker") and beat.get("text") and beat.get("action") for beat in chapter["beats"]):
             raise ValueError("each story beat needs a speaker, text, and action")
         for beat in chapter["beats"]:
+            spawn = beat.get("spawn_position")
+            if spawn is not None and (not beat.get("encounter") or not isinstance(spawn, list)
+                                      or len(spawn) != 2
+                                      or any(type(value) is not int or not 0 <= value <= 32767 for value in spawn)):
+                raise ValueError(f"encounter spawn position for {chapter['area']} must be two bounded integers")
             event = beat.get("journal")
             if event is None:
                 continue

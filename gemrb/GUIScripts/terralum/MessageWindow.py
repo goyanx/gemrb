@@ -223,7 +223,11 @@ def OnLoad():
 		if "encounter" in beat and not enemy:
 			# The demo humanoid supplies an open-licensed CRE template. The
 			# campaign names and hostility are assigned at spawn time.
-			enemy = GemRB.CreateCreature(1, "riddler")
+			spawn = beat.get("spawn_position")
+			if spawn:
+				enemy = GemRB.CreateCreature(1, "riddler", spawn[0], spawn[1])
+			else:
+				enemy = GemRB.CreateCreature(1, "riddler")
 			GemRB.SetGlobal("TLENEMY", "GLOBAL", enemy)
 			GemRB.SetPlayerName(enemy, beat["encounter"], 0)
 			GemRB.SetPlayerStat(enemy, IE_EA, ENEMY)

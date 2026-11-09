@@ -160,7 +160,8 @@
           "speaker": "Tessa",
           "text": "These tracks circle us. Something from the ruins hunts travellers after dusk.",
           "action": "Face the ambush",
-          "encounter": "Mistwood stalker"
+          "encounter": "Mistwood stalker",
+          "spawn_position": [1008, 444]
         },
         {
           "speaker": "Dorian's inscription",
