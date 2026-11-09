@@ -8,6 +8,7 @@ from pathlib import Path
 
 
 STORY_FILE = Path(__file__).resolve().parents[3] / "terralum" / "story.json"
+CAST_FILE = Path(__file__).resolve().parents[3] / "terralum" / "scene_cast.json"
 
 
 def get(key):
@@ -16,3 +17,7 @@ def get(key):
 
 def chapters():
 	return get("chapters")
+
+def cast(area):
+	with CAST_FILE.open(encoding="utf-8") as source:
+		return json.load(source)[area.lower()]

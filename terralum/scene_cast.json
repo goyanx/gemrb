@@ -1,0 +1,31 @@
+{
+  "tl0001": [
+    {"name": "Archivist Mara", "creature": "riddler", "position": [690, 520], "line": "Dorian's last travel ledger is in the library. The court holds the key to his western route."},
+    {"name": "King Edmon", "creature": "protagon", "position": [930, 500], "line": "I am Alsperia's original king. I grant you a map and shelter; return with knowledge, not conquest."},
+    {"name": "Queen Alisande", "creature": "riddler", "position": [870, 620], "line": "Edmon is my husband and king. His trust opens this road, and I expect you to honor it."}
+  ],
+  "tl0002": [
+    {"name": "Scout Tessa", "creature": "protagon", "position": [680, 520], "line": "Pale stones mark the safe ground. The moss hides old snares, so watch where you step."},
+    {"name": "Lost Wayfarer", "creature": "riddler", "position": [930, 500], "line": "Something circles the ruined watchpost. I heard it answer my name from the trees."}
+  ],
+  "tl0003": [
+    {"name": "Dorian the Seer", "creature": "riddler", "position": [700, 500], "line": "I hid the scrolls because a road between worlds magnifies the purpose of whoever crosses it."},
+    {"name": "Lorian Guardian", "creature": "protagon", "position": [930, 500], "line": "The vault is not a prize. Prove you can leave its door closed before you ask it to open."}
+  ],
+  "tl0004": [
+    {"name": "King Edmon", "creature": "protagon", "position": [690, 520], "line": "You have returned with the scrolls. Tell the court what they can do, and what they must not do."},
+    {"name": "Queen Alisande", "creature": "riddler", "position": [930, 500], "line": "Knowledge won in darkness deserves careful study. I will argue for patience before the nobles."}
+  ],
+  "tl0005": [
+    {"name": "Magister Vael", "creature": "riddler", "position": [690, 520], "line": "The observatory wards bend toward the breach. The sealed lecture vault is answering voices from below."},
+    {"name": "Queen Alisande", "creature": "protagon", "position": [930, 500], "line": "I will hold the wardens at the perimeter. Do not mistake the echo for a command."}
+  ],
+  "tl0006": [
+    {"name": "Ealdrin", "creature": "riddler", "position": [690, 520], "line": "This living record says a Tear may answer a powerful mind that questions its own limits."},
+    {"name": "Queen Alisande", "creature": "protagon", "position": [930, 500], "line": "We need scholars and warders before we follow the second Tear. I will not leave the record unread."}
+  ],
+  "tl0007": [
+    {"name": "Queen Vaelthira", "creature": "riddler", "position": [690, 520], "line": "My sanctuary's Tear speaks with a familiar voice. I ask you to study it before choosing what to do."},
+    {"name": "Seraphina Everglow", "creature": "protagon", "position": [930, 500], "line": "The ward diagrams are ready. We can observe the Tear without provoking it."}
+  ]
+}

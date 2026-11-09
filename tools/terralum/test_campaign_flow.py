@@ -62,18 +62,32 @@ class Window:
 
 window = Window()
 events = []
-globals_ = {"TLCHAP": 0, "TLBEAT": 0, "TLENEMY": 0}
+globals_ = {"TLCHAP": 0, "TLBEAT": 0, "TLENEMY": 0, "TLCAST": 0}
 enemy_dead = False
+current_area = "tl0001"
+next_actor = 1001
+timed_events = []
 gemrb = types.ModuleType("GemRB")
 gemrb.LoadWindow = lambda *args: window
 gemrb.GetGameVar = lambda name: globals_[name]
 gemrb.SetGlobal = lambda name, context, value: globals_.__setitem__(name, value)
 gemrb.SetVar = lambda *args: None
 gemrb.LoadMusicPL = lambda name, *args: events.append(("music", name))
-gemrb.MoveToArea = lambda name: events.append(("area", name))
+def move_to_area(name):
+    global current_area
+    current_area = name
+    events.append(("area", name))
+gemrb.MoveToArea = move_to_area
+gemrb.GetCurrentArea = lambda: current_area
+gemrb.SetTimedEvent = lambda callback, delay: timed_events.append(callback)
 gemrb.PlaySound = lambda name, *args: events.append(("voice", name))
-gemrb.CreateCreature = lambda *args: 1001
-gemrb.SetPlayerName = lambda *args: None
+def create_creature(*args):
+    global next_actor
+    next_actor += 1
+    events.append(("spawn", args))
+    return next_actor
+gemrb.CreateCreature = create_creature
+gemrb.SetPlayerName = lambda actor, name, *args: events.append(("name", actor, name))
 gemrb.SetPlayerStat = lambda *args: None
 gemrb.ExecuteString = lambda action, actor: events.append(("attack", action, actor))
 gemrb.GetPlayerStat = lambda actor, stat: 2048 if enemy_dead else 0
@@ -88,25 +102,36 @@ spec = importlib.util.spec_from_file_location("MessageWindow", SCRIPTS / "terral
 campaign = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(campaign)
 campaign.OnLoad()
+while timed_events:
+    timed_events.pop(0)()
 
 assert window.controls[4].frame["w"] == 100
 assert window.controls[10].text == "NARRATE"
+assert window.controls[11].text == "TALK"
 assert "Archivist Mara" in window.controls[0].text
+assert len([event for event in events if event[0] == "spawn"]) == len(campaign.Story.cast("tl0001"))
+window.controls[11].press()
+assert "Dorian's last travel ledger" in window.controls[0].text
 for chapter in range(7):
     assert globals_["TLCHAP"] == chapter
     beats = campaign.Story.chapters()[chapter]["beats"]
     for beat in beats:
         if "encounter" in beat:
             window.controls[4].press()
-            assert ("attack", "Attack(Player1)", 1001) in events
-            assert globals_["TLENEMY"] == 1001
+            assert any(event[:2] == ("attack", "Attack(Player1)") for event in events)
+            assert globals_["TLENEMY"] > 1001
             window.controls[4].press()
             assert globals_["TLBEAT"] == beats.index(beat)
             enemy_dead = True
         window.controls[4].press()
         enemy_dead = False
+    while timed_events:
+        timed_events.pop(0)()
+    assert globals_["TLCAST"] == globals_["TLCHAP"] + 1
+    current_cast = campaign.Story.cast(campaign.Story.chapters()[globals_["TLCHAP"]]["area"])
+    assert any(name[0] == "name" and name[2] == current_cast[0]["name"] for name in events)
 assert "TO BE CONTINUED" in window.controls[0].text
 assert len([event for event in events if event[0] == "area"]) == 6
 assert len([event for event in events if event[0] == "voice"]) == 7
-print("Seven chapters,", sum(len(chapter["beats"]) for chapter in campaign.Story.chapters()),
-      "beats, three encounters, six area transitions, and seven voice cues passed")
+print("Seven scene casts,", sum(len(campaign.Story.cast(chapter["area"])) for chapter in campaign.Story.chapters()),
+      "named actors, Talk interactions, three encounter gates, six area transitions, and seven voice cues passed")

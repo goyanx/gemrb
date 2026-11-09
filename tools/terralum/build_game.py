@@ -19,6 +19,7 @@ ROOT = Path(__file__).resolve().parents[2]
 SOURCE = ROOT / "demo"
 PROJECT = ROOT / "terralum"
 OUTPUT = PROJECT / "build" / "game"
+CAST_FILE = PROJECT / "scene_cast.json"
 AREA_IMAGE = PROJECT / "art" / "observatory_courtyard.png"
 AREAS = {
     "tl0001": "alsperia_market.png",
@@ -44,6 +45,16 @@ def read_story():
             raise ValueError("each chapter needs a built area and story beats")
         if not all(beat.get("speaker") and beat.get("text") and beat.get("action") for beat in chapter["beats"]):
             raise ValueError("each story beat needs a speaker, text, and action")
+    cast = json.loads(CAST_FILE.read_text(encoding="utf-8"))
+    for area in AREAS:
+        people = cast.get(area, [])
+        if len(people) < 2:
+            raise ValueError(f"scene cast for {area} must contain at least two NPCs")
+        for person in people:
+            if not person.get("name") or not person.get("line") or person.get("creature") not in ("protagon", "riddler"):
+                raise ValueError(f"scene cast for {area} has an incomplete NPC")
+            if len(person.get("position", [])) != 2 or any(not isinstance(value, int) for value in person["position"]):
+                raise ValueError(f"scene cast position for {area} must contain two integer coordinates")
     return story
 
 
@@ -96,8 +107,8 @@ def build():
     image = write_tis(AREA_IMAGE, SOURCE / "override" / "ar0100.tis", OUTPUT / "override" / "ar0100.tis")
     image.save(OUTPUT / "override" / "ar0100.png")
 
-    # Clone only the demo's geometry template. The ARE's actor and spawn
-    # counts are cleared so its tutorial cast does not reappear in Terralum.
+    # Keep the demo's walkmesh and entrances until Terralum has authored area
+    # geometry. Remove its actors and interactive tutorial objects.
     for area, image_name in AREAS.items():
         upper = area.upper().encode("ascii")
         for suffix in (".are", ".WED", ".mos", "LM.BMP", "SR.BMP", "HT.BMP", "TMP.BMP"):
@@ -108,7 +119,11 @@ def build():
             if suffix == ".are":
                 data = bytearray(data)
                 struct.pack_into("<H", data, 0x58, 0)  # actor count
-                struct.pack_into("<I", data, 0x6C, 0)  # spawn count
+                struct.pack_into("<H", data, 0x5A, 0)  # region count
+                struct.pack_into("<I", data, 0x64, 0)  # spawn count
+                struct.pack_into("<H", data, 0x74, 0)  # container count
+                struct.pack_into("<H", data, 0x76, 0)  # item count
+                struct.pack_into("<I", data, 0xA4, 0)  # door count
                 song_offset = struct.unpack_from("<I", data, 0xBC)[0]
                 song_index = {"tl0001": 1, "tl0002": 3, "tl0003": 2,
                               "tl0004": 1, "tl0005": 2, "tl0006": 2,

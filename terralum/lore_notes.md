@@ -13,6 +13,6 @@ This is a working adaptation note, not a replacement for the user's source files
 
 ## New game material and limits
 
-Archivist Mara, Scout Tessa, their dialogue, the waystone inscription, the Lorian guardian encounter, and the vault echo are **proposed adaptation content**. The first source names Dorian and Lorian but does not provide all the scripted dialogue used here. Combat uses provisional demo creature art. No game scene implies a verified resolution of Eldrador's Tear, the false Algoreth's future, the Archives' exact relationship, or Edmon's fate.
+Archivist Mara, Scout Tessa, the Lost Wayfarer, their dialogue, the waystone inscription, the Lorian guardian encounter, and the vault echo are **proposed adaptation content**. The first source names Dorian and Lorian but does not provide all the scripted dialogue used here. Scene actors currently reuse demo creature art. No game scene implies a verified resolution of Eldrador's Tear, the false Algoreth's future, the Archives' exact relationship, or Edmon's fate.
 
 The children Elara, Lyriana and Alric, Lady Elowen, Tidewarden Thalor and the spectral guardians belong to the wider recovered lore but are not yet staged in the playable prototype. Their details and chronology need careful source review before use. Golemnus is a Dungeon Master in the source context, not an established in-world NPC. Synthia and Demerzel belong to separate stories.

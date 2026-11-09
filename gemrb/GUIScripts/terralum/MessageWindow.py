@@ -9,7 +9,7 @@ import GUICommon
 import GUIMA
 import GUIINV
 from GUIDefines import *
-from ie_stats import IE_EA, IE_STATE_ID, STATE_DEAD, ENEMY
+from ie_stats import IE_EA, IE_STATE_ID, STATE_DEAD, ENEMY, NEUTRAL
 
 
 def _style(button, width=None):
@@ -49,8 +49,31 @@ def OnLoad():
 	voice = window.CreateButton(10, 660, 183, 100, 34)
 	_style(voice)
 	voice.SetText("NARRATE")
+	talk = window.CreateButton(11, 545, 183, 100, 34)
+	_style(talk)
+	talk.SetText("TALK")
 
 	chapters = Story.chapters()
+	cast_index = {"line": -1}
+
+	def spawn_cast(chapter_index):
+		chapter = chapters[chapter_index]
+		if GemRB.GetCurrentArea().lower() != chapter["area"]:
+			return
+		if GemRB.GetGameVar("TLCAST") == chapter_index + 1:
+			return
+		for person in Story.cast(chapter["area"]):
+			actor = GemRB.CreateCreature(1, person["creature"], person["position"][0], person["position"][1])
+			GemRB.SetPlayerName(actor, person["name"], 0)
+			GemRB.SetPlayerStat(actor, IE_EA, NEUTRAL)
+		GemRB.SetGlobal("TLCAST", "GLOBAL", chapter_index + 1)
+
+	def talk_to_scene_npc():
+		chapter_index = GemRB.GetGameVar("TLCHAP")
+		people = Story.cast(chapters[chapter_index]["area"])
+		cast_index["line"] = (cast_index["line"] + 1) % len(people)
+		person = people[cast_index["line"]]
+		message.SetText("[cap]T[/cap]ERRALUM  |  " + chapters[chapter_index]["title"] + "\n" + chapters[chapter_index]["place"] + "\n\n" + person["name"] + ": " + person["line"] + "\n\n")
 	def enemy_alive(enemy):
 		try:
 			return not GemRB.GetPlayerStat(enemy, IE_STATE_ID) & STATE_DEAD
@@ -105,6 +128,8 @@ def OnLoad():
 			GemRB.SetVar("CHAPTER", chapter_index + 1)
 			GemRB.LoadMusicPL(chapters[chapter_index]["music"], 1)
 			GemRB.MoveToArea(chapters[chapter_index]["area"])
+			GemRB.SetTimedEvent(lambda: spawn_cast(chapter_index), 1)
+			cast_index["line"] = -1
 			show()
 			narrate()
 			return
@@ -113,7 +138,10 @@ def OnLoad():
 
 	action.OnPress(advance)
 	voice.OnPress(narrate)
+	talk.OnPress(talk_to_scene_npc)
 	GemRB.LoadMusicPL(chapters[GemRB.GetGameVar("TLCHAP")]["music"], 1)
+	initial_chapter = GemRB.GetGameVar("TLCHAP")
+	GemRB.SetTimedEvent(lambda: spawn_cast(initial_chapter), 1)
 	show()
 	narrate()
 
