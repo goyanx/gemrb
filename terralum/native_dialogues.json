@@ -1,4 +1,54 @@
 {
+  "OREN": {
+    "states": [
+      {
+        "when": [{"flag": "TLCHAP", "value": 14}, {"flag": "TLORENDOCKET", "value": 0}],
+        "say": "The docket can preserve the route and scroll accounts without deciding what the scrolls were meant to do. How should I file your testimony?",
+        "transitions": [
+          {"text": "Review the council docket.", "next": 1,
+           "set": [{"flag": "TLORENDOCKET", "value": 1}]},
+          {"text": "Leave the docket open for further testimony.", "final": true}
+        ]
+      },
+      {
+        "say": "Should the route testimony and the account of the scrolls be placed side by side, or filed separately until more evidence is found?",
+        "transitions": [
+          {"text": "Place the accounts side by side.", "next": 2,
+           "journal": "At Edmon and Alisande's council, Algoreth chose how Royal Scribe Oren would preserve the route testimony and scroll account. The docket records the limits of both witnesses without settling the scrolls' purpose.",
+           "set": [{"flag": "TLWITNESS", "value": 1}, {"flag": "TLJRN_COURT_RECORD", "value": 1}]},
+          {"text": "File them as separate accounts.", "next": 3,
+           "journal": "At Edmon and Alisande's council, Algoreth chose how Royal Scribe Oren would preserve the route testimony and scroll account. The docket records the limits of both witnesses without settling the scrolls' purpose.",
+           "set": [{"flag": "TLWITNESS", "value": 2}, {"flag": "TLJRN_COURT_RECORD", "value": 1}]}
+        ]
+      },
+      {
+        "say": "I will place Dorian's route testimony beside the scroll account, with a note that the route records how you reached Lorian, not what the scrolls mean.",
+        "transitions": [{"text": "Keep that distinction in the record.", "final": true}]
+      },
+      {
+        "say": "I will file the trail testimony and scroll notes separately. Their relationship remains open for further study.",
+        "transitions": [{"text": "Keep both accounts available to the court.", "final": true}]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 14}, {"flag": "TLORENDOCKET", "value": 1},
+                 {"flag": "TLWITNESS", "value": 1}],
+        "say": "The paired docket keeps the route evidence distinct from the scrolls' meaning. That is a useful record for the court.",
+        "transitions": [{"text": "Thank Oren for preserving the distinction.", "final": true}]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 14}, {"flag": "TLORENDOCKET", "value": 1},
+                 {"flag": "TLWITNESS", "value": 2}],
+        "say": "The separate accounts preserve the limits of what we know. Edmon and Alisande can review each without treating one as proof of the other.",
+        "transitions": [{"text": "Thank Oren for preserving both accounts.", "final": true}]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 14}, {"flag": "TLORENDOCKET", "value": 1},
+                 {"flag": "TLWITNESS", "value": 0}],
+        "say": "I have prepared the council docket. We can still decide whether to pair the route testimony with the scroll account or preserve them separately.",
+        "transitions": [{"text": "Decide how the council should file the evidence.", "next": 1}]
+      }
+    ]
+  },
   "MARA": {
     "states": [
       {

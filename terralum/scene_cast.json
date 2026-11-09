@@ -709,6 +709,7 @@
     {
       "name": "Royal Scribe Oren",
       "creature": "protagon",
+      "dialog": "OREN",
       "position": [
         800,
         620

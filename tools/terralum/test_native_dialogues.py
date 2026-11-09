@@ -81,6 +81,7 @@ class NativeDialogueResourceTests(unittest.TestCase):
         self.assertEqual(bindings["KINGEDM"], ("tl0001", "King Edmon"))
         self.assertEqual(bindings["ALISAND"], ("tl0001", "Queen Alisande"))
         self.assertEqual(bindings["MARA"], ("tl0001", "Archivist Mara"))
+        self.assertEqual(bindings["OREN"], ("tl0011", "Royal Scribe Oren"))
 
     def test_compiled_alistair_dialogue_and_tlk(self):
         pack = Path(os.environ.get("TERRALUM_GAME_OUTPUT", PROJECT / "build" / "game")).resolve()
