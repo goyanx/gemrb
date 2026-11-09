@@ -1052,7 +1052,7 @@
         720,
         700
       ],
-      "line": "The living record and its witness are catalogued, but the comparison leaf is not. We can call the Index Warden to test the gap or leave the folio sealed.",
+      "line": "The living record is catalogued, but the comparison leaf is missing. We can call the Index Warden to test the gap or leave the folio sealed.",
       "choices": [
         {
           "label": "Call the Index Warden",
@@ -1062,7 +1062,7 @@
         },
         {
           "label": "Leave the folio sealed",
-          "reply": "You leave the dormant ward intact. The missing leaf stays an unanswered question, and Selene can prepare the witness account.",
+          "reply": "You leave the dormant ward intact. The missing leaf stays an unanswered question, and Selene can prepare the warder inquiry.",
           "flag": "TLARCHIVEWARD",
           "value": 2
         }
@@ -1162,7 +1162,7 @@
         690,
         520
       ],
-      "line": "The index names a sealed account and a living witness. I can copy the account, or keep the original safe while Ealdrin questions me.",
+      "line": "The index names a sealed account and a titleless living record. Its speaker is not identified. I can copy the account, or keep the original safe while Ealdrin prepares questions for Eldrador.",
       "choices": [
         {
           "label": "Copy the sealed account",
@@ -1171,16 +1171,38 @@
           "value": 1
         },
         {
-          "label": "Question the witness",
-          "reply": "Selene keeps the original safe and gives Ealdrin her account. The expedition will rely on questions asked in Eldrador.",
+          "label": "Carry questions for Eldrador's warders",
+          "reply": "Selene keeps the original safe. Ealdrin will carry a question list for the warders, whose own observations will remain distinct from the archive record.",
           "flag": "TLARCHIVE",
-          "value": 2
+          "value": 2,
+          "followup": {
+            "line": "The titleless living record speaks of exceptional powers confronting their limits, and something answering that uncertainty. Which question should Ealdrin take to Eldrador?",
+            "journal": {
+              "flag": "TLJRN_ARCHIVE_QUESTION",
+              "section": 4,
+              "text": "Archivist Selene kept the sealed Deep Archives account in place. Algoreth chose whether Ealdrin should ask Eldrador's warders what limits they observed or what the archive record cannot establish about their Tear. The living record's title and speaker remain unknown."
+            },
+            "choices": [
+              {
+                "label": "Ask what limits the warders observed",
+                "reply": "Ealdrin will ask the warders what limits they observed directly and record their answer as testimony, apart from the archive account.",
+                "flag": "TLARCHIVEQUESTION",
+                "value": 1
+              },
+              {
+                "label": "Ask what the record cannot establish",
+                "reply": "Ealdrin will ask the warders what the archival account cannot establish about their Tear, without treating its wording as an explanation.",
+                "flag": "TLARCHIVEQUESTION",
+                "value": 2
+              }
+            ]
+          }
         }
       ],
       "role": "Archivist of the Index Hall",
       "faction": "Deep Archives",
       "goal": "Protect the original sealed account while helping Ealdrin prepare a responsible copy or witness record.",
-      "knowledge": "Knows the index entry and the living witness; does not claim the account resolves the nature of the Tears.",
+      "knowledge": "Knows the index entry refers to a titleless living record and a missing comparison leaf; does not know the record’s speaker or what the missing leaf would establish.",
       "voice": "Careful and protective of fragile records.",
       "provenance": "adaptation",
       "responses": [
@@ -1192,7 +1214,7 @@
         {
           "flag": "TLARCHIVEWARD",
           "value": 2,
-          "line": "Nera left the folio sealed. I will preserve the account and prepare the living witness statement for Ealdrin."
+          "line": "Nera left the folio sealed. I will preserve the account while Ealdrin prepares a question for Eldrador’s warders."
         }
       ]
     },
@@ -1207,19 +1229,19 @@
       "role": "Scholar of the Deep Archives",
       "faction": "Deep Archives Expedition",
       "goal": "Choose a responsible way to prepare the Index Hall record for the Eldrador inquiry.",
-      "knowledge": "Knows the index names a sealed account and a living witness; he will compare either source with the Eldrador signs.",
+      "knowledge": "Knows the catalogue names a sealed account and a titleless living record; the record’s speaker and the missing leaf’s contents are unknown.",
       "voice": "Thoughtful and skeptical, separating evidence from interpretation.",
       "provenance": "canon",
       "responses": [
         {
           "flag": "TLJRN_ARCHIVE_WARD",
           "value": 1,
-          "line": "The Warden yielded the comparison leaf but no verdict. It records the catalog gap; the living witness still matters."
+          "line": "The Warden yielded a comparison leaf but no verdict. We can compare its catalog marks with the warders’ direct observations."
         },
         {
           "flag": "TLARCHIVEWARD",
           "value": 2,
-          "line": "The folio remains sealed. We will keep the missing comparison as an open question and rely on Selene’s witness account."
+          "line": "The folio remains sealed. We will keep the missing comparison open and carry Ealdrin’s questions to Eldrador’s warders."
         }
       ]
     }
@@ -1320,7 +1342,7 @@
         {
           "flag": "TLBRIEFING",
           "value": 2,
-          "line": "Ealdrin carries Selene’s witness notes; the sealed account stays in Alsperia. I will prepare for an inquiry guided by Eldrador’s testimony."
+          "line": "Ealdrin carries questions for the warders; Selene’s original stays sealed in Alsperia. I will prepare for an inquiry guided by Eldrador’s testimony."
         }
       ]
     },
@@ -1376,11 +1398,11 @@
         },
         {
           "when": [{"flag": "TLBRIEFING", "value": 2}, {"flag": "TLVOYAGE", "value": 1}],
-          "line": "Ealdrin carries Selene’s witness notes, and Aven chose observation. We can listen first without treating a witness account as a verdict."
+          "line": "Ealdrin carries questions for Eldrador’s warders, and Aven chose observation. We can listen first without treating testimony as a verdict."
         },
         {
           "when": [{"flag": "TLBRIEFING", "value": 2}, {"flag": "TLVOYAGE", "value": 2}],
-          "line": "The witness notes travel with the warding instruments aboard a guarded approach. I will keep our technical readings distinct from what Selene witnessed."
+          "line": "The warder inquiry travels with the instruments aboard a guarded approach. I will keep our technical readings distinct from testimony gathered in Eldrador."
         }
       ],
       "dialog": "ALISTAR"
@@ -1510,7 +1532,7 @@
         690,
         500
       ],
-      "line": "Selene’s account gives us evidence and a witness, but no conclusion about the Eldrador Tear.",
+      "line": "The Deep Archives account records a titleless living record. Its speaker is unknown, and it gives us no conclusion about the Eldrador Tear.",
       "choices": [
         {
           "label": "Carry the marked copy",
@@ -1519,8 +1541,8 @@
           "value": 1
         },
         {
-          "label": "Carry the witness notes",
-          "reply": "We will leave the copy in Alsperia and carry Selene’s witness notes instead.",
+          "label": "Carry the warder inquiry",
+          "reply": "We will leave the copy in Alsperia and carry Ealdrin’s questions for Eldrador’s warders instead.",
           "flag": "TLBRIEFING",
           "value": 2
         }
@@ -1528,7 +1550,7 @@
       "role": "Scholar of the Deep Archives",
       "faction": "Deep Archives Expedition",
       "goal": "Help Algoreth choose how the expedition handles incomplete archival evidence.",
-      "knowledge": "Knows Selene’s account and witness notes; neither establishes the cause or nature of the Eldrador Tear.",
+      "knowledge": "Knows Selene’s marked account and the warder questions Ealdrin plans to carry; neither establishes the cause or nature of the Eldrador Tear.",
       "voice": "Thoughtful and skeptical, distinguishing the record from its interpretation.",
       "provenance": "canon",
       "responses": [
@@ -1540,7 +1562,7 @@
         {
           "flag": "TLARCHIVEWARD",
           "value": 2,
-          "line": "Nera kept the folio sealed. We will preserve that choice and carry only the witness account if you decide."
+          "line": "Nera kept the folio sealed. We will preserve that choice and carry Ealdrin’s warder inquiry if you decide."
         }
       ]
     },
@@ -1561,7 +1583,7 @@
         {
           "flag": "TLBRIEFING",
           "value": 2,
-          "line": "The archive copy remains here. I have made room for Selene’s witness notes and our own observations."
+          "line": "The archive copy remains here. I have made room for Ealdrin’s warder questions and our own observations."
         }
       ],
       "role": "Aethercraft expedition scholar",
@@ -1612,6 +1634,16 @@
         500
       ],
       "line": "Welcome to Eldrador. Before we approach the lower sanctuary, choose what should anchor our first account: the people who heard the voice, or the ward marks measured around it.",
+      "responses": [
+        {
+          "when": [{"flag": "TLARCHIVE", "value": 2}, {"flag": "TLARCHIVEQUESTION", "value": 1}],
+          "line": "Ealdrin has brought a question about the limits the archive describes. My warders can report what they observed directly; we will keep their testimony separate from that record."
+        },
+        {
+          "when": [{"flag": "TLARCHIVE", "value": 2}, {"flag": "TLARCHIVEQUESTION", "value": 2}],
+          "line": "Ealdrin has brought a question about what the archive cannot establish. We can hear our warders or examine the measured marks, and keep each source distinct."
+        }
+      ],
       "choices": [
         {
           "label": "Hear the warders' witnesses",
@@ -1656,7 +1688,7 @@
       "role": "Harbor and sanctuary road warden",
       "faction": "Eldrador Wardens",
       "goal": "Keep the road secure and give the expedition access to the local evidence it requests.",
-      "knowledge": "Knows that the road is closed and that warders recorded witness statements and seal measurements; has no explanation for the Tear.",
+      "knowledge": "Knows that the road is closed and that warders recorded warder testimonys and seal measurements; has no explanation for the Tear.",
       "voice": "Formal and practical, careful not to put words in the witnesses' mouths.",
       "provenance": "adaptation"
     }

@@ -85,7 +85,8 @@ globals_ = {"TLCHAP": 0, "TLBEAT": 0, "TLENEMY": 0, "TLENEMY_STALKER": 0,
             "TLLORIANPURPOSE": 0, "TLLORIAN_GUARDIAN": 0, "TLJRN_LORIAN_PURPOSE": 0,
             "TLJRN_GALLERY_RESOLUTION": 0,
             "TLJRN_SCROLLS": 0, "TLJRN_TEAR": 0,
-            "TLJRN_ARCHIVE": 0, "TLJRN_ELDRADOR": 0, "TLJRN_VOYAGE": 0, "TLJRN_BRIEFING": 0,
+            "TLJRN_ARCHIVE": 0, "TLARCHIVEQUESTION": 0, "TLJRN_ARCHIVE_QUESTION": 0,
+            "TLJRN_ELDRADOR": 0, "TLJRN_VOYAGE": 0, "TLJRN_BRIEFING": 0,
             "TLELDRADOR": 0, "TLSANCTUARY": 0, "TLJRN_ARRIVAL": 0, "TLJRN_SANCTUARY": 0,
             "TLPPELLDOCKET": 0, "TLJRN_PELL_PUBLIC": 0, "TLJRN_PELL_ARCHIVE": 0,
             "TLJRN_COURT_OPEN": 0, "TLJRN_COURT_RESTRICTED": 0}
@@ -415,7 +416,11 @@ for chapter_index, choice_index in ((chapter_index_by_area[area], choice) for ar
     button.press()
     assert globals_[choice["flag"]] == choice["value"]
     assert choice["reply"] in window.controls[0].text
-    if not choice.get("followup"):
+    if choice.get("followup"):
+        window.controls[12].press()
+        assert globals_["TLARCHIVEQUESTION"] == 1
+        assert globals_["TLJRN_ARCHIVE_QUESTION"] == 1
+    else:
         for _ in range(len(campaign.Story.cast(chapter["area"]))):
             window.controls[11].press()
             if f"{campaign.Story.cast(chapter['area'])[0]['name']}:" in window.controls[0].text:
@@ -884,6 +889,67 @@ for chapter_index, chapter in enumerate(chapters):
             choice_count += 1
 assert choice_count == 46
 
+# Selene's second choice is a required follow-up: Ealdrin carries a bounded
+# question to Eldrador rather than treating the titleless living record as a witness.
+selene = next(person for person in campaign.Story.cast("tl0013") if person["name"] == "Archivist Selene")
+selene_followup = selene["choices"][1]["followup"]
+for selected, expected, response in (
+        (1, "what limits they observed", "Ealdrin has brought a question about the limits"),
+        (2, "what the archive record cannot establish", "Ealdrin has brought a question about what the archive cannot establish")):
+    window = Window()
+    events.clear()
+    timed_events.clear()
+    journal_entries.clear()
+    current_area = "tl0013"
+    globals_.update({key: (1 if key.startswith("TLJRN_") else 0) for key in globals_})
+    globals_.update({"TLCHAP": chapter_index_by_area["tl0013"], "TLBEAT": 0, "TLENEMY": 0,
+                     "TLCAST": 0, "TLARCHIVE": 0, "TLARCHIVEQUESTION": 0,
+                     "TLJRN_ARCHIVE_QUESTION": 0})
+    campaign.OnLoad()
+    while timed_events:
+        timed_events.pop(0)()
+    for _ in range(len(campaign.Story.cast("tl0013"))):
+        window.controls[11].press()
+        if "Archivist Selene:" in window.controls[0].text:
+            break
+    assert "Archivist Selene:" in window.controls[0].text
+    window.controls[13].press()
+    assert globals_["TLARCHIVE"] == 2
+    assert globals_["TLFOLLOWPENDING"] == 1
+    assert selene_followup["line"] in window.controls[0].text
+    campaign.OnLoad()  # The pending question survives GUI script reload.
+    while timed_events:
+        timed_events.pop(0)()
+    assert globals_["TLFOLLOWPENDING"] == 1
+    assert selene_followup["line"] in window.controls[0].text
+    window.controls[11 + selected].press()
+    assert globals_["TLARCHIVEQUESTION"] == selected
+    assert globals_["TLFOLLOWPENDING"] == 0
+    assert globals_["TLJRN_ARCHIVE_QUESTION"] == 1
+    assert any(expected in entry["value"] for entry in journal_entries)
+    assert sum("Archivist Selene kept the sealed" in entry["value"] for entry in journal_entries) == 1
+    campaign.OnLoad()
+    while timed_events:
+        timed_events.pop(0)()
+    assert sum("Archivist Selene kept the sealed" in entry["value"] for entry in journal_entries) == 1
+
+    # The selected question changes Queen Vaelthira's welcome in Eldrador.
+    window = Window()
+    current_area = "tl0022"
+    globals_.update({"TLCHAP": chapter_index_by_area["tl0022"], "TLBEAT": 0, "TLENEMY": 0, "TLCAST": 0})
+    campaign.OnLoad()
+    while timed_events:
+        timed_events.pop(0)()
+    for _ in range(len(campaign.Story.cast("tl0022"))):
+        window.controls[11].press()
+        if "Queen Vaelthira:" in window.controls[0].text:
+            break
+    assert "Queen Vaelthira:" in window.controls[0].text
+    assert response in window.controls[0].text
+
+choice_count += len(selene_followup["choices"])
+assert choice_count == 48
+
 # Mara's staged ledger conversation records one shared journal event and carries
 # either handling choice into Scholar Inessa's later library dialogue.
 mara = campaign.Story.cast("tl0001")[0]
@@ -947,7 +1013,7 @@ for selected, expected_response in ((1, "separate landmark copy"),
 
 # Include the two nested options in the campaign-wide authored response count.
 choice_count += len(followup["choices"])
-assert choice_count == 48
+assert choice_count == 50
 
 # The Act IV council hearing requires the player to choose how Oren preserves
 # the evidence; Alisande and the closing record both acknowledge either path.
@@ -1001,7 +1067,7 @@ for selected, expected_response, expected_route in (
     assert expected_route in window.controls[0].text
 
 choice_count += len(council_followup["choices"])
-assert choice_count == 50
+assert choice_count == 52
 
 # Pell's council deposition is optional, gives bounded route testimony, and
 # journals the player's decision to publish only the warning or restrict detail.
@@ -1062,7 +1128,7 @@ for selected, event_flag, expected_response in (
             policy_response = "The road remains open to supervised scholars and travellers." if court_policy == 1 else "Scroll access requires leave from Edmon and me."
             assert policy_response in window.controls[0].text
 
-assert choice_count == 50
+assert choice_count == 52
 
 # The return to the Mistwood Watchpost reuses the location but changes its
 # conversation. Both records persist through a script reload and change court dialogue.
@@ -1124,7 +1190,7 @@ for selected, expected_response, expected_edmon, expected_route in (
     assert expected_edmon in window.controls[0].text
 
 choice_count += len(return_followup["choices"])
-assert choice_count == 52
+assert choice_count == 54
 
 # Act VI's optional archive quest offers a peaceful path and a gated warder
 # challenge. Victory records the comparison leaf and changes dialogue in the
@@ -1175,13 +1241,13 @@ while timed_events:
 window.controls[11].press()
 assert "called the Index Warden" in window.controls[0].text
 window.controls[11].press()
-assert "Warden yielded the comparison leaf but no verdict" in window.controls[0].text
+assert "Warden yielded a comparison leaf but no verdict" in window.controls[0].text
 
 # The Act VII chart-room decision is required, journaled, reflected in the next
 # beat and spoken differently by Flight Marshal Aven in the hangar.
 for briefing, expected_line in (
         (1, "copied account is aboard in a separate case"),
-        (2, "Ealdrin carries Selene’s witness notes")):
+        (2, "Ealdrin carries questions for the warders")):
     chart_index = chapter_index_by_area["tl0020"]
     window = Window()
     events.clear()
@@ -1212,7 +1278,7 @@ for briefing, expected_line in (
     while timed_events:
         timed_events.pop(0)()
     window.controls[11].press()
-    assert expected_line in window.controls[0].text
+    assert expected_line in window.controls[0].text, window.controls[0].text
 
 # The Act V annex decision is mandatory and both rules carry into the vault's
 # false-echo approach and final seal narration without changing the outcome.
@@ -1296,7 +1362,7 @@ for signal in (1, 2):
         assert expected in window.controls[0].text
 
 choice_count += len(relay_followup["choices"])
-assert choice_count == 54
+assert choice_count == 56
 
 # The Act VII Eldrador landing and sanctuary-approach adaptations preserve the
 # unresolved Tear while carrying both evidence and protocol choices forward.
@@ -1373,8 +1439,8 @@ hangar_index = chapter_index_by_area["tl0014"]
 alistair_lines = {
     (1, 1): "marked account and Aven chose observation",
     (1, 2): "marked account travels separately while Aven prepares a guarded arrival",
-    (2, 1): "witness notes, and Aven chose observation",
-    (2, 2): "witness notes travel with the warding instruments aboard a guarded approach",
+    (2, 1): "Ealdrin carries questions for Eldrador’s warders, and Aven chose observation",
+    (2, 2): "warder inquiry travels with the instruments aboard a guarded approach",
 }
 for (briefing, voyage), expected in alistair_lines.items():
     window = Window()
@@ -1395,4 +1461,4 @@ for (briefing, voyage), expected in alistair_lines.items():
     assert "cannot tell us what the Eldrador Tear is" not in window.controls[0].text
 
 print(len(chapters), "scenes across seven acts,", sum(len(campaign.Story.cast(chapter["area"])) for chapter in chapters),
-      "named scene actors, keyboard controls, authored journal events, four-state NPC response conditions, all 54 response options, three market routes, four encounter gates, twenty-four transitions, and seven voice cues passed")
+      "named scene actors, keyboard controls, authored journal events, four-state NPC response conditions, all 56 response options, three market routes, four encounter gates, twenty-four transitions, and seven voice cues passed")

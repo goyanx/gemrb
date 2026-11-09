@@ -416,7 +416,7 @@
       },
       {
         "when": [{"flag": "TLCHAP", "value": 19}, {"flag": "TLBRIEFING", "value": 2}, {"flag": "TLVOYAGE", "value": 1}],
-        "say": "Ealdrin carries Selene’s witness notes, and Aven chose observation. We can listen first without treating a witness account as a verdict.",
+        "say": "Ealdrin carries questions for Eldrador’s warders, and Aven chose observation. We can listen without treating testimony as a verdict.",
         "transitions": [
           {"text": "Ask whether the preparations explain the Tear.", "next": 9},
           {"text": "Keep the records distinct and proceed.", "final": true}
@@ -424,7 +424,7 @@
       },
       {
         "when": [{"flag": "TLCHAP", "value": 19}, {"flag": "TLBRIEFING", "value": 2}, {"flag": "TLVOYAGE", "value": 2}],
-        "say": "The witness notes travel with the warding instruments aboard a guarded approach. I will keep our technical readings distinct from what Selene witnessed.",
+        "say": "The warder inquiry travels with the warding instruments aboard a guarded approach. I will keep our technical readings distinct from testimony gathered in Eldrador.",
         "transitions": [
           {"text": "Ask whether the preparations explain the Tear.", "next": 10},
           {"text": "Keep the records distinct and proceed.", "final": true}

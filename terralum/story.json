@@ -778,7 +778,7 @@
         },
         {
           "speaker": "Archivist Nera",
-          "text": "The witness entry is present, but its comparison leaf is missing. The Index Warden keeps the unindexed folios; we can ask it to account for the gap, or leave the old seal untouched.",
+          "text": "The catalogue refers to a titleless living record, but its comparison leaf is missing. The Index Warden keeps the unindexed folios; we can ask it to account for the gap, or leave the old seal untouched.",
           "action": "Investigate the missing leaf",
           "encounter": "Deep Archive Warden",
           "encounter_actor_flag": "TLDEEP_ARCHIVE_WARDEN",
@@ -795,7 +795,7 @@
             {
               "flag": "TLARCHIVEWARD",
               "value": 2,
-              "text": "Nera leaves the Index Warden undisturbed. The missing comparison remains an open question; Selene and the living witness will guide the next inquiry."
+              "text": "Nera leaves the Index Warden undisturbed. The missing comparison remains an open question; Ealdrin will carry questions to Eldrador without treating the archive record as a witness."
             }
           ]
         },
@@ -812,7 +812,7 @@
             {
               "flag": "TLARCHIVEWARD",
               "value": 2,
-              "text": "Nera left the folio sealed. Selene will prepare the witness account, and the missing comparison remains an open question."
+              "text": "Nera left the folio sealed. Ealdrin will take questions to Eldrador’s warders, and the missing comparison remains an open question."
             }
           ]
         }
@@ -829,7 +829,7 @@
       "beats": [
         {
           "speaker": "Archivist Selene",
-          "text": "The index names a sealed account and a living witness. I can copy the account, or keep the original here while Ealdrin questions me.",
+          "text": "The index names a sealed account and a titleless living record. Its speaker is not identified. I can copy the account, or keep the original safe while Ealdrin prepares questions for Eldrador.",
           "action": "Inspect the index"
         },
         {
@@ -845,7 +845,7 @@
             {
               "flag": "TLARCHIVE",
               "value": 2,
-              "text": "Selene keeps the sealed account in the archive. Ealdrin will rely on a witness statement and ask questions in Eldrador."
+              "text": "Selene keeps the sealed account in the archive. Ealdrin will carry questions for Eldrador’s warders and keep their testimony distinct from the archive record."
             }
           ],
           "journal": {
@@ -899,7 +899,7 @@
       "place": "Alsperia Expedition Chart Room",
       "music": "tlcity.mus",
       "voice": "",
-      "narration": "Before the Aethercraft leaves Alsperia, Ealdrin asks Algoreth to decide how the Deep Archives record will travel. Selene’s account can guide a question, but neither the copy nor the witness can settle what awaits in Eldrador.",
+      "narration": "Before the Aethercraft leaves Alsperia, Ealdrin asks Algoreth to decide how the Deep Archives account will travel. If it stays sealed, he will carry a question for Eldrador’s warders; neither source settles what awaits there.",
       "beats": [
         {
           "speaker": "Ealdrin",
@@ -919,13 +919,13 @@
             {
               "flag": "TLBRIEFING",
               "value": 2,
-              "text": "Selene’s original stays in Alsperia. Ealdrin carries her witness notes, and the expedition will begin with questions for Vaelthira’s wardens."
+              "text": "Selene’s original stays in Alsperia. Ealdrin carries a question for Vaelthira’s warders; their testimony will remain separate from the titleless living record."
             }
           ],
           "journal": {
             "flag": "TLJRN_BRIEFING",
             "section": 4,
-            "text": "Before the Eldrador voyage, Algoreth chose whether to carry a clearly marked copy of the Deep Archives account or Selene’s witness notes. Neither source is treated as proof of what the Tear is."
+            "text": "Before the Eldrador voyage, Algoreth chose whether to carry a marked copy of the Deep Archives account or questions for Vaelthira’s warders. The titleless living record’s speaker remains unknown, and neither inquiry is treated as proof of what the Tear is."
           }
         }
       ]
@@ -989,13 +989,13 @@
           "journal": {
             "flag": "TLJRN_ARRIVAL",
             "section": 4,
-            "text": "The party arrived in Eldrador. Algoreth chose whether the expedition would begin with the warders' witness accounts or their measured seal records. The cause and outcome of Vaelthira's Tear remain unknown."
+            "text": "The party arrived in Eldrador. Algoreth chose whether the expedition would begin with the warders' warder inquirys or their measured seal records. The cause and outcome of Vaelthira's Tear remain unknown."
           },
           "routes": [
             {
               "flag": "TLELDRADOR",
               "value": 1,
-              "text": "The warders' witness accounts are kept as testimony, with each speaker's words separate from the expedition's conclusions."
+              "text": "The warders' warder inquirys are kept as testimony, with each speaker's words separate from the expedition's conclusions."
             },
             {
               "flag": "TLELDRADOR",
