@@ -28,6 +28,28 @@ in `gemrb/docs/` and the [gemrb.6 man page](https://gemrb.org/Manpage.html).
 If you want to help out, start by reading this
 list of [options, tips and priorities](https://github.com/gemrb/gemrb/blob/master/CONTRIBUTING.md).
 
+## Terralum: Scrolls of Byzantem
+
+This fork also contains **Terralum**, an original seven-chapter fantasy RPG prototype built with GemRB. Follow Algoreth Jon Goren from the court of Alsperia and the search for the scrolls of Byzantem toward the later mystery of the Tears. The prototype features generated area backdrops, named scene characters, local dialogue, Kokoro narration, ambient music, and encounter scenes.
+
+<p align="center">
+  <img src="terralum/screenshots/alsperia-market-npcs.png" alt="Live GemRB screenshot of the Alsperia Market scene with the player and three named NPCs" width="86%">
+</p>
+
+<p align="center"><em>Alsperia Market running in GemRB, with the local scene cast and Talk and Narrate controls.</em></p>
+
+<p align="center">
+  <img src="terralum/screenshots/market-party-detail.png" alt="Close view of the player and market NPCs" width="42%">
+  <img src="terralum/art/mistwood_road.png" alt="Generated Mistwood Road scene art" width="42%">
+</p>
+
+<p align="center">
+  <img src="terralum/art/lorian_cavern.png" alt="Generated Caverns of Lorian scene art" width="42%">
+  <img src="terralum/art/alsperia_skyport.png" alt="Generated Alsperia Skyport scene art" width="42%">
+</p>
+
+The game is an in-progress prototype, not a finished or full-length RPG. Its current characters reuse demo sprites, its areas share a temporary geometry template, and its Talk control does not yet use branching Infinity Engine dialogue. See the [Terralum project guide](terralum/README.md), [current TODO and handoff](TODO.md), and [design pipeline baseline](terralum/GOLD_STANDARD_GAME_DESIGN_PIPELINE.md) for build instructions and implementation status.
+
 ## Supported platforms
 
 Architectures and platforms that successfully run or ran GemRB:
