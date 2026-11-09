@@ -1,4 +1,34 @@
 {
+  "TESSA": {
+    "states": [
+      {
+        "when": [{"flag": "TLCHAP", "value": 4}, {"flag": "TLHUNTER", "value": 0}],
+        "say": "This camp sits where the old trail divides. A shuttered lantern can mark the pale-stone bend, or we can leave the camp dark and travel without its signal.",
+        "transitions": [
+          {"text": "Relight the lantern behind its shutter.", "next": 1, "set": [{"flag": "TLHUNTER", "value": 1}]},
+          {"text": "Keep the camp concealed and leave the lantern dark.", "next": 2, "set": [{"flag": "TLHUNTER", "value": 2}]}
+        ]
+      },
+      {
+        "say": "You shield the flame. Its narrow beam marks the pale-stone bend without lighting the whole camp.",
+        "transitions": [{"text": "We will follow the marked bend.", "final": true}]
+      },
+      {
+        "say": "The lantern stays dark. We keep the camp hidden, though the stalker's route remains uncertain.",
+        "transitions": [{"text": "We will watch the road ourselves.", "final": true}]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 4}, {"flag": "TLHUNTER", "value": 1}],
+        "say": "The shuttered lantern marks our quiet bend. Keep to the pale stones; the camp remains dark behind us.",
+        "transitions": [{"text": "The signal is clear.", "final": true}]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 4}, {"flag": "TLHUNTER", "value": 2}],
+        "say": "The lantern stays dark. The camp remains concealed, but I cannot promise the stalker has left the road.",
+        "transitions": [{"text": "We will proceed carefully.", "final": true}]
+      }
+    ]
+  },
   "DORIAN": {
     "states": [
       {

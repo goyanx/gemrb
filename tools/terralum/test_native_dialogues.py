@@ -106,6 +106,12 @@ class NativeDialogueResourceTests(unittest.TestCase):
         self.assertEqual({tuple(condition["value"] for condition in state["when"]
                                 if condition["flag"] == "TLLORIANPURPOSE")
                           for state in dorian[4:]}, {(1,), (2,), (3,)})
+        self.assertEqual(bindings["TESSA"], [("tl0015", "Scout Tessa")])
+        tessa = dialogues["TESSA"]["states"]
+        self.assertEqual([item["set"][0]["value"] for item in tessa[0]["transitions"]], [1, 2])
+        self.assertEqual({tuple(condition["value"] for condition in state["when"]
+                                if condition["flag"] == "TLHUNTER")
+                          for state in tessa[3:]}, {(1,), (2,)})
 
     def test_compiled_alistair_dialogue_and_tlk(self):
         pack = Path(os.environ.get("TERRALUM_GAME_OUTPUT", PROJECT / "build" / "game")).resolve()

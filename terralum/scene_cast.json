@@ -152,6 +152,7 @@
   "tl0015": [
     {
       "name": "Scout Tessa",
+      "dialog": "TESSA",
       "role": "Royal scout and Mistwood guide",
       "goal": "Lead the party along the safest known trail while limiting the watcher's opportunity to follow.",
       "knowledge": "Knows the road, pale stones, and hunters' lantern signal; does not know the stalker's origin or intent.",
