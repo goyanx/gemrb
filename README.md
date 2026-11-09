@@ -14,6 +14,26 @@ Icewind Dale and Planescape: Torment. It sports a cleaner design, greater
 extensibility and several innovations.
 Would you like to create a game like Baldur's Gate?
 
+## Play Terralum
+
+This fork includes **Terralum: Scrolls of Byzantem**, an original, story-driven Infinity Engine style RPG campaign built on GemRB. Follow Algoreth Jon Goren from the court of Alsperia through the Mistwood, Lorian, the eastern academy, the Deep Archives, and onward to Eldrador. The current prototype spans **25 areas across seven acts**, with local NPCs, branching choices, journaled consequences, encounters, optional narration, and ambient music.
+
+<p align="center">
+  <a href="terralum/screenshots/alsperia-market-npcs.png"><img src="terralum/screenshots/alsperia-market-npcs.png" alt="Live GemRB gameplay capture of the Alsperia Market opening scene, showing the party, local cast, story text, and controls" width="92%"></a>
+</p>
+<p align="center"><em>Live gameplay in GemRB · Alsperia Market</em></p>
+
+<p align="center">
+  <a href="terralum/screenshots/market-party-detail.png"><img src="terralum/screenshots/market-party-detail.png" alt="Close-up of the player and scene cast in the live Market area" width="44%"></a>
+  &nbsp;&nbsp;
+  <a href="terralum/screenshots/campaign-locations-concept-art.jpg"><img src="terralum/screenshots/campaign-locations-concept-art.jpg" alt="Generated concept-art montage previewing Terralum campaign locations" width="44%"></a>
+</p>
+<p align="center"><em>Left: live in-game scene detail · Right: generated location concept art, a visual target rather than in-game scenery</em></p>
+
+**[Campaign guide](terralum/README.md)** · **[Gold Standard pipeline](terralum/GOLD_STANDARD_GAME_DESIGN_PIPELINE.md)** · **[Campaign plan](terralum/campaign_plan.md)** · **[Current TODO](TODO.md)**
+
+> **Prototype status:** This is an expanding playable slice, not a finished full-length RPG. Its party and scene actors currently reuse demo sprites, and all 25 areas still inherit the demo's WED layout and terrain. The campaign has custom per-area searchmaps, authored cast and dialogue choices, and a growing set of stateful story events. See the [campaign guide](terralum/README.md) for build steps and current verification limits.
+
 To try it out you either need some of the ORIGINAL game's data or you can
 get a tiny sneak peek by running the included trivial game demo.
 
@@ -33,25 +53,6 @@ list of [options, tips and priorities](https://github.com/gemrb/gemrb/blob/maste
 **An original Infinity Engine style RPG campaign, built on GemRB.** In **Terralum: Scrolls of Byzantem**, Algoreth Jon Goren leaves the court of Alsperia to recover the lost scrolls. The trail leads through the Mistwood and Caverns of Lorian, then toward the eastern academy, the Deep Archives, and the mysteries of the Tears.
 
 The playable prototype currently covers **25 scene areas and 63 story beats across seven acts**. Its 58 named scene actors have local dialogue and response choices. Stateful conversations carry across scenes: Mara's ledger handling changes Scholar Inessa's later Library response, Royal Scribe Oren's Council docket preserves whether route testimony and the scroll account are paired or kept separate, and Keeper Orla's new Mistwood Waywarden Relay lets Algoreth decide whether to call the patrol. Saren's dialogue reflects whether the party copied Leora's schedule; both relay outcomes are journaled. After Lorian, the party returns to the watchpost: Pell records whether the route marker is public or held in Edmon's court archive, and King Edmon and Queen Alisande respond to the decision. The campaign also has ambient music, optional Kokoro narration, and four gated encounters. Act VII continues from the Aethercraft departure into an Eldrador landing and sanctuary-threshold investigation. The party records testimony or ward measurements, then chooses a cautious approach; the game stops before the inner sanctuary is entered, leaving the Tear unresolved as the recovered lore requires. It is an active prototype: campaign content and systems are growing, and the full-length RPG is still ahead.
-
-### See Terralum running in GemRB
-
-The opening Market scene is a live capture from GemRB. It shows the player party, three scene NPCs, the current story beat, and the Talk, Narrate, and Continue controls. The close-up highlights cast placement and scene presentation. Concept art below previews the campaign's intended locations; it is not in-game art.
-
-<p align="center">
-  <a href="terralum/screenshots/alsperia-market-npcs.png"><img src="terralum/screenshots/alsperia-market-npcs.png" alt="Live GemRB capture of Terralum's Alsperia Market scene, with the player party, three local NPCs, story text, and game controls" width="94%"></a>
-</p>
-<p align="center"><em>Live gameplay capture · Alsperia Market</em></p>
-
-<p align="center">
-  <a href="terralum/screenshots/market-party-detail.png"><img src="terralum/screenshots/market-party-detail.png" alt="Detail view from the live GemRB Market scene showing party and NPC sprite placement" width="62%"></a>
-</p>
-<p align="center"><em>Scene cast and dialogue layout · live GemRB capture</em></p>
-
-<p align="center">
-  <a href="terralum/screenshots/campaign-locations-concept-art.jpg"><img src="terralum/screenshots/campaign-locations-concept-art.jpg" alt="Generated concept art for Alsperia Market, Hunter's Camp, Three-Cairn Fork, Caverns of Lorian, Deep Archives, and Aethercraft Hangar" width="94%"></a>
-</p>
-<p align="center"><em>Campaign locations · generated concept art, not in-game screenshots</em></p>
 
 ### Campaign location gallery
 
