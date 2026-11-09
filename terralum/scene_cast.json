@@ -168,6 +168,34 @@
         }
       ],
       "faction": "Mistwood Hunters"
+    },
+    {
+      "name": "Ranger Ilya",
+      "role": "Creekside pathfinder for the Mistwood hunters",
+      "goal": "Keep the camp hidden while helping travellers pass the stalker's patrol without using the lantern.",
+      "knowledge": "Reads broken reeds and shallow tracks to map the watcher’s creekside turn; does not know what the watcher is.",
+      "voice": "Observant and spare, describing tracks before drawing conclusions.",
+      "provenance": "adaptation",
+      "creature": "protagon",
+      "position": [
+        535,
+        690
+      ],
+      "line": "I can show you a creekside route. Read the broken reeds and the stalker's turn; we can leave the lantern black and stay below its sightline.",
+      "choices": [
+        {
+          "label": "Read the creekside tracks",
+          "reply": "You and Ilya mark the shallow crossings. The streambed keeps you below the stalker's sightline without exposing the camp.",
+          "flag": "TLHUNTERTRACK",
+          "value": 1,
+          "journal": {
+            "flag": "TLJRN_TRACKS",
+            "section": 4,
+            "text": "Hunter Ilya found broken reeds showing the stalker's creekside patrol. The party can follow the stream to pass beneath its sightline without lighting the camp lantern."
+          }
+        }
+      ],
+      "faction": "Mistwood Hunters"
     }
   ],
   "tl0002": [

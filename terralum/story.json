@@ -144,6 +144,11 @@
               "value": 1,
               "text": "The hunters' shuttered lantern marked a quiet bend around the stalker. Dorian's warning points onward to the watchpost."
             },
+        {
+          "flag": "TLHUNTERTRACK",
+          "value": 1,
+          "text": "Ilya's creekside tracks led the party beneath the stalker's sightline. They reach Dorian's warning without revealing the camp or lighting its lantern."
+        },
             {
               "flag": "TLHUNTER",
               "value": 2,

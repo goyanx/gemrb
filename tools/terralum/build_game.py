@@ -72,19 +72,29 @@ def read_story():
             event = beat.get("journal")
             if event is None:
                 continue
-            if (not isinstance(event, dict) or not isinstance(event.get("flag"), str)
-                    or not re.fullmatch(r"TL[A-Z][A-Z0-9_]{1,28}", event["flag"])
-                    or not isinstance(event.get("text"), str) or not event["text"].strip()
-                    or len(event["text"]) > 2000 or type(event.get("section")) is not int
-                    or event["section"] not in (1, 2, 4)):
-                raise ValueError("journal events need a unique TL flag, text, and section 1, 2, or 4")
-            if event["flag"] in journal_flags:
-                raise ValueError(f"journal event flag {event['flag']} is used more than once")
-            if event["flag"] not in initialized_flags:
-                raise ValueError(f"journal event flag {event['flag']} must be initialized in SetupGame.py")
-            journal_flags.add(event["flag"])
-    read_cast()
+            validate_journal_event(event, journal_flags, initialized_flags)
+    cast = read_cast()
+    for area_cast in cast.values():
+        for person in area_cast:
+            for choice in person.get("choices", []):
+                event = choice.get("journal")
+                if event is not None:
+                    validate_journal_event(event, journal_flags, initialized_flags)
     return story
+
+
+def validate_journal_event(event, used_flags, initialized_flags):
+    if (not isinstance(event, dict) or not isinstance(event.get("flag"), str)
+            or not re.fullmatch(r"TL[A-Z][A-Z0-9_]{1,28}", event["flag"])
+            or not isinstance(event.get("text"), str) or not event["text"].strip()
+            or len(event["text"]) > 2000 or type(event.get("section")) is not int
+            or event["section"] not in (1, 2, 4)):
+        raise ValueError("journal events need a unique TL flag, text, and section 1, 2, or 4")
+    if event["flag"] in used_flags:
+        raise ValueError(f"journal event flag {event['flag']} is used more than once")
+    if event["flag"] not in initialized_flags:
+        raise ValueError(f"journal event flag {event['flag']} must be initialized in SetupGame.py")
+    used_flags.add(event["flag"])
 
 
 def validate_npc(person, area, require_design=False):

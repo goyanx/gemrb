@@ -10,22 +10,24 @@ This is the current work ledger for human and AI contributors. Read [AGENTS.md](
 - [x] Exposed the full baseline through the read-only `terralum_get_design_standard` MCP tool.
 - [x] Built a 15-scene campaign slice across the seven-act spine, adding the Mistwood Hunter's Camp before the road and watchpost. Story provenance and uncertainties are noted in `terralum/lore_notes.md`.
 - [x] Added generated backdrops for the 15 scene resources (some reuse a previously generated image), seven act-entry Kokoro narration clips, and three looping ambient music tracks.
-- [x] Added 31 named, scene-specific NPC actors across 15 areas; added Talk, Narrate, Continue, and numbered-response keyboard shortcuts alongside visible controls. Current sprites reuse two demo templates.
+- [x] Added 32 named, scene-specific NPC actors across 15 areas; added Talk, Narrate, Continue, and numbered-response keyboard shortcuts alongside visible controls. Current sprites reuse two demo templates.
 - [x] Completed structured role, faction, goal, knowledge, voice, and provenance sheets for all 31 NPC cast entries; pack validation now rejects entries missing this design context.
 - [x] Added a victory gate to each of the three prototype encounters.
 - [x] Fixed the ARE builder counts: it now preserves the demo entrances and clears actor, region, spawn, container, item, and door counts that belonged to the demo.
-- [x] Campaign-flow mock reports 15 scene casts, 31 actors, keyboard controls, all 19 authored response options, three market routes, three encounter gates, fourteen area transitions, and seven voice cues.
-- [x] Added nine one-time journal events across the early scroll quest and later Tear research, including an active and resolved Hunter's Camp objective, with an in-game Journal panel backed by GemRB's persistent journal API.
+- [x] Campaign-flow mock reports 15 scene casts, 32 actors, keyboard controls, all 20 authored response options, three market routes, three encounter gates, fourteen area transitions, and seven voice cues.
+- [x] Added nine one-time story-beat journal events and an optional persistent Hunter's Camp creekside clue, including the active/resolved camp objective; the Journal panel uses GemRB's persistent journal API.
+- [x] Added Ranger Ilya's optional creekside conversation and stateful route around the Mistwood stalker; the dialogue journal event is deduplicated on repeat interaction, and the campaign mock tests the dark-lantern branch through Dorian's inscription.
 - [x] Expanded Act II with a Mistwood Hunter's Camp, two adaptation NPCs, a lantern choice, active and resolved journal events, and a quiet-trail route that can bypass the later stalker ambush.
 - [x] Fixed the safe-route skip to continue into Dorian's inscription beat, show route-specific text, and resolve the camp objective once in the journal.
 - [x] Authored the Hunter's Camp's first scene-specific `SR.BMP`: a connected clearing and trails, blocked shelter/cart/firepit/rock footprints, and reachable start/NPC positions. The map is declared in `terralum/area_searchmaps.json` and built from GemRB's indexed searchmap template.
+- [x] Added Ranger Ilya's optional creekside investigation. Reading the tracks adds a deduplicated journal note and safely bypasses the Mistwood stalker even if the lantern remains dark; the campaign mock covers the dialogue, journal, revisit, route, and encounter outcome.
 - [x] Built and launched the WSL GemRB pack with direct startup. The opening scene shows three NPCs beside the player; live startup loaded actors and city ambience with no Python traceback.
 - [x] Fork remote `goyanx/gemrb` and branch `terralum-first-slice` are configured; each accepted slice is committed, commented on, and pushed as shown in branch history.
 
 ## Ongoing
 
 - [ ] **Scene dialogue slice:** Market, library, watchpost, seal gallery, council, academy courtyard, archive index, and hangar choices set persistent flags with later text outcomes. The logic is mock-tested; live input/save testing remains open. The custom choice UI is not a native GemRB DLG system.
-- [ ] **Journal verification:** the log panel and nine event flags pass the script mock; live display, save/load, and revisit deduplication still need direct playtesting.
+- [ ] **Journal verification:** ten event flags, including the optional creekside clue and revisit deduplication, pass the script mock; live display and save/load still need direct playtesting.
 - [ ] **Playable-scene verification:** the extended pack builds and the opening area starts in live GemRB. The new Hunter's Camp path has only script-level verification so far. The WSLg window input path has not yet been verified. Later-area entry, player movement, actual fights, choice input, save/load, and return entry still need direct playtesting.
 - [ ] **Art and geometry:** characters currently reuse the demo's two humanoid sprites. Hunter's Camp now has a custom searchmap, but all 15 areas still inherit the AR0100 WED layout and terrain/height/light files; the other 14 also use its generic searchmap. The camp map is connectivity-checked in a script, while actual in-engine movement remains unverified.
 - [ ] **Campaign length:** 15 locations and 39 beats form an expanded prototype, not a long-form campaign. The Hunter's Camp adds one optional Mistwood stop; Acts VI and VII have archive-index and hangar preparation locations. Deeper quest arcs remain; see `terralum/campaign_plan.md`.

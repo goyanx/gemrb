@@ -74,6 +74,7 @@ globals_ = {"TLCHAP": 0, "TLBEAT": 0, "TLENEMY": 0, "TLCAST": 0,
             "TLMARALEAD": 0, "TLLIBRARYCLUE": 0, "TLWATCHPOST": 0, "TLHUNTER": 0,
             "TLGALLERY": 0, "TLCOURT": 0, "TLECHO": 0, "TLMISTWOODSAFE": 0, "TLARCHIVE": 0, "TLVOYAGE": 0,
             "TLJRN_BYZANTEM": 0, "TLJRN_MISTWOOD": 0, "TLJRN_HUNTER": 0, "TLJRN_HUNTER_RESOLVED": 0,
+            "TLHUNTERTRACK": 0, "TLJRN_TRACKS": 0,
             "TLJRN_SCROLLS": 0, "TLJRN_TEAR": 0,
             "TLJRN_ARCHIVE": 0, "TLJRN_ELDRADOR": 0, "TLJRN_VOYAGE": 0}
 enemy_dead = False
@@ -318,5 +319,83 @@ while timed_events:
 window.controls[4].press()
 assert globals_["TLMISTWOODSAFE"] == 0
 assert globals_["TLENEMY"] > 1001
+
+# Ranger Ilya's optional creekside investigation preserves concealment and
+# bypasses the stalker even when the camp lantern stays dark.
+window = Window()
+events.clear()
+timed_events.clear()
+current_area = "tl0015"
+enemy_dead = False
+globals_.update({"TLCHAP": 2, "TLBEAT": 0, "TLENEMY": 0, "TLCAST": 0,
+                 "TLMARALEAD": 3, "TLLIBRARYCLUE": 2, "TLHUNTER": 2,
+                 "TLHUNTERTRACK": 0, "TLMISTWOODSAFE": 0,
+                 "TLJRN_TRACKS": 0, "TLJRN_HUNTER_RESOLVED": 0})
+campaign.OnLoad()
+while timed_events:
+    timed_events.pop(0)()
+for _ in range(3):
+    window.controls[11].press()
+assert "Ranger Ilya" in window.controls[0].text
+assert window.controls[12].text == "Read the creekside tracks"
+track_journal_count = len(journal_entries)
+window.controls[12].press()
+assert globals_["TLHUNTERTRACK"] == 1
+assert globals_["TLJRN_TRACKS"] == 1
+assert len(journal_entries) == track_journal_count + 1
+assert "creekside patrol" in journal_entries[-1]["value"]
+
+# Repeating the choice cannot duplicate the journal clue.
+for _ in range(3):
+    window.controls[11].press()
+window.controls[12].press()
+assert len(journal_entries) == track_journal_count + 1
+
+window = Window()
+events.clear()
+timed_events.clear()
+current_area = "tl0002"
+globals_.update({"TLCHAP": 3, "TLBEAT": 1, "TLENEMY": 0, "TLCAST": 0,
+                 "TLMISTWOODSAFE": 0})
+campaign.OnLoad()
+while timed_events:
+    timed_events.pop(0)()
+window.controls[4].press()
+assert globals_["TLMISTWOODSAFE"] == 1
+assert globals_["TLBEAT"] == 2
+assert "Ilya's creekside tracks" in window.controls[0].text
+assert not any(event[0] == "attack" for event in events)
+assert globals_["TLJRN_HUNTER_RESOLVED"] == 1
+
+# Exercise every authored player response once, including choices on later NPCs.
+choice_count = 0
+for chapter_index, chapter in enumerate(chapters):
+    people = campaign.Story.cast(chapter["area"])
+    for person_index, person in enumerate(people):
+        for choice_index, choice in enumerate(person.get("choices", [])):
+            window = Window()
+            events.clear()
+            timed_events.clear()
+            current_area = chapter["area"]
+            globals_.update({key: (1 if key.startswith("TLJRN_") else 0) for key in globals_})
+            globals_.update({"TLCHAP": chapter_index, "TLBEAT": 0, "TLENEMY": 0, "TLCAST": 0})
+            if choice.get("journal"):
+                globals_[choice["journal"]["flag"]] = 0
+            campaign.OnLoad()
+            while timed_events:
+                timed_events.pop(0)()
+            for _ in range(person_index + 1):
+                window.controls[11].press()
+            button = window.controls[12 + choice_index]
+            assert button.text == choice["label"]
+            button.press()
+            assert globals_[choice["flag"]] == choice["value"]
+            assert choice["reply"] in window.controls[0].text
+            if choice.get("journal"):
+                event = choice["journal"]
+                assert globals_[event["flag"]] == 1
+                assert any(entry["value"] == event["text"] for entry in journal_entries)
+            choice_count += 1
+assert choice_count == 20
 print(len(chapters), "scenes across seven acts,", sum(len(campaign.Story.cast(chapter["area"])) for chapter in chapters),
-      "named scene actors, keyboard controls, a persistent nine-entry quest journal, all 19 responses, three market routes, encounter gates, fourteen transitions, and seven voice cues passed")
+      "named scene actors, keyboard controls, ten journal events, all 20 response options, three market routes, encounter gates, fourteen transitions, and seven voice cues passed")

@@ -118,17 +118,20 @@ def OnLoad():
 	def choose_dialogue(person, choice):
 		GemRB.SetGlobal(choice["flag"], "GLOBAL", choice["value"])
 		chapter = chapters[GemRB.GetGameVar("TLCHAP")]
+		record_journal_event(choice.get("journal"), chapter["act"])
 		message.SetText("[cap]T[/cap]ERRALUM  |  " + chapter["title"] + "\n" + chapter["place"] + "\n\n" + person["name"] + ": " + choice["reply"] + "\n\n")
 		dialogue_state["has_choices"] = False
 		for button in choice_buttons:
 			button.SetVisible(False)
 		journal_button.SetVisible(True)
 
-	def record_journal_entry(chapter, beat):
-		event = beat.get("journal")
+	def record_journal_event(event, act):
 		if event and not GemRB.GetGameVar(event["flag"]):
-			GemRB.SetJournalEntry(event["text"], event["section"], chapter["act"])
+			GemRB.SetJournalEntry(event["text"], event["section"], act)
 			GemRB.SetGlobal(event["flag"], "GLOBAL", 1)
+
+	def record_journal_entry(chapter, beat):
+		record_journal_event(beat.get("journal"), chapter["act"])
 
 	def render_journal():
 		entries = []
@@ -211,7 +214,7 @@ def OnLoad():
 		beat = chapter["beats"][beat_index]
 		if (chapter["area"] == "tl0002" and beat.get("encounter")
 				and (GemRB.GetGameVar("TLMARALEAD") == 1 or GemRB.GetGameVar("TLLIBRARYCLUE") == 1
-				     or GemRB.GetGameVar("TLHUNTER") == 1)):
+				     or GemRB.GetGameVar("TLHUNTER") == 1 or GemRB.GetGameVar("TLHUNTERTRACK") == 1)):
 			GemRB.SetGlobal("TLMISTWOODSAFE", "GLOBAL", 1)
 			GemRB.SetGlobal("TLBEAT", "GLOBAL", beat_index + 1)
 			show()
