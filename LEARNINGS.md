@@ -83,3 +83,7 @@ This file records verified implementation findings and mistakes that should info
 - **Combine persistent outcomes in a returning NPC's entry state.** Alisande's return-court conversation distinguishes all four combinations of the route-record and Lorian-gallery choices; separate single-flag responses would lose that continuity. Keep state predicates mutually exclusive so GemRB selects one unambiguous entry line.
 
 - **Keep phased encounter progress separate from encounter victory.** Persist a phase index while the active actor ID is saved in the existing enemy global. Spawn the next phase only after the current actor dies, and do not write the quest-resolution journal entry until the last phase is defeated. The script mock covers both transitions; actual combat and save/reload recovery still require live GemRB testing.
+
+- **Use a complete condition set for dialogue that combines two choices.** False Algoreth’s line checks both the Academy warding rule and the pulse response, yielding four exclusive states. Test all combinations so a line cannot reflect only one prior choice or fall back to stale generic text.
+
+- **A headless engine startup is not a playthrough.** An isolated Xvfb run can confirm GemRB loads its core and Start GUI without a Python traceback, but demo resource warnings and no simulated player input mean scene loading, combat, and save/load are still unverified. Keep that result separate from live gameplay evidence.

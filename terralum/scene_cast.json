@@ -969,7 +969,61 @@
       "knowledge": "Repeats Algoreth's voice and warns it will learn; its origin and nature remain unresolved.",
       "voice": "An intimate imitation that turns cold when its boundary holds.",
       "spawn_flag": "TLFALSE_ALGORETH",
-      "provenance": "canon"
+      "responses": [
+        {
+          "when": [
+            {
+              "flag": "TLWARDING",
+              "value": 1
+            },
+            {
+              "flag": "TLECHO",
+              "value": 1
+            }
+          ],
+          "line": "You traced a boundary and gave the ward more time. I can feel the shape you mean to hold."
+        },
+        {
+          "when": [
+            {
+              "flag": "TLWARDING",
+              "value": 1
+            },
+            {
+              "flag": "TLECHO",
+              "value": 2
+            }
+          ],
+          "line": "You traced the boundary, then marked each pulse. I know what beat you are watching."
+        },
+        {
+          "when": [
+            {
+              "flag": "TLWARDING",
+              "value": 2
+            },
+            {
+              "flag": "TLECHO",
+              "value": 1
+            }
+          ],
+          "line": "You named containment as the rule and reinforced the ward. I will remember the limit you set."
+        },
+        {
+          "when": [
+            {
+              "flag": "TLWARDING",
+              "value": 2
+            },
+            {
+              "flag": "TLECHO",
+              "value": 2
+            }
+          ],
+          "line": "You named the rule and recorded the pulse. Marks do not make a chain. Next time, I will have learned."
+        }
+      ],
+      "provenance": "adaptation"
     }
   ],
   "tl0021": [

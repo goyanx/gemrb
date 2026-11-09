@@ -1473,5 +1473,33 @@ for (briefing, voyage), expected in alistair_lines.items():
     assert expected in window.controls[0].text, window.controls[0].text
     assert "cannot tell us what the Eldrador Tear is" not in window.controls[0].text
 
+# False Algoreth answers the player's exact Academy warding and pulse decisions
+# before the staged vault fight. Check all four condition combinations.
+vault_index = chapter_index_by_area["tl0005"]
+false_algoreth = next(person for person in campaign.Story.cast("tl0005")
+                      if person["name"] == "False Algoreth")
+for warding in (1, 2):
+    for echo in (1, 2):
+        window = Window()
+        events.clear()
+        timed_events.clear()
+        current_area = "tl0005"
+        globals_.update({"TLCHAP": vault_index, "TLBEAT": 0, "TLENEMY": 0, "TLCAST": 0,
+                         "TLECHOPHASE": 0, "TLFALSE_ALGORETH": 0,
+                         "TLWARDING": warding, "TLECHO": echo})
+        campaign = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(campaign)
+        campaign.OnLoad()
+        while timed_events:
+            timed_events.pop(0)()
+        expected_line = next(response["line"] for response in false_algoreth["responses"]
+                             if all(globals_[condition["flag"]] == condition["value"]
+                                    for condition in response["when"]))
+        for _ in range(len(campaign.Story.cast("tl0005"))):
+            window.controls[11].press()
+            if expected_line in window.controls[0].text:
+                break
+        assert expected_line in window.controls[0].text
+
 print(len(chapters), "scenes across seven acts,", sum(len(campaign.Story.cast(chapter["area"])) for chapter in chapters),
       "named scene actors, keyboard controls, authored journal events, four-state NPC response conditions, all 56 response options, three market routes, four encounter gates, twenty-four transitions, and seven voice cues passed")
