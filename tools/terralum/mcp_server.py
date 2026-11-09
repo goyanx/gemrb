@@ -46,7 +46,7 @@ TOOLS = [
         "inputSchema": {
             "type": "object",
             "properties": {
-                "chapter": {"type": "integer", "minimum": 1, "maximum": 12,
+              "chapter": {"type": "integer", "minimum": 1, "maximum": 14,
                             "description": "One-based scene index in story.json."},
                 "beat": {"type": "integer", "minimum": 1},
                 "field": {"type": "string", "enum": ["speaker", "text", "action"]},

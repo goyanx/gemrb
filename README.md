@@ -30,7 +30,7 @@ list of [options, tips and priorities](https://github.com/gemrb/gemrb/blob/maste
 
 ## Terralum: Scrolls of Byzantem
 
-This fork also contains **Terralum**, an original seven-act fantasy RPG prototype built with GemRB. Twelve scene areas follow Algoreth Jon Goren from the court of Alsperia and the search for the scrolls of Byzantem toward the later mystery of the Tears. The prototype features generated area backdrops, named scene characters, consequential dialogue choices, Kokoro narration, ambient music, and encounter scenes.
+This fork also contains **Terralum**, an original seven-act fantasy RPG prototype built with GemRB. Fourteen scene areas follow Algoreth Jon Goren from the court of Alsperia and the search for the scrolls of Byzantem toward the later mystery of the Tears. Its expanded Acts VI and VII add the Deep Archive Index Hall and Aethercraft Hangar. The prototype features generated area backdrops, named scene characters, consequential dialogue choices, Kokoro narration, ambient music, and encounter scenes.
 
 <p align="center">
   <img src="terralum/screenshots/alsperia-market-npcs.png" alt="Live GemRB screenshot of the Alsperia Market scene with the player and three named NPCs" width="86%">
@@ -51,6 +51,8 @@ This fork also contains **Terralum**, an original seven-act fantasy RPG prototyp
 <p align="center">
   <img src="terralum/art/council_chamber.png" alt="Generated Alsperia Council Chamber scene art" width="42%">
   <img src="terralum/art/observatory_courtyard.png" alt="Generated Eastern Academy courtyard scene art" width="42%">
+  <img src="terralum/art/archive_index_hall.png" alt="Generated Deep Archive Index Hall scene art" width="42%">
+  <img src="terralum/art/aethercraft_hangar.png" alt="Generated Aethercraft Hangar scene art" width="42%">
 </p>
 
 The game is an in-progress prototype, not a finished or full-length RPG. Its current characters reuse demo sprites, its areas share a temporary geometry template, and its custom choice panel is not the native Infinity Engine DLG system. See the [Terralum project guide](terralum/README.md), [current TODO and handoff](TODO.md), and [design pipeline baseline](terralum/GOLD_STANDARD_GAME_DESIGN_PIPELINE.md) for build instructions and implementation status.

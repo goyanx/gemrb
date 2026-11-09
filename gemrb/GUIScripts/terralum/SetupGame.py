@@ -30,4 +30,6 @@ def OnLoad():
 	GemRB.SetGlobal("TLCOURT", "GLOBAL", 0)
 	GemRB.SetGlobal("TLECHO", "GLOBAL", 0)
 	GemRB.SetGlobal("TLMISTWOODSAFE", "GLOBAL", 0)
+	GemRB.SetGlobal("TLARCHIVE", "GLOBAL", 0)
+	GemRB.SetGlobal("TLVOYAGE", "GLOBAL", 0)
 	GemRB.EnterGame()

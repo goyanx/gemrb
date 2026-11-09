@@ -33,12 +33,15 @@ AREAS = {
     "tl0005": "tear_vault.png",
     "tl0012": "observatory_courtyard.png",
     "tl0006": "deep_archives.png",
+    "tl0013": "archive_index_hall.png",
     "tl0007": "alsperia_skyport.png",
+    "tl0014": "aethercraft_hangar.png",
 }
 AREA_SONG_INDEX = {
     "tl0001": 1, "tl0002": 3, "tl0003": 2, "tl0004": 1,
     "tl0005": 2, "tl0006": 2, "tl0007": 1, "tl0008": 1,
     "tl0009": 3, "tl0010": 2, "tl0011": 1, "tl0012": 2,
+    "tl0013": 2, "tl0014": 1,
 }
 
 

@@ -72,7 +72,7 @@ window = Window()
 events = []
 globals_ = {"TLCHAP": 0, "TLBEAT": 0, "TLENEMY": 0, "TLCAST": 0,
             "TLMARALEAD": 0, "TLLIBRARYCLUE": 0, "TLWATCHPOST": 0,
-            "TLGALLERY": 0, "TLCOURT": 0, "TLECHO": 0, "TLMISTWOODSAFE": 0}
+            "TLGALLERY": 0, "TLCOURT": 0, "TLECHO": 0, "TLMISTWOODSAFE": 0, "TLARCHIVE": 0, "TLVOYAGE": 0}
 enemy_dead = False
 current_area = "tl0001"
 next_actor = 1001
@@ -131,7 +131,7 @@ window.controls[12].press()
 assert globals_["TLMARALEAD"] == 1
 assert "safe path" in window.controls[0].text
 chapters = campaign.Story.chapters()
-assert len(chapters) == 12
+assert len(chapters) == 14
 assert sorted({chapter["act"] for chapter in chapters}) == list(range(1, 8))
 for chapter_index, chapter in enumerate(chapters):
     assert globals_["TLCHAP"] == chapter_index
@@ -142,6 +142,10 @@ for chapter_index, chapter in enumerate(chapters):
     if chapter_index:
         window.controls[11].press()
         assert people[0]["name"] in window.controls[0].text
+        if chapter["area"] == "tl0007":
+            assert "copied archive account" in window.controls[0].text
+            window.controls[11].press()
+            assert "archive copy is aboard" in window.controls[0].text
         if chapter["area"] == "tl0002" and globals_["TLLIBRARYCLUE"] == 1:
             assert "Inessa's copied rune index" in window.controls[0].text
         if people[0].get("choices"):
@@ -182,12 +186,12 @@ assert globals_["TLWATCHPOST"] == 1
 assert globals_["TLGALLERY"] == 1
 assert globals_["TLCOURT"] == 1
 assert globals_["TLECHO"] == 1
-assert len([event for event in events if event[0] == "area"]) == 11
+assert len([event for event in events if event[0] == "area"]) == 13
 assert len([event for event in events if event[0] == "voice"]) == 7
 assert len([event for event in events if event[0] == "attack"]) == 2
 
 # Exercise every remaining response option and its next-beat result.
-for chapter_index, choice_index in ((0, 1), (0, 2), (1, 1), (3, 1), (5, 1), (7, 1), (8, 1)):
+for chapter_index, choice_index in ((0, 1), (0, 2), (1, 1), (3, 1), (5, 1), (7, 1), (8, 1), (11, 1), (13, 1)):
     chapter = chapters[chapter_index]
     window = Window()
     events.clear()
@@ -195,7 +199,7 @@ for chapter_index, choice_index in ((0, 1), (0, 2), (1, 1), (3, 1), (5, 1), (7, 
     current_area = chapter["area"]
     globals_.update({"TLCHAP": chapter_index, "TLBEAT": 0, "TLENEMY": 0, "TLCAST": 0,
                      "TLMARALEAD": 0, "TLLIBRARYCLUE": 0, "TLWATCHPOST": 0,
-                     "TLGALLERY": 0, "TLCOURT": 0, "TLECHO": 0, "TLMISTWOODSAFE": 0})
+                     "TLGALLERY": 0, "TLCOURT": 0, "TLECHO": 0, "TLMISTWOODSAFE": 0, "TLARCHIVE": 0, "TLVOYAGE": 0})
     campaign.OnLoad()
     while timed_events:
         timed_events.pop(0)()
@@ -232,4 +236,4 @@ for lead, expect_warden in ((2, True), (3, False)):
     assert globals_["TLENEMY"] > 1001
     assert any(event[:2] == ("attack", "Attack(Player1)") for event in events)
 print(len(chapters), "scenes across seven acts,", sum(len(campaign.Story.cast(chapter["area"])) for chapter in chapters),
-      "named scene actors, keyboard controls, all 13 responses, three market routes, encounter gates, eleven transitions, and seven voice cues passed")
+      "named scene actors, keyboard controls, all 17 responses, three market routes, encounter gates, thirteen transitions, and seven voice cues passed")
