@@ -8,6 +8,16 @@ if (-not (Test-Path -LiteralPath $enginePath)) {
     throw 'GemRB WSL build is missing. Build it first using the instructions in terralum/README.md.'
 }
 
+$runningGemRB = @(wsl --exec pgrep -a -x gemrb 2>$null)
+$pgrepExit = $LASTEXITCODE
+if ($pgrepExit -eq 0 -and $runningGemRB.Count -gt 0) {
+    $runningList = $runningGemRB -join [Environment]::NewLine
+    throw "GemRB is already running in WSL. Close the existing session before starting another:`n$runningList"
+}
+if ($pgrepExit -gt 1) {
+    throw 'Could not check for an existing GemRB process in WSL; refusing to launch a duplicate.'
+}
+
 Push-Location $repoRoot
 try {
     python tools/terralum/build_game.py
