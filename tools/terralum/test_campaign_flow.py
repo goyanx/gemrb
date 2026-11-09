@@ -83,7 +83,8 @@ globals_ = {"TLCHAP": 0, "TLBEAT": 0, "TLENEMY": 0, "TLENEMY_STALKER": 0,
             "TLJRN_SCROLLS": 0, "TLJRN_TEAR": 0,
             "TLJRN_ARCHIVE": 0, "TLJRN_ELDRADOR": 0, "TLJRN_VOYAGE": 0, "TLJRN_BRIEFING": 0,
             "TLELDRADOR": 0, "TLSANCTUARY": 0, "TLJRN_ARRIVAL": 0, "TLJRN_SANCTUARY": 0}
-globals_.update({"TLMARADETAIL": 0, "TLJRN_MARA": 0})
+globals_.update({"TLMARADETAIL": 0, "TLJRN_MARA": 0, "TLFOLLOWPENDING": 0,
+                 "TLFOLLOWNPC": 0, "TLFOLLOWCHOICE": 0})
 enemy_dead = False
 dead_actors = set()
 current_area = "tl0001"
@@ -164,6 +165,7 @@ assert window.controls[12].text == "Ask for the old route"
 assert window.controls[12].hotkey == ("1", 0, True)
 window.controls[12].press()
 assert globals_["TLMARALEAD"] == 1
+assert globals_["TLFOLLOWPENDING"] == 1
 assert "safe path through the pale stones" in window.controls[0].text
 assert "Copy the landmarks for Inessa" == window.controls[12].text
 window.controls[4].press()
@@ -171,9 +173,17 @@ assert globals_["TLBEAT"] == 0
 assert "Finish this conversation before continuing" in window.controls[0].text
 window.controls[11].press()
 assert "Copy the landmarks for Inessa" == window.controls[12].text
+campaign.OnLoad()  # A loaded save recreates the required follow-up from campaign globals.
+while timed_events:
+    timed_events.pop(0)()
+assert globals_["TLFOLLOWPENDING"] == 1
+assert "Should I copy the landmarks for Inessa" in window.controls[0].text
+window.controls[4].press()
+assert "Finish this conversation before continuing" in window.controls[0].text
 window.controls[12].press()
 assert globals_["TLMARADETAIL"] == 1
 assert globals_["TLJRN_MARA"] == 1
+assert globals_["TLFOLLOWPENDING"] == 0
 assert any("agreed how to handle Dorian's western route ledger" in entry["value"]
            for entry in journal_entries)
 chapters = campaign.Story.chapters()
@@ -267,7 +277,7 @@ assert globals_["TLCOURT"] == 1
 assert globals_["TLECHO"] == 1
 assert globals_["TLARCHIVEWARD"] == 2
 assert len([event for event in events if event[0] == "area"]) == 22
-assert len([event for event in events if event[0] == "voice"]) == 7
+assert len([event for event in events if event[0] == "voice"]) == 8
 assert len([event for event in events if event[0] == "attack"]) == 2
 assert len(journal_entries) == 20
 assert globals_["TLJRN_WAYSTONE"] == 1
@@ -790,7 +800,21 @@ for selected, expected_response in ((1, "separate landmark copy"),
     assert "Archivist Mara:" in window.controls[0].text
     window.controls[12].press()
     assert followup["line"] in window.controls[0].text
+    campaign.OnLoad()
+    while timed_events:
+        timed_events.pop(0)()
+    assert globals_["TLFOLLOWPENDING"] == 1
+    assert followup["line"] in window.controls[0].text
     window.controls[13 if selected == 2 else 12].press()
+    assert globals_["TLMARADETAIL"] == selected
+    assert globals_["TLJRN_MARA"] == 1
+    assert globals_["TLFOLLOWPENDING"] == 0
+    assert sum("agreed how to handle Dorian's western route ledger" in entry["value"]
+               for entry in journal_entries) == 1
+
+    campaign.OnLoad()  # A completed choice remains recorded and does not duplicate its journal entry.
+    while timed_events:
+        timed_events.pop(0)()
     assert globals_["TLMARADETAIL"] == selected
     assert globals_["TLJRN_MARA"] == 1
     assert sum("agreed how to handle Dorian's western route ledger" in entry["value"]

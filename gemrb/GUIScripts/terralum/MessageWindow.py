@@ -129,10 +129,19 @@ def OnLoad():
 			record_journal_event(dialogue_state["followup_journal"], chapter["act"])
 			dialogue_state["must_finish_followup"] = False
 			dialogue_state["followup_journal"] = None
+			GemRB.SetGlobal("TLFOLLOWPENDING", "GLOBAL", 0)
+			GemRB.SetGlobal("TLFOLLOWNPC", "GLOBAL", 0)
+			GemRB.SetGlobal("TLFOLLOWCHOICE", "GLOBAL", 0)
 		followup = choice.get("followup")
 		if followup:
 			dialogue_state["must_finish_followup"] = True
 			dialogue_state["followup_journal"] = followup.get("journal")
+			people = Story.cast(chapter["area"])
+			person_index = next(index for index, person_data in enumerate(people)
+							if person_data["name"] == person["name"])
+			GemRB.SetGlobal("TLFOLLOWPENDING", "GLOBAL", 1)
+			GemRB.SetGlobal("TLFOLLOWNPC", "GLOBAL", person_index)
+			GemRB.SetGlobal("TLFOLLOWCHOICE", "GLOBAL", person["choices"].index(choice))
 			message.SetText("[cap]T[/cap]ERRALUM  |  " + chapter["title"] + "\n" + chapter["place"] + "\n\n" + person["name"] + ": " + choice["reply"] + "\n\n" + person["name"] + ": " + followup["line"] + "\n\n")
 			show_dialogue_choices(person, followup["choices"])
 			return
@@ -192,6 +201,30 @@ def OnLoad():
 		chapter = chapters[GemRB.GetGameVar("TLCHAP")]
 		if chapter.get("voice"):
 			GemRB.PlaySound(chapter["voice"], "GUI", 0, 0, 4)
+
+	def restore_pending_followup():
+		if not GemRB.GetGameVar("TLFOLLOWPENDING"):
+			return
+		chapter = chapters[GemRB.GetGameVar("TLCHAP")]
+		if GemRB.GetCurrentArea().lower() != chapter["area"]:
+			return
+		people = Story.cast(chapter["area"])
+		person_index = GemRB.GetGameVar("TLFOLLOWNPC")
+		choice_index = GemRB.GetGameVar("TLFOLLOWCHOICE")
+		if not (0 <= person_index < len(people)):
+			return
+		person = people[person_index]
+		choices = person.get("choices", [])
+		if not (0 <= choice_index < len(choices)):
+			return
+		choice = choices[choice_index]
+		followup = choice.get("followup")
+		if not followup:
+			return
+		dialogue_state["must_finish_followup"] = True
+		dialogue_state["followup_journal"] = followup.get("journal")
+		message.SetText("[cap]T[/cap]ERRALUM  |  " + chapter["title"] + "\n" + chapter["place"] + "\n\n" + person["name"] + ": " + choice["reply"] + "\n\n" + person["name"] + ": " + followup["line"] + "\n\n")
+		show_dialogue_choices(person, followup["choices"])
 
 	def show():
 		chapter_index = GemRB.GetGameVar("TLCHAP")
@@ -374,6 +407,7 @@ def OnLoad():
 	initial_chapter = GemRB.GetGameVar("TLCHAP")
 	GemRB.SetTimedEvent(lambda: spawn_cast(initial_chapter), 1)
 	show()
+	restore_pending_followup()
 	narrate()
 
 
