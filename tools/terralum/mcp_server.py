@@ -60,8 +60,16 @@ NPC_INPUT_SCHEMA = {
             "type": "object", "properties": {
                 "flag": {"type": "string", "pattern": "^TL[A-Z][A-Z0-9_]{1,28}$"},
                 "value": {"type": "integer"},
+                "when": {"type": "array", "minItems": 1, "maxItems": 8, "items": {
+                    "type": "object", "properties": {
+                        "flag": {"type": "string", "pattern": "^TL[A-Z][A-Z0-9_]{1,28}$"},
+                        "value": {"type": "integer"},
+                    }, "required": ["flag", "value"], "additionalProperties": False,
+                }},
                 "line": {"type": "string", "minLength": 1, "maxLength": 2000},
-            }, "required": ["flag", "value", "line"], "additionalProperties": False,
+            }, "required": ["line"], "oneOf": [
+                {"required": ["flag", "value"]}, {"required": ["when"]},
+            ], "additionalProperties": False,
         }},
     },
     "required": ["name", "role", "faction", "goal", "knowledge", "voice", "provenance", "creature", "position", "line"],
@@ -193,7 +201,13 @@ def call_tool(name, arguments):
         validate_npc(npc, area, require_design=True)
         setup = SETUP_PATH.read_text(encoding="utf-8")
         registered_flags = set(re.findall(r'GemRB\.SetGlobal\("(TL[A-Z0-9_]+)", "GLOBAL", 0\)', setup))
-        npc_flags = {entry["flag"] for entry in npc.get("responses", [])}
+        npc_flags = set()
+        for response in npc.get("responses", []):
+            conditions = response.get("when")
+            if conditions is not None:
+                npc_flags.update(condition["flag"] for condition in conditions)
+            else:
+                npc_flags.add(response["flag"])
         npc_flags.update(entry["flag"] for entry in iter_npc_choices(npc.get("choices", [])))
         npc_flags.update(choice["followup"]["journal"]["flag"] for choice in npc.get("choices", [])
                          if choice.get("followup", {}).get("journal"))

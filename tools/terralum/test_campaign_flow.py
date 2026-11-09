@@ -1246,5 +1246,49 @@ for evidence in (1, 2):
         assert "The party has reached the lower sanctuary threshold" in window.controls[0].text
         assert "has not been entered or resolved" in window.controls[0].text
 
+# Alistair is a recurring, lore-grounded engineer. His hangar line reflects the
+# combined archive-carrying and voyage-preparation decisions without claiming
+# that either choice identifies or resolves Eldrador's Tear.
+chart_index = chapter_index_by_area["tl0020"]
+window = Window()
+events.clear()
+timed_events.clear()
+current_area = "tl0020"
+globals_.update({"TLCHAP": chart_index, "TLBEAT": 0, "TLENEMY": 0, "TLCAST": 0})
+campaign = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(campaign)
+campaign.OnLoad()
+while timed_events:
+    timed_events.pop(0)()
+assert len(campaign.Story.cast("tl0020")) == 4
+for _ in range(4):
+    window.controls[11].press()
+assert "magic knights’ armaments" in window.controls[0].text
+assert len([event for event in events if event[0] == "spawn"]) == 4
+
+hangar_index = chapter_index_by_area["tl0014"]
+alistair_lines = {
+    (1, 1): "marked account and Aven chose observation",
+    (1, 2): "marked account travels separately while Aven prepares a guarded arrival",
+    (2, 1): "witness notes, and Aven chose observation",
+    (2, 2): "witness notes travel with the warding instruments aboard a guarded approach",
+}
+for (briefing, voyage), expected in alistair_lines.items():
+    window = Window()
+    events.clear()
+    timed_events.clear()
+    current_area = "tl0014"
+    globals_.update({"TLCHAP": hangar_index, "TLBEAT": 0, "TLENEMY": 0, "TLCAST": 0,
+                     "TLBRIEFING": briefing, "TLVOYAGE": voyage})
+    campaign = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(campaign)
+    campaign.OnLoad()
+    while timed_events:
+        timed_events.pop(0)()
+    for _ in range(3):
+        window.controls[11].press()
+    assert expected in window.controls[0].text, window.controls[0].text
+    assert "cannot tell us what the Eldrador Tear is" not in window.controls[0].text
+
 print(len(chapters), "scenes across seven acts,", sum(len(campaign.Story.cast(chapter["area"])) for chapter in chapters),
-      "named scene actors, keyboard controls, authored journal events and combat aftermath, all 52 response options, three market routes, four encounter gates, twenty-four transitions, and seven voice cues passed")
+      "named scene actors, keyboard controls, authored journal events, four-state NPC response conditions, all 52 response options, three market routes, four encounter gates, twenty-four transitions, and seven voice cues passed")

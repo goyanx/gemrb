@@ -1233,6 +1233,75 @@
       "knowledge": "Knows the diagrams and instruments aboard the ship; has not examined Eldrador's Tear directly.",
       "voice": "Clear and reassuring, giving practical details without claiming certainty.",
       "provenance": "canon"
+    },
+    {
+      "name": "Alistair",
+      "creature": "riddler",
+      "position": [
+        830,
+        650
+      ],
+      "line": "The Aethercraft carries our instruments and records. My work on the magic knights’ armaments cannot tell us what the Eldrador Tear is.",
+      "role": "Magical-technological innovator and armaments specialist",
+      "faction": "Alsperia magical development",
+      "goal": "Keep the expedition’s preparations clear without claiming that equipment explains the Tear.",
+      "knowledge": "Develops weapons and projectiles for Alsperia’s magic knights and is involved with the Aethercraft; the source does not establish that he can identify the Eldrador Tear.",
+      "voice": "Inventive and exact, separating technical observations from conclusions.",
+      "provenance": "canon",
+      "responses": [
+        {
+          "when": [
+            {
+              "flag": "TLBRIEFING",
+              "value": 1
+            },
+            {
+              "flag": "TLVOYAGE",
+              "value": 1
+            }
+          ],
+          "line": "You carry Selene’s marked account and Aven chose observation. Keep the incomplete record apart from the instruments; neither tells us what waits there."
+        },
+        {
+          "when": [
+            {
+              "flag": "TLBRIEFING",
+              "value": 1
+            },
+            {
+              "flag": "TLVOYAGE",
+              "value": 2
+            }
+          ],
+          "line": "The marked account travels separately while Aven prepares a guarded arrival. Those preparations protect the inquiry; they do not settle the record."
+        },
+        {
+          "when": [
+            {
+              "flag": "TLBRIEFING",
+              "value": 2
+            },
+            {
+              "flag": "TLVOYAGE",
+              "value": 1
+            }
+          ],
+          "line": "Ealdrin carries Selene’s witness notes, and Aven chose observation. We can listen first without treating a witness account as a verdict."
+        },
+        {
+          "when": [
+            {
+              "flag": "TLBRIEFING",
+              "value": 2
+            },
+            {
+              "flag": "TLVOYAGE",
+              "value": 2
+            }
+          ],
+          "line": "The witness notes travel with the warding instruments aboard a guarded approach. I will keep our technical readings distinct from what Selene witnessed."
+        }
+      ]
     }
   ],
   "tl0018": [
@@ -1433,6 +1502,21 @@
       "goal": "Keep the expedition open to Eldrador’s witnesses while supporting Algoreth’s decision.",
       "knowledge": "Knows the party is preparing to investigate another Tear; its nature and outcome remain unknown.",
       "voice": "Warm, composed, and direct about shared responsibility.",
+      "provenance": "canon"
+    },
+    {
+      "name": "Alistair",
+      "creature": "riddler",
+      "position": [
+        870,
+        620
+      ],
+      "line": "I work on the magic knights’ armaments and on Alsperia’s magical craft. Neither discipline tells me what waits in Eldrador.",
+      "role": "Magical-technological innovator and armaments specialist",
+      "faction": "Alsperia magical development",
+      "goal": "Support the expedition while keeping engineering observations distinct from claims about the Tear.",
+      "knowledge": "Develops weapons and projectiles for Alsperia’s magic knights and is involved with the Aethercraft; has no confirmed knowledge of Eldrador’s Tear.",
+      "voice": "Inventive and exact, separating technical observations from conclusions.",
       "provenance": "canon"
     }
   ],

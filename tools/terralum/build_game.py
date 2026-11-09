@@ -136,6 +136,13 @@ def read_story():
                 raise ValueError(f"encounter actor flag {actor_flag} for {chapter['area']} has no matching scene NPC")
     for area_cast in cast.values():
         for person in area_cast:
+            for response in person.get("responses", []):
+                conditions = response.get("when")
+                if conditions is None:
+                    conditions = [{"flag": response["flag"], "value": response["value"]}]
+                for condition in conditions:
+                    if condition["flag"] not in initialized_flags:
+                        raise ValueError(f"dialogue response flag {condition['flag']} must be initialized in SetupGame.py")
             for choice in iter_npc_choices(person.get("choices", [])):
                 event = choice.get("journal")
                 if event is not None:
@@ -192,15 +199,27 @@ def validate_npc(person, area, require_design=False):
     if choices and len({choice["flag"] for choice in choices}) != 1:
         raise ValueError(f"scene dialogue choices for {area} must share one decision flag")
     responses = person.get("responses", [])
-    if (not isinstance(responses, list)
-            or len(responses) > 24
-            or any(not isinstance(response, dict)
-                   or not isinstance(response.get("line"), str) or not response["line"].strip()
-                   or len(response["line"]) > 2000
-                   or not isinstance(response.get("flag"), str)
-                   or not re.fullmatch(r"TL[A-Z][A-Z0-9_]{1,28}", response["flag"])
-                   or type(response.get("value")) is not int for response in responses)):
-        raise ValueError(f"scene dialogue responses for {area} must define a flag, value, and line")
+    if not isinstance(responses, list) or len(responses) > 24:
+        raise ValueError(f"scene dialogue responses for {area} must define up to 24 entries")
+    for response in responses:
+        if (not isinstance(response, dict)
+                or not isinstance(response.get("line"), str) or not response["line"].strip()
+                or len(response["line"]) > 2000):
+            raise ValueError(f"scene dialogue responses for {area} need a nonempty line")
+        conditions = response.get("when")
+        if conditions is not None:
+            if ("flag" in response or "value" in response or not isinstance(conditions, list)
+                    or not conditions or len(conditions) > 8
+                    or any(not isinstance(condition, dict)
+                           or not isinstance(condition.get("flag"), str)
+                           or not re.fullmatch(r"TL[A-Z][A-Z0-9_]{1,28}", condition["flag"])
+                           or type(condition.get("value")) is not int for condition in conditions)
+                    or len({condition["flag"] for condition in conditions}) != len(conditions)):
+                raise ValueError(f"scene dialogue response conditions for {area} must use distinct TL flags and integer values")
+        elif (not isinstance(response.get("flag"), str)
+              or not re.fullmatch(r"TL[A-Z][A-Z0-9_]{1,28}", response["flag"])
+              or type(response.get("value")) is not int):
+            raise ValueError(f"scene dialogue responses for {area} must define a flag, value, and line")
     route_lines = person.get("route_lines", {})
     if not isinstance(route_lines, dict) or any(not str(key).isdigit() or not isinstance(value, str) or not value.strip()
                                                 for key, value in route_lines.items()):

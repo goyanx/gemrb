@@ -158,6 +158,29 @@ class SceneCastAuthoringTests(unittest.TestCase):
         self.assertEqual(len(cast), 4)
         self.assertEqual(cast[3]["name"], "Market Wayfinder")
 
+    def test_multi_flag_dialogue_response_authoring(self):
+        npc = self.npc("Conditional Wayfinder")
+        npc["choices"] = []
+        npc["responses"] = [{
+            "when": [{"flag": "TLBRIEFING", "value": 1}, {"flag": "TLVOYAGE", "value": 2}],
+            "line": "The response requires both expedition choices.",
+        }]
+        added = self.payload(mcp_server.call_tool("terralum_upsert_scene_npc", {
+            "area": "tl0001", "npc": npc,
+        }))
+        self.assertEqual(added["npc"]["responses"][0]["when"][1]["flag"], "TLVOYAGE")
+
+        invalid = self.npc("Unregistered Condition")
+        invalid["choices"] = []
+        invalid["responses"] = [{
+            "when": [{"flag": "TLNOTREGISTERED", "value": 1}],
+            "line": "This state cannot be read safely.",
+        }]
+        with self.assertRaisesRegex(ValueError, "register campaign flags"):
+            mcp_server.call_tool("terralum_upsert_scene_npc", {
+                "area": "tl0001", "npc": invalid,
+            })
+
     def test_design_metadata_and_area_cast_invariants_are_required(self):
         npc = self.npc()
         del npc["goal"]

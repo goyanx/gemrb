@@ -4,14 +4,15 @@ This is the current work ledger for human and AI contributors. Read [AGENTS.md](
 
 ## Done
 
+- [x] Added lore-grounded Alistair to the Act VII Chart Room and Aethercraft Hangar. The recurring engineer's hangar dialogue reflects all four combinations of the archive-carrying and voyage-preparation choices; the pack and MCP authoring tools now validate multi-flag `when` conditions.
 - [x] Researched *Baldur's Gate II*'s documented area pipeline, design guidelines, writing/technical-design collaboration, area density, and QA lessons; captured cited sources in the gold-standard baseline.
 - [x] Added `terralum/GOLD_STANDARD_GAME_DESIGN_PIPELINE.md` with canon rules, production gates, scene acceptance criteria, and current-state gaps.
 - [x] Added repo-level `AGENTS.md` instructions that direct AI and human game contributors to the baseline and lore notes.
 - [x] Exposed the full baseline through the read-only `terralum_get_design_standard` MCP tool.
 - [x] Built a 25-scene campaign slice across the seven-act spine, including an Act III return to the Mistwood Watchpost, adding the Royal Dispatch Archive and Royal Stables in Act I, the Mistwood Hunter's Camp and Three-Cairn Fork in Act II, the Academy Containment Annex in Act V, and an Eldrador landing and threshold investigation in Act VII. Story provenance and uncertainties are noted in `terralum/lore_notes.md`.
 - [x] Added 23 distinct generated backdrops for 25 scene resources; Deep Archives and the returning Watchpost reuse their existing location art, seven act-entry Kokoro narration clips, and three looping ambient music tracks.
-- [x] Added 58 named, scene-specific NPC placements across 25 areas; added Talk, Narrate, Continue, and numbered-response keyboard shortcuts alongside visible controls. Current sprites reuse two demo templates.
-- [x] Completed structured role, faction, goal, knowledge, voice, and provenance sheets for all 58 NPC cast entries; pack validation now rejects entries missing this design context.
+- [x] Added 60 named, scene-specific NPC placements across 25 areas; added Talk, Narrate, Continue, and numbered-response keyboard shortcuts alongside visible controls. Current sprites reuse two demo templates.
+- [x] Completed structured role, faction, goal, knowledge, voice, and provenance sheets for all 60 NPC cast entries; pack validation now rejects entries missing this design context.
 - [x] Added a victory gate to each of the four prototype encounters.
 - [x] Expanded the Mistwood Road gate into a two-foe authored encounter group; each enemy has its own connected spawn point and persistent actor flag, and the campaign mock verifies both attack orders and the group victory gate.
 - [x] Made the Mistwood fight's victory persist as a resolved journal event and changed Courier Pell's watchpost response when both road creatures are defeated.
@@ -24,7 +25,7 @@ This is the current work ledger for human and AI contributors. Read [AGENTS.md](
 - [x] Added the Mistwood Waywarden Relay after the Ruined Watchpost. Orla offers a required patrol-or-silence choice with one shared journal event; Saren uses Leora's dispatch schedule only if the party copied it. Added original concept art and a connected three-approach searchmap.
 - [x] Added an Act IV evidence-docket quest with Royal Scribe Oren. A required two-stage conversation decides whether Dorian's route testimony sits beside the scroll account or remains separate; one journal event records the decision, Alisande responds to it, and the player cannot leave the hearing unfinished. Both branches pass the campaign-flow mock; a custom connected `SR.BMP` includes the party start, three council NPCs, and north/south approaches.
 - [x] Fixed the ARE builder counts: it now preserves the demo entrances and clears actor, region, spawn, container, item, and door counts that belonged to the demo.
-- [x] Campaign-flow mock reports 25 scene casts, 58 actor placements, keyboard controls, all 52 authored response options, three market routes, four encounter gates, five hostile actors across those encounters, twenty-four area transitions, and seven voice cues.
+- [x] Campaign-flow mock reports 25 scene casts, 60 actor placements, keyboard controls, all 52 authored response options, three market routes, four encounter gates, five hostile actors across those encounters, twenty-four area transitions, and seven voice cues.
 - [x] Expanded the MCP journal authoring tool to cover all 25 scenes and attach journal events to encounter victories; its test covers late-act authoring, victory hooks, and duplicate-flag rejection.
 - [x] Added campaign journal entries for story beats and dialogue choices, plus the active/resolved Hunter's Camp objective; entries use GemRB's persistent journal API and are guarded against duplicate records.
 - [x] Added Ranger Ilya's optional creekside conversation and stateful route around the Mistwood stalker; the dialogue journal event is deduplicated on repeat interaction, and the campaign mock tests the dark-lantern branch through Dorian's inscription.
@@ -47,7 +48,7 @@ This is the current work ledger for human and AI contributors. Read [AGENTS.md](
 
 ## Ongoing
 
-- [ ] **Scene dialogue slice:** Market, library, Royal Dispatch Archive, Royal Stables, River Crossing, Watchpost and return, Waywarden Relay, Lorian purpose test, seal gallery, Deep Archives, council, academy courtyard, Index Hall, Expedition Chart Room, hangar, Eldrador Landing Quay, and Lower Sanctuary Threshold choices set persistent flags with later text outcomes. The logic is mock-tested; live input/save testing remains open. The custom choice UI is not a native GemRB DLG system.
+- [ ] **Scene dialogue slice:** Market, library, Royal Dispatch Archive, Royal Stables, River Crossing, Watchpost and return, Waywarden Relay, Lorian purpose test, seal gallery, Deep Archives, council, academy courtyard, Index Hall, Expedition Chart Room, hangar, Eldrador Landing Quay, and Lower Sanctuary Threshold choices set persistent flags with later text outcomes. Alistair now carries both expedition decisions into four tested Hangar responses using multi-flag conditions. Live input/save testing remains open. The custom choice UI is not a native GemRB DLG system.
 - [ ] **Journal verification:** twenty-six event flags, including the Act III return-road record, Act IV evidence docket, academy warding decision, Eldrador evidence/protocol choices, and conditional Mistwood and Deep Archive encounter victories, pass script mocks; live display and save/load still need direct playtesting.
 - [ ] **Playable-scene verification:** the extended pack builds and GemRB starts against it. All 25 custom maps pass script connectivity checks, but movement is unverified. The current WSL session has two GemRB processes and the desktop is locked, so no UI input was sent; `terralum/play.ps1` now refuses to add another instance. Later-area entry, player movement, actual fights, choice input, save/load, and return entry still need direct playtesting after unlocking the desktop and closing one session.
 - [ ] **Art and geometry:** Characters currently reuse the demo's two humanoid sprites. All 25 named scenes now have custom searchmaps, but every area still inherits the AR0100 WED layout and terrain/height/light files. Actual in-engine movement remains unverified.
@@ -73,7 +74,7 @@ This is the current work ledger for human and AI contributors. Read [AGENTS.md](
 - [ ] Replace repeated placeholder NPC models with unique/generated or compatible open-licensed art and portraits. Keep provenance and license records.
 - [ ] Place actual interactable clues, containers, doors, and travel links only where they match the new scene geometry.
 - [ ] Turn encounters into fully authored tactical events with clues, distinct enemy behavior and art, balance, failure outcomes, and quest-state effects. Mistwood now has a connected two-foe ambush with persistent actor IDs and a group victory gate; live combat and balance remain unverified.
-- [ ] Review all 58 cast sheets against live scenes; deepen return-state dialogue and recurring NPC continuity where appropriate.
+- [ ] Review all 60 cast sheets against live scenes; deepen return-state dialogue and recurring NPC continuity where appropriate.
 
 ### P2 — Expand the campaign
 

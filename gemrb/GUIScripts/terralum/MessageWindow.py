@@ -104,7 +104,13 @@ def OnLoad():
 		if chapter["area"] == "tl0002" and person.get("route_lines"):
 			line = person["route_lines"].get(str(GemRB.GetGameVar("TLMARALEAD")), line)
 		for response in person.get("responses", []):
-			if GemRB.GetGameVar(response["flag"]) == response["value"]:
+			conditions = response.get("when")
+			if conditions is not None:
+				matches = all(GemRB.GetGameVar(condition["flag"]) == condition["value"]
+							  for condition in conditions)
+			else:
+				matches = GemRB.GetGameVar(response["flag"]) == response["value"]
+			if matches:
 				line = response["line"]
 				break
 		message.SetText("[cap]T[/cap]ERRALUM  |  " + chapters[chapter_index]["title"] + "\n" + chapters[chapter_index]["place"] + "\n\n" + person["name"] + ": " + line + "\n\n")
