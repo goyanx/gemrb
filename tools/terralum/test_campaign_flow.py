@@ -74,7 +74,7 @@ class Window:
 
 window = Window()
 events = []
-globals_ = {"TLCHAP": 0, "TLBEAT": 0, "TLENEMY": 0, "TLENEMY_STALKER": 0,
+globals_ = {"CHAPTER": 1, "TLCHAP": 0, "TLBEAT": 0, "TLENEMY": 0, "TLENEMY_STALKER": 0,
             "TLENEMY_PROWLER": 0, "TLCAST": 0,
             "TLMARALEAD": 0, "TLLIBRARYCLUE": 0, "TLWATCHPOST": 0, "TLHUNTER": 0,
             "TLGALLERY": 0, "TLCOURT": 0, "TLECHO": 0, "TLECHOPHASE": 0, "TLFALSE_ALGORETH": 0, "TLWARDING": 0, "TLJRN_WARDING": 0, "TLMISTWOODSAFE": 0, "TLMISTWOODVICTORY": 0, "TLARCHIVE": 0, "TLVOYAGE": 0, "TLBRIEFING": 0,
@@ -103,9 +103,9 @@ gemrb = types.ModuleType("GemRB")
 gemrb.LoadWindow = lambda *args: window
 gemrb.GetGameVar = lambda name: globals_[name]
 gemrb.SetGlobal = lambda name, context, value: globals_.__setitem__(name, value)
-def set_journal_entry(text, section, chapter):
+def set_journal_entry(text, section, group=0):
     journal_entries.append({"Text": len(journal_entries) + 1, "GameTime": len(journal_entries) + 1,
-                            "Section": section, "Chapter": chapter, "value": text})
+                            "Section": section, "Chapter": globals_["CHAPTER"], "Group": group, "value": text})
 gemrb.SetJournalEntry = set_journal_entry
 gemrb.GetJournalSize = lambda chapter, section: sum(entry["Chapter"] == chapter and entry["Section"] == section for entry in journal_entries)
 def get_journal_entry(chapter, index, section):
@@ -896,6 +896,24 @@ for chapter_index, chapter in enumerate(chapters):
                 assert any(entry["value"] == event["text"] for entry in journal_entries)
             choice_count += 1
 assert choice_count == 46
+
+# Native NPC DLG writes the route flag directly; the scene panel reconciles
+# its authored journal event on the next render without duplicating it.
+window = Window()
+events.clear()
+timed_events.clear()
+journal_entries.clear()
+current_area = "tl0015"
+globals_.update({key: (1 if key.startswith("TLJRN_") else 0) for key in globals_})
+globals_.update({"TLCHAP": chapter_index_by_area["tl0015"], "TLBEAT": 0, "TLENEMY": 0,
+                 "TLCAST": 0, "TLTRAVELKIT": 2, "TLHUNTERTRACK": 1, "TLJRN_TRACKS": 0})
+campaign.OnLoad()
+while timed_events:
+    timed_events.pop(0)()
+assert globals_["TLJRN_TRACKS"] == 1
+assert next(entry for entry in journal_entries if entry["value"].startswith("Hunter Ilya found broken reeds"))["Chapter"] == 2
+assert sum(entry["value"] == "Hunter Ilya found broken reeds showing the stalker's creekside patrol. The party can follow the stream to pass beneath its sightline without lighting the camp lantern."
+           for entry in journal_entries) == 1
 
 # Selene's second choice is a required follow-up: Ealdrin carries a bounded
 # question to Eldrador rather than treating the titleless living record as a witness.

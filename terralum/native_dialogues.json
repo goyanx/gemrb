@@ -1,4 +1,36 @@
 {
+  "ILYA": {
+    "states": [
+      {
+        "when": [{"flag": "TLCHAP", "value": 4}, {"flag": "TLHUNTERTRACK", "value": 0}, {"flag": "TLTRAVELKIT", "value": 1}],
+        "say": "The broken reeds show where the stalker turns. Without rope, I cannot promise the streambank will hold beneath the party's weight.",
+        "transitions": [
+          {"text": "Read the creekside tracks and mark the shallow crossings.", "next": 2, "set": [{"flag": "TLHUNTERTRACK", "value": 1}]}
+        ]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 4}, {"flag": "TLHUNTERTRACK", "value": 0}, {"flag": "TLTRAVELKIT", "value": 2}],
+        "say": "The broken reeds show where the stalker turns. Your rope can secure a handline at the shallow crossing and keep the party below its sightline.",
+        "transitions": [
+          {"text": "Read the creekside tracks and rig the handline.", "next": 2, "set": [{"flag": "TLHUNTERTRACK", "value": 1}]}
+        ]
+      },
+      {
+        "say": "We marked the shallow crossings. The streambed keeps us below the stalker's sightline without exposing the camp.",
+        "transitions": [{"text": "We will take the creekside route.", "final": true}]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 4}, {"flag": "TLHUNTERTRACK", "value": 1}, {"flag": "TLTRAVELKIT", "value": 1}],
+        "say": "The tracks show where it turns. Without rope, the bank may not hold under everyone's weight; the lantern route remains safer.",
+        "transitions": [{"text": "Keep to the marked trail.", "final": true}]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 4}, {"flag": "TLHUNTERTRACK", "value": 1}, {"flag": "TLTRAVELKIT", "value": 2}],
+        "say": "The rope gives us a handline at the shallow crossing. We can follow the tracks beneath the stalker's sightline.",
+        "transitions": [{"text": "Use the creekside route.", "final": true}]
+      }
+    ]
+  },
   "TESSA": {
     "states": [
       {

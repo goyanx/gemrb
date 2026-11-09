@@ -221,6 +221,7 @@
     },
     {
       "name": "Ranger Ilya",
+      "dialog": "ILYA",
       "role": "Creekside pathfinder for the Mistwood hunters",
       "goal": "Keep the camp hidden while helping travellers pass the stalker's patrol without using the lantern.",
       "knowledge": "Reads broken reeds and shallow tracks to map the watcher’s creekside turn; does not know what the watcher is.",

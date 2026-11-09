@@ -165,11 +165,24 @@ def OnLoad():
 
 	def record_journal_event(event, act):
 		if event and not GemRB.GetGameVar(event["flag"]):
-			GemRB.SetJournalEntry(event["text"], event["section"], act)
+			GemRB.SetGlobal("CHAPTER", "GLOBAL", act)
+			GemRB.SetJournalEntry(event["text"], event["section"], 0)
 			GemRB.SetGlobal(event["flag"], "GLOBAL", 1)
 
 	def record_journal_entry(chapter, beat):
 		record_journal_event(beat.get("journal"), chapter["act"])
+
+	def reconcile_npc_journal_events(chapter):
+		"""Record scene choice events set by a native DLG transition."""
+		for person in Story.cast(chapter["area"]):
+			for choice in person.get("choices", []):
+				if choice.get("journal") and GemRB.GetGameVar(choice["flag"]) == choice["value"]:
+					record_journal_event(choice["journal"], chapter["act"])
+				followup = choice.get("followup")
+				if followup and followup.get("journal"):
+					for followup_choice in followup.get("choices", []):
+						if GemRB.GetGameVar(followup_choice["flag"]) == followup_choice["value"]:
+							record_journal_event(followup["journal"], chapter["act"])
 
 	def render_journal():
 		entries = []
@@ -241,12 +254,16 @@ def OnLoad():
 		chapter_index = GemRB.GetGameVar("TLCHAP")
 		beat_index = GemRB.GetGameVar("TLBEAT")
 		chapter = chapters[chapter_index]
+		# GemRB's AddJournalEntry reads the game-script CHAPTER global; SetVar
+		# only updates the separate GUI dictionary and does not select a journal page.
+		GemRB.SetGlobal("CHAPTER", "GLOBAL", chapter["act"])
 		beat = chapter["beats"][beat_index]
 		if chapter["area"] == "tl0019" and beat_index == 1:
 			river_route = 1 if (GemRB.GetGameVar("TLTRAVELKIT") == 2
 							and GemRB.GetGameVar("TLRIVER") == 1) else 2
 			GemRB.SetGlobal("TLRIVERROUTE", "GLOBAL", river_route)
 		record_journal_entry(chapter, beat)
+		reconcile_npc_journal_events(chapter)
 		journal_button.SetVisible(True)
 		journal_button.SetText("JOURNAL")
 		dialogue_state["has_choices"] = False

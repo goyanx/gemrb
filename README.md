@@ -24,11 +24,11 @@ This fork includes **Terralum: Scrolls of Byzantem**, an original, story-driven 
 <p align="center"><em>Live GemRB campaign capture: the Alsperia Market opening scene with its local cast, story panel, journal control, Talk, Continue, and Kokoro Narrate.</em></p>
 
 <p align="center">
-  <a href="terralum/screenshots/market-party-detail.png"><img src="terralum/screenshots/market-party-detail.png" alt="Close-up of the player and scene cast in the live Market area" width="44%"></a>
+  <a href="terralum/screenshots/alsperia-market-journal-live.png"><img src="terralum/screenshots/alsperia-market-journal-live.png" alt="Live GemRB Journal showing the Alsperia opening quest under Act I" width="44%"></a>
   &nbsp;&nbsp;
   <a href="terralum/screenshots/campaign-locations-concept-art.jpg"><img src="terralum/screenshots/campaign-locations-concept-art.jpg" alt="Generated concept-art montage previewing Terralum campaign locations" width="44%"></a>
 </p>
-<p align="center"><em>Left: gameplay detail crop from an earlier Market capture · Right: generated location concept art, a visual target rather than in-game scenery.</em></p>
+<p align="center"><em>Left: live GemRB Journal with the opening quest recorded under Act I · Right: generated location concept art, a visual target rather than in-game scenery.</em></p>
 
 **[Campaign guide](terralum/README.md)** · **[Gold Standard pipeline](terralum/GOLD_STANDARD_GAME_DESIGN_PIPELINE.md)** · **[Campaign plan](terralum/campaign_plan.md)** · **[Current TODO](TODO.md)**
 
