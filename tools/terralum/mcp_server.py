@@ -15,7 +15,13 @@ from build_game import AREAS, PROJECT, build, read_story
 
 
 STORY_PATH = PROJECT / "story.json"
+STANDARD_PATH = PROJECT / "GOLD_STANDARD_GAME_DESIGN_PIPELINE.md"
 TOOLS = [
+    {
+        "name": "terralum_get_design_standard",
+        "description": "Read the Terralum gold-standard design and production baseline before authoring game content.",
+        "inputSchema": {"type": "object", "properties": {}, "additionalProperties": False},
+    },
     {
         "name": "terralum_get_project",
         "description": "Inspect Terralum's chapters, locations, and generated game pack.",
@@ -73,6 +79,8 @@ def result(value):
 
 
 def call_tool(name, arguments):
+    if name == "terralum_get_design_standard":
+        return result({"path": str(STANDARD_PATH), "markdown": STANDARD_PATH.read_text(encoding="utf-8")})
     if name == "terralum_get_project":
         return result({
             "story": read_story(),

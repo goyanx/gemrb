@@ -2,6 +2,8 @@
 
 ## Template drawn from Baldur's Gate II
 
+The binding contributor baseline is [GOLD_STANDARD_GAME_DESIGN_PIPELINE.md](GOLD_STANDARD_GAME_DESIGN_PIPELINE.md). This file tracks delivery slices; the gold-standard file defines acceptance gates.
+
 BioWare's postmortem describes a stable engine and content pipeline that let most development time go to authored content. It gives a repeatable area process: designers map and describe an area, concept artists develop the isometric idea, the level is built and dressed, then designers author clipping, lighting, height, and the search map. Its lessons also call out project scope and quality assurance as core constraints. Interviews with BG2 writers and designers describe dialogue authored with variables, technical designers implementing actor spawns, movement, rewards, and event timing, and quest arcs being outlined in beats before implementation. A BG2 retrospective emphasizes putting quests, items, encounters, and people into explorable spaces, and giving companions distinct motives and relationship arcs.
 
 Sources: [BioWare's BG2 postmortem](https://media.gdcvault.com/GD_Mag_Archives/GDM_March_2001.pdf), [David Gaider on Infinity Engine writing and implementation](https://www.shacknews.com/article/103473/beneath-a-starless-sky-pillars-of-eternity-and-the-infinity-engine-era-of-rpgs?page=15), [Kevin Martens on BG2 area content](https://www.insidemacgames.com/historical/news/story.php%3FArticleID=1621.html), [BG2 retrospective](https://www.pcgamer.com/games/rpg/25-years-ago-today-baldurs-gate-2-set-rpgs-on-the-path-to-becoming-the-industry-defining-genre-they-are-today-we-were-putting-all-the-fantasies-that-we-had-into-the-game/).

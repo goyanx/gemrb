@@ -2,13 +2,17 @@
 
 This project is a playable campaign prototype for [GemRB](../README.md). GemRB runs Infinity Engine games; it is not a visual editor. The game starts with Algoreth Jon Goren as a wizard seeking the scrolls of Byzantem. Seven chapters move from that early quest to his later, documented reign and the Tear of Chaos. This is a chapter structure inspired by long fantasy RPGs, **not** Baldur's Gate II playtime or content.
 
+## AI and human contributor baseline
+
+Read [GOLD_STANDARD_GAME_DESIGN_PIPELINE.md](GOLD_STANDARD_GAME_DESIGN_PIPELINE.md) before authoring or implementing Terralum content. It defines the canon rules, BG2-informed design principles, production gates, and per-scene acceptance checklist. The same baseline is exposed through the `terralum_get_design_standard` MCP tool.
+
 ## Story basis
 
 The local campaign archive `C:\Users\goyan\Documents\GolemDungeon - kingdoms - kingdom-alsperia [1203075571572154459].txt` supports the early scroll quest. The user-supplied `TERRALUM_LORE_CODEX.md` supports the later Wizard King, eastern academy, Tear of Chaos, Archives and Eldrador arc. The user clarified that in the early period Queen Alisande was married to King Edmon. The sources do not recover the later transition to Algoreth's reign and marriage, so the game leaves that interval unwritten. See [`lore_notes.md`](lore_notes.md) for provenance and uncertainties. Neither source archive is copied into this repository.
 
 story.json contains seven chapter introductions and 23 dialogue beats. The seven playable locations are Alsperia Market, Mistwood Road, Lorian Cavern, Alsperia Court, Old Observatory Vault, Deep Archives, and Alsperia Skyport. scene_cast.json defines 15 named scene actors and a local Talk line for each scene; their current sprites reuse the demo's two humanoid templates. They are placed when each area loads, and Talk cycles through their local lines. The three hostile encounters require victory before the story advances. Dialogue is still linear, and the actors need unique art, native GemRB dialogue trees, and real area geometry. This is a playable campaign slice, not a full length RPG campaign.
 
-scene_production_plan.md explains the BG2-inspired content pipeline and delivery slices. campaign_plan.md maps the seven acts to a longer quest and location plan, with archive facts separated from new material. The preserved story_scrolls_draft.json records the earlier game draft before the codex arrived; it is not the active campaign.
+scene_production_plan.md tracks the BG2-inspired delivery slices. campaign_plan.md maps the seven acts to a longer quest and location plan, with archive facts separated from new material. The preserved story_scrolls_draft.json records the earlier game draft before the codex arrived; it is not the active campaign.
 
 ## Build and play
 
