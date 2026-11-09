@@ -726,6 +726,64 @@
       "provenance": "canon"
     }
   ],
+  "tl0021": [
+    {
+      "name": "Warden Celene",
+      "creature": "riddler",
+      "position": [
+        640,
+        475
+      ],
+      "line": "The ring is stable for now. Force will only make the pulse answer harder. Before we descend, decide what rule the ward should keep.",
+      "choices": [
+        {
+          "label": "Set a boundary of form",
+          "reply": "Algoreth traces a fixed contour around the breach. Celene marks its shape and watches for any change.",
+          "flag": "TLWARDING",
+          "value": 1
+        },
+        {
+          "label": "Name the ward's purpose",
+          "reply": "Algoreth defines the ward's purpose: contain and observe, without obeying the voice within.",
+          "flag": "TLWARDING",
+          "value": 2
+        }
+      ],
+      "role": "Eastern Academy ward warden",
+      "faction": "Eastern Academy",
+      "goal": "Record a stable rule for containing the breach before anyone enters the vault.",
+      "knowledge": "The breach responds to force and repeats the king's last spoken thought; its source and intent remain unknown.",
+      "voice": "Focused and urgent, grounded in measurements rather than speculation.",
+      "provenance": "adaptation"
+    },
+    {
+      "name": "Magister Vael",
+      "creature": "protagon",
+      "position": [
+        970,
+        470
+      ],
+      "line": "The courtyard pulse ends here. If we descend, we should carry a rule that can be observed and checked.",
+      "responses": [
+        {
+          "flag": "TLWARDING",
+          "value": 1,
+          "line": "Celene has marked the boundary of form. I will compare that contour with every change in the vault."
+        },
+        {
+          "flag": "TLWARDING",
+          "value": 2,
+          "line": "The ward's purpose is containment and observation. We will record what the voice does, without treating it as an instruction."
+        }
+      ],
+      "role": "Magister of the Eastern Academy",
+      "faction": "Eastern Academy",
+      "goal": "Carry the selected warding rule into the vault and compare it with observable changes.",
+      "knowledge": "Has measured the courtyard pulse and annex breach; does not know what speaks from the Tear.",
+      "voice": "Scholarly and controlled, careful to separate evidence from interpretation.",
+      "provenance": "adaptation"
+    }
+  ],
   "tl0006": [
     {
       "name": "Ealdrin",

@@ -240,6 +240,9 @@ def OnLoad():
 		if chapter["area"] == "tl0020" and beat_index == 0 and not GemRB.GetGameVar("TLBRIEFING"):
 			message.Append("\n\nEaldrin is waiting for your decision about which record the expedition will carry.")
 			return
+		if chapter["area"] == "tl0021" and beat_index == 0 and not GemRB.GetGameVar("TLWARDING"):
+			message.Append("\n\nCelene is waiting for your containment rule before the party enters the vault.")
+			return
 		if (chapter["area"] == "tl0002" and beat.get("encounter")
 				and (GemRB.GetGameVar("TLMARALEAD") == 1 or GemRB.GetGameVar("TLLIBRARYCLUE") == 1
 				     or (GemRB.GetGameVar("TLTRAVELKIT") == 1 and GemRB.GetGameVar("TLHUNTER") == 1)

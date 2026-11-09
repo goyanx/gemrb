@@ -556,6 +556,44 @@
       ]
     },
     {
+      "title": "V. The Eastern Academy — Containment Annex",
+      "act": 5,
+      "area": "tl0021",
+      "place": "Eastern Academy Containment Annex",
+      "music": "tlcave.mus",
+      "voice": "",
+      "narration": "In the annex, the wardens have held a small breach inside a ring of measuring arms. Its changing light follows the pulse recorded in the courtyard.",
+      "beats": [
+        {
+          "speaker": "Warden Celene",
+          "text": "The ring is stable for now. Force will only make the pulse answer harder. Before we descend, decide what rule the ward should keep.",
+          "action": "Set the ward"
+        },
+        {
+          "speaker": "Magister Vael",
+          "text": "The rule is recorded. We can carry it into the vault, but it tells us nothing yet about what waits in the Tear.",
+          "action": "Enter the vault",
+          "journal": {
+            "flag": "TLJRN_WARDING",
+            "section": 4,
+            "text": "At the academy annex, Algoreth set a containment rule before entering the Tear vault. The breach remains unexplained; the ward records a method, not a verdict."
+          },
+          "routes": [
+            {
+              "flag": "TLWARDING",
+              "value": 1,
+              "text": "The annex record defines a fixed boundary of form. Celene checks its measured contour before the party enters the vault."
+            },
+            {
+              "flag": "TLWARDING",
+              "value": 2,
+              "text": "The annex record names the ward's purpose: contain and observe, without obeying the echo. Vael carries that rule into the vault."
+            }
+          ]
+        }
+      ]
+    },
+    {
       "title": "V. The Eastern Academy",
       "act": 5,
       "area": "tl0005",
@@ -574,6 +612,16 @@
           "text": "The wardens will hold the perimeter. Go carefully, my love. Whatever speaks below already knows your voice.",
           "action": "Enter the vault",
           "routes": [
+            {
+              "flag": "TLWARDING",
+              "value": 1,
+              "text": "The annex's measured contour gives Celene a line to watch as the party approaches the false echo."
+            },
+            {
+              "flag": "TLWARDING",
+              "value": 2,
+              "text": "The annex rule is to contain and observe. The party carries that purpose toward the false echo without treating its voice as command."
+            },
             {
               "flag": "TLECHO",
               "value": 1,
@@ -600,7 +648,19 @@
             "flag": "TLJRN_TEAR",
             "section": 4,
             "text": "The false Algoreth spoke from the academy Tear. Algoreth sealed the breach with a boundary of form and purpose; the false self remains contained."
-          }
+          },
+          "routes": [
+            {
+              "flag": "TLWARDING",
+              "value": 1,
+              "text": "Power shall endure only in form. Form shall endure only in purpose. Purpose shall endure only where being does not devour itself. The measured boundary holds; the false self remains contained."
+            },
+            {
+              "flag": "TLWARDING",
+              "value": 2,
+              "text": "Power shall endure only in form. Form shall endure only in purpose. Purpose shall endure only where being does not devour itself. The ward keeps its purpose; the false self remains contained."
+            }
+          ]
         }
       ]
     },

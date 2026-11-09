@@ -32,7 +32,7 @@ list of [options, tips and priorities](https://github.com/gemrb/gemrb/blob/maste
 
 **An original Infinity Engine style RPG campaign, built on GemRB.** In **Terralum: Scrolls of Byzantem**, Algoreth Jon Goren leaves the court of Alsperia to recover the lost scrolls. The trail leads through the Mistwood and Caverns of Lorian, then toward the eastern academy, the Deep Archives, and the mysteries of the Tears.
 
-The playable prototype currently covers **20 scene areas and 50 story beats across seven acts**. It includes a 46-actor scene cast, branching dialogue, a persistent quest journal, optional Kokoro narration, ambient music, and four gated encounters. The latest Act VII scene lets Algoreth decide whether the expedition carries a carefully marked archive copy or a witness account, then carries that choice into the Aethercraft hangar. It is an active prototype: campaign content and systems are growing, and the full-length RPG is still ahead.
+The playable prototype currently covers **21 scene areas and 52 story beats across seven acts**. It includes a 48-actor scene cast, branching dialogue, a persistent quest journal, optional Kokoro narration, ambient music, and four gated encounters. In the new Act V Containment Annex, Algoreth chooses whether the ward follows a measured boundary or an explicit purpose; that choice changes how the party approaches the false echo and frames the established sealing event. It is an active prototype: campaign content and systems are growing, and the full-length RPG is still ahead.
 
 ### See Terralum running in GemRB
 
@@ -55,7 +55,7 @@ The opening Market scene is a live capture from GemRB. It shows the player party
 
 ### Campaign location gallery
 
-Nineteen distinct generated concept backdrops preview the twenty scene areas; one backdrop is reused. They are visual targets for the current prototype. The Royal Stables, Dispatch Archive, Hunter's Camp, River Crossing, Three-Cairn Fork, Mistwood Road, Ruined Watchpost, Lorian Cavern, Seal Gallery, Deep Archives, and Expedition Chart Room have custom searchmaps. All twenty areas still use the demo's shared WED layout and other terrain resources.
+Twenty distinct generated concept backdrops preview the twenty-one scene areas; one backdrop is reused. They are visual targets for the current prototype. The Royal Stables, Dispatch Archive, Hunter's Camp, River Crossing, Three-Cairn Fork, Mistwood Road, Ruined Watchpost, Lorian Cavern, Seal Gallery, Deep Archives, Expedition Chart Room, and Containment Annex have custom searchmaps. All twenty-one areas still use the demo's shared WED layout and other terrain resources.
 
 <table>
   <tr>
@@ -90,6 +90,7 @@ Nineteen distinct generated concept backdrops preview the twenty scene areas; on
   </tr>
   <tr>
     <td align="center"><img src="terralum/art/expedition_chart_room.png" alt="Alsperia Expedition Chart Room concept art, with harbor windows, an airship, star charts and a clear central floor" width="100%"><br><sub>Expedition Chart Room</sub></td>
+    <td align="center"><img src="terralum/art/academy_warding_annex.png" alt="Eastern Academy Containment Annex concept art, a violet Tear held inside a brass measuring ring" width="100%"><br><sub>Containment Annex</sub></td>
   </tr>
 </table>
 
@@ -100,7 +101,7 @@ Nineteen distinct generated concept backdrops preview the twenty scene areas; on
 - [Campaign plan](terralum/campaign_plan.md) — seven-act story spine and planned expansion.
 - [TODO and handoff](TODO.md) — completed, ongoing, and next work.
 
-Terralum is an in-progress prototype, not a finished or full-length RPG. The current cast reuses demo sprites and all twenty areas still inherit the demo WED layout; eleven areas have custom searchmaps, while the other nine use the generic one. Choices use a custom panel rather than native Infinity Engine DLG resources. The project guide and handoff describe current playability and verification gaps.
+Terralum is an in-progress prototype, not a finished or full-length RPG. The current cast reuses demo sprites and all twenty-one areas still inherit the demo WED layout; twelve areas have custom searchmaps, while the other nine use the generic one. Choices use a custom panel rather than native Infinity Engine DLG resources. The project guide and handoff describe current playability and verification gaps.
 
 ## Supported platforms
 

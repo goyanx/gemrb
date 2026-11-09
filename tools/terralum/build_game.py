@@ -44,6 +44,7 @@ AREAS = {
     "tl0007": "alsperia_skyport.png",
     "tl0020": "expedition_chart_room.png",
     "tl0014": "aethercraft_hangar.png",
+    "tl0021": "academy_warding_annex.png",
 }
 AREA_SONG_INDEX = {
     "tl0001": 1, "tl0002": 3, "tl0003": 2, "tl0004": 1,
@@ -51,6 +52,7 @@ AREA_SONG_INDEX = {
     "tl0009": 3, "tl0010": 2, "tl0011": 1, "tl0012": 2,
     "tl0013": 2, "tl0014": 1, "tl0015": 3,
     "tl0016": 3, "tl0017": 1, "tl0018": 1, "tl0019": 3, "tl0020": 1,
+    "tl0021": 2,
 }
 
 

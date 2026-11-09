@@ -66,4 +66,6 @@ def OnLoad():
 	GemRB.SetGlobal("TLJRN_ELDRADOR", "GLOBAL", 0)
 	GemRB.SetGlobal("TLJRN_VOYAGE", "GLOBAL", 0)
 	GemRB.SetGlobal("TLJRN_BRIEFING", "GLOBAL", 0)
+	GemRB.SetGlobal("TLWARDING", "GLOBAL", 0)
+	GemRB.SetGlobal("TLJRN_WARDING", "GLOBAL", 0)
 	GemRB.EnterGame()

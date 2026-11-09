@@ -73,7 +73,7 @@ events = []
 globals_ = {"TLCHAP": 0, "TLBEAT": 0, "TLENEMY": 0, "TLENEMY_STALKER": 0,
             "TLENEMY_PROWLER": 0, "TLCAST": 0,
             "TLMARALEAD": 0, "TLLIBRARYCLUE": 0, "TLWATCHPOST": 0, "TLHUNTER": 0,
-            "TLGALLERY": 0, "TLCOURT": 0, "TLECHO": 0, "TLMISTWOODSAFE": 0, "TLMISTWOODVICTORY": 0, "TLARCHIVE": 0, "TLVOYAGE": 0, "TLBRIEFING": 0,
+            "TLGALLERY": 0, "TLCOURT": 0, "TLECHO": 0, "TLWARDING": 0, "TLJRN_WARDING": 0, "TLMISTWOODSAFE": 0, "TLMISTWOODVICTORY": 0, "TLARCHIVE": 0, "TLVOYAGE": 0, "TLBRIEFING": 0,
             "TLARCHIVEWARD": 0, "TLDEEP_ARCHIVE_WARDEN": 0, "TLJRN_ARCHIVE_WARD": 0,
             "TLJRN_BYZANTEM": 0, "TLJRN_MISTWOOD": 0, "TLJRN_MISTWOOD_AMBUSH": 0, "TLJRN_HUNTER": 0, "TLJRN_HUNTER_RESOLVED": 0,
             "TLHUNTERTRACK": 0, "TLJRN_TRACKS": 0, "TLTRAVELKIT": 0, "TLJRN_TRAVELKIT": 0, "TLROYALORDER": 0, "TLJRN_ROYALORDER": 0, "TLRIVER": 0, "TLRIVERROUTE": 0, "TLJRN_RIVER": 0,
@@ -165,7 +165,7 @@ assert globals_["TLMARALEAD"] == 1
 assert "safe path" in window.controls[0].text
 chapters = campaign.Story.chapters()
 chapter_index_by_area = {chapter["area"]: index for index, chapter in enumerate(chapters)}
-assert len(chapters) == 20
+assert len(chapters) == 21
 assert sorted({chapter["act"] for chapter in chapters}) == list(range(1, 8))
 for chapter_index, chapter in enumerate(chapters):
     assert globals_["TLCHAP"] == chapter_index
@@ -253,10 +253,10 @@ assert globals_["TLGALLERY"] == 1
 assert globals_["TLCOURT"] == 1
 assert globals_["TLECHO"] == 1
 assert globals_["TLARCHIVEWARD"] == 2
-assert len([event for event in events if event[0] == "area"]) == 19
+assert len([event for event in events if event[0] == "area"]) == 20
 assert len([event for event in events if event[0] == "voice"]) == 7
 assert len([event for event in events if event[0] == "attack"]) == 2
-assert len(journal_entries) == 16
+assert len(journal_entries) == 17
 assert globals_["TLJRN_WAYSTONE"] == 1
 assert any("Three-Cairn Fork" in entry["value"] for entry in journal_entries)
 assert globals_["TLJRN_LORIAN_PURPOSE"] == 1
@@ -268,7 +268,7 @@ assert any(entry["Section"] == 2 and "Hunter's Camp decision is resolved" in ent
            for entry in journal_entries)
 
 # Exercise every remaining response option and its next-beat result.
-for chapter_index, choice_index in ((chapter_index_by_area[area], choice) for area, choice in (("tl0001", 1), ("tl0001", 2), ("tl0008", 1), ("tl0017", 1), ("tl0015", 1), ("tl0016", 1), ("tl0009", 1), ("tl0003", 1), ("tl0010", 1), ("tl0011", 1), ("tl0012", 1), ("tl0013", 1), ("tl0014", 1))):
+for chapter_index, choice_index in ((chapter_index_by_area[area], choice) for area, choice in (("tl0001", 1), ("tl0001", 2), ("tl0008", 1), ("tl0017", 1), ("tl0015", 1), ("tl0016", 1), ("tl0009", 1), ("tl0003", 1), ("tl0010", 1), ("tl0011", 1), ("tl0012", 1), ("tl0021", 1), ("tl0013", 1), ("tl0014", 1))):
     chapter = chapters[chapter_index]
     window = Window()
     events.clear()
@@ -277,7 +277,8 @@ for chapter_index, choice_index in ((chapter_index_by_area[area], choice) for ar
     globals_.update({"TLCHAP": chapter_index, "TLBEAT": 0, "TLENEMY": 0, "TLCAST": 0,
                      "TLWAYSTONE": 0,
                      "TLMARALEAD": 0, "TLLIBRARYCLUE": 0, "TLWATCHPOST": 0, "TLHUNTER": 0,
-                     "TLGALLERY": 0, "TLCOURT": 0, "TLECHO": 0, "TLMISTWOODSAFE": 0, "TLARCHIVE": 0, "TLVOYAGE": 0})
+                     "TLGALLERY": 0, "TLCOURT": 0, "TLECHO": 0, "TLWARDING": 0, "TLJRN_WARDING": 0,
+                     "TLMISTWOODSAFE": 0, "TLARCHIVE": 0, "TLVOYAGE": 0})
     campaign.OnLoad()
     while timed_events:
         timed_events.pop(0)()
@@ -749,7 +750,7 @@ for chapter_index, chapter in enumerate(chapters):
                 assert globals_[event["flag"]] == 1
                 assert any(entry["value"] == event["text"] for entry in journal_entries)
             choice_count += 1
-assert choice_count == 35
+assert choice_count == 37
 
 # Act VI's optional archive quest offers a peaceful path and a gated warder
 # challenge. Victory records the comparison leaf and changes dialogue in the
@@ -839,5 +840,48 @@ for briefing, expected_line in (
     window.controls[11].press()
     assert expected_line in window.controls[0].text
 
+# The Act V annex decision is mandatory and both rules carry into the vault's
+# false-echo approach and final seal narration without changing the outcome.
+for warding in (1, 2):
+    annex_index = chapter_index_by_area["tl0021"]
+    window = Window()
+    events.clear()
+    timed_events.clear()
+    current_area = "tl0021"
+    enemy_dead = False
+    globals_.update({"TLCHAP": annex_index, "TLBEAT": 0, "TLENEMY": 0, "TLCAST": 0,
+                     "TLWARDING": 0, "TLJRN_WARDING": 0, "TLJRN_TEAR": 0,
+                     "TLECHO": 1})
+    campaign.OnLoad()
+    while timed_events:
+        timed_events.pop(0)()
+    window.controls[4].press()
+    assert globals_["TLBEAT"] == 0
+    assert "Celene is waiting" in window.controls[0].text
+    window.controls[11].press()
+    window.controls[11 + warding].press()
+    assert globals_["TLWARDING"] == warding
+    window.controls[4].press()
+    assert globals_["TLJRN_WARDING"] == 1
+    assert any("set a containment rule" in entry["value"] for entry in journal_entries)
+    window.controls[4].press()
+    assert current_area == "tl0005"
+    while timed_events:
+        timed_events.pop(0)()
+    window.controls[4].press()
+    approach = next(route for route in campaign.Story.chapters()[chapter_index_by_area["tl0005"]]["beats"][1]["routes"]
+                    if route["flag"] == "TLWARDING" and route["value"] == warding)
+    assert approach["text"] in window.controls[0].text
+    window.controls[4].press()
+    window.controls[4].press()
+    assert "Vault echo emerges" in window.controls[0].text
+    enemy_dead = True
+    window.controls[4].press()
+    resolution = next(route for route in campaign.Story.chapters()[chapter_index_by_area["tl0005"]]["beats"][3]["routes"]
+                      if route["value"] == warding)
+    assert resolution["text"] in window.controls[0].text
+    assert "false self remains contained" in resolution["text"]
+    assert globals_["TLJRN_TEAR"] == 1
+
 print(len(chapters), "scenes across seven acts,", sum(len(campaign.Story.cast(chapter["area"])) for chapter in chapters),
-      "named scene actors, keyboard controls, authored journal events and combat aftermath, all 35 response options, three market routes, four encounter gates, nineteen transitions, and seven voice cues passed")
+      "named scene actors, keyboard controls, authored journal events and combat aftermath, all 37 response options, three market routes, four encounter gates, twenty transitions, and seven voice cues passed")
