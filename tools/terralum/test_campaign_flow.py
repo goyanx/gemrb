@@ -135,6 +135,7 @@ gemrb.SetPlayerStat = lambda *args: None
 gemrb.ExecuteString = lambda action, actor: events.append(("attack", action, actor))
 gemrb.GetPlayerStat = lambda actor, stat: 2048 if enemy_dead or actor in dead_actors else 0
 gemrb.GamePause = lambda *args: None
+gemrb.GameSelectPC = lambda *args: events.append(("select-pc", *args))
 gemrb.GameControlSetTargetMode = lambda mode, types=0: events.append(("target-mode", mode, types))
 sys.modules["GemRB"] = gemrb
 for name, symbol in (("GUICommon", "GetWindowPack"), ("GUIMA", "OpenMapWindow"), ("GUIINV", "OpenInventoryWindow")):
@@ -160,6 +161,7 @@ assert window.controls[15].text == "JOURNAL"
 assert window.controls[15].hotkey == ("j", 0, True)
 assert window.controls[10].disabled is False
 window.controls[16].press()
+assert events[-2] == ("select-pc", 1, True, 1)
 assert events[-1][0:2] == ("target-mode", 1)
 assert len(journal_entries) == 1
 window.controls[15].press()

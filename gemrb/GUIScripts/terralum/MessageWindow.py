@@ -134,6 +134,7 @@ def OnLoad():
 			journal_state["open"] = False
 			journal_button.SetText("JOURNAL")
 			show()
+		GemRB.GameSelectPC(1, True, SELECT_REPLACE)
 		GemRB.GameControlSetTargetMode(TARGET_MODE_TALK, GA_NO_DEAD | GA_NO_ENEMY | GA_NO_HIDDEN)
 		message.Append("\n\nChoose a scene NPC to speak with.")
 
