@@ -24,11 +24,13 @@ This fork includes **Terralum: Scrolls of Byzantem**, an original, story-driven 
 <p align="center"><em>Live GemRB campaign capture: the Alsperia Market opening scene with its local cast, story panel, journal control, Talk, Continue, and Kokoro Narrate.</em></p>
 
 <p align="center">
-  <a href="terralum/screenshots/alsperia-market-journal-live.png"><img src="terralum/screenshots/alsperia-market-journal-live.png" alt="Live GemRB Journal showing the Alsperia opening quest under Act I" width="44%"></a>
+  <a href="terralum/screenshots/alsperia-market-journal-live.png"><img src="terralum/screenshots/alsperia-market-journal-live.png" alt="Live GemRB Journal showing the Alsperia opening quest under Act I" width="30%"></a>
   &nbsp;&nbsp;
-  <a href="terralum/screenshots/campaign-locations-concept-art.jpg"><img src="terralum/screenshots/campaign-locations-concept-art.jpg" alt="Generated concept-art montage previewing Terralum campaign locations" width="44%"></a>
+  <a href="terralum/screenshots/campaign-locations-concept-art.jpg"><img src="terralum/screenshots/campaign-locations-concept-art.jpg" alt="Generated concept-art montage previewing Terralum campaign locations" width="30%"></a>
+  &nbsp;&nbsp;
+  <a href="terralum/screenshots/alsperia-market-native-dialogue-live.png"><img src="terralum/screenshots/alsperia-market-native-dialogue-live.png" alt="Live GemRB native dialogue with Queen Alisande after selecting a response" width="30%"></a>
 </p>
-<p align="center"><em>Left: live GemRB Journal with the opening quest recorded under Act I · Right: generated location concept art, a visual target rather than in-game scenery.</em></p>
+<p align="center"><em>Live GemRB Journal · generated location concept art (visual target, not in-game scenery) · native Queen Alisande dialogue after a response was selected.</em></p>
 
 <p align="center">
   <a href="terralum/screenshots/market-party-detail.png"><img src="terralum/screenshots/market-party-detail.png" alt="Detail crop of the player party and local NPC placements in the Alsperia Market" width="60%"></a>
@@ -37,7 +39,7 @@ This fork includes **Terralum: Scrolls of Byzantem**, an original, story-driven 
 
 **[Campaign guide](terralum/README.md)** · **[Gold Standard pipeline](terralum/GOLD_STANDARD_GAME_DESIGN_PIPELINE.md)** · **[Campaign plan](terralum/campaign_plan.md)** · **[Current TODO](TODO.md)**
 
-> **Prototype status:** This is an expanding playable slice, not a finished full-length RPG. Its party and scene actors currently reuse demo sprites, and all 25 areas still inherit the demo's WED layout and terrain. The campaign has custom per-area searchmaps, authored cast and dialogue choices, and a growing set of stateful story events. See the [campaign guide](terralum/README.md) for build steps and current verification limits.
+> **Prototype status:** This is an expanding playable slice, not a finished full-length RPG. Its party and scene actors currently reuse demo sprites, and all 25 areas still inherit the demo's WED layout and terrain. The opening scene now has a live-tested native actor dialogue and stateful response; broader DLG branches and save/load still need playtesting. See the [campaign guide](terralum/README.md) for build steps and current verification limits.
 
 To try it out you either need some of the ORIGINAL game's data or you can
 get a tiny sneak peek by running the included trivial game demo.

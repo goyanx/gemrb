@@ -23,7 +23,7 @@ def _style(button, width=None):
 
 def OnLoad():
 	window = GemRB.LoadWindow(0, GUICommon.GetWindowPack(), WINDOW_BOTTOM | WINDOW_HCENTER)
-	window.SetFlags(WF_BORDERLESS, OP_OR)
+	window.SetFlags(WF_BORDERLESS | IE_GUI_VIEW_IGNORE_EVENTS, OP_OR)
 	window.AddAlias("MSGWIN")
 	window.AddAlias("HIDE_CUT", 0)
 	message = window.GetControl(0)

@@ -2304,7 +2304,7 @@ bool GameControl::OnMouseUp(const MouseEvent& me, unsigned short Mod)
 			return true;
 		}
 
-		if (lastCursor == IE_CURSOR_BLOCKED) {
+		if (lastCursor == IE_CURSOR_BLOCKED && targetMode == TargetMode::None) {
 			// don't allow travel if the destination is actually blocked
 			return false;
 		}
