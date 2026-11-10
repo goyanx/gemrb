@@ -33,13 +33,18 @@ This fork includes **Terralum: Scrolls of Byzantem**, an original, story-driven 
 <p align="center"><em>Live GemRB Journal · generated location concept art (visual target, not in-game scenery) · native Queen Alisande dialogue after a response was selected.</em></p>
 
 <p align="center">
+  <a href="terralum/screenshots/alsperia-market-mara-ledger-choice-live.png"><img src="terralum/screenshots/alsperia-market-mara-ledger-choice-live.png" alt="Live GemRB native Archivist Mara dialogue after choosing to copy Dorian’s pale-stone landmarks for the library" width="60%"></a>
+</p>
+<p align="center"><em>Live dialogue branch: Archivist Mara confirms that Algoreth copied the pale-stone landmarks for Inessa while keeping Dorian’s original ledger sealed.</em></p>
+
+<p align="center">
   <a href="terralum/screenshots/market-party-detail.png"><img src="terralum/screenshots/market-party-detail.png" alt="Detail crop of the player party and local NPC placements in the Alsperia Market" width="60%"></a>
 </p>
 <p align="center"><em>Live scene detail: the party and local cast are placed together in the opening market. Scene actors currently reuse the demo's placeholder sprites.</em></p>
 
 **[Campaign guide](terralum/README.md)** · **[Gold Standard pipeline](terralum/GOLD_STANDARD_GAME_DESIGN_PIPELINE.md)** · **[Campaign plan](terralum/campaign_plan.md)** · **[Current TODO](TODO.md)**
 
-> **Prototype status:** This is an expanding playable slice, not a finished full-length RPG. Its party and scene actors currently reuse demo sprites, and all 25 areas still inherit the demo's WED layout and terrain. The opening scene now has a live-tested native actor dialogue and stateful response; broader DLG branches and save/load still need playtesting. See the [campaign guide](terralum/README.md) for build steps and current verification limits.
+> **Prototype status:** This is an expanding playable slice, not a finished full-length RPG. Its party and scene actors currently reuse demo sprites, and all 25 areas still inherit the demo's WED layout and terrain. The opening scene now has live-tested native actor dialogue for Mara and Queen Alisande; Mara's copy-landmarks branch works, while other branches and save/load still need playtesting. See the [campaign guide](terralum/README.md) for build steps and current verification limits.
 
 To try it out you either need some of the ORIGINAL game's data or you can
 get a tiny sneak peek by running the included trivial game demo.
