@@ -379,7 +379,43 @@
       "goal": "Warn other travellers about the presence circling the ruined watchpost.",
       "knowledge": "Heard the stalker answer a name in the trees; cannot identify it or explain how it speaks.",
       "voice": "Shaken and guarded, speaking in short sensory details.",
-      "provenance": "adaptation"
+      "provenance": "adaptation",
+      "responses": [
+        {
+          "flag": "TLWAYFARER",
+          "value": 1,
+          "line": "Thank you for recording the warning without my name. I hope the next traveller hears caution, not a tale about me."
+        },
+        {
+          "flag": "TLWAYFARER",
+          "value": 2,
+          "line": "Thank you for leaving my account private. The road can carry a warning without carrying my name."
+        }
+      ],
+      "choices": [
+        {
+          "label": "Send Pell an anonymous warning about the answering voice.",
+          "reply": "The party records the traveller's account without a name: a voice answered from the trees, but its source is unknown.",
+          "flag": "TLWAYFARER",
+          "value": 1,
+          "journal": {
+            "flag": "TLJRN_WAYFARER_PUBLIC",
+            "section": 4,
+            "text": "In Mistwood, Algoreth heard a traveller's account that a voice answered from the trees. He sent Courier Pell an anonymous warning; neither the witness nor the sound's source was identified."
+          }
+        },
+        {
+          "label": "Keep the account private; report only the unsafe road.",
+          "reply": "The party keeps the traveller's account private and asks Pell to warn others only that the road is unsafe.",
+          "flag": "TLWAYFARER",
+          "value": 2,
+          "journal": {
+            "flag": "TLJRN_WAYFARER_PRIVATE",
+            "section": 4,
+            "text": "In Mistwood, Algoreth heard a traveller's account that a voice answered from the trees. He kept the account private and asked Courier Pell to report only the unsafe road; neither the witness nor the sound's source was identified."
+          }
+        }
+      ]
     }
   ],
   "tl0009": [
@@ -391,7 +427,51 @@
         520
       ],
       "line": "I found a charcoal rubbing under the watchpost stair. The western arch is marked, but the stalker kept me from carrying it onward.",
-      "responses": [
+      "responses":       [
+        {
+          "when": [
+            {
+              "flag": "TLWAYFARER",
+              "value": 1
+            },
+            {
+              "flag": "TLMISTWOODVICTORY",
+              "value": 1
+            }
+          ],
+          "line": "Tessa says you drove both creatures off the road. I can carry the rubbing and an anonymous warning that a voice answered from the trees; its source is still unknown."
+        },
+        {
+          "when": [
+            {
+              "flag": "TLWAYFARER",
+              "value": 2
+            },
+            {
+              "flag": "TLMISTWOODVICTORY",
+              "value": 1
+            }
+          ],
+          "line": "Tessa says you drove both creatures off the road. I can carry the rubbing. You asked me to keep the traveller's account private, so the report warns only that the road is unsafe."
+        },
+        {
+          "when": [
+            {
+              "flag": "TLWAYFARER",
+              "value": 1
+            }
+          ],
+          "line": "I have the anonymous warning: a voice answered from the trees. I cannot tell what made the sound, and the rubbing alone does not make the watchpost safe."
+        },
+        {
+          "when": [
+            {
+              "flag": "TLWAYFARER",
+              "value": 2
+            }
+          ],
+          "line": "No traveller's account is in the report. I'll leave the rubbing and warn that the road is unsafe; the sound itself remains unknown."
+        },
         {
           "flag": "TLMISTWOODVICTORY",
           "value": 1,

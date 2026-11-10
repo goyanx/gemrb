@@ -75,7 +75,7 @@ class Window:
 window = Window()
 events = []
 globals_ = {"CHAPTER": 1, "TLCHAP": 0, "TLBEAT": 0, "TLENEMY": 0, "TLENEMY_STALKER": 0,
-            "TLENEMY_PROWLER": 0, "TLCAST": 0,
+            "TLENEMY_PROWLER": 0, "TLCAST": 0, "TLWAYFARER": 0, "TLJRN_WAYFARER_PUBLIC": 0, "TLJRN_WAYFARER_PRIVATE": 0,
             "TLMARALEAD": 0, "TLLIBRARYCLUE": 0, "TLWATCHPOST": 0, "TLHUNTER": 0,
             "TLGALLERY": 0, "TLCOURT": 0, "TLECHO": 0, "TLECHOPHASE": 0, "TLFALSE_ALGORETH": 0, "TLWARDING": 0, "TLJRN_WARDING": 0, "TLMISTWOODSAFE": 0, "TLMISTWOODVICTORY": 0, "TLARCHIVE": 0, "TLVOYAGE": 0, "TLBRIEFING": 0,
             "TLARCHIVEWARD": 0, "TLDEEP_ARCHIVE_WARDEN": 0, "TLJRN_ARCHIVE_WARD": 0,
@@ -902,7 +902,7 @@ for chapter_index, chapter in enumerate(chapters):
                 assert globals_[event["flag"]] == 1
                 assert any(entry["value"] == event["text"] for entry in journal_entries)
             choice_count += 1
-assert choice_count == 46
+assert choice_count == 48
 
 # Native NPC DLG writes the route flag directly; the scene panel reconciles
 # its authored journal event on the next render without duplicating it.
@@ -981,7 +981,7 @@ for selected, expected, response in (
     assert response in window.controls[0].text
 
 choice_count += len(selene_followup["choices"])
-assert choice_count == 48
+assert choice_count == 50
 
 # Mara's staged ledger conversation records one shared journal event and carries
 # either handling choice into Scholar Inessa's later library dialogue.
@@ -1046,7 +1046,7 @@ for selected, expected_response in ((1, "separate landmark copy"),
 
 # Include the two nested options in the campaign-wide authored response count.
 choice_count += len(followup["choices"])
-assert choice_count == 50
+assert choice_count == 52
 
 # The Act IV council hearing requires the player to choose how Oren preserves
 # the evidence; Alisande and the closing record both acknowledge either path.
@@ -1100,7 +1100,7 @@ for selected, expected_response, expected_route in (
     assert expected_route in window.controls[0].text
 
 choice_count += len(council_followup["choices"])
-assert choice_count == 52
+assert choice_count == 54
 
 # Pell's council deposition is optional, gives bounded route testimony, and
 # journals the player's decision to publish only the warning or restrict detail.
@@ -1161,7 +1161,7 @@ for selected, event_flag, expected_response in (
             policy_response = "The road remains open to supervised scholars and travellers." if court_policy == 1 else "Scroll access requires leave from Edmon and me."
             assert policy_response in window.controls[0].text
 
-assert choice_count == 52
+assert choice_count == 54
 
 # The return to the Mistwood Watchpost reuses the location but changes its
 # conversation. Both records persist through a script reload and change court dialogue.
@@ -1223,7 +1223,7 @@ for selected, expected_response, expected_edmon, expected_route in (
     assert expected_edmon in window.controls[0].text
 
 choice_count += len(return_followup["choices"])
-assert choice_count == 54
+assert choice_count == 56
 
 # Act VI's optional archive quest offers a peaceful path and a gated warder
 # challenge. Victory records the comparison leaf and changes dialogue in the
@@ -1402,7 +1402,7 @@ for signal in (1, 2):
         assert expected in window.controls[0].text
 
 choice_count += len(relay_followup["choices"])
-assert choice_count == 56
+assert choice_count == 58
 
 # The Act VII Eldrador landing and sanctuary-approach adaptations preserve the
 # unresolved Tear while carrying both evidence and protocol choices forward.
@@ -1528,5 +1528,76 @@ for warding in (1, 2):
                 break
         assert expected_line in window.controls[0].text
 
+# The Lost Wayfarer may send an anonymous warning or keep their account private.
+# Both outcomes are journaled once and Courier Pell carries the chosen level of
+# detail forward, with a distinct response if the Mistwood ambush was defeated.
+wayfarer = next(person for person in campaign.Story.cast("tl0002")
+                if person["name"] == "Lost Wayfarer")
+pell = next(person for person in campaign.Story.cast("tl0009")
+             if person["name"] == "Courier Pell")
+for choice_value, victory in ((1, 0), (1, 1), (2, 0), (2, 1)):
+    window = Window()
+    events.clear()
+    timed_events.clear()
+    journal_entries.clear()
+    current_area = "tl0002"
+    globals_.update({"TLCHAP": chapter_index_by_area["tl0002"], "TLBEAT": 0,
+                     "TLENEMY": 0, "TLCAST": 0, "TLWAYFARER": 0,
+                     "TLJRN_WAYFARER_PUBLIC": 0, "TLJRN_WAYFARER_PRIVATE": 0, "TLMISTWOODVICTORY": victory,
+                     "TLFOLLOWPENDING": 0})
+    campaign = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(campaign)
+    campaign.OnLoad()
+    while timed_events:
+        timed_events.pop(0)()
+    window.controls[11].press()  # Tessa
+    window.controls[11].press()  # Lost Wayfarer
+    assert "Lost Wayfarer:" in window.controls[0].text
+    assert len(wayfarer["choices"]) == 2
+    window.controls[11].press()
+    assert window.controls[12].text == wayfarer["choices"][0]["label"]
+    window.controls[12 if choice_value == 1 else 13].press()
+    assert globals_["TLWAYFARER"] == choice_value
+    journal_flag = "TLJRN_WAYFARER_PUBLIC" if choice_value == 1 else "TLJRN_WAYFARER_PRIVATE"
+    other_journal_flag = "TLJRN_WAYFARER_PRIVATE" if choice_value == 1 else "TLJRN_WAYFARER_PUBLIC"
+    assert globals_[journal_flag] == 1
+    assert globals_[other_journal_flag] == 0
+    assert len(journal_entries) == 1
+    assert journal_entries[0]["Chapter"] == 2
+    assert "voice answered from the trees" in journal_entries[0]["value"]
+    for _ in range(2):
+        window.controls[11].press()
+    assert not window.controls[12].visible and not window.controls[13].visible
+    assert len(journal_entries) == 1
+
+    window = Window()
+    events.clear()
+    timed_events.clear()
+    current_area = "tl0009"
+    globals_.update({"TLCHAP": chapter_index_by_area["tl0009"], "TLBEAT": 0,
+                     "TLENEMY": 0, "TLCAST": 0})
+    campaign = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(campaign)
+    campaign.OnLoad()
+    while timed_events:
+        timed_events.pop(0)()
+    window.controls[11].press()
+    assert "Courier Pell:" in window.controls[0].text
+    response = next(
+        response for response in pell["responses"]
+        if all(globals_[condition["flag"]] == condition["value"]
+               for condition in response.get("when", [{"flag": response.get("flag"),
+                                                        "value": response.get("value")}]))
+    )
+    assert response["line"] in window.controls[0].text
+    if choice_value == 1:
+        assert "anonymous warning" in window.controls[0].text
+    else:
+        assert ("keep the traveller's account private" in window.controls[0].text
+                or "No traveller's account" in window.controls[0].text)
+    assert ("drove both creatures off the road" in window.controls[0].text) == bool(victory)
+
+assert choice_count == 58
+
 print(len(chapters), "scenes across seven acts,", sum(len(campaign.Story.cast(chapter["area"])) for chapter in chapters),
-      "named scene actors, keyboard controls, authored journal events, four-state NPC response conditions, all 56 response options, three market routes, four encounter gates, twenty-four transitions, and seven voice cues passed")
+      "named scene actors, keyboard controls, authored journal events, four-state NPC response conditions, all 58 response options, three market routes, four encounter gates, twenty-four transitions, and seven voice cues passed")
