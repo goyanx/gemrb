@@ -2,6 +2,14 @@
 
 This project is a playable campaign prototype for [GemRB](../README.md). GemRB runs Infinity Engine games; it is not a visual editor. The game starts with Algoreth Jon Goren as a wizard seeking the scrolls of Byzantem. Twenty-five scene areas now span seven acts, from the early quest to his later, documented reign and the unresolved Eldrador Tear. The act cadence takes inspiration from long fantasy RPGs, **not** Baldur's Gate II content or playtime.
 
+## In-game screenshots
+
+These captures come from isolated GemRB sessions. Mistwood shows the optional Wayfarer report and its Journal entry; the Watchpost capture shows Courier Pell responding to the anonymous warning while leaving the voice unexplained.
+
+| Mistwood choice | Act II Journal | Watchpost callback |
+| --- | --- | --- |
+| ![The Lost Wayfarer offers two reporting choices on Mistwood Road](screenshots/mistwood-wayfarer-choice.png) | ![The Act II Journal records the anonymous warning](screenshots/mistwood-wayfarer-journal.png) | ![Courier Pell acknowledges the anonymous warning at the Watchpost](screenshots/ruined-watchpost-pell-callback.png) |
+
 ## AI and human contributor baseline
 
 Read [GOLD_STANDARD_GAME_DESIGN_PIPELINE.md](GOLD_STANDARD_GAME_DESIGN_PIPELINE.md) before authoring or implementing Terralum content. It defines the canon rules, BG2-informed design principles, production gates, and per-scene acceptance checklist. Use the repo-root [TODO.md](../TODO.md) for current status and [LEARNINGS.md](../LEARNINGS.md) for verified engineering findings. The baseline is also exposed through the `terralum_get_design_standard` MCP tool.
