@@ -6,7 +6,7 @@
 import struct
 from pathlib import Path
 
-from PIL import Image
+from PIL import Image, ImageEnhance
 
 ROOT = Path(__file__).resolve().parents[2]
 SPRITE_ROOT = ROOT / "terralum" / "art" / "world_sprites"
@@ -51,6 +51,17 @@ def _indexed_frame(image, palette_image):
 	return cropped.width, cropped.height, bounds, bytes(data)
 
 
+def _open_world_frame(path):
+	"""Boost muted costume colors so nearby actors stay recognizable in-game."""
+	with Image.open(path) as source:
+		image = source.convert("RGBA")
+	rgb = image.convert("RGB")
+	rgb = ImageEnhance.Color(rgb).enhance(1.7)
+	rgb = ImageEnhance.Contrast(rgb).enhance(1.16)
+	rgb.putalpha(image.getchannel("A"))
+	return rgb
+
+
 def _bam_bytes(images, cycles, anchor_adjust=(0, 0)):
 	"""Write uncompressed BAM V1, retaining a distinct 256-entry palette."""
 	colors, palette_image = _palette_for(images)
@@ -87,12 +98,12 @@ def _bam_bytes(images, cycles, anchor_adjust=(0, 0)):
 def write_npc_avatar(name, prefix, output_override):
 	"""Compile one actor's 9-direction walk and idle BAM resources."""
 	source = SPRITE_ROOT / name
-	walk = [Image.open(source / f"{direction:02d}_{pose:02d}.png").convert("RGBA")
+	walk = [_open_world_frame(source / f"{direction:02d}_{pose:02d}.png")
 		for direction in range(9) for pose in range(4)]
 	walk_cycles = [list(range(direction * 4, direction * 4 + 4)) for direction in range(9)]
 	walk_bam = _bam_bytes(walk, walk_cycles)
 
-	idle = [Image.open(source / f"{direction:02d}_00.png").convert("RGBA") for direction in range(9)]
+	idle = [_open_world_frame(source / f"{direction:02d}_00.png") for direction in range(9)]
 	# The standard humanoid's G17 awake stance indexes cycles 63 through 71.
 	idle_cycles = [[0] for _ in range(63)]
 	idle_cycles.extend([[direction] for direction in range(9)])
