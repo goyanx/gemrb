@@ -47,6 +47,12 @@ PORTRAITS = {
     "TAVIN0": (3, 2, 1), "LEORA0": (3, 3, 1), "NERIN0": (3, 0, 2),
     "ORIS00": (3, 1, 2), "MERETH": (3, 2, 2), "ORLA00": (3, 3, 2),
 }
+PORTRAIT_ART_OVERRIDES = {
+    "EDMONV": PROJECT / "art" / "character_avatars" / "edmon0.png",
+    "ALISAV": PROJECT / "art" / "character_avatars" / "alisan.png",
+    "MARAAV": PROJECT / "art" / "character_avatars" / "mara00.png",
+    "ALGOVR": PROJECT / "art" / "character_avatars" / "algore.png",
+}
 def avatar_profile(person):
 	text = (person.get("name", "") + " " + person.get("role", "")).lower()
 	if "queen alisande" in text:
@@ -700,6 +706,24 @@ def build():
                 cell_crop = cell.crop((0, top, width, top + new_height))
             resized = cell_crop.resize(size, Image.Resampling.LANCZOS)
             resized.save(OUTPUT / "override" / f"{portrait}{suffix}.bmp", format="BMP")
+    for portrait, source_path in PORTRAIT_ART_OVERRIDES.items():
+        with Image.open(source_path) as source_portrait:
+            portrait_rgba = source_portrait.convert("RGBA")
+        for suffix, size in (("M", (169, 224)), ("S", (64, 64))):
+            desired_ratio = size[0] / size[1]
+            width, height = portrait_rgba.size
+            if width / height > desired_ratio:
+                new_width = round(height * desired_ratio)
+                left = (width - new_width) // 2
+                portrait_crop = portrait_rgba.crop((left, 0, left + new_width, height))
+            else:
+                new_height = round(width / desired_ratio)
+                top = max(0, (height - new_height) // 3)
+                portrait_crop = portrait_rgba.crop((0, top, width, top + new_height))
+            background = Image.new("RGBA", portrait_crop.size, (35, 30, 26, 255))
+            background.alpha_composite(portrait_crop)
+            background.convert("RGB").resize(size, Image.Resampling.LANCZOS).save(
+                OUTPUT / "override" / f"{portrait}{suffix}.bmp", format="BMP")
     write_native_dialogues(native_dialogues)
     image = write_tis(AREA_IMAGE, SOURCE / "override" / "ar0100.tis", OUTPUT / "override" / "ar0100.tis")
     image.save(OUTPUT / "override" / "ar0100.png")

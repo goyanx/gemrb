@@ -14,6 +14,12 @@ from ie_stats import (IE_EA, IE_STATE_ID, STATE_DEAD, ENEMY, NEUTRAL,
 					  IE_HAIR_COLOR, IE_MAJOR_COLOR, IE_MINOR_COLOR)
 
 NPC_PALETTES_BY_NAME = NPCPalette.palettes_by_name(Story.cast_catalog())
+PORTRAIT_ALIASES = {
+	"Archivist Mara": "MARAAV",
+	"King Edmon": "EDMONV",
+	"Queen Alisande": "ALISAV",
+	"Algoreth": "ALGOVR",
+}
 
 
 def _style(button, width=None):
@@ -87,7 +93,7 @@ def OnLoad():
 	cast_index = {"line": -1}
 
 	def set_portrait(person):
-		portrait = person.get("portrait") if person else None
+		portrait = PORTRAIT_ALIASES.get(person["name"], person.get("portrait")) if person else None
 		if portrait:
 			portrait_button.SetPicture(portrait + "M")
 			portrait_button.SetVisible(True)

@@ -35,6 +35,12 @@ This fork includes **Terralum: Scrolls of Byzantem**, an original, story-driven 
 <p align="center"><em>Three custom actors in live GemRB · 38 generated multi-direction character sets grouped by role and costume.</em></p>
 
 <p align="center">
+  <a href="terralum/screenshots/character-dialogue-avatars-live.png"><img src="terralum/screenshots/character-dialogue-avatars-live.png" alt="Live GemRB dialogue showing the redesigned Archivist Mara portrait with her blue hood, braid, spectacles, and book" width="72%"></a>
+  <a href="terralum/art/character_avatars/central_cast_portraits.png"><img src="terralum/art/character_avatars/central_cast_portraits.png" alt="New portrait designs for King Edmon, Queen Alisande, Archivist Mara, and Algoreth" width="25%"></a>
+</p>
+<p align="center"><em>New character portraits shown in a live dialogue, alongside the central cast design sheet.</em></p>
+
+<p align="center">
   <a href="terralum/screenshots/market-party-moved-live.png"><img src="terralum/screenshots/market-party-moved-live.png" alt="Live GemRB screenshot after the selected party member moved through Alsperia Market and the camera followed" width="75%"></a>
 </p>
 <p align="center"><em>Click-to-move in the Market courtyard: the selected party member reaches the stalls and the camera reveals more of the area.</em></p>
