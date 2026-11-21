@@ -20,6 +20,10 @@ All 38 named NPCs now have separately rendered, animated world avatars. Outfit p
 
 ![Contact sheet of all 38 named NPC world avatars](art/world_sprites/cast-contact-sheet.png)
 
+| Scout Tessa at Hunter's Camp | Saren's live schedule dialogue | Relay choice in the Journal |
+| --- | --- | --- |
+| ![Scout Tessa's new hood and quiver avatar in the Hunter's Camp scene](screenshots/progression-tessa-choice.png) | ![Waywarden Saren's dialogue acknowledges Leora's copied schedule](screenshots/progression-saren-direct-talk.png) | ![The Act II Journal records the patrol call at the Relay](screenshots/progression-relay-journal.png) |
+
 The current procedural pass gives 35 cast members identity-specific costume palettes or visible carried gear, alongside bespoke royal designs for Edmon, Alisande, and Vaelthira. In the live Library, Inessa carries a scroll while Oren wears a distinct scholar coat; Mara's Market sprite uses another field-record variant. Other areas still need an in-game cast review.
 
 ![Live Library scene showing distinct Inessa and Oren world avatars](screenshots/supporting-cast-library-live.png)

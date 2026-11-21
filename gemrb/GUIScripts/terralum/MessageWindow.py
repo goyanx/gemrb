@@ -214,6 +214,7 @@ def OnLoad():
 		for button in choice_buttons:
 			button.SetVisible(False)
 		journal_button.SetVisible(True)
+		cast.SetVisible(True)
 
 	def record_journal_event(event, act):
 		if event and not GemRB.GetGameVar(event["flag"]):
@@ -325,6 +326,7 @@ def OnLoad():
 		dialogue_state["has_choices"] = False
 		for button in choice_buttons:
 			button.SetVisible(False)
+		cast.SetVisible(True)
 		beat_text = beat["text"]
 		if chapter["area"] == "tl0002" and beat_index == 0:
 			lead = GemRB.GetGameVar("TLMARALEAD")
