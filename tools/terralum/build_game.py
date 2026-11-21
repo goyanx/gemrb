@@ -65,6 +65,14 @@ def avatar_profile(person):
 		return "saren"
 	if "lost wayfarer" in text:
 		return "wayfarer"
+	if "hunter fen" in text:
+		return "fen"
+	if "waykeeper sella" in text:
+		return "sella"
+	if "carver doma" in text:
+		return "doma"
+	if "courier eren" in text:
+		return "eren"
 	if "dorian the seer" in text:
 		return "dorian"
 	if "lorian guardian" in text:
@@ -83,7 +91,7 @@ def avatar_profile(person):
 		return "royal"
 	if "king edmon" in text:
 		return "king"
-	if "carver doma" in text or "stoneworker" in text:
+	if "stoneworker" in text:
 		return "citizen"
 	if any(word in text for word in ("ranger", "scout", "hunter", "pathfinder", "waykeeper",
 									"fordkeeper", "wayfarer", "courier")):

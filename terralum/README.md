@@ -32,9 +32,11 @@ The latest avatar pass gives Scholar Inessa a scholar's stole and route folio, S
 
 ![Scholar Inessa's updated world avatar in the live Library scene](screenshots/inessa-avatar-library-rebuilt.png)
 
-The supporting cast now has four more named sprite designs: Dorian's silver-bearded seer regalia, Lorian's broad guardian mantle and shield, Ilya's rust trail scarf and quiver, and Pell's dispatch tube and courier sash. The generated reference sheet is visual guidance; all four designs were translated into their animated world sprites and included in the rebuilt game pack. Live scene-scale review is still pending.
+The supporting cast now has eight more named sprite designs: Dorian's silver-bearded seer regalia, Lorian's broad guardian mantle and shield, Ilya's rust trail scarf and quiver, Pell's dispatch tube and courier sash, Fen's hunter hat and fur collar, Sella's waystone charms and marker staff, Doma's stoneworking apron and tools, and Eren's courier pack and rope coil. The generated reference sheets are visual guidance; all eight designs were translated into animated world sprites and included in the rebuilt game pack. Live scene-scale review is still pending.
 
 ![Generated concept sheet guiding Dorian, Lorian, Ilya, and Pell's distinct world-avatar designs](art/reference/supporting-cast-avatar-concepts.png)
+
+![Generated concept sheet guiding Fen, Sella, Doma, and Eren's Mistwood-route avatar designs](art/reference/mistwood-route-cast-concepts.png)
 
 Four generated portrait sheets now provide medium and small GemRB portrait resources for all thirty-eight unique named NPCs across the seven-act cast. These dialogue portraits are separate from the animated world sprites. Portraits are selected by NPC data and appear beside their dialogue. The latest sheet adds distinct portraits for twelve previously unpictured characters.
 

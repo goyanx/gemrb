@@ -1,8 +1,8 @@
 # Supporting cast avatar concepts
 
-Generated reference art that informed the next four procedural world-sprite designs. Read each row left to right:
+Generated concept art guides the named 80×96 world-sprite models. These images are visual references, not runtime sprites.
 
-- Top row: Scout Tessa, Lost Wayfarer, Dorian the Seer.
-- Bottom row: Lorian Guardian, Ranger Ilya, Courier Pell.
+- `supporting-cast-avatar-concepts.png`: top row Tessa, the Lost Wayfarer, Dorian; bottom row Lorian, Ilya, Pell.
+- `mistwood-route-cast-concepts.png`: top row Hunter Fen and Waykeeper Sella; bottom row Carver Doma and Courier Eren.
 
-The sheet is concept guidance, not a game-ready sprite atlas. In-game figures are rendered as animated nine-direction Blender models in `art/world_sprites/` and compiled into GemRB BAM resources by the build pipeline. Review the contact sheet and then verify each new design in its authored scene.
+The matching animated nine-direction frames live under `../world_sprites/`. Review those frames at map scale and then in each authored GemRB scene before approving the design.

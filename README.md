@@ -34,7 +34,7 @@ This fork includes **Terralum: Scrolls of Byzantem**, an original, story-driven 
 </p>
 <p align="center"><em>Three custom actors in live GemRB · 38 generated multi-direction character sets grouped by role and costume.</em></p>
 
-The latest supporting-cast art pass adds named silhouettes and story props for Dorian, Lorian, Ilya, and Pell. See the [generated character reference sheet](terralum/art/reference/supporting-cast-avatar-concepts.png) and the updated world-sprite contact sheet above; their compiled in-game scene review remains in progress.
+The latest supporting-cast art pass adds named silhouettes and story props for Dorian, Lorian, Ilya, Pell, Fen, Sella, Doma, and Eren. See the generated [Byzantem cast](terralum/art/reference/supporting-cast-avatar-concepts.png) and [Mistwood route](terralum/art/reference/mistwood-route-cast-concepts.png) references and the updated world-sprite contact sheet above. The current build's Market scene was live-captured; scene review for these newer NPC sprites remains in progress.
 
 <p align="center">
   <a href="terralum/screenshots/character-dialogue-avatars-live.png"><img src="terralum/screenshots/character-dialogue-avatars-live.png" alt="Live GemRB dialogue showing the redesigned Archivist Mara portrait with her blue hood, braid, spectacles, and book" width="72%"></a>

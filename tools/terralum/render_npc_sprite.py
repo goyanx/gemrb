@@ -89,8 +89,9 @@ def parent_at(obj, pivot, name):
 def make_actor(name, profile, seed):
 	# Keep the general animation rig, but let recurring cast leads carry a
 	# distinct role silhouette and signature prop instead of only a new color.
-	archetype = {"inessa": "scholar", "dorian": "mage", "tessa": "ranger", "ilya": "ranger",
-		"pell": "ranger", "saren": "guard", "lorian": "guard", "wayfarer": "ranger"}.get(profile, profile)
+	archetype = {"inessa": "scholar", "dorian": "mage", "tessa": "ranger", "doma": "citizen", "fen": "ranger",
+		"sella": "ranger", "ilya": "ranger", "eren": "ranger", "pell": "ranger",
+		"saren": "guard", "lorian": "guard", "wayfarer": "ranger"}.get(profile, profile)
 	# Each identity gets a high-contrast cloth color and a visible accessory
 	# variant. At 80x96, one strong prop or head silhouette reads better than
 	# several tiny costume details.
@@ -121,13 +122,23 @@ def make_actor(name, profile, seed):
 		cloth_rgb, trim_rgb, lining_rgb = (0.36, 0.105, 0.075), (0.78, 0.63, 0.32), (0.24, 0.16, 0.10)
 	elif profile == "pell":
 		cloth_rgb, trim_rgb, lining_rgb = (0.14, 0.23, 0.34), (0.72, 0.48, 0.18), (0.58, 0.45, 0.29)
+	elif profile == "fen":
+		cloth_rgb, trim_rgb, lining_rgb = (0.10, 0.20, 0.10), (0.60, 0.48, 0.28), (0.27, 0.17, 0.10)
+	elif profile == "sella":
+		cloth_rgb, trim_rgb, lining_rgb = (0.23, 0.30, 0.18), (0.77, 0.66, 0.39), (0.67, 0.59, 0.45)
+	elif profile == "doma":
+		cloth_rgb, trim_rgb, lining_rgb = (0.32, 0.22, 0.13), (0.70, 0.47, 0.20), (0.63, 0.57, 0.46)
+	elif profile == "eren":
+		cloth_rgb, trim_rgb, lining_rgb = (0.08, 0.27, 0.29), (0.87, 0.58, 0.13), (0.44, 0.30, 0.18)
 	else:
 		cloth_rgb, trim_rgb, lining_rgb = identity_cloth, identity_trim, (0.82, 0.76, 0.62)
 	cloth = material(name + " cloth", cloth_rgb)
 	trim = material(name + " trim", trim_rgb, 0.52)
 	lining = material(name + " lining", lining_rgb)
-	hair = material(name + " hair", (0.62, 0.58, 0.48) if profile == "dorian" else (0.19, 0.075, 0.035))
-	skin = material(name + " skin", (0.31, 0.17, 0.11) if profile == "ilya" else (0.72, 0.47, 0.31))
+	hair_rgb = (0.62, 0.58, 0.48) if profile in ("dorian", "sella") else (0.16, 0.08, 0.035) if profile == "fen" else (0.19, 0.075, 0.035)
+	hair = material(name + " hair", hair_rgb)
+	skin_rgb = (0.31, 0.17, 0.11) if profile == "ilya" else (0.47, 0.29, 0.18) if profile == "eren" else (0.72, 0.47, 0.31)
+	skin = material(name + " skin", skin_rgb)
 	boots = material(name + " boots", (0.13, 0.09, 0.075))
 	parts = []
 	for side, sign in (("left", -1), ("right", 1)):
@@ -165,13 +176,15 @@ def make_actor(name, profile, seed):
 		elif archetype == "ranger":
 			# Short front-facing capes and identity-specific trail gear distinguish
 			# pathfinders from the long-coated scholars and from one another.
-			variant = 0 if profile in ("tessa", "wayfarer") else seed % 4
+			variant = 0 if profile in ("tessa", "wayfarer") else 1 if profile == "fen" else 3 if profile == "eren" else 2 if profile == "sella" else seed % 4
 			add_mesh(name + " short travel cape", [
 				(-0.40 if variant == 2 else -0.34, -0.23, 1.34),
 				(0.40 if variant == 2 else 0.34, -0.23, 1.34),
 				(0.23, -0.23, 1.02), (0.0, -0.23, 0.93), (-0.23, -0.23, 1.02),
 			], [(0, 1, 2, 3, 4)], trim)
-			if variant in (0, 2):
+			if profile == "fen":
+				pass  # Fen's broad hunter hat is modeled below.
+			elif variant in (0, 2):
 				add_sphere(name + " hood", (0, 0.055, 1.67), (0.23, 0.22, 0.24), cloth)
 			else:
 				add_cylinder(name + " broad trail hat", (0, 0.025, 1.72), 0.26, 0.09, trim, vertices=8)
@@ -249,6 +262,25 @@ def make_actor(name, profile, seed):
 				(0.43, 0.12, 0.72), (0.0, 0.12, 0.82), (-0.43, 0.12, 0.72)], [(0, 1, 2, 3, 4)], cloth)
 			add_cube(name + " guardian shield", (0.42, -0.12, 0.89), (0.36, 0.14, 0.62), trim)
 			add_cylinder(name + " guardian spear", (-0.43, 0.02, 1.18), 0.035, 1.46, lining, vertices=6)
+		elif profile == "fen":
+			add_sphere(name + " hunter fur collar", (0, -0.02, 1.34), (0.43, 0.24, 0.20), trim)
+			add_cylinder(name + " feathered hunting quiver", (0.34, 0.05, 1.25), 0.09, 0.68, boots, vertices=7)
+			add_cylinder(name + " longbow", (-0.39, -0.13, 1.10), 0.03, 1.18, trim, vertices=6)
+		elif profile == "sella":
+			add_mesh(name + " waykeeper's mantle", [(-0.42, 0.12, 1.40), (0.42, 0.12, 1.40),
+				(0.36, 0.12, 0.64), (0.0, 0.12, 0.82), (-0.36, 0.12, 0.64)], [(0, 1, 2, 3, 4)], trim)
+			add_cylinder(name + " carved marker staff", (0.42, 0.02, 1.17), 0.035, 1.46, boots, vertices=6)
+			add_cube(name + " waystone charm", (-0.31, -0.21, 0.92), (0.20, 0.08, 0.26), lining)
+		elif profile == "doma":
+			add_cube(name + " stonework apron", (0, -0.22, 0.88), (0.43, 0.08, 0.59), trim)
+			add_cylinder(name + " carver's mallet handle", (0.38, -0.05, 0.89), 0.035, 0.58, boots, vertices=6)
+			add_cube(name + " carver's mallet head", (0.38, -0.05, 1.20), (0.23, 0.13, 0.16), lining)
+			add_cylinder(name + " stone chisel", (-0.34, -0.04, 1.08), 0.025, 0.49, trim, vertices=6)
+		elif profile == "eren":
+			add_mesh(name + " courier scarf", [(-0.18, -0.25, 1.34), (0.18, -0.25, 1.34),
+				(0.17, -0.26, 1.03), (0.34, -0.24, 0.88), (0.25, -0.25, 1.18)], [(0, 1, 2, 3, 4)], trim)
+			add_cube(name + " courier route pack", (0.30, 0.03, 1.16), (0.31, 0.25, 0.48), lining)
+			add_cylinder(name + " coil of ford rope", (-0.37, -0.05, 0.93), 0.12, 0.12, trim, vertices=8)
 	else:
 		flare = 0.46 if profile == "queen" else 0.37 if profile == "mara" else 0.31 if profile == "leora" else 0.34 if profile in ("royal", "mage") else 0.27
 		add_cone(name + " robe", (0, 0, 0.75), flare, 0.17, 0.95, cloth, vertices=10)
@@ -305,6 +337,15 @@ def make_actor(name, profile, seed):
 		add_cone(name + " silver beard", (0, -0.13, 1.48), 0.13, 0.025, 0.28, hair, vertices=7)
 		add_cylinder(name + " brass star circlet", (0, -0.01, 1.79), 0.18, 0.055, trim, vertices=8)
 		add_sphere(name + " seer's orb", (0.40, 0.01, 1.78), (0.10, 0.10, 0.11), lining)
+	elif profile == "fen":
+		add_sphere(name + " hunter beard", (0, -0.11, 1.48), (0.16, 0.10, 0.17), hair)
+		add_cylinder(name + " broad hunter hat", (0, 0.02, 1.79), 0.29, 0.09, boots, vertices=8)
+	elif profile == "sella":
+		add_cylinder(name + " silver trail braid", (0.16, 0.03, 1.38), 0.05, 0.53, hair, vertices=6)
+	elif profile == "doma":
+		add_sphere(name + " close-cropped gray hair", (0, 0.02, 1.73), (0.18, 0.15, 0.11), lining)
+	elif profile == "eren":
+		add_sphere(name + " courier hair knot", (0.11, 0.04, 1.74), (0.10, 0.12, 0.13), hair)
 	if archetype in ("queen", "royal", "king"):
 		add_cylinder(name + " crown band", (0, -0.012, 1.79), 0.16, 0.075, trim, vertices=8)
 		for index in range(5):
