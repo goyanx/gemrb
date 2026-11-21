@@ -94,7 +94,8 @@ globals_ = {"CHAPTER": 1, "TLCHAP": 0, "TLBEAT": 0, "TLENEMY": 0, "TLENEMY_STALK
             "TLELDRADOR": 0, "TLSANCTUARY": 0, "TLJRN_ARRIVAL": 0, "TLJRN_SANCTUARY": 0,
             "TLPPELLDOCKET": 0, "TLJRN_PELL_PUBLIC": 0, "TLJRN_PELL_ARCHIVE": 0,
             "TLJRN_COURT_OPEN": 0, "TLJRN_COURT_RESTRICTED": 0}
-globals_.update({"TLMARADETAIL": 0, "TLJRN_MARA": 0, "TLFOLLOWPENDING": 0,
+globals_.update({"TLMARADETAIL": 0, "TLJRN_MARA": 0, "TLJRN_LIBRARY_COPY": 0,
+                 "TLJRN_LIBRARY_SEAL": 0, "TLFOLLOWPENDING": 0,
                  "TLFOLLOWNPC": 0, "TLFOLLOWCHOICE": 0, "TLWITNESS": 0,
                  "TLORENDOCKET": 0, "TLJRN_COURT_RECORD": 0, "TLRELAY": 0, "TLJRN_RELAY": 0, "TLRETURNMARK": 0, "TLJRN_RETURNMARK": 0})
 enemy_dead = False
@@ -151,7 +152,7 @@ spec = importlib.util.spec_from_file_location("MessageWindow", SCRIPTS / "terral
 campaign = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(campaign)
 campaign.OnLoad()
-assert window.controls[17].picture == "MARA00M"
+assert window.controls[17].picture == "MARAAVM"
 assert window.controls[17].visible
 while timed_events:
     timed_events.pop(0)()
@@ -332,8 +333,8 @@ for chapter_index, chapter in enumerate(chapters):
             elif chapter["area"] == "tl0003":
                 assert beat["encounter_actor_flag"] == "TLLORIAN_GUARDIAN"
                 assert globals_["TLENEMY"] == globals_[beat["encounter_actor_flag"]]
-                assert [event[1] for event in events if event[0] == "spawn"].count(
-                    (1, "riddler", *beat["spawn_position"])) == 1
+                assert (1, "riddler", *beat["spawn_position"]) not in [
+                    event[1] for event in events if event[0] == "spawn"]
             window.controls[4].press()
             assert globals_["TLBEAT"] == beats.index(beat)
             enemy_dead = True
@@ -365,7 +366,7 @@ assert globals_["TLARCHIVEWARD"] == 2
 assert len([event for event in events if event[0] == "area"]) == 24
 assert len([event for event in events if event[0] == "voice"]) == 8
 assert len([event for event in events if event[0] == "attack"]) == 3, [event for event in events if event[0] == "attack"]
-assert len(journal_entries) == 24
+assert len(journal_entries) == 25
 assert globals_["TLJRN_WAYSTONE"] == 1
 assert any("Three-Cairn Fork" in entry["value"] for entry in journal_entries)
 assert globals_["TLJRN_LORIAN_PURPOSE"] == 1

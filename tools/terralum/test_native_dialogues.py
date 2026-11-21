@@ -100,6 +100,7 @@ class NativeDialogueResourceTests(unittest.TestCase):
         self.assertEqual(bindings["OREN"], [("tl0011", "Royal Scribe Oren")])
         self.assertEqual(bindings["PELL"], [("tl0011", "Courier Pell")])
         self.assertEqual(bindings["WAYFAR"], [("tl0002", "Lost Wayfarer")])
+        self.assertEqual(bindings["INESSA"], [("tl0008", "Scholar Inessa")])
         wayfarer = dialogues["WAYFAR"]["states"]
         self.assertEqual(len(wayfarer), 5)
         self.assertEqual(next(condition["value"] for condition in wayfarer[0]["when"]
@@ -131,6 +132,21 @@ class NativeDialogueResourceTests(unittest.TestCase):
                                 if condition["flag"] == "TLTRAVELKIT")
                           for state in ilya[:2]}, {(1,), (2,)})
         self.assertEqual(ilya[0]["transitions"][0]["set"], [{"flag": "TLHUNTERTRACK", "value": 1}])
+
+        inessa = dialogues["INESSA"]["states"]
+        self.assertEqual(len(inessa), 7)
+        self.assertEqual({tuple(condition["value"] for condition in state["when"]
+                                if condition["flag"] == "TLCHAP") for state in inessa[:5]}, {(1,)})
+        self.assertEqual([transition["set"] for transition in inessa[0]["transitions"]], [
+            [{"flag": "TLLIBRARYCLUE", "value": 1}, {"flag": "TLJRN_LIBRARY_COPY", "value": 1}],
+            [{"flag": "TLLIBRARYCLUE", "value": 2}, {"flag": "TLJRN_LIBRARY_SEAL", "value": 1}],
+        ])
+        self.assertEqual([transition["next"] for transition in inessa[0]["transitions"]], [5, 6])
+        self.assertNotIn("when", inessa[5])
+        self.assertNotIn("when", inessa[6])
+        inessa_cast = next(person for person in cast["tl0008"] if person["name"] == "Scholar Inessa")
+        self.assertEqual([choice["journal"]["flag"] for choice in inessa_cast["choices"]],
+                         ["TLJRN_LIBRARY_COPY", "TLJRN_LIBRARY_SEAL"])
 
     def test_compiled_alistair_dialogue_and_tlk(self):
         pack = Path(os.environ.get("TERRALUM_GAME_OUTPUT", PROJECT / "build" / "game")).resolve()

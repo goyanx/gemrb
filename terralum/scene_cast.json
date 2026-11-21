@@ -123,13 +123,23 @@
           "label": "Copy the rune index",
           "reply": "Inessa copies the pale-stone marks into your field notes. Tessa can use them to avoid the watchpost.",
           "flag": "TLLIBRARYCLUE",
-          "value": 1
+          "value": 1,
+          "journal": {
+            "flag": "TLJRN_LIBRARY_COPY",
+            "section": 4,
+            "text": "Scholar Inessa copied the pale-stone marks from the scraped route index into Algoreth's field notes. The waystones may have shifted, so the markings remain a guide rather than a guarantee."
+          }
         },
         {
           "label": "Seal the damaged leaf",
           "reply": "Inessa seals the fragile page. You have the court's route, but the damaged landmarks remain uncertain.",
           "flag": "TLLIBRARYCLUE",
-          "value": 2
+          "value": 2,
+          "journal": {
+            "flag": "TLJRN_LIBRARY_SEAL",
+            "section": 4,
+            "text": "Algoreth asked Scholar Inessa to seal the damaged route-index leaf. The court still holds Dorian's route, but the missing waystone marks remain uncertain."
+          }
         }
       ],
       "role": "Royal library scholar",
@@ -139,7 +149,8 @@
       "voice": "Analytical and patient, explaining uncertainty in concrete terms.",
       "provenance": "adaptation",
       "portrait": "INESSA",
-      "avatar_creature": "inessa"
+      "avatar_creature": "inessa",
+      "dialog": "INESSA"
     },
     {
       "name": "Royal Scribe Oren",
