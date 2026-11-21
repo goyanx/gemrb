@@ -20,6 +20,10 @@ All 38 named NPCs now have separately rendered, animated world avatars. Outfit p
 
 ![Contact sheet of all 38 named NPC world avatars](art/world_sprites/cast-contact-sheet.png)
 
+The current procedural pass gives 35 cast members identity-specific costume palettes or visible carried gear, alongside bespoke royal designs for Edmon, Alisande, and Vaelthira. In the live Library, Inessa carries a scroll while Oren wears a distinct scholar coat; Mara's Market sprite uses another field-record variant. Other areas still need an in-game cast review.
+
+![Live Library scene showing distinct Inessa and Oren world avatars](screenshots/supporting-cast-library-live.png)
+
 Four generated portrait sheets now provide medium and small GemRB portrait resources for all thirty-eight unique named NPCs across the seven-act cast. These dialogue portraits are separate from the animated world sprites. Portraits are selected by NPC data and appear beside their dialogue. The latest sheet adds distinct portraits for twelve previously unpictured characters.
 
 ![Twelve new Terralum NPC portrait concepts for the complete cast](art/character_portraits_sheet_4.png)

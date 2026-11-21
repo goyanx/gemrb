@@ -43,7 +43,12 @@ This fork includes **Terralum: Scrolls of Byzantem**, an original, story-driven 
 <p align="center">
   <a href="terralum/screenshots/cast-map-colors-live.png"><img src="terralum/screenshots/cast-map-colors-live.png" alt="Live GemRB map view with Mara's book-bearing scholar silhouette, King Edmon in crimson, and Queen Alisande in teal" width="82%"></a>
 </p>
-<p align="center"><em>The redesigned central cast in the Market: Mara's book-bearing scholar, Edmon's crimson royal mantle, and Alisande's teal gown. The other scene actors still need the same live review.</em></p>
+<p align="center"><em>The Market's central cast with distinct role silhouettes and royal costumes.</em></p>
+
+<p align="center">
+  <a href="terralum/screenshots/supporting-cast-library-live.png"><img src="terralum/screenshots/supporting-cast-library-live.png" alt="Live GemRB Library scene with differently dressed Scholar Inessa and Royal Scribe Oren" width="82%"></a>
+</p>
+<p align="center"><em>Live Library scene: Inessa's red scroll-carrying outfit and Oren's teal scholar coat are distinct at game scale. The project contact sheet previews all 38 cast sprites.</em></p>
 
 <p align="center">
   <a href="terralum/screenshots/market-party-moved-live.png"><img src="terralum/screenshots/market-party-moved-live.png" alt="Live GemRB screenshot after the selected party member moved through Alsperia Market and the camera followed" width="75%"></a>
@@ -71,7 +76,7 @@ This fork includes **Terralum: Scrolls of Byzantem**, an original, story-driven 
 
 **[Campaign guide](terralum/README.md)** · **[Gold Standard pipeline](terralum/GOLD_STANDARD_GAME_DESIGN_PIPELINE.md)** · **[Campaign plan](terralum/campaign_plan.md)** · **[Current TODO](TODO.md)**
 
-> **Prototype status:** This is an expanding playable slice, not a finished full-length RPG. All 38 named cast members now have custom animated world sprites, and the opening Market's Mara, Edmon, and Alisande are live-rendered in GemRB. Review the remaining scenes in-engine; all 25 areas still inherit the demo's WED layout and terrain. The opening scene has live-tested native actor dialogue for Mara and Queen Alisande; Mara's copy-landmarks and sealed-ledger branches both work, and her decision appears in the Act I Journal. Other branches and save/load still need playtesting. See the [campaign guide](terralum/README.md) for build steps and current verification limits.
+> **Prototype status:** This is an expanding playable slice, not a finished full-length RPG. All 38 named cast members have custom animated world sprites; 35 now use identity-specific costume colors or role equipment, alongside the bespoke royal designs for King Edmon, Queen Alisande, and Queen Vaelthira. Fresh GemRB captures verify the opening Market and Library cast; review the other scenes in-engine. All 25 areas still inherit the demo's WED layout and terrain. The opening scene has live-tested native actor dialogue for Mara and Queen Alisande; Mara's copy-landmarks and sealed-ledger branches both work, and her decision appears in the Act I Journal. Other branches and save/load still need playtesting. See the [campaign guide](terralum/README.md) for build steps and current verification limits.
 
 To try it out you either need some of the ORIGINAL game's data or you can
 get a tiny sneak peek by running the included trivial game demo.

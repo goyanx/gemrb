@@ -19,11 +19,22 @@ def main():
 	parser.add_argument("--blender", default=os.environ.get("BLENDER_BIN") or shutil.which("blender"),
 			required=not (os.environ.get("BLENDER_BIN") or shutil.which("blender")))
 	parser.add_argument("--force", action="store_true", help="rerender complete sprite sets")
+	parser.add_argument("--only", action="append", default=[],
+			help="render one named identity or asset resref; may be repeated")
 	args = parser.parse_args()
 	if not Path(args.blender).is_file():
 		parser.error(f"Blender executable does not exist: {args.blender}")
 	render_script = ROOT / "tools" / "terralum" / "render_npc_sprite.py"
-	for avatar in NPC_AVATARS:
+	selected = [avatar for avatar in NPC_AVATARS if not args.only or
+			any(selector.casefold() in (avatar["name"].casefold(), avatar["asset"].casefold())
+				for selector in args.only)]
+	if args.only and len(selected) != len(set(args.only)):
+		missing = [selector for selector in args.only if not any(
+			selector.casefold() in (avatar["name"].casefold(), avatar["asset"].casefold())
+			for avatar in NPC_AVATARS)]
+		if missing:
+			parser.error("unknown NPC identity or asset: " + ", ".join(missing))
+	for avatar in selected:
 		output = PROJECT / "art" / "world_sprites" / avatar["asset"]
 		frames = [output / f"{direction:02d}_{pose:02d}.png"
 			for direction in range(9) for pose in range(4)]
@@ -37,11 +48,14 @@ def main():
 		if result.returncode:
 			print(result.stdout)
 			result.check_returncode()
+		if f"Rendered 36 frames for {avatar['asset']}" not in result.stdout:
+			print(result.stdout)
+			raise RuntimeError(f"Blender did not report a successful render for {avatar['name']}")
 		if not all(path.is_file() for path in frames):
 			raise RuntimeError(f"Blender did not produce all frames for {avatar['name']}")
 		print(f"rendered {avatar['name']} ({avatar['profile']})", flush=True)
 	write_contact_sheet()
-	print(f"World sprite sets available: {len(NPC_AVATARS)}")
+	print(f"World sprite sets available: {len(NPC_AVATARS)}; rendered selection: {len(selected)}")
 
 
 def write_contact_sheet():

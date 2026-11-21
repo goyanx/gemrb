@@ -6,6 +6,7 @@ Run with Blender's Python, not the system Python:
 """
 
 import bpy
+import colorsys
 import math
 import os
 import sys
@@ -86,22 +87,18 @@ def parent_at(obj, pivot, name):
 
 
 def make_actor(name, profile, seed):
-	# Each cast archetype changes the silhouette and props; the seed rotates its
-	# clothing hue so two scholars or wardens still read as different people.
+	# Each identity gets a high-contrast cloth color and a visible accessory
+	# variant. At 80x96, one strong prop or head silhouette reads better than
+	# several tiny costume details.
+	hue = (seed * 0.61803398875 + 0.08) % 1.0
+	identity_cloth = tuple(colorsys.hsv_to_rgb(hue, 0.76, 0.58))
+	identity_trim = tuple(colorsys.hsv_to_rgb((hue + 0.10) % 1.0, 0.76, 0.88))
 	if profile == "queen":
 		cloth_rgb, trim_rgb, lining_rgb = (0.035, 0.25, 0.32), (0.88, 0.62, 0.16), (0.86, 0.79, 0.64)
 	elif profile == "king":
 		cloth_rgb, trim_rgb, lining_rgb = (0.38, 0.035, 0.055), (0.88, 0.60, 0.16), (0.92, 0.84, 0.68)
-	elif profile == "scholar":
-		hue = 0.60 + ((seed % 5) - 2) * 0.025
-		cloth_rgb = tuple(__import__("colorsys").hsv_to_rgb(hue, 0.72, 0.44))
-		trim_rgb = (0.62, 0.34, 0.12)
-		lining_rgb = (0.82, 0.74, 0.59)
 	else:
-		hue = (seed * 0.61803398875 + 0.08) % 1.0
-		cloth_rgb = tuple(__import__("colorsys").hsv_to_rgb(hue, 0.58, 0.72))
-		trim_rgb = tuple(__import__("colorsys").hsv_to_rgb((hue + 0.12) % 1.0, 0.43, 0.82))
-		lining_rgb = tuple(__import__("colorsys").hsv_to_rgb((hue + 0.50) % 1.0, 0.22, 0.86))
+		cloth_rgb, trim_rgb, lining_rgb = identity_cloth, identity_trim, (0.82, 0.76, 0.62)
 	cloth = material(name + " cloth", cloth_rgb)
 	trim = material(name + " trim", trim_rgb, 0.52)
 	lining = material(name + " lining", lining_rgb)
@@ -126,27 +123,65 @@ def make_actor(name, profile, seed):
 			add_cylinder(name + " royal belt", (0, -0.10, 0.85), 0.24, 0.08, lining, vertices=8)
 			add_sphere(name + " royal shoulder cape", (0, 0.02, 1.29), (0.44, 0.28, 0.24), cloth)
 		elif profile == "scholar":
-			add_cube(name + " archivist's book", (-0.32, -0.17, 0.87), (0.25, 0.10, 0.36), trim)
-			add_cube(name + " book pages", (-0.32, -0.228, 0.87), (0.19, 0.025, 0.30), lining)
-			add_cube(name + " cross-body satchel", (0.19, -0.19, 0.92), (0.22, 0.08, 0.24), boots)
+			variant = seed % 4
+			if variant == 0:
+				add_cube(name + " archivist's book", (-0.32, -0.17, 0.87), (0.25, 0.10, 0.36), trim)
+				add_cube(name + " book pages", (-0.32, -0.228, 0.87), (0.19, 0.025, 0.30), lining)
+			elif variant == 1:
+				add_cylinder(name + " tall scroll case", (0.33, 0.02, 1.20), 0.075, 0.82, trim, vertices=8)
+				add_sphere(name + " scroll cap", (0.33, 0.02, 1.62), (0.09, 0.09, 0.08), lining)
+			elif variant == 2:
+				add_cube(name + " open folio", (-0.31, -0.16, 0.91), (0.34, 0.10, 0.27), trim)
+				add_cube(name + " folio pages", (-0.31, -0.22, 0.91), (0.27, 0.025, 0.21), lining)
+			else:
+				add_cylinder(name + " field scroll", (-0.33, -0.12, 0.96), 0.07, 0.48, trim, vertices=8)
+				add_cube(name + " broad satchel", (0.28, -0.18, 0.89), (0.30, 0.10, 0.34), boots)
+			if variant in (1, 3):
+				add_cube(name + " cross-body strap", (0.02, -0.20, 1.06), (0.07, 0.06, 0.64), trim)
 		elif profile == "ranger":
-			# A short shoulder cape leaves the trousers visible, separating the
-			# pathfinder silhouette from the long-robed scholars and mages.
+			# Short front-facing capes and identity-specific trail gear distinguish
+			# pathfinders from the long-coated scholars and from one another.
+			variant = seed % 4
 			add_mesh(name + " short travel cape", [
-				(-0.34, -0.23, 1.34), (0.34, -0.23, 1.34),
+				(-0.40 if variant == 2 else -0.34, -0.23, 1.34),
+				(0.40 if variant == 2 else 0.34, -0.23, 1.34),
 				(0.23, -0.23, 1.02), (0.0, -0.23, 0.93), (-0.23, -0.23, 1.02),
 			], [(0, 1, 2, 3, 4)], trim)
-			add_sphere(name + " hood", (0, 0.055, 1.67), (0.23, 0.22, 0.24), cloth)
-			add_cube(name + " trail pack", (0.31, 0.02, 1.17), (0.27, 0.25, 0.42), lining)
+			if variant in (0, 2):
+				add_sphere(name + " hood", (0, 0.055, 1.67), (0.23, 0.22, 0.24), cloth)
+			else:
+				add_cylinder(name + " broad trail hat", (0, 0.025, 1.72), 0.26, 0.09, trim, vertices=8)
+				add_cone(name + " travel cap", (0, 0.025, 1.83), 0.15, 0.02, 0.18, cloth, vertices=7)
+			if variant in (0, 3):
+				add_cube(name + " trail pack", (0.31, 0.02, 1.17), (0.27, 0.25, 0.42), lining)
+			else:
+				add_cylinder(name + " bedroll", (0.34, 0.02, 1.22), 0.12, 0.58, lining, vertices=8)
 		elif profile == "guard":
+			variant = seed % 4
 			add_cylinder(name + " cuirass", (0, -0.09, 1.04), 0.25, 0.42, trim, vertices=8)
 			for sign in (-1, 1):
 				add_sphere(name + " pauldron", (sign * 0.28, 0, 1.31), (0.16, 0.20, 0.15), trim)
-			add_sphere(name + " helmet", (0, 0.02, 1.76), (0.23, 0.21, 0.18), trim)
-			add_cone(name + " helmet crest", (0, 0.025, 1.96), 0.045, 0.008, 0.28, lining, vertices=5)
-			add_cube(name + " shield", (0.39, -0.12, 0.79), (0.28, 0.11, 0.56), lining)
+			if variant in (0, 1, 3):
+				add_sphere(name + " helmet", (0, 0.02, 1.76), (0.23, 0.21, 0.18), trim)
+				add_cone(name + " helmet crest", (0, 0.025, 1.96), 0.045, 0.008, 0.28, lining, vertices=5)
+			else:
+				add_sphere(name + " guard hood", (0, 0.03, 1.72), (0.25, 0.23, 0.27), cloth)
+				add_cube(name + " brow plate", (0, -0.17, 1.72), (0.28, 0.08, 0.10), trim)
+			if variant in (0, 2):
+				add_cube(name + " shield", (0.39, -0.12, 0.79), (0.28, 0.11, 0.56), lining)
+			else:
+				add_cylinder(name + " patrol spear", (0.42, 0.02, 1.12), 0.025, 1.22, lining, vertices=6)
+				add_cone(name + " spear head", (0.42, 0.02, 1.78), 0.07, 0.005, 0.24, trim, vertices=5)
 		elif profile == "citizen":
 			add_cube(name + " work apron", (0, -0.18, 0.81), (0.32, 0.07, 0.48), trim)
+			variant = seed % 3
+			if variant == 0:
+				add_sphere(name + " work cap", (0, 0.03, 1.76), (0.23, 0.20, 0.13), lining)
+			elif variant == 1:
+				add_cylinder(name + " tool hammer", (0.39, -0.04, 0.94), 0.04, 0.58, boots, vertices=6)
+				add_cube(name + " hammer head", (0.39, -0.04, 1.25), (0.20, 0.10, 0.12), trim)
+			else:
+				add_cube(name + " market satchel", (0.33, 0.02, 1.05), (0.30, 0.25, 0.32), lining)
 	else:
 		flare = 0.40 if profile == "queen" else 0.34 if profile in ("royal", "mage") else 0.27
 		add_cone(name + " robe", (0, 0, 0.75), flare, 0.17, 0.95, cloth, vertices=10)
@@ -154,7 +189,13 @@ def make_actor(name, profile, seed):
 		if profile in ("queen", "royal", "king"):
 			add_sphere(name + " royal mantle", (0, 0.015, 1.27), (0.37, 0.25, 0.18), trim)
 		elif profile == "mage":
-			add_cone(name + " star mantle", (0, 0.04, 1.25), 0.34, 0.18, 0.26, trim, vertices=8)
+			variant = seed % 3
+			if variant == 0:
+				add_cone(name + " star mantle", (0, 0.04, 1.25), 0.34, 0.18, 0.26, trim, vertices=8)
+			elif variant == 1:
+				add_sphere(name + " shoulder mantle", (0, 0.02, 1.28), (0.40, 0.27, 0.21), trim)
+			else:
+				add_cube(name + " spell folio", (-0.30, -0.17, 0.94), (0.24, 0.10, 0.33), trim)
 		elif profile == "scholar":
 			add_cube(name + " field book", (0.30, -0.13, 0.92), (0.16, 0.09, 0.23), trim)
 		add_sphere(name + " bodice", (0, -0.015, 1.16), (0.19, 0.17, 0.27), cloth)
@@ -178,7 +219,8 @@ def make_actor(name, profile, seed):
 			x = -0.13 + index * 0.065
 			add_cone(name + " crown point " + str(index), (x, -0.01, 1.88), 0.035, 0.002, 0.18, trim, vertices=5)
 	elif profile == "mage":
-		add_cone(name + " pointed hat", (0, 0.025, 1.91), 0.16, 0.005, 0.34, trim, vertices=7)
+		if seed % 3 != 1:
+			add_cone(name + " pointed hat", (0, 0.025, 1.91), 0.16, 0.005, 0.34, trim, vertices=7)
 		add_cylinder(name + " mage staff", (0.39, 0.02, 1.13), 0.025, 1.18, trim, vertices=6)
 		add_sphere(name + " staff crystal", (0.39, 0.02, 1.75), (0.08, 0.08, 0.10), lining)
 	elif profile == "ranger":
