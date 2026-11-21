@@ -131,5 +131,6 @@ This file records verified implementation findings and mistakes that should info
 - Validate BAM palette packing with generated transparent images. Pillow can produce palette index 255 even when building a 255-color opaque palette; after reserving BAM index zero for transparency, clamp the shifted opaque index to 255.
 - Inspect the asset in a built live scene. A good concept sheet alone cannot confirm the game scale, palette, anchor, facing, or integration.
 - Do not skip GemRB's character color-stat initialization based on an assumption about BAM palettes. A trial skip made the opening custom cast invisible; preserve existing CRE initialization unless a controlled in-engine comparison proves it is unnecessary.
+- To change only the player sprite's visual scale, clone the protagonist CRE with a private `avatars.2da` animation ID and resample the source BAM frames while scaling their frame anchors. `CHMB1` has no separate `G1` BAM, so use its `G17` idle BAM for that slot. Keep the avatar palette mode at zero; the recoloring mode made the player appear in false neon colors.
 
 \n

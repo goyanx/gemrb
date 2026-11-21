@@ -12,7 +12,7 @@ These captures come from isolated GemRB sessions. Mistwood shows the optional Wa
 
 The earlier 38-NPC avatar pass used low-poly Blender figures. That approach looked too much like blocky 3D game characters and is no longer the target art direction. The core recurring cast is now transitioning to hand-painted 2D world sprites; the first live Market pass replaces Mara while Edmon, Alisande, and Tessa have matching painted turnaround sources. Remaining cast members still need this conversion.
 
-![Live GemRB Market scene with Archivist Mara converted to a painted 2D world sprite](screenshots/painted-opening-cast.png)
+![Live GemRB Market scene with painted Mara, Queen Alisande, and King Edmon sprites and the enlarged Algoreth player character](screenshots/painted-opening-cast.png)
 
 ![Painted 2D turnarounds for Mara, King Edmon, Queen Alisande, and Scout Tessa](art/reference/painted_turnarounds/contact-sheet.png)
 

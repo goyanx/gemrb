@@ -5,6 +5,7 @@ This is the current work ledger for human and AI contributors. Read [AGENTS.md](
 ## Done
 
 - [x] Replaced the rejected low-poly NPC art direction with a painted 2D world-sprite prototype for Archivist Mara, King Edmon, Queen Alisande, and Scout Tessa. Added transparent turnaround sources and a converter to the 80x96 nine-direction GemRB frame layout. Rebuilt the campaign and verified the painted Mara, Queen, and King in a live Market scene; moved Edmon to a clear lower path after the old position produced a broken white silhouette. The walk slots currently repeat idle art; hand-painted motion and conversion of the remaining cast are still required.
+- [x] Increased Algoreth's in-game sprite size by 30% using a private animation row and scaled copy of GemRB's existing indexed animations. His palette remains intact, the shared NPC animation is unchanged, and a fresh live Market capture confirms the larger player model.
 
 - [x] Added and live-verified Scholar Inessa's native Library DLG. Both the cautious route-copy and sealed-leaf branches reach distinct response and re-entry lines, set the existing route flag, and add exactly their matching Act I Journal entry. The DLG writes the journal entry at the choice transition, so it appears immediately rather than waiting for the next campaign-panel refresh. Verified both branches in separate fresh GemRB builds; native dialogue and campaign-flow tests pass.
 

@@ -33,7 +33,7 @@ The character-art direction is shifting to hand-painted 2D figures. This current
 <p align="center">
   <a href="terralum/screenshots/painted-opening-cast.png"><img src="terralum/screenshots/painted-opening-cast.png" alt="Live GemRB scene with painted two-dimensional sprites for Archivist Mara, King Edmon, and Queen Alisande" width="92%"></a>
 </p>
-<p align="center"><em>Painted 2D NPC sprite prototype in the live Alsperia Market scene.</em></p>
+<p align="center"><em>Painted 2D NPC sprite prototype in the live Alsperia Market scene, with Algoreth scaled up for readability.</em></p>
 
 <p align="center">
   <a href="terralum/screenshots/terralum-cast-avatars-live.png"><img src="terralum/screenshots/terralum-cast-avatars-live.png" alt="Live GemRB opening scene with the custom Queen, King, and Archivist avatars" width="65%"></a>

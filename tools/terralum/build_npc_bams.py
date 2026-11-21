@@ -98,6 +98,70 @@ def _bam_bytes(images, cycles, anchor_adjust=(0, 0)):
 	return header + frame_table + cycle_table + palette + frame_lookup + frame_data
 
 
+def _scale_bam_v1(data, factor):
+	"""Scale raw indexed BAM V1 frames while preserving palette and cycles."""
+	if data[:8] != b"BAM V1  ":
+		raise ValueError("protagonist scale source must be BAM V1")
+	frame_count, cycle_count, compressed, frame_offset, palette_offset, lookup_offset = \
+		struct.unpack_from("<HBBIII", data, 8)
+	if compressed:
+		raise ValueError("compressed BAM V1 frames are not supported for protagonist scaling")
+	frames = [struct.unpack_from("<HHhhI", data, frame_offset + index * 12)
+		for index in range(frame_count)]
+	cycle_offset = frame_offset + 12 * frame_count
+	cycles = [struct.unpack_from("<HH", data, cycle_offset + index * 4)
+		for index in range(cycle_count)]
+	lookup_count = max((start + count for count, start in cycles), default=0)
+	lookups = data[lookup_offset:lookup_offset + lookup_count * 2]
+	palette = data[palette_offset:palette_offset + 1024]
+	new_frame_offset = 24
+	new_cycle_offset = new_frame_offset + 12 * frame_count
+	new_palette_offset = new_cycle_offset + 4 * cycle_count
+	new_lookup_offset = new_palette_offset + 1024
+	new_data_offset = new_lookup_offset + len(lookups)
+	new_records = []
+	new_pixels = bytearray()
+	for width, height, center_x, center_y, frame_flags in frames:
+		if not frame_flags & 0x80000000:
+			raise ValueError("compressed BAM V1 frame cannot be scaled")
+		pixels_offset = frame_flags & 0x7FFFFFFF
+		pixels = data[pixels_offset:pixels_offset + width * height]
+		if len(pixels) != width * height:
+			raise ValueError("truncated BAM V1 frame data")
+		new_width, new_height = max(1, round(width * factor)), max(1, round(height * factor))
+		image = Image.frombytes("P", (width, height), pixels)
+		image.putpalette([channel for entry in range(256)
+			for channel in (palette[entry * 4 + 2], palette[entry * 4 + 1], palette[entry * 4])])
+		resized = image.resize((new_width, new_height), Image.Resampling.NEAREST).tobytes()
+		new_records.append((new_width, new_height, round(center_x * factor),
+			round(center_y * factor), 0x80000000 | (new_data_offset + len(new_pixels))))
+		new_pixels.extend(resized)
+	header = b"BAM V1  " + struct.pack("<HBBIII", frame_count, cycle_count, 0,
+		new_frame_offset, new_palette_offset, new_lookup_offset)
+	frame_table = b"".join(struct.pack("<HHhhI", *record) for record in new_records)
+	cycle_table = b"".join(struct.pack("<HH", *cycle) for cycle in cycles)
+	return header + frame_table + cycle_table + palette + lookups + new_pixels
+
+
+def write_scaled_player_avatar(source_override, output_override, factor=1.30):
+	"""Give Algoreth a larger version of the existing animated protagonist art."""
+	base_creature = bytearray((source_override / "protagon.cre").read_bytes())
+	if base_creature[:8] != b"CRE V1.0":
+		raise ValueError("protagon.cre must be a supported CRE V1.0 source")
+	animation_id, prefix = 0xC8F0, "TLPG"
+	struct.pack_into("<I", base_creature, 0x28, animation_id)
+	(output_override / "algopc.cre").write_bytes(base_creature)
+	with (output_override / "avatars.2da").open("a", encoding="utf-8", newline="") as table:
+		table.write(f"\n0x{animation_id:04X} {prefix} {prefix} {prefix} {prefix} 0 2 0 *")
+	for suffix in ("G11", "G1", "G17"):
+		# The demo has no separate G1 ready BAM; its G17 is the idle stance
+		# source used for both modes.
+		source_suffix = "G17" if suffix == "G1" else suffix
+		source = source_override / f"CHMB1{source_suffix}.BAM"
+		(output_override / f"{prefix}{suffix}.BAM").write_bytes(
+			_scale_bam_v1(source.read_bytes(), factor))
+
+
 def write_npc_avatar(name, prefix, output_override):
 	"""Compile one actor's 9-direction walk and idle BAM resources."""
 	source = SPRITE_ROOT / name
