@@ -2274,6 +2274,7 @@
     {
       "name": "Waywarden Saren",
       "creature": "protagon",
+      "dialog": "SAREN",
       "position": [
         680,
         620
