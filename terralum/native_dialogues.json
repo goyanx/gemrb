@@ -140,7 +140,7 @@
   "SAREN": {
     "states": [
       {
-        "when": [{"flag": "TLCHAP", "value": 18}, {"flag": "TLROYALORDER", "value": 1}, {"flag": "TLRELAY", "value": 0}],
+        "when": [{"flag": "TLCHAP", "value": 9}, {"flag": "TLROYALORDER", "value": 1}, {"flag": "TLRELAY", "value": 0}],
         "say": "Leora's copied schedule gives us the relay interval. Orla can signal the patrol without sending it across the wrong trail.",
         "transitions": [
           {"text": "Ask what the relay signal means.", "next": 2},
@@ -148,7 +148,7 @@
         ]
       },
       {
-        "when": [{"flag": "TLCHAP", "value": 18}, {"flag": "TLROYALORDER", "value": 2}, {"flag": "TLRELAY", "value": 0}],
+        "when": [{"flag": "TLCHAP", "value": 9}, {"flag": "TLROYALORDER", "value": 2}, {"flag": "TLRELAY", "value": 0}],
         "say": "The schedule stayed sealed. Orla can call the wardens, but we do not know which patrol will answer or when.",
         "transitions": [
           {"text": "Ask what the relay signal means.", "next": 2},
@@ -156,27 +156,27 @@
         ]
       },
       {
-        "when": [{"flag": "TLCHAP", "value": 18}, {"flag": "TLRELAY", "value": 0}],
+        "when": [{"flag": "TLCHAP", "value": 9}, {"flag": "TLRELAY", "value": 0}],
         "say": "The schedule is not in hand. Orla controls the lantern: one measured flash calls a patrol, while a shuttered light keeps the road quiet.",
         "transitions": [{"text": "Leave the signal choice to Orla.", "final": true}]
       },
       {
-        "when": [{"flag": "TLCHAP", "value": 18}, {"flag": "TLROYALORDER", "value": 1}, {"flag": "TLRELAY", "value": 1}],
+        "when": [{"flag": "TLCHAP", "value": 9}, {"flag": "TLROYALORDER", "value": 1}, {"flag": "TLRELAY", "value": 1}],
         "say": "The copied schedule gave Orla the right interval. The patrol can shadow the road without crossing the travellers' path.",
         "transitions": [{"text": "Continue along the marked road.", "final": true}]
       },
       {
-        "when": [{"flag": "TLCHAP", "value": 18}, {"flag": "TLROYALORDER", "value": 2}, {"flag": "TLRELAY", "value": 1}],
+        "when": [{"flag": "TLCHAP", "value": 9}, {"flag": "TLROYALORDER", "value": 2}, {"flag": "TLRELAY", "value": 1}],
         "say": "Orla called the wardens, but with the schedule sealed we cannot know which patrol will answer. We will keep to the pale-stone road and watch for them.",
         "transitions": [{"text": "Proceed with care.", "final": true}]
       },
       {
-        "when": [{"flag": "TLCHAP", "value": 18}, {"flag": "TLROYALORDER", "value": 1}, {"flag": "TLRELAY", "value": 2}],
+        "when": [{"flag": "TLCHAP", "value": 9}, {"flag": "TLROYALORDER", "value": 1}, {"flag": "TLRELAY", "value": 2}],
         "say": "The schedule is ready, but Orla kept the lantern dark. The party can travel without drawing the patrol toward Lorian.",
         "transitions": [{"text": "Keep the approach quiet.", "final": true}]
       },
       {
-        "when": [{"flag": "TLCHAP", "value": 18}, {"flag": "TLROYALORDER", "value": 2}, {"flag": "TLRELAY", "value": 2}],
+        "when": [{"flag": "TLCHAP", "value": 9}, {"flag": "TLROYALORDER", "value": 2}, {"flag": "TLRELAY", "value": 2}],
         "say": "The schedule stayed sealed, and Orla kept the relay dark. We will reach Lorian without asking an unknown patrol to find us.",
         "transitions": [{"text": "Keep the approach quiet.", "final": true}]
       }

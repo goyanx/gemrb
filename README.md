@@ -61,6 +61,14 @@ This fork includes **Terralum: Scrolls of Byzantem**, an original, story-driven 
 <p align="center"><em>Leora's patrol schedule decision feeds the Waywarden encounters in Mistwood.</em></p>
 
 <p align="center">
+  <a href="terralum/screenshots/saren-live-copied-patrol-dialogue.png"><img src="terralum/screenshots/saren-live-copied-patrol-dialogue.png" alt="Live GemRB Saren dialogue when the patrol schedule was copied and Orla called the patrol" width="49%"></a>
+  <a href="terralum/screenshots/saren-live-sealed-call.png"><img src="terralum/screenshots/saren-live-sealed-call.png" alt="Live GemRB Saren dialogue when the patrol schedule remained sealed and Orla called the wardens" width="49%"></a>
+  <a href="terralum/screenshots/saren-live-copied-quiet.png"><img src="terralum/screenshots/saren-live-copied-quiet.png" alt="Live GemRB Saren dialogue when the copied schedule was carried but the relay stayed quiet" width="49%"></a>
+  <a href="terralum/screenshots/saren-live-sealed-quiet.png"><img src="terralum/screenshots/saren-live-sealed-quiet.png" alt="Live GemRB Saren dialogue when the schedule stayed sealed and the relay stayed quiet" width="49%"></a>
+</p>
+<p align="center"><em>All four schedule-and-signal outcomes shown in live GemRB. The relay choices remain Orla's; Saren explains their consequences.</em></p>
+
+<p align="center">
   <a href="terralum/screenshots/inessa-live-choice-rebuilt.png"><img src="terralum/screenshots/inessa-live-choice-rebuilt.png" alt="Live GemRB native dialogue with Scholar Inessa offering two Library route decisions" width="78%"></a>
 </p>
 <p align="center"><em>Scholar Inessa's Library conversation, opened by clicking her in the scene. Both route decisions have distinct follow-up dialogue and appear in the Act I Journal.</em></p>
