@@ -34,6 +34,8 @@ This fork includes **Terralum: Scrolls of Byzantem**, an original, story-driven 
 </p>
 <p align="center"><em>Three custom actors in live GemRB · 38 generated multi-direction character sets grouped by role and costume.</em></p>
 
+The latest supporting-cast art pass adds named silhouettes and story props for Dorian, Lorian, Ilya, and Pell. See the [generated character reference sheet](terralum/art/reference/supporting-cast-avatar-concepts.png) and the updated world-sprite contact sheet above; their compiled in-game scene review remains in progress.
+
 <p align="center">
   <a href="terralum/screenshots/character-dialogue-avatars-live.png"><img src="terralum/screenshots/character-dialogue-avatars-live.png" alt="Live GemRB dialogue showing the redesigned Archivist Mara portrait with her blue hood, braid, spectacles, and book" width="72%"></a>
   <a href="terralum/art/character_avatars/central_cast_portraits.png"><img src="terralum/art/character_avatars/central_cast_portraits.png" alt="New portrait designs for King Edmon, Queen Alisande, Archivist Mara, and Algoreth" width="25%"></a>

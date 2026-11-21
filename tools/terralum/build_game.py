@@ -65,6 +65,14 @@ def avatar_profile(person):
 		return "saren"
 	if "lost wayfarer" in text:
 		return "wayfarer"
+	if "dorian the seer" in text:
+		return "dorian"
+	if "lorian guardian" in text:
+		return "lorian"
+	if "ranger ilya" in text:
+		return "ilya"
+	if "courier pell" in text:
+		return "pell"
 	if "queen alisande" in text:
 		return "queen"
 	if "archivist mara" in text:

@@ -32,6 +32,10 @@ The latest avatar pass gives Scholar Inessa a scholar's stole and route folio, S
 
 ![Scholar Inessa's updated world avatar in the live Library scene](screenshots/inessa-avatar-library-rebuilt.png)
 
+The supporting cast now has four more named sprite designs: Dorian's silver-bearded seer regalia, Lorian's broad guardian mantle and shield, Ilya's rust trail scarf and quiver, and Pell's dispatch tube and courier sash. The generated reference sheet is visual guidance; all four designs were translated into their animated world sprites and included in the rebuilt game pack. Live scene-scale review is still pending.
+
+![Generated concept sheet guiding Dorian, Lorian, Ilya, and Pell's distinct world-avatar designs](art/reference/supporting-cast-avatar-concepts.png)
+
 Four generated portrait sheets now provide medium and small GemRB portrait resources for all thirty-eight unique named NPCs across the seven-act cast. These dialogue portraits are separate from the animated world sprites. Portraits are selected by NPC data and appear beside their dialogue. The latest sheet adds distinct portraits for twelve previously unpictured characters.
 
 ![Twelve new Terralum NPC portrait concepts for the complete cast](art/character_portraits_sheet_4.png)
@@ -72,7 +76,7 @@ The campaign-flow mock checks scene progression and response effects. The MCP te
 
 ### NPC world-avatar pipeline
 
-World sprites are procedural Blender models rendered to 80×96 transparent frames: nine directions with four walk poses each. `render_cast_sprites.py` reads each named cast identity and selects one of six role profiles; `build_npc_bams.py` compiles walk, ready, and awake BAMs, and `build_game.py` binds them through unique CRE resources and `avatars.2da` rows. With Blender available, regenerate missing frames and the contact sheet with:
+World sprites are procedural Blender models rendered to 80×96 transparent frames: nine directions with four walk poses each. `render_cast_sprites.py` uses role profiles plus named silhouettes for recurring characters; Dorian, Lorian, Ilya, and Pell now have individual shapes, colors, and story props. Their generated concept sheet is reference art in [`art/reference/supporting-cast-avatar-concepts.png`](art/reference/supporting-cast-avatar-concepts.png), while the runtime models are rendered as animated BAMs. `build_npc_bams.py` compiles walk, ready, and awake BAMs, and `build_game.py` binds them through unique CRE resources and `avatars.2da` rows. With Blender available, regenerate missing frames and the contact sheet with:
 
 ```powershell
 python tools/terralum/render_cast_sprites.py --blender path\to\blender.exe
