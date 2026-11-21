@@ -34,6 +34,8 @@ The latest avatar pass gives Scholar Inessa a scholar's stole and route folio, S
 
 The supporting cast now has eight more named sprite designs: Dorian's silver-bearded seer regalia, Lorian's broad guardian mantle and shield, Ilya's rust trail scarf and quiver, Pell's dispatch tube and courier sash, Fen's hunter hat and fur collar, Sella's waystone charms and marker staff, Doma's stoneworking apron and tools, and Eren's courier pack and rope coil. The generated reference sheets are visual guidance; all eight designs were translated into animated world sprites and included in the rebuilt game pack. Live scene-scale review is still pending.
 
+The latest readability pass gives Scout Tessa a blue-green cloak, rust signal marker, high hood, and dark quiver so she stands apart from other Mistwood travelers. All 36 directional frames were rerendered and the rebuilt pack was opened directly in Mistwood; GemRB shows Tessa's new colors in the scene. The Lost Wayfarer's sprite currently needs a separate live palette investigation before the Mistwood cast review is complete.
+
 ![Generated concept sheet guiding Dorian, Lorian, Ilya, and Pell's distinct world-avatar designs](art/reference/supporting-cast-avatar-concepts.png)
 
 ![Generated concept sheet guiding Fen, Sella, Doma, and Eren's Mistwood-route avatar designs](art/reference/mistwood-route-cast-concepts.png)

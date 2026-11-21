@@ -109,7 +109,9 @@ def make_actor(name, profile, seed):
 	elif profile == "inessa":
 		cloth_rgb, trim_rgb, lining_rgb = (0.10, 0.16, 0.30), (0.70, 0.40, 0.18), (0.82, 0.78, 0.63)
 	elif profile == "tessa":
-		cloth_rgb, trim_rgb, lining_rgb = (0.12, 0.26, 0.17), (0.72, 0.46, 0.18), (0.58, 0.40, 0.25)
+		# Separate the scout from the forest palette: a blue-green cloak and
+		# rust signal scarf remain readable against the Mistwood backdrop.
+		cloth_rgb, trim_rgb, lining_rgb = (0.035, 0.19, 0.30), (0.86, 0.25, 0.07), (0.18, 0.12, 0.09)
 	elif profile == "saren":
 		cloth_rgb, trim_rgb, lining_rgb = (0.10, 0.18, 0.28), (0.72, 0.58, 0.25), (0.77, 0.73, 0.62)
 	elif profile == "wayfarer":
