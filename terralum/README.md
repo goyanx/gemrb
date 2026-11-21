@@ -10,6 +10,10 @@ These captures come from isolated GemRB sessions. Mistwood shows the optional Wa
 | --- | --- | --- |
 | ![The Lost Wayfarer offers two reporting choices on Mistwood Road](screenshots/mistwood-wayfarer-choice.png) | ![The Act II Journal records the anonymous warning](screenshots/mistwood-wayfarer-journal.png) | ![Courier Pell acknowledges the anonymous warning at the Watchpost](screenshots/ruined-watchpost-pell-callback.png) | ![Archivist Mara's custom portrait appears with her dialogue](screenshots/archivist-mara-dialogue-portrait.png) |
 
+GemRB applies stable hair and clothing palettes to the shared scene-creature animations so NPCs have distinct silhouettes by color. This capture shows the Market cast.
+
+![Market NPCs with distinct green, orange, and teal clothing palettes](screenshots/alsperia-market-npc-palettes.png)
+
 ## AI and human contributor baseline
 
 Read [GOLD_STANDARD_GAME_DESIGN_PIPELINE.md](GOLD_STANDARD_GAME_DESIGN_PIPELINE.md) before authoring or implementing Terralum content. It defines the canon rules, BG2-informed design principles, production gates, and per-scene acceptance checklist. Use the repo-root [TODO.md](../TODO.md) for current status and [LEARNINGS.md](../LEARNINGS.md) for verified engineering findings. The baseline is also exposed through the `terralum_get_design_standard` MCP tool.

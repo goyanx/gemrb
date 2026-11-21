@@ -9,7 +9,14 @@ import GUICommon
 import GUIMA
 import GUIINV
 from GUIDefines import *
-from ie_stats import IE_EA, IE_STATE_ID, STATE_DEAD, ENEMY, NEUTRAL
+from ie_stats import (IE_EA, IE_STATE_ID, STATE_DEAD, ENEMY, NEUTRAL,
+					  IE_HAIR_COLOR, IE_MAJOR_COLOR, IE_MINOR_COLOR)
+
+NPC_PALETTES = (
+	(0, 5, 4), (1, 21, 2), (22, 62, 23), (3, 53, 1),
+	(44, 74, 25), (5, 45, 50), (26, 26, 36), (7, 37, 67),
+	(68, 28, 18), (9, 69, 59), (49, 10, 10), (88, 48, 80),
+)
 
 
 def _style(button, width=None):
@@ -100,6 +107,10 @@ def OnLoad():
 			actor = GemRB.CreateCreature(1, person["creature"], person["position"][0], person["position"][1])
 			GemRB.SetPlayerName(actor, person["name"], 0)
 			GemRB.SetPlayerStat(actor, IE_EA, NEUTRAL)
+			palette = NPC_PALETTES[sum(ord(char) for char in person["name"]) % len(NPC_PALETTES)]
+			GemRB.SetPlayerStat(actor, IE_HAIR_COLOR, palette[0])
+			GemRB.SetPlayerStat(actor, IE_MAJOR_COLOR, palette[1])
+			GemRB.SetPlayerStat(actor, IE_MINOR_COLOR, palette[2])
 			if person.get("dialog"):
 				GemRB.SetPlayerDialog(actor, person["dialog"])
 			if person.get("spawn_flag"):
