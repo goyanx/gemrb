@@ -72,6 +72,12 @@ def OnLoad():
 	_style(actor_talk)
 	actor_talk.SetText("TALK")
 	actor_talk.SetHotKey("t", 0, True)
+	save_button = window.CreateButton(18, 10, 183, 78, 34)
+	_style(save_button)
+	save_button.SetText("SAVE")
+	load_button = window.CreateButton(19, 94, 183, 78, 34)
+	_style(load_button)
+	load_button.SetText("LOAD")
 	choice_buttons = []
 	for index, x in enumerate((10, 183, 356)):
 		button = window.CreateButton(12 + index, x, 183, 160, 34)
@@ -88,6 +94,7 @@ def OnLoad():
 	portrait_button.SetVisible(False)
 	journal_state = {"open": False}
 	dialogue_state = {"has_choices": False, "must_finish_followup": False, "followup_journal": None}
+	load_state = {"games": (), "page": 0, "selected": None}
 
 	chapters = Story.chapters()
 	cast_index = {"line": -1}
@@ -171,6 +178,95 @@ def OnLoad():
 		GemRB.GameControlSetTargetMode(TARGET_MODE_TALK, GA_NO_DEAD | GA_NO_ENEMY | GA_NO_HIDDEN)
 		message.Append("\n\nChoose a scene NPC to speak with.")
 
+	def save_game():
+		GUICommon.SetSaveDir()
+		games = GemRB.GetSaveGames()
+		existing_names = {game.GetName() for game in games}
+		chapter = chapters[GemRB.GetGameVar("TLCHAP")]
+		place = chapter["place"].replace("/", "-").replace("\\", "-")
+		serial = 1
+		while "Terralum {:03d} - {}".format(serial, place) in existing_names:
+			serial += 1
+		save_name = "Terralum {:03d} - {}".format(serial, place)
+		result = GemRB.SaveGame(None, save_name, -1, GemRB.GetGamePreview())
+		if result == 0:
+			message.SetText("TERRALUM  |  GAME SAVED\n\n" + save_name + "\n\nYour party, current area, campaign decisions, and journal have been saved.")
+		else:
+			message.SetText("TERRALUM  |  SAVE FAILED\n\nGemRB could not write the save. Check the game log for the storage error.")
+		action.SetText("CONTINUE")
+		action.OnPress(advance)
+
+	def load_game(save):
+		GemRB.SetVar("PlayMode", 0)
+		GemRB.LoadGame(save)
+		GemRB.EnterGame()
+		GemRB.HardEndPL()
+
+	def confirm_load(save):
+		load_state["selected"] = save
+		message.SetText("TERRALUM  |  LOAD SAVED GAME\n\nLoad '" + save.GetName() + "'?\n\nYour current unsaved progress will be replaced.")
+		for index, button in enumerate(choice_buttons):
+			button.SetVisible(index < 2)
+		if load_state["selected"] is not None:
+			choice_buttons[0].SetText("LOAD")
+			choice_buttons[0].OnPress(lambda _button=None, save=save: (GemRB.QuitGame(), GemRB.SetTimer(lambda: load_game(save), 0, 0)))
+			choice_buttons[1].SetText("CANCEL")
+			choice_buttons[1].OnPress(show)
+		journal_button.SetVisible(False)
+		cast.SetVisible(False)
+		actor_talk.SetVisible(False)
+		voice.SetVisible(False)
+		save_button.SetVisible(False)
+		load_button.SetVisible(False)
+		action.SetText("CANCEL")
+		action.SetVisible(False)
+		action.OnPress(show)
+
+	def show_load_page():
+		games = load_state["games"]
+		page = load_state["page"]
+		start = page * len(choice_buttons)
+		page_games = games[start:start + len(choice_buttons)]
+		page_count = (len(games) + len(choice_buttons) - 1) // len(choice_buttons)
+		message.SetText("TERRALUM  |  SAVED GAMES  |  PAGE {} OF {}\n\nSelect a save to continue from it.".format(page + 1, page_count))
+		for index, button in enumerate(choice_buttons):
+			button.SetVisible(index < len(page_games))
+			if index < len(page_games):
+				save = page_games[index]
+				button.SetText(save.GetName()[:22])
+				button.OnPress(lambda _button=None, save=save: confirm_load(save))
+		journal_button.SetVisible(True)
+		journal_button.SetText("CANCEL")
+		journal_button.OnPress(show)
+		cast.SetVisible(page_count > 1)
+		cast.SetText("PREV")
+		cast.OnPress(lambda: change_load_page(-1))
+		actor_talk.SetVisible(False)
+		voice.SetVisible(False)
+		save_button.SetVisible(False)
+		load_button.SetVisible(False)
+		action.SetText("NEXT")
+		action.SetVisible(page_count > 1)
+		action.OnPress(lambda: change_load_page(1))
+
+	def change_load_page(direction):
+		page_count = (len(load_state["games"]) + len(choice_buttons) - 1) // len(choice_buttons)
+		load_state["page"] = (load_state["page"] + direction) % page_count
+		show_load_page()
+
+	def open_load_window():
+		GUICommon.SetSaveDir()
+		games = list(GemRB.GetSaveGames())
+		if not games:
+			message.SetText("TERRALUM  |  NO SAVED GAMES\n\nPress SAVE to create a named save before loading a game.")
+			action.SetText("CONTINUE")
+			action.OnPress(advance)
+			return
+		games.sort(key=lambda game: (game.GetGameDate(), game.GetName()), reverse=True)
+		load_state["games"] = tuple(games)
+		load_state["page"] = 0
+		show_load_page()
+
 	def show_dialogue_choices(person, choices):
 		for index, button in enumerate(choice_buttons):
 			button.SetVisible(index < len(choices))
@@ -182,6 +278,8 @@ def OnLoad():
 		dialogue_state["has_choices"] = bool(choices)
 		journal_button.SetVisible(not bool(choices))
 		cast.SetVisible(not bool(choices))
+		save_button.SetVisible(not bool(choices))
+		load_button.SetVisible(not bool(choices))
 
 	def choose_dialogue(person, choice):
 		set_portrait(person)
@@ -215,6 +313,8 @@ def OnLoad():
 			button.SetVisible(False)
 		journal_button.SetVisible(True)
 		cast.SetVisible(True)
+		save_button.SetVisible(True)
+		load_button.SetVisible(True)
 
 	def record_journal_event(event, act):
 		if event and not GemRB.GetGameVar(event["flag"]):
@@ -323,10 +423,19 @@ def OnLoad():
 		reconcile_npc_journal_events(chapter)
 		journal_button.SetVisible(True)
 		journal_button.SetText("JOURNAL")
+		journal_button.OnPress(toggle_journal)
 		dialogue_state["has_choices"] = False
 		for button in choice_buttons:
 			button.SetVisible(False)
 		cast.SetVisible(True)
+		cast.SetText("CAST")
+		cast.OnPress(talk_to_scene_npc)
+		actor_talk.SetVisible(True)
+		actor_talk.OnPress(begin_actor_talk)
+		voice.SetVisible(True)
+		voice.OnPress(narrate)
+		save_button.SetVisible(True)
+		load_button.SetVisible(True)
 		beat_text = beat["text"]
 		if chapter["area"] == "tl0002" and beat_index == 0:
 			lead = GemRB.GetGameVar("TLMARALEAD")
@@ -345,6 +454,7 @@ def OnLoad():
 				break
 		message.SetText("[cap]T[/cap]ERRALUM  |  " + chapter["title"] + "\n" + chapter["place"] + "\n\n" + beat["speaker"] + ": " + beat_text + "\n\n")
 		action.SetText(beat["action"].upper() if len(beat["action"]) < 11 else "CONTINUE")
+		action.SetVisible(True)
 		action.OnPress(advance)
 		voice.SetDisabled(not chapter.get("voice"))
 
@@ -535,6 +645,8 @@ def OnLoad():
 	voice.OnPress(narrate)
 	cast.OnPress(talk_to_scene_npc)
 	actor_talk.OnPress(begin_actor_talk)
+	save_button.OnPress(save_game)
+	load_button.OnPress(open_load_window)
 	action.SetHotKey(GEM_RETURN, 0, True)
 	GemRB.LoadMusicPL(chapters[GemRB.GetGameVar("TLCHAP")]["music"], 1)
 	initial_chapter = GemRB.GetGameVar("TLCHAP")

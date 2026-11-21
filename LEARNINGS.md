@@ -140,3 +140,9 @@ This file records verified implementation findings and mistakes that should info
 - Replacing the named lead's sprite does not make a scene look finished when adjacent supporting cast still use low-poly placeholder figures. Review the full visible cast in each scene, not only the speaker or portrait.
 - Keep each painted turnaround tied to the canonical `scene_cast.json` identity and its runtime `avatar_creature`; rebuild the game pack before judging a source-image change.
 - A 3x3 painted turnaround can seed GemRB's directional idle views, but repeating one view for all walk slots is a temporary visual prototype, not an animation solution.
+
+### Save/load in the demo pack
+
+- The open demo pack contains GemRB save/load APIs and scripts but omits the stock `GUISAVE.chu` and `GUILOAD.chu` windows. Calling those stock screens fails at runtime.
+- Build save and load controls into Terralum's existing panel and call `GemRB.SaveGame`, `GemRB.GetSaveGames`, and `GemRB.LoadGame` directly. Named saves use `GemRB.SaveGame(None, description, version, preview)`; loading an active session needs confirmation, then `QuitGame`, a zero-delay timer, `LoadGame`, and `EnterGame`.
+- Verify a real save folder and reload in GemRB. Script mocks alone do not prove serialized campaign globals, dialogue closures, actors, or journal state survive.
