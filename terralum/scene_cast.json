@@ -223,7 +223,8 @@
           "line": "The lantern stays dark. I cannot promise the stalker has left the road, but the camp should remain concealed."
         }
       ],
-      "faction": "Mistwood Hunters"
+      "faction": "Mistwood Hunters",
+      "portrait": "HUNTER"
     },
     {
       "name": "Ranger Ilya",
@@ -264,7 +265,8 @@
           }
         }
       ],
-      "faction": "Mistwood Hunters"
+      "faction": "Mistwood Hunters",
+      "portrait": "ILYA00"
     }
   ],
   "tl0016": [
@@ -295,7 +297,8 @@
           "value": 2
         }
       ],
-      "faction": "Mistwood Waykeepers"
+      "faction": "Mistwood Waykeepers",
+      "portrait": "SELLA0"
     },
     {
       "name": "Carver Doma",
@@ -595,7 +598,8 @@
       "goal": "Test why Algoreth seeks the scrolls before allowing the vault story to proceed.",
       "knowledge": "Knows he hid the scrolls and that world-travel magnifies the traveller's purpose; the available source does not establish his later history.",
       "voice": "Cryptic but concise, asking the player to examine motive rather than accept a prophecy.",
-      "provenance": "canon"
+      "provenance": "canon",
+      "portrait": "DORIAN"
     },
     {
       "name": "Lorian Guardian",
@@ -785,7 +789,8 @@
       "goal": "Recommend a road policy the court can enforce without letting soldiers decide the scrolls' purpose.",
       "knowledge": "Knows what the guard can protect and the limits of military authority; has not studied the scrolls.",
       "voice": "Blunt, civic-minded, and wary of power without accountability.",
-      "provenance": "adaptation"
+      "provenance": "adaptation",
+      "portrait": "ROVAN0"
     },
     {
       "name": "Queen Alisande",
@@ -1405,7 +1410,8 @@
       "goal": "Protect the sealed account while helping Ealdrin distinguish the catalog gap from a conclusion about the Tears.",
       "knowledge": "Knows the comparison leaf is absent and that the Index Warden guards unindexed folios; does not know what the missing leaf would prove.",
       "voice": "Precise and patient, treating missing evidence as a question rather than a verdict.",
-      "provenance": "adaptation"
+      "provenance": "adaptation",
+      "portrait": "NERA00"
     },
     {
       "name": "Index Warden",
@@ -1428,7 +1434,8 @@
           "value": 1,
           "line": "You called me to witness the missing comparison. The account remains sealed; answer the test, and I will yield the leaf."
         }
-      ]
+      ],
+      "portrait": "IDXWARD"
     }
   ],
   "tl0007": [
@@ -1681,7 +1688,8 @@
           "value": 2,
           "line": "Ealdrin carries questions for the warders; Selene’s original stays sealed in Alsperia. I will prepare for an inquiry guided by Eldrador’s testimony."
         }
-      ]
+      ],
+      "portrait": "AVEN00"
     },
     {
       "name": "Seraphina Everglow",
@@ -1869,7 +1877,8 @@
       "goal": "Keep travellers and couriers from being swept into the flooded crossing.",
       "knowledge": "Knows the ford, the exposed stepping stones, and where a handline can be secured; does not know what hunts the road.",
       "voice": "Practical and watchful, giving a clear warning before offering a route.",
-      "provenance": "adaptation"
+      "provenance": "adaptation",
+      "portrait": "MAELIN"
     },
     {
       "name": "Courier Eren",

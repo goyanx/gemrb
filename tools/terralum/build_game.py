@@ -26,6 +26,7 @@ SEARCHMAP_FILE = PROJECT / "area_searchmaps.json"
 AREA_IMAGE = PROJECT / "art" / "observatory_courtyard.png"
 PORTRAIT_SHEET = PROJECT / "art" / "character_portraits_sheet.png"
 PORTRAIT_SHEET_2 = PROJECT / "art" / "character_portraits_sheet_2.png"
+PORTRAIT_SHEET_3 = PROJECT / "art" / "character_portraits_sheet_3.png"
 PORTRAITS = {
     "ALGORE": (0, 0), "MARA00": (1, 0), "INESSA": (2, 0),
     "ALISAN": (0, 1), "EDMON0": (1, 1), "TESSA0": (2, 1),
@@ -33,6 +34,9 @@ PORTRAITS = {
     "SERAPH": (3, 0), "SAREN0": (4, 0), "MAGVAE": (5, 0),
     "EALDRI": (3, 1), "VAELTH": (4, 1), "OREN00": (5, 1),
     "EREN00": (3, 2), "CELENE": (4, 2), "ALIST0": (5, 2),
+    "DORIAN": (6, 0), "ROVAN0": (7, 0), "ILYA00": (8, 0),
+    "HUNTER": (6, 1), "SELLA0": (7, 1), "MAELIN": (8, 1),
+    "NERA00": (6, 2), "IDXWARD": (7, 2), "AVEN00": (8, 2),
 }
 SETUP_FILE = ROOT / "gemrb" / "GUIScripts" / "terralum" / "SetupGame.py"
 AREAS = {
@@ -603,7 +607,7 @@ def build():
         shutil.rmtree(OUTPUT)
     shutil.copytree(SOURCE, OUTPUT)
     portrait_sheets = [Image.open(path).convert("RGB") for path in
-                       (PORTRAIT_SHEET, PORTRAIT_SHEET_2)]
+                       (PORTRAIT_SHEET, PORTRAIT_SHEET_2, PORTRAIT_SHEET_3)]
     for portrait, (cell_index, row) in PORTRAITS.items():
         sheet = portrait_sheets[cell_index // 3]
         column = cell_index % 3

@@ -14,7 +14,7 @@ GemRB applies stable hair and clothing palettes to the shared scene-creature ani
 
 ![Market NPCs with distinct green, orange, and teal clothing palettes](screenshots/alsperia-market-npc-palettes.png)
 
-Two generated portrait sheets now provide medium and small GemRB portrait resources for seventeen recurring scene NPCs across the seven-act cast. Portraits are selected by NPC data and appear beside their dialogue.
+Three generated portrait sheets now provide medium and small GemRB portrait resources for twenty-six named scene NPCs across the seven-act cast. Portraits are selected by NPC data and appear beside their dialogue.
 
 ## AI and human contributor baseline
 
