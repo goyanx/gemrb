@@ -65,8 +65,8 @@
       "creature": "protagon",
       "dialog": "KINGEDM",
       "position": [
-        930,
-        500
+        900,
+        700
       ],
       "line": "I am Alsperia's original king. I grant you a map and shelter; return with knowledge, not conquest.",
       "role": "Original King of Alsperia",

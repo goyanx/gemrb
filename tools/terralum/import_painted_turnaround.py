@@ -1,0 +1,50 @@
+#!/usr/bin/env python3
+# SPDX-FileCopyrightText: 2026 Golem Inc.
+# SPDX-License-Identifier: GPL-2.0-or-later
+"""Convert a 3x3 painted turnaround into GemRB's 9-direction idle source frames.
+
+The first art pass imports painted idle views. It duplicates each authored view
+across the four walk-frame slots until hand-painted movement frames are ready.
+"""
+
+import argparse
+from pathlib import Path
+
+from PIL import Image
+
+
+ROOT = Path(__file__).resolve().parents[2]
+FRAME_SIZE = (80, 96)
+# Sprite-sheet rows: front-left, front, front-right; side-left, three-quarter,
+# side-right; back-left, back, back-right.
+DIRECTIONS = ((1, 0), (0, 0), (0, 1), (0, 2), (1, 2), (2, 2), (2, 1), (2, 0), (1, 1))
+
+
+def main():
+	parser = argparse.ArgumentParser(description=__doc__)
+	parser.add_argument("sheet", type=Path, help="transparent 3x3 turnaround PNG")
+	parser.add_argument("asset", help="world sprite folder name, such as mara00")
+	args = parser.parse_args()
+	with Image.open(args.sheet) as source:
+		image = source.convert("RGBA")
+	output = ROOT / "terralum" / "art" / "world_sprites" / args.asset
+	output.mkdir(parents=True, exist_ok=True)
+	for direction, (column, row) in enumerate(DIRECTIONS):
+		left, right = round(column * image.width / 3), round((column + 1) * image.width / 3)
+		top, bottom = round(row * image.height / 3), round((row + 1) * image.height / 3)
+		cell = image.crop((left, top, right, bottom))
+		alpha = cell.getchannel("A")
+		bounds = alpha.getbbox()
+		if bounds is None:
+			raise ValueError(f"empty transparent cell at row {row}, column {column}")
+		cell = cell.crop(bounds)
+		cell.thumbnail((72, 88), Image.Resampling.LANCZOS)
+		frame = Image.new("RGBA", FRAME_SIZE, (0, 0, 0, 0))
+		frame.alpha_composite(cell, ((FRAME_SIZE[0] - cell.width) // 2, FRAME_SIZE[1] - cell.height))
+		for pose in range(4):
+			frame.save(output / f"{direction:02d}_{pose:02d}.png")
+	print(f"Imported 9 painted idle views for {args.asset} into {output}")
+
+
+if __name__ == "__main__":
+	main()

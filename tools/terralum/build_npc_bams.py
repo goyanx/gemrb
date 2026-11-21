@@ -47,7 +47,10 @@ def _indexed_frame(image, palette_image):
 	data = bytearray(indices.tobytes())
 	alpha_data = cropped.getchannel("A").tobytes()
 	for index, opacity in enumerate(alpha_data):
-		data[index] = 0 if opacity < 128 else data[index] + 1
+		# BAM index zero is transparent. Quantizing against Pillow's padded
+		# 256-entry palette can still emit index 255; clamp after shifting so it
+		# maps to BAM's last valid opaque palette entry instead of overflowing.
+		data[index] = 0 if opacity < 128 else min(data[index] + 1, 255)
 	return cropped.width, cropped.height, bounds, bytes(data)
 
 

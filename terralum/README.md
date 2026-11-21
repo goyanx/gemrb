@@ -10,7 +10,13 @@ These captures come from isolated GemRB sessions. Mistwood shows the optional Wa
 | --- | --- | --- |
 | ![The Lost Wayfarer offers two reporting choices on Mistwood Road](screenshots/mistwood-wayfarer-choice.png) | ![The Act II Journal records the anonymous warning](screenshots/mistwood-wayfarer-journal.png) | ![Courier Pell acknowledges the anonymous warning at the Watchpost](screenshots/ruined-watchpost-pell-callback.png) | ![Archivist Mara's custom portrait appears with her dialogue](screenshots/archivist-mara-dialogue-portrait.png) |
 
-All 38 named NPCs now have separately rendered, animated world avatars. Outfit profiles include royals, scholars, rangers, guards, mages, and citizens; per-character colors and accessories distinguish members within a role. The contact sheet is a quick art review, and the live Market capture verifies three actors in GemRB.
+The earlier 38-NPC avatar pass used low-poly Blender figures. That approach looked too much like blocky 3D game characters and is no longer the target art direction. The core recurring cast is now transitioning to hand-painted 2D world sprites; the first live Market pass replaces Mara while Edmon, Alisande, and Tessa have matching painted turnaround sources. Remaining cast members still need this conversion.
+
+![Live GemRB Market scene with Archivist Mara converted to a painted 2D world sprite](screenshots/painted-opening-cast.png)
+
+![Painted 2D turnarounds for Mara, King Edmon, Queen Alisande, and Scout Tessa](art/reference/painted_turnarounds/contact-sheet.png)
+
+The turnaround import tool is documented in [`art/reference/painted_turnarounds/README.md`](art/reference/painted_turnarounds/README.md). The current import fills the four walk slots with the same painted view, so idle rendering is usable but walking is not animation-complete. Review source sheets, then inspect the converted character in a built GemRB scene.
 
 ![Market NPCs with distinct green, orange, and teal clothing palettes](screenshots/alsperia-market-npc-palettes.png)
 

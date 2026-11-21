@@ -4,6 +4,8 @@ This is the current work ledger for human and AI contributors. Read [AGENTS.md](
 
 ## Done
 
+- [x] Replaced the rejected low-poly NPC art direction with a painted 2D world-sprite prototype for Archivist Mara, King Edmon, Queen Alisande, and Scout Tessa. Added transparent turnaround sources and a converter to the 80x96 nine-direction GemRB frame layout. Rebuilt the campaign and verified the painted Mara, Queen, and King in a live Market scene; moved Edmon to a clear lower path after the old position produced a broken white silhouette. The walk slots currently repeat idle art; hand-painted motion and conversion of the remaining cast are still required.
+
 - [x] Added and live-verified Scholar Inessa's native Library DLG. Both the cautious route-copy and sealed-leaf branches reach distinct response and re-entry lines, set the existing route flag, and add exactly their matching Act I Journal entry. The DLG writes the journal entry at the choice transition, so it appears immediately rather than waiting for the next campaign-panel refresh. Verified both branches in separate fresh GemRB builds; native dialogue and campaign-flow tests pass.
 
 - [x] Replaced shared demo NPC animations with 38 custom 9-direction world-sprite sets across six role silhouettes. Each identity has a distinct creature resource and BAM prefix, three actor-animation BAMs, an individual palette, and a scene-cast binding. The generated resource audit found all 152 CRE/BAM files. Increased costume color and contrast in the compiled walking and idle animations; the live Market capture shows stronger color separation, while silhouette readability remains open.
@@ -78,6 +80,8 @@ This is the current work ledger for human and AI contributors. Read [AGENTS.md](
 - [x] Rebuilt the isolated Terralum pack after adding the Mistwood report; GemRB started the fresh pack in Xvfb, loaded Alsperia Market and its cast, and logged no Python traceback. A direct Mistwood start rendered the Lost Wayfarer and both choices; the anonymous-warning choice appeared in the Act II Journal. Direct Watchpost starts under isolated Xvfb verified Pell's anonymous-warning response and private-account response. A continuous transition and save/load remain unverified.
 
 ## Ongoing
+
+- [ ] **Complete the painted 2D cast conversion.** Four recurring characters now have painted turnaround sources, and Mara is live in the Market. Generate approved sheets for the rest of the cast, identify a reliable hand-painted animation workflow for walk cycles, and review every converted NPC at scene scale. Keep the low-poly source art out of new final character work.
 
 - [ ] **Fix the Lost Wayfarer's Mistwood world sprite.** The actor and CRE load in a fresh direct-start GemRB session, but the world model appears as a white silhouette after the latest pack rebuild. Tessa's revised sprite renders correctly in the same scene. Compare the Wayfarer's compiled BAM, `avatars.2da` animation row, and inherited `riddler` CRE palette stats; do not mark the full Mistwood cast review complete until the Wayfarer renders with its authored costume.
 

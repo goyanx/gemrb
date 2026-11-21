@@ -28,6 +28,13 @@ This fork includes **Terralum: Scrolls of Byzantem**, an original, story-driven 
 </p>
 <p align="center"><em>Fresh live capture: Mara's archive-blue hood, Edmon's royal red, and Alisande's teal gown create separate silhouettes for the opening cast.</em></p>
 
+The character-art direction is shifting to hand-painted 2D figures. This current GemRB capture shows the painted Mara, Queen Alisande, and King Edmon sprites in the Market; the [turnaround sheet](terralum/art/reference/painted_turnarounds/contact-sheet.png) and [import workflow](terralum/art/reference/painted_turnarounds/README.md) document the prototype.
+
+<p align="center">
+  <a href="terralum/screenshots/painted-opening-cast.png"><img src="terralum/screenshots/painted-opening-cast.png" alt="Live GemRB scene with painted two-dimensional sprites for Archivist Mara, King Edmon, and Queen Alisande" width="92%"></a>
+</p>
+<p align="center"><em>Painted 2D NPC sprite prototype in the live Alsperia Market scene.</em></p>
+
 <p align="center">
   <a href="terralum/screenshots/terralum-cast-avatars-live.png"><img src="terralum/screenshots/terralum-cast-avatars-live.png" alt="Live GemRB opening scene with the custom Queen, King, and Archivist avatars" width="65%"></a>
   <a href="terralum/art/world_sprites/cast-contact-sheet.png"><img src="terralum/art/world_sprites/cast-contact-sheet.png" alt="Contact sheet of 38 custom Terralum NPC world avatars" width="30%"></a>
