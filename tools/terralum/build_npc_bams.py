@@ -153,13 +153,19 @@ def write_scaled_player_avatar(source_override, output_override, factor=1.70):
 	(output_override / "algopc.cre").write_bytes(base_creature)
 	with (output_override / "avatars.2da").open("a", encoding="utf-8", newline="") as table:
 		table.write(f"\n0x{animation_id:04X} {prefix} {prefix} {prefix} {prefix} 0 2 0 *")
+	player_stances = {}
 	for suffix in ("G11", "G1", "G17"):
 		# The demo has no separate G1 ready BAM; its G17 is the idle stance
 		# source used for both modes.
 		source_suffix = "G17" if suffix == "G1" else suffix
 		source = source_override / f"CHMB1{source_suffix}.BAM"
-		(output_override / f"{prefix}{suffix}.BAM").write_bytes(
-			_scale_bam_v1(source.read_bytes(), factor))
+		player_stances[suffix] = _scale_bam_v1(source.read_bytes(), factor)
+		(output_override / f"{prefix}{suffix}.BAM").write_bytes(player_stances[suffix])
+	# CODE_MIRROR may request these VHR stance suffixes for head turns,
+	# damage, death, sleep, and emergence. The demo G17 BAM includes their
+	# indexed cycles, so scaled G17 is a valid fallback for those poses.
+	for suffix in ("G12", "G13", "G14", "G15", "G16", "G18", "G19"):
+		(output_override / f"{prefix}{suffix}.BAM").write_bytes(player_stances["G17"])
 
 
 def write_npc_avatar(name, prefix, output_override):
@@ -180,8 +186,20 @@ def write_npc_avatar(name, prefix, output_override):
 	ready_cycles.extend([[direction] for direction in range(9)])
 	ready_bam = _bam_bytes(idle, ready_cycles)
 
+	# GemRB's mirrored-human animation type addresses these stances at fixed
+	# VHR cycle offsets. Reuse the directional idle frames as safe fallback
+	# poses, while keeping every expected cycle index present in the BAM.
+	stance_bams = {}
+	for suffix, first_cycle in (("G12", 18), ("G13", 27), ("G14", 36),
+							("G15", 45), ("G16", 54), ("G18", 72), ("G19", 81)):
+		cycles = [[0] for _ in range(first_cycle)]
+		cycles.extend([[direction] for direction in range(9)])
+		stance_bams[suffix] = _bam_bytes(idle, cycles)
+
 	output_override.mkdir(parents=True, exist_ok=True)
 	(output_override / f"{prefix}G11.BAM").write_bytes(walk_bam)
 	(output_override / f"{prefix}G1.BAM").write_bytes(ready_bam)
 	(output_override / f"{prefix}G17.BAM").write_bytes(idle_bam)
+	for suffix, data in stance_bams.items():
+		(output_override / f"{prefix}{suffix}.BAM").write_bytes(data)
 	return (len(walk_bam), len(ready_bam), len(idle_bam))
