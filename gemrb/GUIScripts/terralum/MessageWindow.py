@@ -103,11 +103,12 @@ def OnLoad():
 		for person in Story.cast(chapter["area"]):
 			actor = GemRB.CreateCreature(1, person["creature"], person["position"][0], person["position"][1])
 			GemRB.SetPlayerName(actor, person["name"], 0)
+			if person["creature"] in ("protagon", "riddler"):
+				palette = NPC_PALETTES_BY_NAME[person["name"]]
+				GemRB.SetPlayerStat(actor, IE_HAIR_COLOR, palette[0])
+				GemRB.SetPlayerStat(actor, IE_MAJOR_COLOR, palette[1])
+				GemRB.SetPlayerStat(actor, IE_MINOR_COLOR, palette[2])
 			GemRB.SetPlayerStat(actor, IE_EA, NEUTRAL)
-			palette = NPC_PALETTES_BY_NAME[person["name"]]
-			GemRB.SetPlayerStat(actor, IE_HAIR_COLOR, palette[0])
-			GemRB.SetPlayerStat(actor, IE_MAJOR_COLOR, palette[1])
-			GemRB.SetPlayerStat(actor, IE_MINOR_COLOR, palette[2])
 			if person.get("dialog"):
 				GemRB.SetPlayerDialog(actor, person["dialog"])
 			if person.get("spawn_flag"):

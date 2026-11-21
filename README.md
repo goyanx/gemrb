@@ -24,6 +24,11 @@ This fork includes **Terralum: Scrolls of Byzantem**, an original, story-driven 
 <p align="center"><em>Live GemRB campaign capture: the Alsperia Market opening scene with its local cast, story panel, journal control, Talk, Continue, and Kokoro Narrate.</em></p>
 
 <p align="center">
+  <a href="terralum/screenshots/queen-avatar-live.png"><img src="terralum/screenshots/queen-avatar-live.png" alt="Live GemRB market scene with Queen Alisande's custom teal-and-gold animated world avatar" width="92%"></a>
+</p>
+<p align="center"><em>Queen Alisande now uses a custom animated world sprite. The remaining cast is still being moved off the shared demo models.</em></p>
+
+<p align="center">
   <a href="terralum/screenshots/alsperia-market-journal-live.png"><img src="terralum/screenshots/alsperia-market-journal-live.png" alt="Live GemRB Journal showing the Alsperia opening quest and Mara’s ledger decision under Act I" width="30%"></a>
   &nbsp;&nbsp;
   <a href="terralum/screenshots/campaign-locations-concept-art.jpg"><img src="terralum/screenshots/campaign-locations-concept-art.jpg" alt="Generated concept-art montage previewing Terralum campaign locations" width="30%"></a>
@@ -40,11 +45,11 @@ This fork includes **Terralum: Scrolls of Byzantem**, an original, story-driven 
 <p align="center">
   <a href="terralum/screenshots/market-party-detail.png"><img src="terralum/screenshots/market-party-detail.png" alt="Detail crop of the player party and local NPC placements in the Alsperia Market" width="60%"></a>
 </p>
-<p align="center"><em>Live scene detail: the party and local cast are placed together in the opening market. Scene actors currently reuse the demo's placeholder sprites.</em></p>
+<p align="center"><em>Live scene detail: the party and local cast are placed together in the opening market. Queen Alisande has a custom animated sprite; other actors still use shared demo sprites.</em></p>
 
 **[Campaign guide](terralum/README.md)** · **[Gold Standard pipeline](terralum/GOLD_STANDARD_GAME_DESIGN_PIPELINE.md)** · **[Campaign plan](terralum/campaign_plan.md)** · **[Current TODO](TODO.md)**
 
-> **Prototype status:** This is an expanding playable slice, not a finished full-length RPG. Its party and scene actors currently reuse demo sprites, and all 25 areas still inherit the demo's WED layout and terrain. The opening scene now has live-tested native actor dialogue for Mara and Queen Alisande; Mara's copy-landmarks and sealed-ledger branches both work, and her decision appears in the Act I Journal; other branches and save/load still need playtesting. See the [campaign guide](terralum/README.md) for build steps and current verification limits.
+> **Prototype status:** This is an expanding playable slice, not a finished full-length RPG. Queen Alisande has the first custom animated world sprite; the rest of the scene cast still shares demo animations, and all 25 areas still inherit the demo's WED layout and terrain. The opening scene has live-tested native actor dialogue for Mara and Queen Alisande; Mara's copy-landmarks and sealed-ledger branches both work, and her decision appears in the Act I Journal. Other branches and save/load still need playtesting. See the [campaign guide](terralum/README.md) for build steps and current verification limits.
 
 To try it out you either need some of the ORIGINAL game's data or you can
 get a tiny sneak peek by running the included trivial game demo.

@@ -78,7 +78,7 @@
     },
     {
       "name": "Queen Alisande",
-      "creature": "riddler",
+      "creature": "alisande",
       "dialog": "ALISAND",
       "position": [
         870,
@@ -718,7 +718,7 @@
     },
     {
       "name": "Queen Alisande",
-      "creature": "riddler",
+      "creature": "alisande",
       "dialog": "ALISAND",
       "position": [
         930,
@@ -799,7 +799,7 @@
     },
     {
       "name": "Queen Alisande",
-      "creature": "riddler",
+      "creature": "alisande",
       "dialog": "ALISAND",
       "position": [
         930,
@@ -1210,7 +1210,7 @@
     },
     {
       "name": "Queen Alisande",
-      "creature": "protagon",
+      "creature": "alisande",
       "position": [
         930,
         500
@@ -1375,7 +1375,7 @@
     },
     {
       "name": "Queen Alisande",
-      "creature": "protagon",
+      "creature": "alisande",
       "position": [
         930,
         500
@@ -1992,7 +1992,7 @@
     },
     {
       "name": "Queen Alisande",
-      "creature": "protagon",
+      "creature": "alisande",
       "position": [
         810,
         720

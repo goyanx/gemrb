@@ -15,6 +15,8 @@ from pathlib import Path
 
 from PIL import Image, ImageDraw
 
+from build_npc_bams import write_npc_avatar
+
 
 ROOT = Path(__file__).resolve().parents[2]
 SOURCE = ROOT / "demo"
@@ -45,6 +47,11 @@ PORTRAITS = {
     "TAVIN0": (3, 2, 1), "LEORA0": (3, 3, 1), "NERIN0": (3, 0, 2),
     "ORIS00": (3, 1, 2), "MERETH": (3, 2, 2), "ORLA00": (3, 3, 2),
 }
+NPC_AVATARS = (
+    {"name": "queen_alisande", "prefix": "TLAL", "animation_id": 0xC900,
+     "creature": "alisande", "base_creature": "riddler"},
+)
+SUPPORTED_CREATURES = {"protagon", "riddler"} | {avatar["creature"] for avatar in NPC_AVATARS}
 SETUP_FILE = ROOT / "gemrb" / "GUIScripts" / "terralum" / "SetupGame.py"
 AREAS = {
     "tl0001": "alsperia_market.png",
@@ -226,7 +233,7 @@ def validate_npc(person, area, require_design=False):
               "knowledge": 1000, "voice": 500}
     if (not isinstance(person.get("name"), str) or not person["name"].strip() or len(person["name"]) > 120
             or not isinstance(person.get("line"), str) or not person["line"].strip() or len(person["line"]) > 2000
-            or person.get("creature") not in ("protagon", "riddler")):
+            or person.get("creature") not in SUPPORTED_CREATURES):
         raise ValueError(f"scene cast for {area} has an incomplete NPC")
     portrait = person.get("portrait")
     if portrait is not None and portrait not in PORTRAITS:
@@ -613,6 +620,17 @@ def build():
     if OUTPUT.exists():
         shutil.rmtree(OUTPUT)
     shutil.copytree(SOURCE, OUTPUT)
+    avatars_table = OUTPUT / "override" / "avatars.2da"
+    with avatars_table.open("a", encoding="utf-8", newline="") as table:
+        for avatar in NPC_AVATARS:
+            table.write(f"\n0x{avatar['animation_id']:04X} {avatar['prefix']} {avatar['prefix']} "
+                        f"{avatar['prefix']} {avatar['prefix']} 0 2 1 *")
+            write_npc_avatar(avatar["name"], avatar["prefix"], OUTPUT / "override")
+            creature = bytearray((OUTPUT / "override" / f"{avatar['base_creature']}.cre").read_bytes())
+            if creature[:8] != b"CRE V1.0":
+                raise ValueError(f"{avatar['base_creature']}.cre must be a supported CRE V1.0 source")
+            struct.pack_into("<I", creature, 0x28, avatar["animation_id"])
+            (OUTPUT / "override" / f"{avatar['creature']}.cre").write_bytes(creature)
     portrait_sheets = [(Image.open(path).convert("RGB"), columns, rows)
                        for path, columns, rows in PORTRAIT_SHEETS]
     for portrait, (sheet_index, column, row) in PORTRAITS.items():
