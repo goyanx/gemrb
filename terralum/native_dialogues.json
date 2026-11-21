@@ -31,6 +31,28 @@
       }
     ]
   },
+  "EDDA": {
+    "states": [
+      {
+        "when": [{"flag": "TLCHAP", "value": 3}, {"flag": "TLTRAVELKIT", "value": 0}],
+        "say": "The king's horse is ready. We can pack either a shuttered lantern with spare oil, or rope and trail rations. I can fit one field kit into the saddle bags.",
+        "transitions": [
+          {"text": "Pack the shuttered lantern and spare oil.", "next": 1, "set": [{"flag": "TLTRAVELKIT", "value": 1}]},
+          {"text": "Pack rope and trail rations.", "next": 2, "set": [{"flag": "TLTRAVELKIT", "value": 2}]}
+        ]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 3}, {"flag": "TLTRAVELKIT", "value": 1}],
+        "say": "The shuttered lantern and spare oil are packed. Scout Tessa can decide whether a signal is worth showing once we reach the hunters' camp.",
+        "transitions": [{"text": "Keep the lantern shuttered until Tessa advises us.", "final": true}]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 3}, {"flag": "TLTRAVELKIT", "value": 2}],
+        "say": "The rope and trail rations are packed. Ranger Ilya can use them to secure a creek crossing without exposing the camp to a signal.",
+        "transitions": [{"text": "Carry the rope for the creekside route.", "final": true}]
+      }
+    ]
+  },
   "INESSA": {
     "states": [
       {

@@ -1651,6 +1651,7 @@
     {
       "name": "Stablemaster Edda",
       "portrait": "EDDA00",
+      "dialog": "EDDA",
       "creature": "protagon",
       "position": [
         600,
