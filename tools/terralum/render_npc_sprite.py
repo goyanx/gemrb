@@ -87,6 +87,10 @@ def parent_at(obj, pivot, name):
 
 
 def make_actor(name, profile, seed):
+	# Keep the general animation rig, but let recurring cast leads carry a
+	# distinct role silhouette and signature prop instead of only a new color.
+	archetype = {"inessa": "scholar", "tessa": "ranger", "saren": "guard",
+		"wayfarer": "ranger"}.get(profile, profile)
 	# Each identity gets a high-contrast cloth color and a visible accessory
 	# variant. At 80x96, one strong prop or head silhouette reads better than
 	# several tiny costume details.
@@ -101,6 +105,14 @@ def make_actor(name, profile, seed):
 		cloth_rgb, trim_rgb, lining_rgb = (0.28, 0.10, 0.29), (0.22, 0.60, 0.55), (0.88, 0.78, 0.57)
 	elif profile == "king":
 		cloth_rgb, trim_rgb, lining_rgb = (0.38, 0.035, 0.055), (0.88, 0.60, 0.16), (0.92, 0.84, 0.68)
+	elif profile == "inessa":
+		cloth_rgb, trim_rgb, lining_rgb = (0.10, 0.16, 0.30), (0.70, 0.40, 0.18), (0.82, 0.78, 0.63)
+	elif profile == "tessa":
+		cloth_rgb, trim_rgb, lining_rgb = (0.12, 0.26, 0.17), (0.72, 0.46, 0.18), (0.58, 0.40, 0.25)
+	elif profile == "saren":
+		cloth_rgb, trim_rgb, lining_rgb = (0.10, 0.18, 0.28), (0.72, 0.58, 0.25), (0.77, 0.73, 0.62)
+	elif profile == "wayfarer":
+		cloth_rgb, trim_rgb, lining_rgb = (0.19, 0.22, 0.17), (0.48, 0.36, 0.22), (0.62, 0.53, 0.40)
 	else:
 		cloth_rgb, trim_rgb, lining_rgb = identity_cloth, identity_trim, (0.82, 0.76, 0.62)
 	cloth = material(name + " cloth", cloth_rgb)
@@ -111,7 +123,7 @@ def make_actor(name, profile, seed):
 	boots = material(name + " boots", (0.13, 0.09, 0.075))
 	parts = []
 	for side, sign in (("left", -1), ("right", 1)):
-		if profile in ("ranger", "guard", "citizen", "king", "scholar"):
+		if archetype in ("ranger", "guard", "citizen", "king", "scholar"):
 			leg = add_cylinder(name + " " + side + " trouser", (sign * 0.075, 0.0, 0.36), 0.062, 0.46, lining)
 		else:
 			leg = add_cylinder(name + " " + side + " leg", (sign * 0.075, 0.0, 0.36), 0.055, 0.46, lining)
@@ -119,14 +131,14 @@ def make_actor(name, profile, seed):
 		parts.append((leg_pivot, sign, "leg"))
 		add_sphere(name + " " + side + " shoe", (sign * 0.075, -0.06, 0.105), (0.075, 0.13, 0.07), boots)
 
-	if profile in ("ranger", "guard", "citizen", "king", "scholar"):
-		tunic_depth = 0.46 if profile == "ranger" else 0.50 if profile == "king" else 0.62
+	if archetype in ("ranger", "guard", "citizen", "king", "scholar"):
+		tunic_depth = 0.46 if archetype == "ranger" else 0.50 if archetype == "king" else 0.62
 		add_cylinder(name + " tunic", (0, 0, 0.98), 0.23, tunic_depth, cloth, vertices=8)
-		if profile == "king":
+		if archetype == "king":
 			add_cube(name + " royal overcoat", (0, -0.17, 0.94), (0.48, 0.08, 0.50), trim)
 			add_cylinder(name + " royal belt", (0, -0.10, 0.85), 0.24, 0.08, lining, vertices=8)
 			add_sphere(name + " royal shoulder cape", (0, 0.02, 1.29), (0.44, 0.28, 0.24), cloth)
-		elif profile == "scholar":
+		elif archetype == "scholar":
 			variant = seed % 4
 			if variant == 0:
 				add_cube(name + " archivist's book", (-0.32, -0.17, 0.87), (0.25, 0.10, 0.36), trim)
@@ -142,10 +154,10 @@ def make_actor(name, profile, seed):
 				add_cube(name + " broad satchel", (0.28, -0.18, 0.89), (0.30, 0.10, 0.34), boots)
 			if variant in (1, 3):
 				add_cube(name + " cross-body strap", (0.02, -0.20, 1.06), (0.07, 0.06, 0.64), trim)
-		elif profile == "ranger":
+		elif archetype == "ranger":
 			# Short front-facing capes and identity-specific trail gear distinguish
 			# pathfinders from the long-coated scholars and from one another.
-			variant = seed % 4
+			variant = 0 if profile in ("tessa", "wayfarer") else seed % 4
 			add_mesh(name + " short travel cape", [
 				(-0.40 if variant == 2 else -0.34, -0.23, 1.34),
 				(0.40 if variant == 2 else 0.34, -0.23, 1.34),
@@ -160,8 +172,8 @@ def make_actor(name, profile, seed):
 				add_cube(name + " trail pack", (0.31, 0.02, 1.17), (0.27, 0.25, 0.42), lining)
 			else:
 				add_cylinder(name + " bedroll", (0.34, 0.02, 1.22), 0.12, 0.58, lining, vertices=8)
-		elif profile == "guard":
-			variant = seed % 4
+		elif archetype == "guard":
+			variant = 2 if profile == "saren" else seed % 4
 			add_cylinder(name + " cuirass", (0, -0.09, 1.04), 0.25, 0.42, trim, vertices=8)
 			for sign in (-1, 1):
 				add_sphere(name + " pauldron", (sign * 0.28, 0, 1.31), (0.16, 0.20, 0.15), trim)
@@ -176,7 +188,7 @@ def make_actor(name, profile, seed):
 			else:
 				add_cylinder(name + " patrol spear", (0.42, 0.02, 1.12), 0.025, 1.22, lining, vertices=6)
 				add_cone(name + " spear head", (0.42, 0.02, 1.78), 0.07, 0.005, 0.24, trim, vertices=5)
-		elif profile == "citizen":
+		elif archetype == "citizen":
 			add_cube(name + " work apron", (0, -0.18, 0.81), (0.32, 0.07, 0.48), trim)
 			variant = seed % 3
 			if variant == 0:
@@ -186,6 +198,33 @@ def make_actor(name, profile, seed):
 				add_cube(name + " hammer head", (0.39, -0.04, 1.25), (0.20, 0.10, 0.12), trim)
 			else:
 				add_cube(name + " market satchel", (0.33, 0.02, 1.05), (0.30, 0.25, 0.32), lining)
+		if profile == "inessa":
+			# Her broad scholar's stole and open folio give Inessa a recognizable
+			# outline distinct from the cap-and-scroll silhouette used by librarians.
+			add_mesh(name + " scholar stole", [(-0.42, -0.24, 1.34), (0.42, -0.24, 1.34),
+				(0.27, -0.25, 0.94), (0.0, -0.26, 1.02), (-0.27, -0.25, 0.94)], [(0, 1, 2, 3, 4)], trim)
+			add_cube(name + " open route folio", (-0.30, -0.22, 0.92), (0.24, 0.08, 0.24), lining)
+			add_cube(name + " folio cover", (-0.30, -0.27, 0.92), (0.25, 0.02, 0.25), trim)
+		elif profile == "tessa":
+			# The scout's high hood and feather marker remain legible at map scale.
+			add_sphere(name + " scout hood mantle", (0, 0.07, 1.65), (0.30, 0.27, 0.32), cloth)
+			add_cone(name + " scout feather", (0.14, 0.04, 1.98), 0.045, 0.004, 0.42, trim, vertices=5)
+			add_cube(name + " scout quiver", (0.34, 0.10, 1.25), (0.18, 0.18, 0.48), boots)
+		elif profile == "saren":
+			# Saren's marshal mantle, badge and long spear mark the relay authority.
+			add_mesh(name + " marshal mantle", [(-0.44, 0.10, 1.38), (0.44, 0.10, 1.38),
+				(0.30, 0.10, 0.76), (0.0, 0.10, 0.91), (-0.30, 0.10, 0.76)], [(0, 1, 2, 3, 4)], cloth)
+			add_sphere(name + " marshal badge", (0, -0.24, 1.27), (0.09, 0.045, 0.09), lining)
+			add_cylinder(name + " relay spear", (0.46, 0.02, 1.28), 0.03, 1.58, lining, vertices=6)
+			add_cone(name + " relay spear point", (0.46, 0.02, 2.12), 0.08, 0.004, 0.24, trim, vertices=5)
+		elif profile == "wayfarer":
+			# An uneven weather cloak and carried lantern distinguish the traveler
+			# from the equipped scouts who know these roads.
+			add_mesh(name + " patched weather cloak", [(-0.39, 0.12, 1.36), (0.39, 0.12, 1.36),
+				(0.34, 0.12, 0.72), (0.18, 0.12, 0.86), (0.0, 0.12, 0.68),
+				(-0.16, 0.12, 0.84), (-0.34, 0.12, 0.70)], [(0, 1, 2, 3, 4, 5, 6)], trim)
+			add_cylinder(name + " travel lantern handle", (-0.39, -0.06, 1.02), 0.018, 0.34, boots, vertices=6)
+			add_cube(name + " travel lantern", (-0.39, -0.06, 0.82), (0.17, 0.14, 0.21), lining)
 	else:
 		flare = 0.46 if profile == "queen" else 0.37 if profile == "mara" else 0.31 if profile == "leora" else 0.34 if profile in ("royal", "mage") else 0.27
 		add_cone(name + " robe", (0, 0, 0.75), flare, 0.17, 0.95, cloth, vertices=10)
@@ -202,7 +241,7 @@ def make_actor(name, profile, seed):
 			add_sphere(name + " archive hood", (0, 0.055, 1.71), (0.25, 0.23, 0.29), cloth)
 			add_cylinder(name + " sealed dispatch tube", (0.34, 0.02, 1.16), 0.075, 0.82, trim, vertices=8)
 			add_sphere(name + " dispatch tube cap", (0.34, 0.02, 1.59), (0.09, 0.09, 0.07), lining)
-		if profile in ("queen", "royal", "king"):
+		if archetype in ("queen", "royal", "king"):
 			add_sphere(name + " royal mantle", (0, 0.015, 1.27), (0.37, 0.25, 0.18), trim)
 		elif profile == "mage":
 			variant = seed % 3
@@ -212,7 +251,7 @@ def make_actor(name, profile, seed):
 				add_sphere(name + " shoulder mantle", (0, 0.02, 1.28), (0.40, 0.27, 0.21), trim)
 			else:
 				add_cube(name + " spell folio", (-0.30, -0.17, 0.94), (0.24, 0.10, 0.33), trim)
-		elif profile == "scholar":
+		elif archetype == "scholar":
 			add_cube(name + " field book", (0.30, -0.13, 0.92), (0.16, 0.09, 0.23), trim)
 		add_sphere(name + " bodice", (0, -0.015, 1.16), (0.19, 0.17, 0.27), cloth)
 		add_cylinder(name + " collar", (0, 0, 1.36), 0.13, 0.08, trim)
@@ -225,7 +264,7 @@ def make_actor(name, profile, seed):
 
 	add_cylinder(name + " neck", (0, 0, 1.44), 0.075, 0.12, skin)
 	add_sphere(name + " face", (0, -0.005, 1.61), (0.17, 0.155, 0.20), skin)
-	if profile not in ("ranger", "guard", "leora"):
+	if archetype not in ("ranger", "guard", "leora"):
 		add_sphere(name + " hair", (0, 0.025, 1.72), (0.175, 0.15, 0.15), hair)
 	if profile == "mara":
 		# A visible braid and spectacles distinguish her face from the shared
@@ -238,7 +277,7 @@ def make_actor(name, profile, seed):
 	if profile == "king":
 		beard = material(name + " silver beard", (0.58, 0.55, 0.48))
 		add_sphere(name + " beard", (0, -0.12, 1.51), (0.15, 0.085, 0.16), beard)
-	if profile in ("queen", "royal", "king"):
+	if archetype in ("queen", "royal", "king"):
 		add_cylinder(name + " crown band", (0, -0.012, 1.79), 0.16, 0.075, trim, vertices=8)
 		for index in range(5):
 			x = -0.13 + index * 0.065
@@ -248,12 +287,12 @@ def make_actor(name, profile, seed):
 			add_cone(name + " pointed hat", (0, 0.025, 1.91), 0.16, 0.005, 0.34, trim, vertices=7)
 		add_cylinder(name + " mage staff", (0.39, 0.02, 1.13), 0.025, 1.18, trim, vertices=6)
 		add_sphere(name + " staff crystal", (0.39, 0.02, 1.75), (0.08, 0.08, 0.10), lining)
-	elif profile == "ranger":
+	elif archetype == "ranger":
 		add_cylinder(name + " bow", (0.43, -0.24, 1.11), 0.035, 1.0, trim, vertices=6)
 	elif profile == "king":
 		add_cylinder(name + " royal scepter", (0.42, -0.22, 1.10), 0.028, 0.88, trim, vertices=6)
 		add_sphere(name + " scepter jewel", (0.42, -0.22, 1.57), (0.065, 0.065, 0.08), lining)
-	elif profile == "scholar":
+	elif archetype == "scholar":
 		add_sphere(name + " scholar cap", (0, 0.01, 1.78), (0.20, 0.18, 0.10), trim)
 	return parts
 

@@ -24,6 +24,10 @@ The current procedural pass gives 35 cast members identity-specific costume pale
 
 ![Live Library scene showing distinct Inessa and Oren world avatars](screenshots/supporting-cast-library-live.png)
 
+The latest avatar pass gives Scholar Inessa a scholar's stole and route folio, Scout Tessa a feathered hood and quiver, Waywarden Saren a marshal mantle and relay spear, and the Lost Wayfarer a weather cloak and lantern. Their 9-direction walk and idle BAMs are rebuilt with the game pack; the Library capture shows Inessa loaded in GemRB.
+
+![Scholar Inessa's updated world avatar in the live Library scene](screenshots/inessa-avatar-library-rebuilt.png)
+
 Four generated portrait sheets now provide medium and small GemRB portrait resources for all thirty-eight unique named NPCs across the seven-act cast. These dialogue portraits are separate from the animated world sprites. Portraits are selected by NPC data and appear beside their dialogue. The latest sheet adds distinct portraits for twelve previously unpictured characters.
 
 ![Twelve new Terralum NPC portrait concepts for the complete cast](art/character_portraits_sheet_4.png)

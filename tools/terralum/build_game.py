@@ -55,6 +55,16 @@ PORTRAIT_ART_OVERRIDES = {
 }
 def avatar_profile(person):
 	text = (person.get("name", "") + " " + person.get("role", "")).lower()
+	# Recurring story leads get a distinct outline at native map scale. Keep these
+	# named profiles ahead of broad job-role matching (scholar/ranger/guard).
+	if "scholar inessa" in text:
+		return "inessa"
+	if "scout tessa" in text:
+		return "tessa"
+	if "waywarden saren" in text:
+		return "saren"
+	if "lost wayfarer" in text:
+		return "wayfarer"
 	if "queen alisande" in text:
 		return "queen"
 	if "archivist mara" in text:
@@ -661,7 +671,10 @@ def write_tis(image_path, reference_path, target_path):
             for tile_x in range(25):
                 tile = image.crop((tile_x * 64, tile_y * 64, (tile_x + 1) * 64, (tile_y + 1) * 64))
                 indexed = tile.quantize(colors=256, method=Image.Quantize.MEDIANCUT)
-                rgb = indexed.getpalette()[:768]
+                rgb = (indexed.getpalette() or [])[:768]
+                # Pillow may return a compact palette for monochrome tiles. TIS V1
+                # still stores 256 BGRA entries, so pad the unused colors explicitly.
+                rgb.extend([0] * (768 - len(rgb)))
                 # GemRB reads BGRA palette entries; the fourth byte is unused.
                 palette = bytearray()
                 for index in range(256):
