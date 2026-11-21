@@ -143,7 +143,7 @@ def _scale_bam_v1(data, factor):
 	return header + frame_table + cycle_table + palette + lookups + new_pixels
 
 
-def write_scaled_player_avatar(source_override, output_override, factor=1.30):
+def write_scaled_player_avatar(source_override, output_override, factor=1.70):
 	"""Give Algoreth a larger version of the existing animated protagonist art."""
 	base_creature = bytearray((source_override / "protagon.cre").read_bytes())
 	if base_creature[:8] != b"CRE V1.0":
