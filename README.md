@@ -35,6 +35,11 @@ This fork includes **Terralum: Scrolls of Byzantem**, an original, story-driven 
 <p align="center"><em>Three custom actors in live GemRB · 38 generated multi-direction character sets grouped by role and costume.</em></p>
 
 <p align="center">
+  <a href="terralum/screenshots/market-party-moved-live.png"><img src="terralum/screenshots/market-party-moved-live.png" alt="Live GemRB screenshot after the selected party member moved through Alsperia Market and the camera followed" width="75%"></a>
+</p>
+<p align="center"><em>Click-to-move in the Market courtyard: the selected party member reaches the stalls and the camera reveals more of the area.</em></p>
+
+<p align="center">
   <a href="terralum/screenshots/alsperia-market-journal-live.png"><img src="terralum/screenshots/alsperia-market-journal-live.png" alt="Live GemRB Journal showing the Alsperia opening quest and Mara’s ledger decision under Act I" width="30%"></a>
   &nbsp;&nbsp;
   <a href="terralum/screenshots/campaign-locations-concept-art.jpg"><img src="terralum/screenshots/campaign-locations-concept-art.jpg" alt="Generated concept-art montage previewing Terralum campaign locations" width="30%"></a>
