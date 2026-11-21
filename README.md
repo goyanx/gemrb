@@ -41,9 +41,9 @@ This fork includes **Terralum: Scrolls of Byzantem**, an original, story-driven 
 <p align="center"><em>New character portraits shown in a live dialogue, alongside the central cast design sheet.</em></p>
 
 <p align="center">
-  <a href="terralum/screenshots/cast-map-colors-live.png"><img src="terralum/screenshots/cast-map-colors-live.png" alt="Live GemRB scene after boosting character sprite costume colors, with the central cast placed in Alsperia Market" width="82%"></a>
+  <a href="terralum/screenshots/cast-map-colors-live.png"><img src="terralum/screenshots/cast-map-colors-live.png" alt="Live GemRB map view with Mara's book-bearing scholar silhouette, King Edmon in crimson, and Queen Alisande in teal" width="82%"></a>
 </p>
-<p align="center"><em>Brighter costume colors help distinguish the Market cast in the play scene. The next art pass will further separate silhouettes.</em></p>
+<p align="center"><em>The redesigned central cast in the Market: Mara's book-bearing scholar, Edmon's crimson royal mantle, and Alisande's teal gown. The other scene actors still need the same live review.</em></p>
 
 <p align="center">
   <a href="terralum/screenshots/market-party-moved-live.png"><img src="terralum/screenshots/market-party-moved-live.png" alt="Live GemRB screenshot after the selected party member moved through Alsperia Market and the camera followed" width="75%"></a>

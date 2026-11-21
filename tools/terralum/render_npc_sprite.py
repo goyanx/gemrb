@@ -89,7 +89,14 @@ def make_actor(name, profile, seed):
 	# Each cast archetype changes the silhouette and props; the seed rotates its
 	# clothing hue so two scholars or wardens still read as different people.
 	if profile == "queen":
-		cloth_rgb, trim_rgb, lining_rgb = (0.055, 0.23, 0.29), (0.8, 0.56, 0.19), (0.74, 0.66, 0.49)
+		cloth_rgb, trim_rgb, lining_rgb = (0.035, 0.25, 0.32), (0.88, 0.62, 0.16), (0.86, 0.79, 0.64)
+	elif profile == "king":
+		cloth_rgb, trim_rgb, lining_rgb = (0.38, 0.035, 0.055), (0.88, 0.60, 0.16), (0.92, 0.84, 0.68)
+	elif profile == "scholar":
+		hue = 0.60 + ((seed % 5) - 2) * 0.025
+		cloth_rgb = tuple(__import__("colorsys").hsv_to_rgb(hue, 0.72, 0.44))
+		trim_rgb = (0.62, 0.34, 0.12)
+		lining_rgb = (0.82, 0.74, 0.59)
 	else:
 		hue = (seed * 0.61803398875 + 0.08) % 1.0
 		cloth_rgb = tuple(__import__("colorsys").hsv_to_rgb(hue, 0.58, 0.72))
@@ -103,7 +110,7 @@ def make_actor(name, profile, seed):
 	boots = material(name + " boots", (0.13, 0.09, 0.075))
 	parts = []
 	for side, sign in (("left", -1), ("right", 1)):
-		if profile in ("ranger", "guard", "citizen", "king"):
+		if profile in ("ranger", "guard", "citizen", "king", "scholar"):
 			leg = add_cylinder(name + " " + side + " trouser", (sign * 0.075, 0.0, 0.36), 0.062, 0.46, lining)
 		else:
 			leg = add_cylinder(name + " " + side + " leg", (sign * 0.075, 0.0, 0.36), 0.055, 0.46, lining)
@@ -111,13 +118,17 @@ def make_actor(name, profile, seed):
 		parts.append((leg_pivot, sign, "leg"))
 		add_sphere(name + " " + side + " shoe", (sign * 0.075, -0.06, 0.105), (0.075, 0.13, 0.07), boots)
 
-	if profile in ("ranger", "guard", "citizen", "king"):
+	if profile in ("ranger", "guard", "citizen", "king", "scholar"):
 		tunic_depth = 0.46 if profile == "ranger" else 0.50 if profile == "king" else 0.62
 		add_cylinder(name + " tunic", (0, 0, 0.98), 0.23, tunic_depth, cloth, vertices=8)
 		if profile == "king":
-			add_cube(name + " royal overcoat", (0, -0.17, 0.94), (0.43, 0.08, 0.44), trim)
+			add_cube(name + " royal overcoat", (0, -0.17, 0.94), (0.48, 0.08, 0.50), trim)
 			add_cylinder(name + " royal belt", (0, -0.10, 0.85), 0.24, 0.08, lining, vertices=8)
-			add_sphere(name + " royal shoulder cape", (0, 0.02, 1.29), (0.38, 0.24, 0.18), trim)
+			add_sphere(name + " royal shoulder cape", (0, 0.02, 1.29), (0.44, 0.28, 0.24), cloth)
+		elif profile == "scholar":
+			add_cube(name + " archivist's book", (-0.32, -0.17, 0.87), (0.25, 0.10, 0.36), trim)
+			add_cube(name + " book pages", (-0.32, -0.228, 0.87), (0.19, 0.025, 0.30), lining)
+			add_cube(name + " cross-body satchel", (0.19, -0.19, 0.92), (0.22, 0.08, 0.24), boots)
 		elif profile == "ranger":
 			# A short shoulder cape leaves the trousers visible, separating the
 			# pathfinder silhouette from the long-robed scholars and mages.
@@ -137,7 +148,7 @@ def make_actor(name, profile, seed):
 		elif profile == "citizen":
 			add_cube(name + " work apron", (0, -0.18, 0.81), (0.32, 0.07, 0.48), trim)
 	else:
-		flare = 0.34 if profile in ("queen", "royal", "mage") else 0.27
+		flare = 0.40 if profile == "queen" else 0.34 if profile in ("royal", "mage") else 0.27
 		add_cone(name + " robe", (0, 0, 0.75), flare, 0.17, 0.95, cloth, vertices=10)
 		add_cone(name + " front panel", (0, -0.13, 0.52), 0.11, 0.09, 0.60, lining, vertices=6)
 		if profile in ("queen", "royal", "king"):
@@ -162,10 +173,10 @@ def make_actor(name, profile, seed):
 	if profile == "king":
 		add_sphere(name + " beard", (0, -0.12, 1.51), (0.13, 0.075, 0.13), hair)
 	if profile in ("queen", "royal", "king"):
-		add_cylinder(name + " crown band", (0, -0.012, 1.79), 0.13, 0.055, trim, vertices=8)
+		add_cylinder(name + " crown band", (0, -0.012, 1.79), 0.16, 0.075, trim, vertices=8)
 		for index in range(5):
-			x = -0.10 + index * 0.05
-			add_cone(name + " crown point " + str(index), (x, -0.01, 1.855), 0.025, 0.002, 0.12, trim, vertices=5)
+			x = -0.13 + index * 0.065
+			add_cone(name + " crown point " + str(index), (x, -0.01, 1.88), 0.035, 0.002, 0.18, trim, vertices=5)
 	elif profile == "mage":
 		add_cone(name + " pointed hat", (0, 0.025, 1.91), 0.16, 0.005, 0.34, trim, vertices=7)
 		add_cylinder(name + " mage staff", (0.39, 0.02, 1.13), 0.025, 1.18, trim, vertices=6)

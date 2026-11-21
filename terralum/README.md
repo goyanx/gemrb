@@ -66,7 +66,7 @@ World sprites are procedural Blender models rendered to 80×96 transparent frame
 python tools/terralum/render_cast_sprites.py --blender path\to\blender.exe
 ```
 
-Use `--force` to rerender all characters after changing the model script. Rebuild the pack afterward. The source models are authored in the Blender script; no third-party character meshes are used. Current role profiles are broad visual archetypes and still need review in live scenes.
+Use `--force` to rerender all characters after changing the model script. Rebuild the pack afterward. The source models are authored in the Blender script; no third-party character meshes are used. The opening cast now has targeted silhouettes: scholars wear trousered coats and carry books, Edmon's royal mantle is crimson and gold, and the queens use distinct crowned gowns. The remaining named cast still needs review in live scenes.
 
 The last command uses the WSL build in this checkout. On Windows with a native GemRB build, use `terralum/build/terralum.cfg`. `terralum/play.ps1` builds and launches through WSL and stops if another GemRB process is already running, preventing ambiguous duplicate game windows. The assembled pack under `terralum/build/` is ignored by Git.
 
