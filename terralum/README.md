@@ -14,6 +14,8 @@ GemRB applies stable hair and clothing palettes to the shared scene-creature ani
 
 ![Market NPCs with distinct green, orange, and teal clothing palettes](screenshots/alsperia-market-npc-palettes.png)
 
+Two generated portrait sheets now provide medium and small GemRB portrait resources for seventeen recurring scene NPCs across the seven-act cast. Portraits are selected by NPC data and appear beside their dialogue.
+
 ## AI and human contributor baseline
 
 Read [GOLD_STANDARD_GAME_DESIGN_PIPELINE.md](GOLD_STANDARD_GAME_DESIGN_PIPELINE.md) before authoring or implementing Terralum content. It defines the canon rules, BG2-informed design principles, production gates, and per-scene acceptance checklist. Use the repo-root [TODO.md](../TODO.md) for current status and [LEARNINGS.md](../LEARNINGS.md) for verified engineering findings. The baseline is also exposed through the `terralum_get_design_standard` MCP tool.

@@ -25,10 +25,14 @@ NATIVE_DIALOGUE_FILE = PROJECT / "native_dialogues.json"
 SEARCHMAP_FILE = PROJECT / "area_searchmaps.json"
 AREA_IMAGE = PROJECT / "art" / "observatory_courtyard.png"
 PORTRAIT_SHEET = PROJECT / "art" / "character_portraits_sheet.png"
+PORTRAIT_SHEET_2 = PROJECT / "art" / "character_portraits_sheet_2.png"
 PORTRAITS = {
     "ALGORE": (0, 0), "MARA00": (1, 0), "INESSA": (2, 0),
     "ALISAN": (0, 1), "EDMON0": (1, 1), "TESSA0": (2, 1),
     "WAYFAR": (0, 2), "PELL00": (1, 2), "SELENE": (2, 2),
+    "SERAPH": (3, 0), "SAREN0": (4, 0), "MAGVAE": (5, 0),
+    "EALDRI": (3, 1), "VAELTH": (4, 1), "OREN00": (5, 1),
+    "EREN00": (3, 2), "CELENE": (4, 2), "ALIST0": (5, 2),
 }
 SETUP_FILE = ROOT / "gemrb" / "GUIScripts" / "terralum" / "SetupGame.py"
 AREAS = {
@@ -598,9 +602,12 @@ def build():
     if OUTPUT.exists():
         shutil.rmtree(OUTPUT)
     shutil.copytree(SOURCE, OUTPUT)
-    sheet = Image.open(PORTRAIT_SHEET).convert("RGB")
-    cell_width, cell_height = sheet.width // 3, sheet.height // 3
-    for portrait, (column, row) in PORTRAITS.items():
+    portrait_sheets = [Image.open(path).convert("RGB") for path in
+                       (PORTRAIT_SHEET, PORTRAIT_SHEET_2)]
+    for portrait, (cell_index, row) in PORTRAITS.items():
+        sheet = portrait_sheets[cell_index // 3]
+        column = cell_index % 3
+        cell_width, cell_height = sheet.width // 3, sheet.height // 3
         cell = sheet.crop((column * cell_width, row * cell_height,
                            (column + 1) * cell_width, (row + 1) * cell_height))
         for suffix, size in (("M", (169, 224)), ("S", (64, 64))):

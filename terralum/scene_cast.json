@@ -150,7 +150,8 @@
       "goal": "Find the oldest reliable entry about Dorian and warn the party to attend to its meaning.",
       "knowledge": "Knows what the catalogue says and where it was copied from; has no firsthand knowledge of Dorian.",
       "voice": "Formal and exact, with a scholar's respect for source records.",
-      "provenance": "adaptation"
+      "provenance": "adaptation",
+      "portrait": "OREN00"
     }
   ],
   "tl0015": [
@@ -532,7 +533,8 @@
       "goal": "Deliver the sealed route dispatch to Courier Pell at the watchpost.",
       "knowledge": "Knows how the party crossed the river and that the dispatch must reach Courier Pell; cannot identify the stalker.",
       "voice": "Grateful and precise, reporting the route without embellishing the record.",
-      "provenance": "adaptation"
+      "provenance": "adaptation",
+      "portrait": "EREN00"
     },
     {
       "name": "Waywarden Saren",
@@ -547,7 +549,8 @@
       "goal": "Survey the markers under Edmon's seal without choosing the traveller's destination.",
       "knowledge": "Knows the patrol route and royal orders; understands that guarding a road does not decide what it is for.",
       "voice": "Disciplined and restrained, separating duty from judgment.",
-      "provenance": "adaptation"
+      "provenance": "adaptation",
+      "portrait": "SAREN0"
     }
   ],
   "tl0003": [
@@ -1061,7 +1064,8 @@
       "goal": "Preserve the council's testimony accurately without inventing a purpose for the scrolls.",
       "knowledge": "Can compare the market ledger, Dorian's route, and Algoreth's report; cannot establish why the scrolls were created.",
       "voice": "Careful and exact, separating what a record says from what it cannot prove.",
-      "provenance": "adaptation"
+      "provenance": "adaptation",
+      "portrait": "OREN00"
     },
     {
       "name": "Courier Pell",
@@ -1145,7 +1149,8 @@
       "goal": "Keep the courtyard perimeter stable long enough for the party to investigate the vault.",
       "knowledge": "Can reinforce the outer ward or record the pulse; cannot yet explain the voice beneath the academy.",
       "voice": "Focused and urgent, reporting observable changes.",
-      "provenance": "adaptation"
+      "provenance": "adaptation",
+      "portrait": "CELENE"
     },
     {
       "name": "Magister Vael",
@@ -1172,7 +1177,8 @@
       "goal": "Connect the courtyard pulse to the disturbance in the sealed vault.",
       "knowledge": "Has measured the pulse and seen the vault react; the source of the echo remains unknown.",
       "voice": "Scholarly and controlled, becoming terse when the ward is at risk.",
-      "provenance": "canon"
+      "provenance": "canon",
+      "portrait": "MAGVAE"
     }
   ],
   "tl0005": [
@@ -1189,7 +1195,8 @@
       "goal": "Connect the courtyard pulse to the disturbance in the sealed vault.",
       "knowledge": "Has measured the pulse and seen the vault react; the source of the echo remains unknown.",
       "voice": "Scholarly and controlled, becoming terse when the ward is at risk.",
-      "provenance": "canon"
+      "provenance": "canon",
+      "portrait": "MAGVAE"
     },
     {
       "name": "Queen Alisande",
@@ -1306,7 +1313,8 @@
       "goal": "Record a stable rule for containing the breach before anyone enters the vault.",
       "knowledge": "The breach responds to force and repeats the king's last spoken thought; its source and intent remain unknown.",
       "voice": "Focused and urgent, grounded in measurements rather than speculation.",
-      "provenance": "adaptation"
+      "provenance": "adaptation",
+      "portrait": "CELENE"
     },
     {
       "name": "Magister Vael",
@@ -1333,7 +1341,8 @@
       "goal": "Carry the selected warding rule into the vault and compare it with observable changes.",
       "knowledge": "Has measured the courtyard pulse and annex breach; does not know what speaks from the Tear.",
       "voice": "Scholarly and controlled, careful to separate evidence from interpretation.",
-      "provenance": "adaptation"
+      "provenance": "adaptation",
+      "portrait": "MAGVAE"
     }
   ],
   "tl0006": [
@@ -1350,7 +1359,8 @@
       "goal": "Compare the archive record with the Eldrador signs without treating either as a settled explanation.",
       "knowledge": "Knows the surviving account links powers to questions about their limits; does not know whether the Deep and Eternal Archives are the same place.",
       "voice": "Thoughtful and skeptical, separating evidence from interpretation.",
-      "provenance": "canon"
+      "provenance": "canon",
+      "portrait": "EALDRI"
     },
     {
       "name": "Queen Alisande",
@@ -1447,7 +1457,8 @@
       "goal": "Invite a careful investigation of the sanctuary Tear before anyone decides how to respond.",
       "knowledge": "Knows what her wardens observed and that the Tear speaks with a familiar voice; its cause and outcome remain unknown.",
       "voice": "Regal and deliberate, asking for study before action.",
-      "provenance": "canon"
+      "provenance": "canon",
+      "portrait": "VAELTH"
     },
     {
       "name": "Seraphina Everglow",
@@ -1474,7 +1485,8 @@
       "goal": "Prepare instruments and ward diagrams while leaving room to change course after seeing the Tear.",
       "knowledge": "Knows the diagrams and instruments aboard the ship; has not examined Eldrador's Tear directly.",
       "voice": "Clear and reassuring, giving practical details without claiming certainty.",
-      "provenance": "canon"
+      "provenance": "canon",
+      "portrait": "SERAPH"
     }
   ],
   "tl0013": [
@@ -1539,7 +1551,8 @@
           "value": 2,
           "line": "Nera left the folio sealed. I will preserve the account while Ealdrin prepares a question for Eldrador’s warders."
         }
-      ]
+      ],
+      "portrait": "SELENE"
     },
     {
       "name": "Ealdrin",
@@ -1566,7 +1579,8 @@
           "value": 2,
           "line": "The folio remains sealed. We will keep the missing comparison open and carry Ealdrin’s questions to Eldrador’s warders."
         }
-      ]
+      ],
+      "portrait": "EALDRI"
     }
   ],
   "tl0017": [
@@ -1694,7 +1708,8 @@
       "goal": "Prepare instruments and ward diagrams while leaving room to change course after seeing the Tear.",
       "knowledge": "Knows the diagrams and instruments aboard the ship; has not examined Eldrador's Tear directly.",
       "voice": "Clear and reassuring, giving practical details without claiming certainty.",
-      "provenance": "canon"
+      "provenance": "canon",
+      "portrait": "SERAPH"
     },
     {
       "name": "Alistair",
@@ -1764,7 +1779,8 @@
           "line": "The warder inquiry travels with the instruments aboard a guarded approach. I will keep our technical readings distinct from testimony gathered in Eldrador."
         }
       ],
-      "dialog": "ALISTAR"
+      "dialog": "ALISTAR",
+      "portrait": "ALIST0"
     }
   ],
   "tl0018": [
@@ -1880,7 +1896,8 @@
       "goal": "Carry a sealed route dispatch to the Ruined Watchpost without losing it to the flood.",
       "knowledge": "Knows the dispatch concerns the road and patrol markers; has not read it or met the stalker.",
       "voice": "Urgent but composed, distinguishing what the document says from what it does not.",
-      "provenance": "adaptation"
+      "provenance": "adaptation",
+      "portrait": "EREN00"
     }
   ],
   "tl0020": [
@@ -1923,7 +1940,8 @@
           "value": 2,
           "line": "Nera kept the folio sealed. We will preserve that choice and carry Ealdrin’s warder inquiry if you decide."
         }
-      ]
+      ],
+      "portrait": "EALDRI"
     },
     {
       "name": "Seraphina Everglow",
@@ -1950,7 +1968,8 @@
       "goal": "Pack the ward diagrams and listening instruments without letting assumptions shape the investigation.",
       "knowledge": "Knows the instruments and ward diagrams; has not examined Eldrador’s Tear directly.",
       "voice": "Clear and reassuring, with practical details and no claims of certainty.",
-      "provenance": "canon"
+      "provenance": "canon",
+      "portrait": "SERAPH"
     },
     {
       "name": "Queen Alisande",
@@ -1982,7 +2001,8 @@
       "knowledge": "Develops weapons and projectiles for Alsperia’s magic knights and is involved with the Aethercraft; has no confirmed knowledge of Eldrador’s Tear.",
       "voice": "Inventive and exact, separating technical observations from conclusions.",
       "provenance": "canon",
-      "dialog": "ALISTAR"
+      "dialog": "ALISTAR",
+      "portrait": "ALIST0"
     }
   ],
   "tl0022": [
@@ -2041,7 +2061,8 @@
       "goal": "Welcome the expedition and let Eldrador's evidence guide the first inquiry.",
       "knowledge": "Knows that warders report a familiar voice and altered seal marks at the lower sanctuary; the cause and outcome remain unknown.",
       "voice": "Measured and hospitable, directing attention to what local people have observed.",
-      "provenance": "canon"
+      "provenance": "canon",
+      "portrait": "VAELTH"
     },
     {
       "name": "Harbor Warden Oris",
@@ -2111,7 +2132,8 @@
       "goal": "Keep the investigation grounded in Eldrador's evidence and choose a cautious approach to the sealed sanctuary.",
       "knowledge": "Knows the party's selected evidence record; has not entered the sealed lower sanctuary with the expedition.",
       "voice": "Calm but concerned for her warders and people.",
-      "provenance": "canon"
+      "provenance": "canon",
+      "portrait": "VAELTH"
     },
     {
       "name": "Ward-Captain Mereth",
@@ -2153,7 +2175,8 @@
       "goal": "Observe the sanctuary pulse without overstating what the instruments can establish.",
       "knowledge": "Carries listening instruments and ward diagrams; has not examined the source of Vaelthira's Tear.",
       "voice": "Clear, patient, and evidence-focused.",
-      "provenance": "canon"
+      "provenance": "canon",
+      "portrait": "SERAPH"
     }
   ],
   "tl0024": [
@@ -2187,7 +2210,8 @@
       "goal": "Offer the party a choice between a scheduled patrol signal and a quiet approach to Lorian.",
       "knowledge": "Knows the signal relay and patrol routes; only has the copied timing if Leora’s schedule was shared.",
       "voice": "Disciplined and restrained, stating the limits of the information at hand.",
-      "provenance": "adaptation"
+      "provenance": "adaptation",
+      "portrait": "SAREN0"
     },
     {
       "name": "Relay Keeper Orla",
@@ -2266,7 +2290,8 @@
       "goal": "Escort the return party and distinguish route safety from patrol timing in the report.",
       "knowledge": "Knows which relay signal Algoreth chose, whether the schedule was copied, and whether the road ambush was defeated; cannot explain the stalker’s origin.",
       "voice": "Disciplined and reflective, reporting events without guessing at their cause.",
-      "provenance": "adaptation"
+      "provenance": "adaptation",
+      "portrait": "SAREN0"
     },
     {
       "name": "Courier Pell",
