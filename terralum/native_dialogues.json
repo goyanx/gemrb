@@ -77,6 +77,36 @@
       }
     ]
   },
+  "LEORA": {
+    "states": [
+      {
+        "when": [{"flag": "TLCHAP", "value": 2}, {"flag": "TLROYALORDER", "value": 0}],
+        "say": "The west-road schedule is current, but the original belongs to the crown. I can copy the authorized patrol times for your journey, or leave the dispatch sealed here.",
+        "transitions": [
+          {"text": "Copy the patrol schedule for the journey.", "next": 1, "set": [{"flag": "TLROYALORDER", "value": 1}]},
+          {"text": "Leave the schedule sealed in the archive.", "next": 2, "set": [{"flag": "TLROYALORDER", "value": 2}]}
+        ]
+      },
+      {
+        "say": "The authorized patrol times are copied onto a travel sheet. The original remains sealed, and the Waywarden can plan around the recorded patrol turn.",
+        "transitions": [{"text": "Carry the copy with the expedition papers.", "final": true}]
+      },
+      {
+        "say": "The dispatch remains sealed. The Waywarden may still join you, but without the schedule he cannot promise which patrol will meet you or when.",
+        "transitions": [{"text": "Travel without a copy of the schedule.", "final": true}]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 2}, {"flag": "TLROYALORDER", "value": 1}],
+        "say": "The travel copy is authorized; the original has not left the archive. Saren can use its timing to keep the patrol on its lawful road.",
+        "transitions": [{"text": "The copy stays with the expedition.", "final": true}]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 2}, {"flag": "TLROYALORDER", "value": 2}],
+        "say": "The schedule stays sealed. Saren can still call the wardens, but he will have to report that the patrol timing is uncertain.",
+        "transitions": [{"text": "Keep the patrol timing uncertain.", "final": true}]
+      }
+    ]
+  },
   "TESSA": {
     "states": [
       {

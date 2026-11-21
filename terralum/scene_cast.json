@@ -1885,7 +1885,8 @@
       "knowledge": "Knows the current patrol schedule and its authorized copy rules; does not know what waits in Mistwood.",
       "voice": "Careful and procedural, balancing public safety with protection of royal records.",
       "provenance": "adaptation",
-      "avatar_creature": "leora0"
+      "avatar_creature": "leora0",
+      "dialog": "LEORA"
     },
     {
       "name": "Page Nerin",
