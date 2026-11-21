@@ -32,6 +32,10 @@ def OnLoad():
 	message.AddAlias("MTA", 0)
 	message.SetColor(ColorRed, TA_COLOR_OPTIONS)
 	message.SetColor(ColorWhite, TA_COLOR_HOVER)
+	message_frame = message.GetFrame()
+	message_frame["x"] += 100
+	message_frame["w"] -= 100
+	message.SetFrame(message_frame)
 
 	pause = window.GetControl(2)
 	pause.OnPress(lambda: GemRB.GamePause(2, 0))
@@ -68,11 +72,23 @@ def OnLoad():
 	_style(journal_button)
 	journal_button.SetText("JOURNAL")
 	journal_button.SetHotKey("j", 0, True)
+	portrait_button = window.CreateButton(17, 12, 42, 82, 100)
+	portrait_button.SetFlags(IE_GUI_BUTTON_PICTURE | IE_GUI_BUTTON_NORMAL, OP_SET)
+	portrait_button.SetBorder(0, {"r": 196, "g": 164, "b": 105, "a": 255}, 1, 0)
+	portrait_button.SetVisible(False)
 	journal_state = {"open": False}
 	dialogue_state = {"has_choices": False, "must_finish_followup": False, "followup_journal": None}
 
 	chapters = Story.chapters()
 	cast_index = {"line": -1}
+
+	def set_portrait(person):
+		portrait = person.get("portrait") if person else None
+		if portrait:
+			portrait_button.SetPicture(portrait + "M")
+			portrait_button.SetVisible(True)
+		else:
+			portrait_button.SetVisible(False)
 
 	def spawn_cast(chapter_index):
 		chapter = chapters[chapter_index]
@@ -107,6 +123,7 @@ def OnLoad():
 		people = Story.cast(chapter["area"])
 		cast_index["line"] = (cast_index["line"] + 1) % len(people)
 		person = people[cast_index["line"]]
+		set_portrait(person)
 		line = person.get("line")
 		if chapter["area"] == "tl0002" and person.get("route_lines"):
 			line = person["route_lines"].get(str(GemRB.GetGameVar("TLMARALEAD")), line)
@@ -151,6 +168,7 @@ def OnLoad():
 		cast.SetVisible(not bool(choices))
 
 	def choose_dialogue(person, choice):
+		set_portrait(person)
 		was_followup = dialogue_state["must_finish_followup"]
 		GemRB.SetGlobal(choice["flag"], "GLOBAL", choice["value"])
 		chapter = chapters[GemRB.GetGameVar("TLCHAP")]
@@ -256,6 +274,7 @@ def OnLoad():
 		if not (0 <= person_index < len(people)):
 			return
 		person = people[person_index]
+		set_portrait(person)
 		choices = person.get("choices", [])
 		if not (0 <= choice_index < len(choices)):
 			return
@@ -276,6 +295,9 @@ def OnLoad():
 		# only updates the separate GUI dictionary and does not select a journal page.
 		GemRB.SetGlobal("CHAPTER", "GLOBAL", chapter["act"])
 		beat = chapter["beats"][beat_index]
+		person = next((person for person in Story.cast(chapter["area"])
+					   if person["name"] == beat["speaker"]), None)
+		set_portrait(person)
 		if chapter["area"] == "tl0019" and beat_index == 1:
 			river_route = 1 if (GemRB.GetGameVar("TLTRAVELKIT") == 2
 							and GemRB.GetGameVar("TLRIVER") == 1) else 2

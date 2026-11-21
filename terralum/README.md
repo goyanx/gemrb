@@ -4,11 +4,11 @@ This project is a playable campaign prototype for [GemRB](../README.md). GemRB r
 
 ## In-game screenshots
 
-These captures come from isolated GemRB sessions. Mistwood shows the optional Wayfarer report and its Journal entry; the Watchpost capture shows Courier Pell responding to the anonymous warning while leaving the voice unexplained.
+These captures come from isolated GemRB sessions. Mistwood shows the optional Wayfarer report and its Journal entry; the Watchpost capture shows Courier Pell responding to the anonymous warning while leaving the voice unexplained. The Market capture shows Archivist Mara's new portrait beside her dialogue.
 
-| Mistwood choice | Act II Journal | Watchpost callback |
+| Mistwood choice | Act II Journal | Watchpost callback | NPC portrait |
 | --- | --- | --- |
-| ![The Lost Wayfarer offers two reporting choices on Mistwood Road](screenshots/mistwood-wayfarer-choice.png) | ![The Act II Journal records the anonymous warning](screenshots/mistwood-wayfarer-journal.png) | ![Courier Pell acknowledges the anonymous warning at the Watchpost](screenshots/ruined-watchpost-pell-callback.png) |
+| ![The Lost Wayfarer offers two reporting choices on Mistwood Road](screenshots/mistwood-wayfarer-choice.png) | ![The Act II Journal records the anonymous warning](screenshots/mistwood-wayfarer-journal.png) | ![Courier Pell acknowledges the anonymous warning at the Watchpost](screenshots/ruined-watchpost-pell-callback.png) | ![Archivist Mara's custom portrait appears with her dialogue](screenshots/archivist-mara-dialogue-portrait.png) |
 
 ## AI and human contributor baseline
 

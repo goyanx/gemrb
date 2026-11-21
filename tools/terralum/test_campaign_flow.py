@@ -24,6 +24,7 @@ class Control:
         self.hotkey = None
         self.disabled = False
         self.visible = True
+        self.picture = None
 
     def __getattr__(self, name):
         if name in ("SetFlags", "AddAlias", "SetColor", "SetAnimation", "SetBorder"):
@@ -38,6 +39,9 @@ class Control:
 
     def SetText(self, text):
         self.text = text
+
+    def SetPicture(self, picture):
+        self.picture = picture
 
     def SetVisible(self, visible):
         self.visible = visible
@@ -147,6 +151,8 @@ spec = importlib.util.spec_from_file_location("MessageWindow", SCRIPTS / "terral
 campaign = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(campaign)
 campaign.OnLoad()
+assert window.controls[17].picture == "MARA00M"
+assert window.controls[17].visible
 while timed_events:
     timed_events.pop(0)()
 

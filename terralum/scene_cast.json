@@ -56,7 +56,8 @@
       "goal": "Recover Dorian's route ledger and send Algoreth to the court with a usable lead.",
       "knowledge": "Knows where the ledger points and which library record may corroborate it; does not know what awaits in Lorian.",
       "voice": "Precise and helpful, careful to distinguish a record from a conclusion.",
-      "provenance": "adaptation"
+      "provenance": "adaptation",
+      "portrait": "MARA00"
     },
     {
       "name": "King Edmon",
@@ -72,7 +73,8 @@
       "goal": "Support the journey to Lorian while making clear that Algoreth travels under the crown's trust.",
       "knowledge": "Knows the royal road and can provide a map, horse, and shelter; has not seen the Byzantem scrolls.",
       "voice": "Measured and authoritative, welcoming without promising what he cannot know.",
-      "provenance": "user-confirmed"
+      "provenance": "user-confirmed",
+      "portrait": "EDMON0"
     },
     {
       "name": "Queen Alisande",
@@ -88,7 +90,8 @@
       "goal": "Protect the trust behind the expedition and ensure the scrolls are treated as a public responsibility.",
       "knowledge": "Knows the court's obligations and the people affected by royal decisions; her knowledge of the road is limited to the records before her.",
       "voice": "Warm, composed, and direct about responsibility.",
-      "provenance": "user-confirmed"
+      "provenance": "user-confirmed",
+      "portrait": "ALISAN"
     }
   ],
   "tl0008": [
@@ -131,7 +134,8 @@
       "goal": "Restore the western route index before it is carried into Mistwood.",
       "knowledge": "Can compare the damaged index with the court copy; cannot guarantee that old waystones remain in place.",
       "voice": "Analytical and patient, explaining uncertainty in concrete terms.",
-      "provenance": "adaptation"
+      "provenance": "adaptation",
+      "portrait": "INESSA"
     },
     {
       "name": "Royal Scribe Oren",
@@ -190,7 +194,8 @@
           "line": "The rope and rations make the creek route practical. Ilya knows where to test the crossing."
         }
       ],
-      "faction": "Alsperia Expedition"
+      "faction": "Alsperia Expedition",
+      "portrait": "TESSA0"
     },
     {
       "name": "Hunter Fen",
@@ -364,7 +369,8 @@
       "goal": "Lead the party along the safest known trail while limiting the watcher's opportunity to follow.",
       "knowledge": "Knows the road, pale stones, and hunters' lantern signal; does not know the stalker's origin or intent.",
       "voice": "Practical, alert, and economical with words.",
-      "provenance": "adaptation"
+      "provenance": "adaptation",
+      "portrait": "TESSA0"
     },
     {
       "name": "Lost Wayfarer",
@@ -415,7 +421,8 @@
             "text": "In Mistwood, Algoreth heard a traveller's account that a voice answered from the trees. He kept the account private and asked Courier Pell to report only the unsafe road; neither the witness nor the sound's source was identified."
           }
         }
-      ]
+      ],
+      "portrait": "WAYFAR"
     }
   ],
   "tl0009": [
@@ -427,7 +434,7 @@
         520
       ],
       "line": "I found a charcoal rubbing under the watchpost stair. The western arch is marked, but the stalker kept me from carrying it onward.",
-      "responses":       [
+      "responses": [
         {
           "when": [
             {
@@ -497,7 +504,8 @@
       "goal": "Deliver the charcoal rubbing and leave the watchpost safer for the next traveller.",
       "knowledge": "Found the rubbing under the stair and knows the stalker blocked the route; has not reached Lorian.",
       "voice": "Quick and matter-of-fact, focused on the message in hand.",
-      "provenance": "adaptation"
+      "provenance": "adaptation",
+      "portrait": "PELL00"
     },
     {
       "name": "Courier Eren",
@@ -693,7 +701,8 @@
           "value": 2,
           "line": "The patrol map stays in the crown record, while Pell's warning can turn travellers away from danger without publishing our route."
         }
-      ]
+      ],
+      "portrait": "EDMON0"
     },
     {
       "name": "Queen Alisande",
@@ -731,7 +740,8 @@
           "value": 2,
           "line": "The gallery warning remains unresolved. Before another gate is approached, the court should agree on what the scrolls may be used for."
         }
-      ]
+      ],
+      "portrait": "ALISAN"
     }
   ],
   "tl0011": [
@@ -791,51 +801,207 @@
       "provenance": "user-confirmed",
       "responses": [
         {
-          "when": [{"flag": "TLPPELLDOCKET", "value": 1}, {"flag": "TLWITNESS", "value": 0}, {"flag": "TLCOURT", "value": 1}],
+          "when": [
+            {
+              "flag": "TLPPELLDOCKET",
+              "value": 1
+            },
+            {
+              "flag": "TLWITNESS",
+              "value": 0
+            },
+            {
+              "flag": "TLCOURT",
+              "value": 1
+            }
+          ],
           "line": "Pell entered a public warning without the patrol details. Oren still needs to decide whether the route testimony and scroll account belong together. The road remains open to supervised scholars and travellers."
         },
         {
-          "when": [{"flag": "TLPPELLDOCKET", "value": 1}, {"flag": "TLWITNESS", "value": 0}, {"flag": "TLCOURT", "value": 2}],
+          "when": [
+            {
+              "flag": "TLPPELLDOCKET",
+              "value": 1
+            },
+            {
+              "flag": "TLWITNESS",
+              "value": 0
+            },
+            {
+              "flag": "TLCOURT",
+              "value": 2
+            }
+          ],
           "line": "Pell entered a public warning without the patrol details. Oren still needs to decide whether the route testimony and scroll account belong together. Scroll access requires leave from Edmon and me."
         },
         {
-          "when": [{"flag": "TLPPELLDOCKET", "value": 1}, {"flag": "TLWITNESS", "value": 1}, {"flag": "TLCOURT", "value": 1}],
+          "when": [
+            {
+              "flag": "TLPPELLDOCKET",
+              "value": 1
+            },
+            {
+              "flag": "TLWITNESS",
+              "value": 1
+            },
+            {
+              "flag": "TLCOURT",
+              "value": 1
+            }
+          ],
           "line": "Pell's public warning and Oren's paired docket both preserve limits: one cautions travellers, the other records how the route testimony relates to the scroll account without claiming their purpose. The road remains open to supervised scholars and travellers."
         },
         {
-          "when": [{"flag": "TLPPELLDOCKET", "value": 1}, {"flag": "TLWITNESS", "value": 1}, {"flag": "TLCOURT", "value": 2}],
+          "when": [
+            {
+              "flag": "TLPPELLDOCKET",
+              "value": 1
+            },
+            {
+              "flag": "TLWITNESS",
+              "value": 1
+            },
+            {
+              "flag": "TLCOURT",
+              "value": 2
+            }
+          ],
           "line": "Pell's public warning and Oren's paired docket both preserve limits: one cautions travellers, the other records how the route testimony relates to the scroll account without claiming their purpose. Scroll access requires leave from Edmon and me."
         },
         {
-          "when": [{"flag": "TLPPELLDOCKET", "value": 1}, {"flag": "TLWITNESS", "value": 2}, {"flag": "TLCOURT", "value": 1}],
+          "when": [
+            {
+              "flag": "TLPPELLDOCKET",
+              "value": 1
+            },
+            {
+              "flag": "TLWITNESS",
+              "value": 2
+            },
+            {
+              "flag": "TLCOURT",
+              "value": 1
+            }
+          ],
           "line": "Pell's warning is public, while Oren filed the route testimony and scroll account separately. The docket does not let either account stand as proof of the other's meaning. The road remains open to supervised scholars and travellers."
         },
         {
-          "when": [{"flag": "TLPPELLDOCKET", "value": 1}, {"flag": "TLWITNESS", "value": 2}, {"flag": "TLCOURT", "value": 2}],
+          "when": [
+            {
+              "flag": "TLPPELLDOCKET",
+              "value": 1
+            },
+            {
+              "flag": "TLWITNESS",
+              "value": 2
+            },
+            {
+              "flag": "TLCOURT",
+              "value": 2
+            }
+          ],
           "line": "Pell's warning is public, while Oren filed the route testimony and scroll account separately. The docket does not let either account stand as proof of the other's meaning. Scroll access requires leave from Edmon and me."
         },
         {
-          "when": [{"flag": "TLPPELLDOCKET", "value": 2}, {"flag": "TLWITNESS", "value": 0}, {"flag": "TLCOURT", "value": 1}],
+          "when": [
+            {
+              "flag": "TLPPELLDOCKET",
+              "value": 2
+            },
+            {
+              "flag": "TLWITNESS",
+              "value": 0
+            },
+            {
+              "flag": "TLCOURT",
+              "value": 1
+            }
+          ],
           "line": "Pell kept the route details with the crown and entered only a warning for travellers. Oren still needs to decide how the scroll testimony belongs in the docket. The road remains open to supervised scholars and travellers."
         },
         {
-          "when": [{"flag": "TLPPELLDOCKET", "value": 2}, {"flag": "TLWITNESS", "value": 0}, {"flag": "TLCOURT", "value": 2}],
+          "when": [
+            {
+              "flag": "TLPPELLDOCKET",
+              "value": 2
+            },
+            {
+              "flag": "TLWITNESS",
+              "value": 0
+            },
+            {
+              "flag": "TLCOURT",
+              "value": 2
+            }
+          ],
           "line": "Pell kept the route details with the crown and entered only a warning for travellers. Oren still needs to decide how the scroll testimony belongs in the docket. Scroll access requires leave from Edmon and me."
         },
         {
-          "when": [{"flag": "TLPPELLDOCKET", "value": 2}, {"flag": "TLWITNESS", "value": 1}, {"flag": "TLCOURT", "value": 1}],
+          "when": [
+            {
+              "flag": "TLPPELLDOCKET",
+              "value": 2
+            },
+            {
+              "flag": "TLWITNESS",
+              "value": 1
+            },
+            {
+              "flag": "TLCOURT",
+              "value": 1
+            }
+          ],
           "line": "Pell's detailed route stays in the crown file; Oren's paired docket places the route testimony beside the scroll account but marks that the route does not establish the scrolls' purpose. The road remains open to supervised scholars and travellers."
         },
         {
-          "when": [{"flag": "TLPPELLDOCKET", "value": 2}, {"flag": "TLWITNESS", "value": 1}, {"flag": "TLCOURT", "value": 2}],
+          "when": [
+            {
+              "flag": "TLPPELLDOCKET",
+              "value": 2
+            },
+            {
+              "flag": "TLWITNESS",
+              "value": 1
+            },
+            {
+              "flag": "TLCOURT",
+              "value": 2
+            }
+          ],
           "line": "Pell's detailed route stays in the crown file; Oren's paired docket places the route testimony beside the scroll account but marks that the route does not establish the scrolls' purpose. Scroll access requires leave from Edmon and me."
         },
         {
-          "when": [{"flag": "TLPPELLDOCKET", "value": 2}, {"flag": "TLWITNESS", "value": 2}, {"flag": "TLCOURT", "value": 1}],
+          "when": [
+            {
+              "flag": "TLPPELLDOCKET",
+              "value": 2
+            },
+            {
+              "flag": "TLWITNESS",
+              "value": 2
+            },
+            {
+              "flag": "TLCOURT",
+              "value": 1
+            }
+          ],
           "line": "Pell's detailed route stays in the crown file, and Oren kept the testimony and scroll account separate. Both decisions limit what the court claims to know. The road remains open to supervised scholars and travellers."
         },
         {
-          "when": [{"flag": "TLPPELLDOCKET", "value": 2}, {"flag": "TLWITNESS", "value": 2}, {"flag": "TLCOURT", "value": 2}],
+          "when": [
+            {
+              "flag": "TLPPELLDOCKET",
+              "value": 2
+            },
+            {
+              "flag": "TLWITNESS",
+              "value": 2
+            },
+            {
+              "flag": "TLCOURT",
+              "value": 2
+            }
+          ],
           "line": "Pell's detailed route stays in the crown file, and Oren kept the testimony and scroll account separate. Both decisions limit what the court claims to know. Scroll access requires leave from Edmon and me."
         },
         {
@@ -848,7 +1014,8 @@
           "value": 2,
           "line": "The separate accounts preserve the limits of what we know. Edmon and I can review each without treating one as proof of the other."
         }
-      ]
+      ],
+      "portrait": "ALISAN"
     },
     {
       "name": "Royal Scribe Oren",
@@ -946,7 +1113,8 @@
       "goal": "Give the council a precise account of the Mistwood route record without claiming knowledge of the scrolls.",
       "knowledge": "Knows where Pell left the public marker or crown route record and what warning he gave travellers; has no firsthand knowledge of the scrolls' purpose.",
       "voice": "Plainspoken and exact, careful to separate what he carried from what he believes.",
-      "provenance": "adaptation"
+      "provenance": "adaptation",
+      "portrait": "PELL00"
     }
   ],
   "tl0012": [
@@ -1036,7 +1204,8 @@
       "goal": "Hold the academy perimeter while Algoreth investigates the echo beneath the vault.",
       "knowledge": "Knows the Tear of Chaos is contained and the false Algoreth remains within it; the intervening years and the nature of other Tears remain unresolved.",
       "voice": "Warm, composed, and direct about responsibility.",
-      "provenance": "canon"
+      "provenance": "canon",
+      "portrait": "ALISAN"
     },
     {
       "name": "False Algoreth",
@@ -1196,7 +1365,8 @@
       "goal": "Keep the research into other Tears supported by scholars and warders, and remain with Algoreth.",
       "knowledge": "Knows the Tear of Chaos is contained and the false Algoreth remains within it; the intervening years and the nature of other Tears remain unresolved.",
       "voice": "Warm, composed, and direct about responsibility.",
-      "provenance": "canon"
+      "provenance": "canon",
+      "portrait": "ALISAN"
     },
     {
       "name": "Archivist Nera",
@@ -1542,19 +1712,55 @@
       "provenance": "canon",
       "responses": [
         {
-          "when": [{"flag": "TLBRIEFING", "value": 1}, {"flag": "TLVOYAGE", "value": 1}],
+          "when": [
+            {
+              "flag": "TLBRIEFING",
+              "value": 1
+            },
+            {
+              "flag": "TLVOYAGE",
+              "value": 1
+            }
+          ],
           "line": "You carry Selene’s marked account and Aven chose observation. Keep the incomplete record apart from the instruments; neither tells us what waits there."
         },
         {
-          "when": [{"flag": "TLBRIEFING", "value": 1}, {"flag": "TLVOYAGE", "value": 2}],
+          "when": [
+            {
+              "flag": "TLBRIEFING",
+              "value": 1
+            },
+            {
+              "flag": "TLVOYAGE",
+              "value": 2
+            }
+          ],
           "line": "The marked account travels separately while Aven prepares a guarded arrival. Those preparations protect the inquiry; they do not settle the record."
         },
         {
-          "when": [{"flag": "TLBRIEFING", "value": 2}, {"flag": "TLVOYAGE", "value": 1}],
+          "when": [
+            {
+              "flag": "TLBRIEFING",
+              "value": 2
+            },
+            {
+              "flag": "TLVOYAGE",
+              "value": 1
+            }
+          ],
           "line": "Ealdrin carries questions for Eldrador’s warders, and Aven chose observation. We can listen first without treating testimony as a verdict."
         },
         {
-          "when": [{"flag": "TLBRIEFING", "value": 2}, {"flag": "TLVOYAGE", "value": 2}],
+          "when": [
+            {
+              "flag": "TLBRIEFING",
+              "value": 2
+            },
+            {
+              "flag": "TLVOYAGE",
+              "value": 2
+            }
+          ],
           "line": "The warder inquiry travels with the instruments aboard a guarded approach. I will keep our technical readings distinct from testimony gathered in Eldrador."
         }
       ],
@@ -1759,7 +1965,8 @@
       "goal": "Keep the expedition open to Eldrador’s witnesses while supporting Algoreth’s decision.",
       "knowledge": "Knows the party is preparing to investigate another Tear; its nature and outcome remain unknown.",
       "voice": "Warm, composed, and direct about shared responsibility.",
-      "provenance": "canon"
+      "provenance": "canon",
+      "portrait": "ALISAN"
     },
     {
       "name": "Alistair",
@@ -1789,11 +1996,29 @@
       "line": "Welcome to Eldrador. Before we approach the lower sanctuary, choose what should anchor our first account: the people who heard the voice, or the ward marks measured around it.",
       "responses": [
         {
-          "when": [{"flag": "TLARCHIVE", "value": 2}, {"flag": "TLARCHIVEQUESTION", "value": 1}],
+          "when": [
+            {
+              "flag": "TLARCHIVE",
+              "value": 2
+            },
+            {
+              "flag": "TLARCHIVEQUESTION",
+              "value": 1
+            }
+          ],
           "line": "Ealdrin has brought a question about the limits the archive describes. My warders can report what they observed directly; we will keep their testimony separate from that record."
         },
         {
-          "when": [{"flag": "TLARCHIVE", "value": 2}, {"flag": "TLARCHIVEQUESTION", "value": 2}],
+          "when": [
+            {
+              "flag": "TLARCHIVE",
+              "value": 2
+            },
+            {
+              "flag": "TLARCHIVEQUESTION",
+              "value": 2
+            }
+          ],
           "line": "Ealdrin has brought a question about what the archive cannot establish. We can hear our warders or examine the measured marks, and keep each source distinct."
         }
       ],
@@ -2103,7 +2328,8 @@
       "goal": "Carry the recovered route account home while leaving useful guidance for travellers who follow.",
       "knowledge": "Knows the charcoal rubbing and the party’s Mistwood choices; does not know what lies beyond Dorian’s western arch.",
       "voice": "Quick and practical, attentive to what other travellers can safely use.",
-      "provenance": "adaptation"
+      "provenance": "adaptation",
+      "portrait": "PELL00"
     }
   ]
 }

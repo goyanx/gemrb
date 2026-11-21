@@ -24,6 +24,12 @@ CAST_FILE = PROJECT / "scene_cast.json"
 NATIVE_DIALOGUE_FILE = PROJECT / "native_dialogues.json"
 SEARCHMAP_FILE = PROJECT / "area_searchmaps.json"
 AREA_IMAGE = PROJECT / "art" / "observatory_courtyard.png"
+PORTRAIT_SHEET = PROJECT / "art" / "character_portraits_sheet.png"
+PORTRAITS = {
+    "ALGORE": (0, 0), "MARA00": (1, 0), "INESSA": (2, 0),
+    "ALISAN": (0, 1), "EDMON0": (1, 1), "TESSA0": (2, 1),
+    "WAYFAR": (0, 2), "PELL00": (1, 2), "SELENE": (2, 2),
+}
 SETUP_FILE = ROOT / "gemrb" / "GUIScripts" / "terralum" / "SetupGame.py"
 AREAS = {
     "tl0001": "alsperia_market.png",
@@ -207,6 +213,9 @@ def validate_npc(person, area, require_design=False):
             or not isinstance(person.get("line"), str) or not person["line"].strip() or len(person["line"]) > 2000
             or person.get("creature") not in ("protagon", "riddler")):
         raise ValueError(f"scene cast for {area} has an incomplete NPC")
+    portrait = person.get("portrait")
+    if portrait is not None and portrait not in PORTRAITS:
+        raise ValueError(f"scene cast portrait for {area} must name an authored portrait")
     position = person.get("position")
     if (not isinstance(position, list) or len(position) != 2
             or any(type(value) is not int or not 0 <= value <= 32767 for value in position)):
@@ -589,6 +598,14 @@ def build():
     if OUTPUT.exists():
         shutil.rmtree(OUTPUT)
     shutil.copytree(SOURCE, OUTPUT)
+    sheet = Image.open(PORTRAIT_SHEET).convert("RGB")
+    cell_width, cell_height = sheet.width // 3, sheet.height // 3
+    for portrait, (column, row) in PORTRAITS.items():
+        cell = sheet.crop((column * cell_width, row * cell_height,
+                           (column + 1) * cell_width, (row + 1) * cell_height))
+        for suffix, size in (("M", (169, 224)), ("S", (64, 64))):
+            resized = cell.resize(size, Image.Resampling.LANCZOS)
+            resized.save(OUTPUT / "override" / f"{portrait}{suffix}.bmp", format="BMP")
     write_native_dialogues(native_dialogues)
     image = write_tis(AREA_IMAGE, SOURCE / "override" / "ar0100.tis", OUTPUT / "override" / "ar0100.tis")
     image.save(OUTPUT / "override" / "ar0100.png")
