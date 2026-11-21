@@ -66,6 +66,16 @@ def add_cube(name, location, scale, mat):
 	return obj
 
 
+def add_mesh(name, vertices, faces, mat):
+	mesh = bpy.data.meshes.new(name + " mesh")
+	mesh.from_pydata(vertices, [], faces)
+	mesh.update()
+	obj = bpy.data.objects.new(name, mesh)
+	bpy.context.collection.objects.link(obj)
+	obj.data.materials.append(mat)
+	return obj
+
+
 def parent_at(obj, pivot, name):
 	empty = bpy.data.objects.new(name, None)
 	bpy.context.collection.objects.link(empty)
@@ -102,14 +112,21 @@ def make_actor(name, profile, seed):
 		add_sphere(name + " " + side + " shoe", (sign * 0.075, -0.06, 0.105), (0.075, 0.13, 0.07), boots)
 
 	if profile in ("ranger", "guard", "citizen", "king"):
-		add_cylinder(name + " tunic", (0, 0, 0.98), 0.23, 0.62, cloth, vertices=8)
+		tunic_depth = 0.46 if profile == "ranger" else 0.50 if profile == "king" else 0.62
+		add_cylinder(name + " tunic", (0, 0, 0.98), 0.23, tunic_depth, cloth, vertices=8)
 		if profile == "king":
-			add_cone(name + " royal coat tails", (0, 0.04, 0.91), 0.29, 0.18, 0.76, trim, vertices=8)
+			add_cube(name + " royal overcoat", (0, -0.17, 0.94), (0.43, 0.08, 0.44), trim)
 			add_cylinder(name + " royal belt", (0, -0.10, 0.85), 0.24, 0.08, lining, vertices=8)
+			add_sphere(name + " royal shoulder cape", (0, 0.02, 1.29), (0.38, 0.24, 0.18), trim)
 		elif profile == "ranger":
-			add_cone(name + " travel cloak", (0, 0.10, 1.12), 0.34, 0.20, 0.52, trim, vertices=8)
+			# A short shoulder cape leaves the trousers visible, separating the
+			# pathfinder silhouette from the long-robed scholars and mages.
+			add_mesh(name + " short travel cape", [
+				(-0.34, -0.23, 1.34), (0.34, -0.23, 1.34),
+				(0.23, -0.23, 1.02), (0.0, -0.23, 0.93), (-0.23, -0.23, 1.02),
+			], [(0, 1, 2, 3, 4)], trim)
 			add_sphere(name + " hood", (0, 0.055, 1.67), (0.23, 0.22, 0.24), cloth)
-			add_cube(name + " trail pack", (0.28, 0.03, 1.17), (0.24, 0.25, 0.40), lining)
+			add_cube(name + " trail pack", (0.31, 0.02, 1.17), (0.27, 0.25, 0.42), lining)
 		elif profile == "guard":
 			add_cylinder(name + " cuirass", (0, -0.09, 1.04), 0.25, 0.42, trim, vertices=8)
 			for sign in (-1, 1):
@@ -142,6 +159,8 @@ def make_actor(name, profile, seed):
 	add_sphere(name + " face", (0, -0.005, 1.61), (0.17, 0.155, 0.20), skin)
 	if profile not in ("ranger", "guard"):
 		add_sphere(name + " hair", (0, 0.025, 1.72), (0.175, 0.15, 0.15), hair)
+	if profile == "king":
+		add_sphere(name + " beard", (0, -0.12, 1.51), (0.13, 0.075, 0.13), hair)
 	if profile in ("queen", "royal", "king"):
 		add_cylinder(name + " crown band", (0, -0.012, 1.79), 0.13, 0.055, trim, vertices=8)
 		for index in range(5):
@@ -152,7 +171,10 @@ def make_actor(name, profile, seed):
 		add_cylinder(name + " mage staff", (0.39, 0.02, 1.13), 0.025, 1.18, trim, vertices=6)
 		add_sphere(name + " staff crystal", (0.39, 0.02, 1.75), (0.08, 0.08, 0.10), lining)
 	elif profile == "ranger":
-		add_cylinder(name + " bow", (0.36, 0.07, 1.11), 0.025, 0.85, trim, vertices=6)
+		add_cylinder(name + " bow", (0.43, -0.24, 1.11), 0.035, 1.0, trim, vertices=6)
+	elif profile == "king":
+		add_cylinder(name + " royal scepter", (0.42, -0.22, 1.10), 0.028, 0.88, trim, vertices=6)
+		add_sphere(name + " scepter jewel", (0.42, -0.22, 1.57), (0.065, 0.065, 0.08), lining)
 	elif profile == "scholar":
 		add_sphere(name + " scholar cap", (0, 0.01, 1.78), (0.20, 0.18, 0.10), trim)
 	return parts
@@ -191,7 +213,7 @@ def main():
 	camera.name = "sprite camera"
 	camera.rotation_euler = (Vector((0, 0, 0.90)) - camera.location).to_track_quat("-Z", "Y").to_euler()
 	camera.data.type = "ORTHO"
-	camera.data.ortho_scale = 1.8
+	camera.data.ortho_scale = 1.65
 	scene.camera = camera
 
 	for location, power, size in (((-3, -4, 7), 850, 5), ((4, 2, 5), 450, 4)):
