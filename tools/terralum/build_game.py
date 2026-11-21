@@ -719,7 +719,7 @@ def build():
                 raise ValueError(f"{avatar['base_creature']}.cre must be a supported CRE V1.0 source")
             struct.pack_into("<I", creature, 0x28, avatar["animation_id"])
             (OUTPUT / "override" / f"{avatar['creature']}.cre").write_bytes(creature)
-    write_scaled_player_avatar(SOURCE / "override", OUTPUT / "override", factor=1.30)
+    write_scaled_player_avatar(SOURCE / "override", OUTPUT / "override", factor=1.70)
     portrait_sheets = [(Image.open(path).convert("RGB"), columns, rows)
                        for path, columns, rows in PORTRAIT_SHEETS]
     for portrait, (sheet_index, column, row) in PORTRAITS.items():
