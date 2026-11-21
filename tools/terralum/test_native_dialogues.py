@@ -102,6 +102,10 @@ class NativeDialogueResourceTests(unittest.TestCase):
         self.assertEqual(bindings["WAYFAR"], [("tl0002", "Lost Wayfarer")])
         wayfarer = dialogues["WAYFAR"]["states"]
         self.assertEqual(len(wayfarer), 5)
+        self.assertEqual(next(condition["value"] for condition in wayfarer[0]["when"]
+                              if condition["flag"] == "TLCHAP"), 7)
+        self.assertEqual({next(condition["value"] for condition in state["when"]
+                             if condition["flag"] == "TLCHAP") for state in wayfarer[3:]}, {7})
         self.assertEqual([transition["set"][0]["value"]
                           for transition in wayfarer[0]["transitions"]], [1, 2])
         self.assertEqual([transition["set"][1]["flag"]

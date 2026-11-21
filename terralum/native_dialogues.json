@@ -64,7 +64,7 @@
   "WAYFAR": {
     "states": [
       {
-        "when": [{"flag": "TLCHAP", "value": 3}, {"flag": "TLWAYFARER", "value": 0}],
+        "when": [{"flag": "TLCHAP", "value": 7}, {"flag": "TLWAYFARER", "value": 0}],
         "say": "Something circles the ruined watchpost. I heard it answer my name from the trees. I do not know what made the sound.",
         "transitions": [
           {"text": "Send Pell an anonymous warning about the answering voice.", "next": 1, "journal": "In Mistwood, Algoreth heard a traveller's account that a voice answered from the trees. He sent Courier Pell an anonymous warning; neither the witness nor the sound's source was identified.", "set": [{"flag": "TLWAYFARER", "value": 1}, {"flag": "TLJRN_WAYFARER_PUBLIC", "value": 1}]},
@@ -80,12 +80,12 @@
         "transitions": [{"text": "Pell will report only that the road is unsafe.", "final": true}]
       },
       {
-        "when": [{"flag": "TLCHAP", "value": 3}, {"flag": "TLWAYFARER", "value": 1}],
+        "when": [{"flag": "TLCHAP", "value": 7}, {"flag": "TLWAYFARER", "value": 1}],
         "say": "The warning can travel without my name. I still cannot tell you what answered from the trees.",
         "transitions": [{"text": "The source stays unknown; I will keep the report precise.", "final": true}]
       },
       {
-        "when": [{"flag": "TLCHAP", "value": 3}, {"flag": "TLWAYFARER", "value": 2}],
+        "when": [{"flag": "TLCHAP", "value": 7}, {"flag": "TLWAYFARER", "value": 2}],
         "say": "You kept my account private. The unsafe road is warning enough; I cannot explain the voice.",
         "transitions": [{"text": "Your name and account stay out of the report.", "final": true}]
       }
