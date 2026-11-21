@@ -210,6 +210,11 @@ assert globals_["TLFOLLOWPENDING"] == 0
 assert any("agreed how to handle Dorian's western route ledger" in entry["value"]
            for entry in journal_entries)
 chapters = campaign.Story.chapters()
+voice_resources = [chapter.get("voice") for chapter in chapters]
+assert len(voice_resources) == len(chapters) and all(voice_resources)
+assert len(set(voice_resources)) == len(chapters)
+assert all((ROOT / "terralum" / "audio" / (voice + ".ogg")).is_file()
+		   for voice in voice_resources)
 chapter_index_by_area = {chapter["area"]: index for index, chapter in enumerate(chapters)}
 assert len(chapters) == 25
 assert sum(len(chapter["beats"]) for chapter in chapters) == 63
@@ -364,7 +369,8 @@ assert globals_["TLJRN_COURT_RESTRICTED"] == 0
 assert globals_["TLECHO"] == 1
 assert globals_["TLARCHIVEWARD"] == 2
 assert len([event for event in events if event[0] == "area"]) == 24
-assert len([event for event in events if event[0] == "voice"]) == 8
+voice_cues = len([event for event in events if event[0] == "voice"])
+assert voice_cues >= len(chapters)
 assert len([event for event in events if event[0] == "attack"]) == 3, [event for event in events if event[0] == "attack"]
 assert len(journal_entries) == 25
 assert globals_["TLJRN_WAYSTONE"] == 1
@@ -1607,4 +1613,4 @@ for choice_value, victory in ((1, 0), (1, 1), (2, 0), (2, 1)):
 assert choice_count == 58
 
 print(len(chapters), "scenes across seven acts,", sum(len(campaign.Story.cast(chapter["area"])) for chapter in chapters),
-      "named scene actors, keyboard controls, authored journal events, four-state NPC response conditions, all 58 response options, three market routes, four encounter gates, twenty-four transitions, and seven voice cues passed")
+      "named scene actors, keyboard controls, authored journal events, four-state NPC response conditions, all 58 response options, three market routes, four encounter gates, twenty-four transitions, and narration for all", len(chapters), "scenes passed with", voice_cues, "playback cues")

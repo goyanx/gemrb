@@ -39,7 +39,7 @@
       "area": "tl0008",
       "place": "Alsperia Library",
       "music": "tlcity.mus",
-      "voice": "",
+      "voice": "tln0008",
       "narration": "The royal archive preserves Dorian's route in a damaged index. The missing marks can be recovered from a scholar's rubbing.",
       "beats": [
         {
@@ -67,7 +67,7 @@
       "area": "tl0018",
       "place": "Alsperia Royal Dispatch Archive",
       "music": "tlcity.mus",
-      "voice": "",
+      "voice": "tln0009",
       "narration": "In the crown dispatch archive, forest patrol maps are kept beside sealed royal orders. The expedition can ask for a copy of the watchpost schedule or leave the record under seal.",
       "beats": [
         {
@@ -105,7 +105,7 @@
       "area": "tl0017",
       "place": "Alsperia Royal Stables",
       "music": "tlcity.mus",
-      "voice": "",
+      "voice": "tln0010",
       "narration": "After leaving the library, Algoreth returns to the royal stables. Edmon's promised horse is ready, but the pack has room for only one field kit before the western ride.",
       "beats": [
         {
@@ -143,7 +143,7 @@
       "area": "tl0015",
       "place": "Mistwood Hunter's Camp",
       "music": "tlwood.mus",
-      "voice": "",
+      "voice": "tln0011",
       "narration": "At a small camp beside the old road, Scout Tessa meets two local hunters. Their shuttered trail lantern can guide the party quietly, though lighting it may reveal the camp to whatever follows them.",
       "beats": [
         {
@@ -181,7 +181,7 @@
       "area": "tl0019",
       "place": "Mistwood River Crossing",
       "music": "tlwood.mus",
-      "voice": "",
+      "voice": "tln0012",
       "narration": "A fallen footbridge has left Courier Eren and his sealed dispatch on the far bank. Fordkeeper Maelin knows the stepping stones, but the current is rising.",
       "beats": [
         {
@@ -219,7 +219,7 @@
       "area": "tl0016",
       "place": "Mistwood Three-Cairn Fork",
       "music": "tlwood.mus",
-      "voice": "",
+      "voice": "tln0013",
       "narration": "At a rain-darkened fork, a mossed waystone lies turned across three pale-stone paths. Two local keepers disagree about whether to set it upright.",
       "beats": [
         {
@@ -346,7 +346,7 @@
       "area": "tl0009",
       "place": "Mistwood Watchpost",
       "music": "tlwood.mus",
-      "voice": "",
+      "voice": "tln0014",
       "narration": "The old watchpost overlooks a split in the woodland road. Fresh charcoal marks point toward Lorian, while a lost courier waits among the fallen stones.",
       "beats": [
         {
@@ -389,7 +389,7 @@
       "area": "tl0024",
       "place": "Mistwood Waywarden Relay",
       "music": "tlwood.mus",
-      "voice": "",
+      "voice": "tln0015",
       "narration": "Beyond the ruined watchpost, a covered signal lantern hangs over a fork in the pale-stone road. The relay can carry a patrol message toward Lorian, if the party chooses to call the wardens.",
       "beats": [
         {
@@ -469,7 +469,7 @@
       "area": "tl0010",
       "place": "Byzantem Seal Gallery",
       "music": "tlcave.mus",
-      "voice": "",
+      "voice": "tln0016",
       "narration": "Beyond the silver vault, a gallery of sealed niches tests whether the traveller can read the warning without breaking it.",
       "beats": [
         {
@@ -507,7 +507,7 @@
       "area": "tl0025",
       "place": "Mistwood Watchpost — Homeward",
       "music": "tlwood.mus",
-      "voice": "",
+      "voice": "tln0017",
       "narration": "On the return from Lorian, Algoreth and Tessa reach the watchpost again. Courier Pell waits beside the charcoal rubbing, ready to carry the route record back to Alsperia.",
       "beats": [
         {
@@ -571,7 +571,7 @@
       "area": "tl0011",
       "place": "Alsperia Council Chamber",
       "music": "tlcity.mus",
-      "voice": "",
+      "voice": "tln0018",
       "narration": "The court asks what the scrolls should mean for Alsperia. Edmon hears the witnesses before deciding how the knowledge may be kept.",
       "beats": [
         {
@@ -621,7 +621,7 @@
       "area": "tl0012",
       "place": "Eastern Academy Courtyard",
       "music": "tlcave.mus",
-      "voice": "",
+      "voice": "tln0019",
       "narration": "In the later reign, academy wardens have evacuated the observatory court. Their instruments record a pulse beneath the lecture vault.",
       "beats": [
         {
@@ -654,7 +654,7 @@
       "area": "tl0021",
       "place": "Eastern Academy Containment Annex",
       "music": "tlcave.mus",
-      "voice": "",
+      "voice": "tln0020",
       "narration": "In the annex, the wardens have held a small breach inside a ring of measuring arms. Its changing light follows the pulse recorded in the courtyard.",
       "beats": [
         {
@@ -840,7 +840,7 @@
       "area": "tl0013",
       "place": "Deep Archive Index Hall",
       "music": "tlcave.mus",
-      "voice": "",
+      "voice": "tln0021",
       "narration": "Past the public shelves, the Archive Index Hall keeps accounts too fragile for ordinary catalogues. Ealdrin asks Algoreth to choose how the record should be carried toward Eldrador.",
       "beats": [
         {
@@ -914,7 +914,7 @@
       "area": "tl0020",
       "place": "Alsperia Expedition Chart Room",
       "music": "tlcity.mus",
-      "voice": "",
+      "voice": "tln0022",
       "narration": "Before the Aethercraft leaves Alsperia, Ealdrin asks Algoreth to decide how the Deep Archives account will travel. If it stays sealed, he will carry a question for Eldrador’s warders; neither source settles what awaits there.",
       "beats": [
         {
@@ -952,7 +952,7 @@
       "area": "tl0014",
       "place": "Alsperia Aethercraft Hangar",
       "music": "tlcity.mus",
-      "voice": "",
+      "voice": "tln0023",
       "narration": "The Aethercraft waits in the hangar beneath the skyport. Seraphina has room for one final preparation before Queen Vaelthira’s invitation becomes a voyage.",
       "beats": [
         {
@@ -990,7 +990,7 @@
       "area": "tl0022",
       "place": "Eldrador Arrival Quay",
       "music": "tlcity.mus",
-      "voice": "",
+      "voice": "tln0024",
       "narration": "The Aethercraft reaches Eldrador under Queen Vaelthira's invitation. At the harbor, warders have closed the road to the lower sanctuary while they compare new reports.",
       "beats": [
         {
@@ -1028,7 +1028,7 @@
       "area": "tl0023",
       "place": "Eldrador Lower Sanctuary Threshold",
       "music": "tlcave.mus",
-      "voice": "",
+      "voice": "tln0025",
       "narration": "At the lower sanctuary, the inner gate remains sealed. A dim pulse moves behind it, and the expedition stops at the warded threshold to agree on a careful approach.",
       "beats": [
         {

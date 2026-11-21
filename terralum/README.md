@@ -108,13 +108,13 @@ The last command uses the WSL build in this checkout. On Windows with a native G
 
 If a running GemRB session has the standard pack open, set `TERRALUM_GAME_OUTPUT` to an isolated output folder before running `build_game.py` and `test_native_dialogues.py`. The builder places the matching Windows and WSL config files next to that pack and leaves the normal launch config untouched.
 
-The voice clips under `terralum/audio/` were rendered locally with Kokoro ONNX using the `af_heart` woman voice. To regenerate them, use the standalone Kokoro Python environment and provide local model and voice files:
+The twenty-five scene-entry narration clips under `terralum/audio/` were rendered locally with Kokoro ONNX using the `af_heart` woman voice. Narration plays when each scene begins and can be replayed with **NARRATE**. To regenerate them, use the standalone Kokoro Python environment and provide local model and voice files:
 
 ```powershell
-python tools/terralum/render_audio.py --model path\to\kokoro-v1.0.onnx --voices path\to\voices-v1.0.bin
+python tools/terralum/render_audio.py --model path\to\kokoro-v1.0.onnx --voices path\to\voices-v1.0.bin --missing-only
 ```
 
-The audio renderer also creates three original looping ambient tracks. It needs `kokoro_onnx`, `numpy`, `soundfile`, and `ffmpeg`. The model files are not included in the repository. Narration plays on chapter entry and through the **Narrate** button. The area song table selects city, woodland, or cavern ambience.
+The audio renderer also creates three original looping ambient tracks. It needs `kokoro_onnx`, `numpy`, `soundfile`, and `ffmpeg`. The model files are not included in the repository. Use `--missing-only` to add new scene narration without changing existing performances; omit it to regenerate all narration and ambient tracks. Narration plays on scene entry and through the **NARRATE** button. The area song table selects city, woodland, or cavern ambience.
 
 ## Author with an AI coder
 
