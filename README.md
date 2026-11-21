@@ -24,9 +24,9 @@ This fork includes **Terralum: Scrolls of Byzantem**, an original, story-driven 
 <p align="center"><em>Live GemRB campaign capture: the Alsperia Market opening scene with its local cast, story panel, journal control, Talk, Continue, and Kokoro Narrate.</em></p>
 
 <p align="center">
-  <a href="terralum/screenshots/distinctive-cast-opening.png"><img src="terralum/screenshots/distinctive-cast-opening.png" alt="Fresh GemRB Market capture with Mara in blue, Edmon in crimson, and Alisande in teal, each with a different animated world sprite" width="92%"></a>
+  <a href="terralum/screenshots/avatar-pass-market-live.png"><img src="terralum/screenshots/avatar-pass-market-live.png" alt="Fresh GemRB Market capture with Mara in blue, Edmon in crimson, and Alisande in teal, each with a different animated world sprite" width="92%"></a>
 </p>
-<p align="center"><em>Live rebuilt Market: Mara's archive-blue hood, Edmon's royal red, and Alisande's teal gown create separate silhouettes for the opening cast.</em></p>
+<p align="center"><em>Fresh live capture: Mara's archive-blue hood, Edmon's royal red, and Alisande's teal gown create separate silhouettes for the opening cast.</em></p>
 
 <p align="center">
   <a href="terralum/screenshots/terralum-cast-avatars-live.png"><img src="terralum/screenshots/terralum-cast-avatars-live.png" alt="Live GemRB opening scene with the custom Queen, King, and Archivist avatars" width="65%"></a>
