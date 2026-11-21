@@ -147,6 +147,9 @@ class NativeDialogueResourceTests(unittest.TestCase):
         inessa_cast = next(person for person in cast["tl0008"] if person["name"] == "Scholar Inessa")
         self.assertEqual([choice["journal"]["flag"] for choice in inessa_cast["choices"]],
                          ["TLJRN_LIBRARY_COPY", "TLJRN_LIBRARY_SEAL"])
+        for dialogue_state in inessa[:3]:
+            for transition, choice in zip(dialogue_state["transitions"], inessa_cast["choices"]):
+                self.assertEqual(transition["journal"], choice["journal"]["text"])
 
     def test_compiled_alistair_dialogue_and_tlk(self):
         pack = Path(os.environ.get("TERRALUM_GAME_OUTPUT", PROJECT / "build" / "game")).resolve()

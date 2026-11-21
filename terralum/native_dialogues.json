@@ -37,24 +37,24 @@
         "when": [{"flag": "TLCHAP", "value": 1}, {"flag": "TLLIBRARYCLUE", "value": 0}, {"flag": "TLMARADETAIL", "value": 1}],
         "say": "Mara's separate copy gives me the route marks without taking the original from the court. The scraped index still needs a decision: should I copy the uncertain landmarks for travel, or seal the damaged leaf?",
         "transitions": [
-          {"text": "Copy the pale-stone landmarks into the field notes.", "next": 5, "set": [{"flag": "TLLIBRARYCLUE", "value": 1}, {"flag": "TLJRN_LIBRARY_COPY", "value": 1}]},
-          {"text": "Seal the damaged leaf and keep the marks uncertain.", "next": 6, "set": [{"flag": "TLLIBRARYCLUE", "value": 2}, {"flag": "TLJRN_LIBRARY_SEAL", "value": 1}]}
+          {"text": "Copy the pale-stone landmarks into the field notes.", "next": 5, "journal": "Scholar Inessa copied the pale-stone marks from the scraped route index into Algoreth's field notes. The waystones may have shifted, so the markings remain a guide rather than a guarantee.", "set": [{"flag": "TLLIBRARYCLUE", "value": 1}, {"flag": "TLJRN_LIBRARY_COPY", "value": 1}]},
+          {"text": "Seal the damaged leaf and keep the marks uncertain.", "next": 6, "journal": "Algoreth asked Scholar Inessa to seal the damaged route-index leaf. The court still holds Dorian's route, but the missing waystone marks remain uncertain.", "set": [{"flag": "TLLIBRARYCLUE", "value": 2}, {"flag": "TLJRN_LIBRARY_SEAL", "value": 1}]}
         ]
       },
       {
         "when": [{"flag": "TLCHAP", "value": 1}, {"flag": "TLLIBRARYCLUE", "value": 0}, {"flag": "TLMARADETAIL", "value": 2}],
         "say": "Mara kept Dorian's original ledger sealed for the court. I can still compare its marks with this damaged index; the question is whether to carry a copy of the uncertain landmarks or preserve the leaf under seal.",
         "transitions": [
-          {"text": "Copy the pale-stone landmarks into the field notes.", "next": 5, "set": [{"flag": "TLLIBRARYCLUE", "value": 1}, {"flag": "TLJRN_LIBRARY_COPY", "value": 1}]},
-          {"text": "Seal the damaged leaf and keep the marks uncertain.", "next": 6, "set": [{"flag": "TLLIBRARYCLUE", "value": 2}, {"flag": "TLJRN_LIBRARY_SEAL", "value": 1}]}
+          {"text": "Copy the pale-stone landmarks into the field notes.", "next": 5, "journal": "Scholar Inessa copied the pale-stone marks from the scraped route index into Algoreth's field notes. The waystones may have shifted, so the markings remain a guide rather than a guarantee.", "set": [{"flag": "TLLIBRARYCLUE", "value": 1}, {"flag": "TLJRN_LIBRARY_COPY", "value": 1}]},
+          {"text": "Seal the damaged leaf and keep the marks uncertain.", "next": 6, "journal": "Algoreth asked Scholar Inessa to seal the damaged route-index leaf. The court still holds Dorian's route, but the missing waystone marks remain uncertain.", "set": [{"flag": "TLLIBRARYCLUE", "value": 2}, {"flag": "TLJRN_LIBRARY_SEAL", "value": 1}]}
         ]
       },
       {
         "when": [{"flag": "TLCHAP", "value": 1}, {"flag": "TLLIBRARYCLUE", "value": 0}],
         "say": "The western landmarks are missing from this index. I can make a cautious copy of the remaining pale-stone marks for the journey, or seal the damaged leaf until the court can review it.",
         "transitions": [
-          {"text": "Copy the pale-stone landmarks into the field notes.", "next": 5, "set": [{"flag": "TLLIBRARYCLUE", "value": 1}, {"flag": "TLJRN_LIBRARY_COPY", "value": 1}]},
-          {"text": "Seal the damaged leaf and keep the marks uncertain.", "next": 6, "set": [{"flag": "TLLIBRARYCLUE", "value": 2}, {"flag": "TLJRN_LIBRARY_SEAL", "value": 1}]}
+          {"text": "Copy the pale-stone landmarks into the field notes.", "next": 5, "journal": "Scholar Inessa copied the pale-stone marks from the scraped route index into Algoreth's field notes. The waystones may have shifted, so the markings remain a guide rather than a guarantee.", "set": [{"flag": "TLLIBRARYCLUE", "value": 1}, {"flag": "TLJRN_LIBRARY_COPY", "value": 1}]},
+          {"text": "Seal the damaged leaf and keep the marks uncertain.", "next": 6, "journal": "Algoreth asked Scholar Inessa to seal the damaged route-index leaf. The court still holds Dorian's route, but the missing waystone marks remain uncertain.", "set": [{"flag": "TLLIBRARYCLUE", "value": 2}, {"flag": "TLJRN_LIBRARY_SEAL", "value": 1}]}
         ]
       },
       {
