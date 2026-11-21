@@ -22,6 +22,8 @@ CHARACTERS = (
 	("Royal Scribe Oren", "oren.png"),
 	("Courier Pell", "pell.png"),
 	("Courier Eren", "eren.png"),
+	("Groom Tavin", "tavin.png"),
+	("Stablemaster Edda", "edda.png"),
 )
 CELL = (240, 252)
 COLUMNS = 3
