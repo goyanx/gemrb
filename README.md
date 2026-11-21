@@ -24,9 +24,9 @@ This fork includes **Terralum: Scrolls of Byzantem**, an original, story-driven 
 <p align="center"><em>Live GemRB campaign capture: the Alsperia Market opening scene with its local cast, story panel, journal control, Talk, Continue, and Kokoro Narrate.</em></p>
 
 <p align="center">
-  <a href="terralum/screenshots/queen-avatar-live.png"><img src="terralum/screenshots/queen-avatar-live.png" alt="Live GemRB market scene with Queen Alisande's custom teal-and-gold animated world avatar" width="92%"></a>
+  <a href="terralum/screenshots/distinctive-cast-opening.png"><img src="terralum/screenshots/distinctive-cast-opening.png" alt="Fresh GemRB Market capture with Mara in blue, Edmon in crimson, and Alisande in teal, each with a different animated world sprite" width="92%"></a>
 </p>
-<p align="center"><em>Live GemRB market scene with distinct world avatars for the local cast.</em></p>
+<p align="center"><em>Live rebuilt Market: Mara's archive-blue hood, Edmon's royal red, and Alisande's teal gown create separate silhouettes for the opening cast.</em></p>
 
 <p align="center">
   <a href="terralum/screenshots/terralum-cast-avatars-live.png"><img src="terralum/screenshots/terralum-cast-avatars-live.png" alt="Live GemRB opening scene with the custom Queen, King, and Archivist avatars" width="65%"></a>
@@ -51,9 +51,9 @@ This fork includes **Terralum: Scrolls of Byzantem**, an original, story-driven 
 <p align="center"><em>Live Library scene: Inessa's red scroll-carrying outfit and Oren's teal scholar coat are distinct at game scale. The project contact sheet previews all 38 cast sprites.</em></p>
 
 <p align="center">
-  <a href="terralum/screenshots/leora-live-archive-final-staging.png"><img src="terralum/screenshots/leora-live-archive-final-staging.png" alt="Live GemRB Royal Dispatch Archive with Algoreth, Archivist Leora, and Page Nerin gathered around the route map" width="78%"></a>
+  <a href="terralum/screenshots/distinctive-cast-market.png"><img src="terralum/screenshots/distinctive-cast-market.png" alt="Live GemRB Royal Dispatch Archive showing Archivist Leora in her custom purple hood and dispatch-scroll world sprite, with her distinct portrait" width="78%"></a>
 </p>
-<p align="center"><em>Leora and Nerin are staged around the Archive map table, with separate robes and silhouettes.</em></p>
+<p align="center"><em>Live rebuilt Archive: Leora's purple hood and dispatch scroll distinguish her from Page Nerin, and her portrait appears during dialogue.</em></p>
 
 <p align="center">
   <a href="terralum/screenshots/leora-live-choice.png"><img src="terralum/screenshots/leora-live-choice.png" alt="Live GemRB native dialogue with Archivist Leora offering a patrol schedule copy or leaving it sealed" width="78%"></a>
@@ -96,7 +96,7 @@ This fork includes **Terralum: Scrolls of Byzantem**, an original, story-driven 
 
 **[Campaign guide](terralum/README.md)** · **[Gold Standard pipeline](terralum/GOLD_STANDARD_GAME_DESIGN_PIPELINE.md)** · **[Campaign plan](terralum/campaign_plan.md)** · **[Current TODO](TODO.md)**
 
-> **Prototype status:** This is an expanding playable slice, not a finished full-length RPG. All 38 named cast members have custom animated world sprites; 35 now use identity-specific costume colors or role equipment, alongside the bespoke royal designs for King Edmon, Queen Alisande, and Queen Vaelthira. Fresh GemRB captures verify the opening Market, Library, and Royal Dispatch Archive casts; review the other scenes in-engine. All 25 areas still inherit the demo's WED layout and terrain. Live-tested native actor dialogue includes Mara and Queen Alisande in the Market, Inessa in the Library, and Leora in the Archive. Mara's copy-landmarks and sealed-ledger branches work; Inessa's copy and seal branches each show their own re-entry line and Act I Journal entry. Leora's copy-schedule branch and re-entry line work; test her sealed-schedule branch and Saren's later response. Other branches, scene movement, and save/load still need playtesting. See the [campaign guide](terralum/README.md) for build steps and current verification limits.
+> **Prototype status:** This is an expanding playable slice, not a finished full-length RPG. All 38 named cast members have custom animated world sprites. New character-specific in-scene designs give Archivist Mara her archive-blue hood, braid, spectacles, and route folio, and Archivist Leora her purple hood and sealed dispatch tube; the rebuilt Archive has been viewed live in GemRB. Fresh captures verify the opening Market, Library, and Royal Dispatch Archive casts; review the remaining scenes in-engine. All 25 areas still inherit the demo's WED layout and terrain. Live-tested native actor dialogue includes Mara and Queen Alisande in the Market, Inessa in the Library, and Leora in the Archive. Mara's copy-landmarks and sealed-ledger branches work; Inessa's copy and seal branches each show their own re-entry line and Act I Journal entry. Leora's copy-schedule and sealed-schedule branches and their re-entry lines work; Saren's later response remains open. Other branches, scene movement, and save/load still need playtesting. See the [campaign guide](terralum/README.md) for build steps and current verification limits.
 
 To try it out you either need some of the ORIGINAL game's data or you can
 get a tiny sneak peek by running the included trivial game demo.

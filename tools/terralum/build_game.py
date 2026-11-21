@@ -57,6 +57,10 @@ def avatar_profile(person):
 	text = (person.get("name", "") + " " + person.get("role", "")).lower()
 	if "queen alisande" in text:
 		return "queen"
+	if "archivist mara" in text:
+		return "mara"
+	if "archivist leora" in text:
+		return "leora"
 	if "queen" in text:
 		return "royal"
 	if "king edmon" in text:

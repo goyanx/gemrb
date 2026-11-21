@@ -95,6 +95,10 @@ def make_actor(name, profile, seed):
 	identity_trim = tuple(colorsys.hsv_to_rgb((hue + 0.10) % 1.0, 0.76, 0.88))
 	if profile == "queen":
 		cloth_rgb, trim_rgb, lining_rgb = (0.035, 0.25, 0.32), (0.88, 0.62, 0.16), (0.86, 0.79, 0.64)
+	elif profile == "mara":
+		cloth_rgb, trim_rgb, lining_rgb = (0.055, 0.17, 0.34), (0.82, 0.52, 0.14), (0.78, 0.72, 0.57)
+	elif profile == "leora":
+		cloth_rgb, trim_rgb, lining_rgb = (0.28, 0.10, 0.29), (0.22, 0.60, 0.55), (0.88, 0.78, 0.57)
 	elif profile == "king":
 		cloth_rgb, trim_rgb, lining_rgb = (0.38, 0.035, 0.055), (0.88, 0.60, 0.16), (0.92, 0.84, 0.68)
 	else:
@@ -183,9 +187,21 @@ def make_actor(name, profile, seed):
 			else:
 				add_cube(name + " market satchel", (0.33, 0.02, 1.05), (0.30, 0.25, 0.32), lining)
 	else:
-		flare = 0.40 if profile == "queen" else 0.34 if profile in ("royal", "mage") else 0.27
+		flare = 0.46 if profile == "queen" else 0.37 if profile == "mara" else 0.31 if profile == "leora" else 0.34 if profile in ("royal", "mage") else 0.27
 		add_cone(name + " robe", (0, 0, 0.75), flare, 0.17, 0.95, cloth, vertices=10)
 		add_cone(name + " front panel", (0, -0.13, 0.52), 0.11, 0.09, 0.60, lining, vertices=6)
+		if profile == "mara":
+			# Mara's archive-blue hood, shoulder cape, spectacles, and folio make
+			# her readable as the route archivist even at native map scale.
+			add_mesh(name + " archivist shoulder cape", [(-0.34, 0.12, 1.34), (0.34, 0.12, 1.34), (0.30, 0.12, 0.93), (0, 0.12, 0.80), (-0.30, 0.12, 0.93)], [(0, 1, 2, 3, 4)], trim)
+			add_cube(name + " route folio", (-0.31, -0.20, 0.91), (0.25, 0.10, 0.34), boots)
+			add_cube(name + " folio pages", (-0.31, -0.258, 0.91), (0.18, 0.018, 0.27), lining)
+		elif profile == "leora":
+			# Leora carries a capped dispatch scroll and wears a distinctive
+			# high archive hood over her layered robe.
+			add_sphere(name + " archive hood", (0, 0.055, 1.71), (0.25, 0.23, 0.29), cloth)
+			add_cylinder(name + " sealed dispatch tube", (0.34, 0.02, 1.16), 0.075, 0.82, trim, vertices=8)
+			add_sphere(name + " dispatch tube cap", (0.34, 0.02, 1.59), (0.09, 0.09, 0.07), lining)
 		if profile in ("queen", "royal", "king"):
 			add_sphere(name + " royal mantle", (0, 0.015, 1.27), (0.37, 0.25, 0.18), trim)
 		elif profile == "mage":
@@ -209,10 +225,19 @@ def make_actor(name, profile, seed):
 
 	add_cylinder(name + " neck", (0, 0, 1.44), 0.075, 0.12, skin)
 	add_sphere(name + " face", (0, -0.005, 1.61), (0.17, 0.155, 0.20), skin)
-	if profile not in ("ranger", "guard"):
+	if profile not in ("ranger", "guard", "leora"):
 		add_sphere(name + " hair", (0, 0.025, 1.72), (0.175, 0.15, 0.15), hair)
+	if profile == "mara":
+		# A visible braid and spectacles distinguish her face from the shared
+		# scholar base model without relying on tiny color changes.
+		add_sphere(name + " archive hood", (0, 0.055, 1.72), (0.24, 0.22, 0.25), cloth)
+		add_cylinder(name + " long braid", (0.18, 0.035, 1.40), 0.055, 0.47, hair, vertices=6)
+		for x in (-0.075, 0.075):
+			add_cube(name + " spectacles " + str(x), (x, -0.155, 1.64), (0.09, 0.025, 0.055), boots)
+		add_cube(name + " spectacles bridge", (0, -0.171, 1.64), (0.06, 0.02, 0.018), boots)
 	if profile == "king":
-		add_sphere(name + " beard", (0, -0.12, 1.51), (0.13, 0.075, 0.13), hair)
+		beard = material(name + " silver beard", (0.58, 0.55, 0.48))
+		add_sphere(name + " beard", (0, -0.12, 1.51), (0.15, 0.085, 0.16), beard)
 	if profile in ("queen", "royal", "king"):
 		add_cylinder(name + " crown band", (0, -0.012, 1.79), 0.16, 0.075, trim, vertices=8)
 		for index in range(5):
