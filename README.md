@@ -26,7 +26,13 @@ This fork includes **Terralum: Scrolls of Byzantem**, an original, story-driven 
 <p align="center">
   <a href="terralum/screenshots/queen-avatar-live.png"><img src="terralum/screenshots/queen-avatar-live.png" alt="Live GemRB market scene with Queen Alisande's custom teal-and-gold animated world avatar" width="92%"></a>
 </p>
-<p align="center"><em>Queen Alisande now uses a custom animated world sprite. The remaining cast is still being moved off the shared demo models.</em></p>
+<p align="center"><em>Live GemRB market scene with distinct world avatars for the local cast.</em></p>
+
+<p align="center">
+  <a href="terralum/screenshots/terralum-cast-avatars-live.png"><img src="terralum/screenshots/terralum-cast-avatars-live.png" alt="Live GemRB opening scene with the custom Queen, King, and Archivist avatars" width="65%"></a>
+  <a href="terralum/art/world_sprites/cast-contact-sheet.png"><img src="terralum/art/world_sprites/cast-contact-sheet.png" alt="Contact sheet of 38 custom Terralum NPC world avatars" width="30%"></a>
+</p>
+<p align="center"><em>Three custom actors in live GemRB · 38 generated multi-direction character sets grouped by role and costume.</em></p>
 
 <p align="center">
   <a href="terralum/screenshots/alsperia-market-journal-live.png"><img src="terralum/screenshots/alsperia-market-journal-live.png" alt="Live GemRB Journal showing the Alsperia opening quest and Mara’s ledger decision under Act I" width="30%"></a>
@@ -45,11 +51,11 @@ This fork includes **Terralum: Scrolls of Byzantem**, an original, story-driven 
 <p align="center">
   <a href="terralum/screenshots/market-party-detail.png"><img src="terralum/screenshots/market-party-detail.png" alt="Detail crop of the player party and local NPC placements in the Alsperia Market" width="60%"></a>
 </p>
-<p align="center"><em>Live scene detail: the party and local cast are placed together in the opening market. Queen Alisande has a custom animated sprite; other actors still use shared demo sprites.</em></p>
+<p align="center"><em>Live scene detail: the party and local cast are placed together in the opening market with custom animated sprites.</em></p>
 
 **[Campaign guide](terralum/README.md)** · **[Gold Standard pipeline](terralum/GOLD_STANDARD_GAME_DESIGN_PIPELINE.md)** · **[Campaign plan](terralum/campaign_plan.md)** · **[Current TODO](TODO.md)**
 
-> **Prototype status:** This is an expanding playable slice, not a finished full-length RPG. Queen Alisande has the first custom animated world sprite; the rest of the scene cast still shares demo animations, and all 25 areas still inherit the demo's WED layout and terrain. The opening scene has live-tested native actor dialogue for Mara and Queen Alisande; Mara's copy-landmarks and sealed-ledger branches both work, and her decision appears in the Act I Journal. Other branches and save/load still need playtesting. See the [campaign guide](terralum/README.md) for build steps and current verification limits.
+> **Prototype status:** This is an expanding playable slice, not a finished full-length RPG. All 38 named cast members now have custom animated world sprites, and the opening Market's Mara, Edmon, and Alisande are live-rendered in GemRB. Review the remaining scenes in-engine; all 25 areas still inherit the demo's WED layout and terrain. The opening scene has live-tested native actor dialogue for Mara and Queen Alisande; Mara's copy-landmarks and sealed-ledger branches both work, and her decision appears in the Act I Journal. Other branches and save/load still need playtesting. See the [campaign guide](terralum/README.md) for build steps and current verification limits.
 
 To try it out you either need some of the ORIGINAL game's data or you can
 get a tiny sneak peek by running the included trivial game demo.
@@ -127,7 +133,7 @@ Twenty-three distinct generated concept backdrops preview the twenty-five scene 
 - [Campaign plan](terralum/campaign_plan.md) — seven-act story spine and planned expansion.
 - [TODO and handoff](TODO.md) — completed, ongoing, and next work.
 
-Terralum is an in-progress prototype, not a finished or full-length RPG. The current cast reuses demo sprites and all twenty-five areas still inherit the demo WED layout; all twenty-five areas now have custom searchmaps, with structural connectivity checks for each. Archivist Mara, Royal Scribe Oren, King Edmon, Queen Alisande, and Alistair have native DLG resources; the royal couple's return-court dialogue reflects the route record and Lorian gallery decision, and the council response reflects Oren's evidence docket. Most NPC conversations still use the custom choice panel, and direct click/save behavior remains unverified in live GemRB. The project guide and handoff describe current playability and verification gaps.
+Terralum is an in-progress prototype, not a finished or full-length RPG. All 38 named cast members have custom animated world-sprite resources; the opening Market actors have been checked live, and other scenes still need in-engine art review. All twenty-five areas still inherit the demo WED layout; the project supplies custom searchmaps with structural connectivity checks for each. Archivist Mara, Royal Scribe Oren, King Edmon, Queen Alisande, and Alistair have native DLG resources; most NPC conversations still use the custom choice panel, and save/load remains unverified. The project guide and handoff describe current playability and verification gaps.
 
 ## Supported platforms
 

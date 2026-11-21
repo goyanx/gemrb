@@ -47,10 +47,59 @@ PORTRAITS = {
     "TAVIN0": (3, 2, 1), "LEORA0": (3, 3, 1), "NERIN0": (3, 0, 2),
     "ORIS00": (3, 1, 2), "MERETH": (3, 2, 2), "ORLA00": (3, 3, 2),
 }
-NPC_AVATARS = (
-    {"name": "queen_alisande", "prefix": "TLAL", "animation_id": 0xC900,
-     "creature": "alisande", "base_creature": "riddler"},
-)
+def avatar_profile(person):
+	text = (person.get("name", "") + " " + person.get("role", "")).lower()
+	if "queen alisande" in text:
+		return "queen"
+	if "queen" in text:
+		return "royal"
+	if "king edmon" in text:
+		return "king"
+	if "carver doma" in text or "stoneworker" in text:
+		return "citizen"
+	if any(word in text for word in ("ranger", "scout", "hunter", "pathfinder", "waykeeper",
+									"fordkeeper", "wayfarer", "courier")):
+		return "ranger"
+	if any(word in text for word in ("warden", "guard", "captain", "guardian", "warder", "marshal")):
+		return "guard"
+	if any(word in text for word in ("magister", "magical", "seer", "echo", "false algoreth", "seraphina")):
+		return "mage"
+	if any(word in text for word in ("archivist", "scholar", "scribe", "index", "page", "keeper")):
+		return "scholar"
+	return "citizen"
+
+
+def world_avatar_catalog():
+	cast = json.loads(CAST_FILE.read_text(encoding="utf-8"))
+	people = {}
+	for scene in cast.values():
+		for person in scene:
+			people.setdefault(person["name"], person)
+	ordered = list(people.values())
+	avatars = []
+	other_index = 0
+	for person in ordered:
+		name = person["name"]
+		creature = "alisande" if name == "Queen Alisande" else person["portrait"].lower()
+		if name == "Queen Alisande":
+			animation_id, prefix, seed = 0xC900, "TLAL", 0
+		else:
+			animation_id, prefix, seed = 0xC901 + other_index, f"TL{other_index:02X}", other_index + 1
+			other_index += 1
+		avatars.append({
+			"name": name,
+			"profile": avatar_profile(person),
+			"seed": seed,
+			"asset": "queen_alisande" if name == "Queen Alisande" else creature,
+			"prefix": prefix,
+			"animation_id": animation_id,
+			"creature": creature,
+			"base_creature": "riddler" if name == "Queen Alisande" else person["creature"],
+		})
+	return tuple(avatars)
+
+
+NPC_AVATARS = world_avatar_catalog()
 SUPPORTED_CREATURES = {"protagon", "riddler"} | {avatar["creature"] for avatar in NPC_AVATARS}
 SETUP_FILE = ROOT / "gemrb" / "GUIScripts" / "terralum" / "SetupGame.py"
 AREAS = {
@@ -625,7 +674,7 @@ def build():
         for avatar in NPC_AVATARS:
             table.write(f"\n0x{avatar['animation_id']:04X} {avatar['prefix']} {avatar['prefix']} "
                         f"{avatar['prefix']} {avatar['prefix']} 0 2 1 *")
-            write_npc_avatar(avatar["name"], avatar["prefix"], OUTPUT / "override")
+            write_npc_avatar(avatar["asset"], avatar["prefix"], OUTPUT / "override")
             creature = bytearray((OUTPUT / "override" / f"{avatar['base_creature']}.cre").read_bytes())
             if creature[:8] != b"CRE V1.0":
                 raise ValueError(f"{avatar['base_creature']}.cre must be a supported CRE V1.0 source")

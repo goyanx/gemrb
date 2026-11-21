@@ -57,7 +57,8 @@
       "knowledge": "Knows where the ledger points and which library record may corroborate it; does not know what awaits in Lorian.",
       "voice": "Precise and helpful, careful to distinguish a record from a conclusion.",
       "provenance": "adaptation",
-      "portrait": "MARA00"
+      "portrait": "MARA00",
+      "avatar_creature": "mara00"
     },
     {
       "name": "King Edmon",
@@ -74,7 +75,8 @@
       "knowledge": "Knows the royal road and can provide a map, horse, and shelter; has not seen the Byzantem scrolls.",
       "voice": "Measured and authoritative, welcoming without promising what he cannot know.",
       "provenance": "user-confirmed",
-      "portrait": "EDMON0"
+      "portrait": "EDMON0",
+      "avatar_creature": "edmon0"
     },
     {
       "name": "Queen Alisande",
@@ -91,7 +93,8 @@
       "knowledge": "Knows the court's obligations and the people affected by royal decisions; her knowledge of the road is limited to the records before her.",
       "voice": "Warm, composed, and direct about responsibility.",
       "provenance": "user-confirmed",
-      "portrait": "ALISAN"
+      "portrait": "ALISAN",
+      "avatar_creature": "alisande"
     }
   ],
   "tl0008": [
@@ -135,7 +138,8 @@
       "knowledge": "Can compare the damaged index with the court copy; cannot guarantee that old waystones remain in place.",
       "voice": "Analytical and patient, explaining uncertainty in concrete terms.",
       "provenance": "adaptation",
-      "portrait": "INESSA"
+      "portrait": "INESSA",
+      "avatar_creature": "inessa"
     },
     {
       "name": "Royal Scribe Oren",
@@ -151,7 +155,8 @@
       "knowledge": "Knows what the catalogue says and where it was copied from; has no firsthand knowledge of Dorian.",
       "voice": "Formal and exact, with a scholar's respect for source records.",
       "provenance": "adaptation",
-      "portrait": "OREN00"
+      "portrait": "OREN00",
+      "avatar_creature": "oren00"
     }
   ],
   "tl0015": [
@@ -196,7 +201,8 @@
         }
       ],
       "faction": "Alsperia Expedition",
-      "portrait": "TESSA0"
+      "portrait": "TESSA0",
+      "avatar_creature": "tessa0"
     },
     {
       "name": "Hunter Fen",
@@ -224,7 +230,8 @@
         }
       ],
       "faction": "Mistwood Hunters",
-      "portrait": "HUNTER"
+      "portrait": "HUNTER",
+      "avatar_creature": "hunter"
     },
     {
       "name": "Ranger Ilya",
@@ -266,7 +273,8 @@
         }
       ],
       "faction": "Mistwood Hunters",
-      "portrait": "ILYA00"
+      "portrait": "ILYA00",
+      "avatar_creature": "ilya00"
     }
   ],
   "tl0016": [
@@ -298,7 +306,8 @@
         }
       ],
       "faction": "Mistwood Waykeepers",
-      "portrait": "SELLA0"
+      "portrait": "SELLA0",
+      "avatar_creature": "sella0"
     },
     {
       "name": "Carver Doma",
@@ -326,7 +335,8 @@
           "line": "You left it turned. Better an unread mark than a false promise of safe passage."
         }
       ],
-      "faction": "Mistwood Waykeepers"
+      "faction": "Mistwood Waykeepers",
+      "avatar_creature": "doma00"
     }
   ],
   "tl0002": [
@@ -375,7 +385,8 @@
       "knowledge": "Knows the road, pale stones, and hunters' lantern signal; does not know the stalker's origin or intent.",
       "voice": "Practical, alert, and economical with words.",
       "provenance": "adaptation",
-      "portrait": "TESSA0"
+      "portrait": "TESSA0",
+      "avatar_creature": "tessa0"
     },
     {
       "name": "Lost Wayfarer",
@@ -428,7 +439,8 @@
           }
         }
       ],
-      "portrait": "WAYFAR"
+      "portrait": "WAYFAR",
+      "avatar_creature": "wayfar"
     }
   ],
   "tl0009": [
@@ -511,7 +523,8 @@
       "knowledge": "Found the rubbing under the stair and knows the stalker blocked the route; has not reached Lorian.",
       "voice": "Quick and matter-of-fact, focused on the message in hand.",
       "provenance": "adaptation",
-      "portrait": "PELL00"
+      "portrait": "PELL00",
+      "avatar_creature": "pell00"
     },
     {
       "name": "Courier Eren",
@@ -539,7 +552,8 @@
       "knowledge": "Knows how the party crossed the river and that the dispatch must reach Courier Pell; cannot identify the stalker.",
       "voice": "Grateful and precise, reporting the route without embellishing the record.",
       "provenance": "adaptation",
-      "portrait": "EREN00"
+      "portrait": "EREN00",
+      "avatar_creature": "eren00"
     },
     {
       "name": "Waywarden Saren",
@@ -555,7 +569,8 @@
       "knowledge": "Knows the patrol route and royal orders; understands that guarding a road does not decide what it is for.",
       "voice": "Disciplined and restrained, separating duty from judgment.",
       "provenance": "adaptation",
-      "portrait": "SAREN0"
+      "portrait": "SAREN0",
+      "avatar_creature": "saren0"
     }
   ],
   "tl0003": [
@@ -601,7 +616,8 @@
       "knowledge": "Knows he hid the scrolls and that world-travel magnifies the traveller's purpose; the available source does not establish his later history.",
       "voice": "Cryptic but concise, asking the player to examine motive rather than accept a prophecy.",
       "provenance": "canon",
-      "portrait": "DORIAN"
+      "portrait": "DORIAN",
+      "avatar_creature": "dorian"
     },
     {
       "name": "Lorian Guardian",
@@ -635,7 +651,8 @@
       "goal": "Keep the vault closed until the traveller shows restraint.",
       "knowledge": "Knows its duty and the vault warning; does not judge the wider history of the scrolls.",
       "voice": "Impersonal and unwavering, speaking in terms of duty and proof.",
-      "provenance": "adaptation"
+      "provenance": "adaptation",
+      "avatar_creature": "lorguar"
     }
   ],
   "tl0010": [
@@ -667,7 +684,8 @@
       "goal": "Protect the sealed niches and make the three marks understandable to the traveller.",
       "knowledge": "Knows the gallery marks passage, return, and restraint; will not reveal what lies behind unopened niches.",
       "voice": "Patient and exact, treating the warning as a question.",
-      "provenance": "adaptation"
+      "provenance": "adaptation",
+      "avatar_creature": "gallkee"
     },
     {
       "name": "Dorian's Echo",
@@ -683,7 +701,8 @@
       "goal": "Make the traveller interpret the warning before choosing to cross.",
       "knowledge": "Repeats the inscription's challenge but is not established as Dorian himself or as a complete record of his memory.",
       "voice": "Reflective and spare, phrased as questions and cautions.",
-      "provenance": "adaptation"
+      "provenance": "adaptation",
+      "avatar_creature": "doriech"
     }
   ],
   "tl0004": [
@@ -714,7 +733,8 @@
           "line": "The patrol map stays in the crown record, while Pell's warning can turn travellers away from danger without publishing our route."
         }
       ],
-      "portrait": "EDMON0"
+      "portrait": "EDMON0",
+      "avatar_creature": "edmon0"
     },
     {
       "name": "Queen Alisande",
@@ -753,7 +773,8 @@
           "line": "The gallery warning remains unresolved. Before another gate is approached, the court should agree on what the scrolls may be used for."
         }
       ],
-      "portrait": "ALISAN"
+      "portrait": "ALISAN",
+      "avatar_creature": "alisande"
     }
   ],
   "tl0011": [
@@ -795,7 +816,8 @@
       "knowledge": "Knows what the guard can protect and the limits of military authority; has not studied the scrolls.",
       "voice": "Blunt, civic-minded, and wary of power without accountability.",
       "provenance": "adaptation",
-      "portrait": "ROVAN0"
+      "portrait": "ROVAN0",
+      "avatar_creature": "rovan0"
     },
     {
       "name": "Queen Alisande",
@@ -1028,7 +1050,8 @@
           "line": "The separate accounts preserve the limits of what we know. Edmon and I can review each without treating one as proof of the other."
         }
       ],
-      "portrait": "ALISAN"
+      "portrait": "ALISAN",
+      "avatar_creature": "alisande"
     },
     {
       "name": "Royal Scribe Oren",
@@ -1075,7 +1098,8 @@
       "knowledge": "Can compare the market ledger, Dorian's route, and Algoreth's report; cannot establish why the scrolls were created.",
       "voice": "Careful and exact, separating what a record says from what it cannot prove.",
       "provenance": "adaptation",
-      "portrait": "OREN00"
+      "portrait": "OREN00",
+      "avatar_creature": "oren00"
     },
     {
       "name": "Courier Pell",
@@ -1128,7 +1152,8 @@
       "knowledge": "Knows where Pell left the public marker or crown route record and what warning he gave travellers; has no firsthand knowledge of the scrolls' purpose.",
       "voice": "Plainspoken and exact, careful to separate what he carried from what he believes.",
       "provenance": "adaptation",
-      "portrait": "PELL00"
+      "portrait": "PELL00",
+      "avatar_creature": "pell00"
     }
   ],
   "tl0012": [
@@ -1160,7 +1185,8 @@
       "knowledge": "Can reinforce the outer ward or record the pulse; cannot yet explain the voice beneath the academy.",
       "voice": "Focused and urgent, reporting observable changes.",
       "provenance": "adaptation",
-      "portrait": "CELENE"
+      "portrait": "CELENE",
+      "avatar_creature": "celene"
     },
     {
       "name": "Magister Vael",
@@ -1188,7 +1214,8 @@
       "knowledge": "Has measured the pulse and seen the vault react; the source of the echo remains unknown.",
       "voice": "Scholarly and controlled, becoming terse when the ward is at risk.",
       "provenance": "canon",
-      "portrait": "MAGVAE"
+      "portrait": "MAGVAE",
+      "avatar_creature": "magvae"
     }
   ],
   "tl0005": [
@@ -1206,7 +1233,8 @@
       "knowledge": "Has measured the pulse and seen the vault react; the source of the echo remains unknown.",
       "voice": "Scholarly and controlled, becoming terse when the ward is at risk.",
       "provenance": "canon",
-      "portrait": "MAGVAE"
+      "portrait": "MAGVAE",
+      "avatar_creature": "magvae"
     },
     {
       "name": "Queen Alisande",
@@ -1222,7 +1250,8 @@
       "knowledge": "Knows the Tear of Chaos is contained and the false Algoreth remains within it; the intervening years and the nature of other Tears remain unresolved.",
       "voice": "Warm, composed, and direct about responsibility.",
       "provenance": "canon",
-      "portrait": "ALISAN"
+      "portrait": "ALISAN",
+      "avatar_creature": "alisande"
     },
     {
       "name": "False Algoreth",
@@ -1293,7 +1322,8 @@
           "line": "You named the rule and recorded the pulse. Marks do not make a chain. Next time, I will have learned."
         }
       ],
-      "provenance": "adaptation"
+      "provenance": "adaptation",
+      "avatar_creature": "falseal"
     }
   ],
   "tl0021": [
@@ -1325,7 +1355,8 @@
       "knowledge": "The breach responds to force and repeats the king's last spoken thought; its source and intent remain unknown.",
       "voice": "Focused and urgent, grounded in measurements rather than speculation.",
       "provenance": "adaptation",
-      "portrait": "CELENE"
+      "portrait": "CELENE",
+      "avatar_creature": "celene"
     },
     {
       "name": "Magister Vael",
@@ -1353,7 +1384,8 @@
       "knowledge": "Has measured the courtyard pulse and annex breach; does not know what speaks from the Tear.",
       "voice": "Scholarly and controlled, careful to separate evidence from interpretation.",
       "provenance": "adaptation",
-      "portrait": "MAGVAE"
+      "portrait": "MAGVAE",
+      "avatar_creature": "magvae"
     }
   ],
   "tl0006": [
@@ -1371,7 +1403,8 @@
       "knowledge": "Knows the surviving account links powers to questions about their limits; does not know whether the Deep and Eternal Archives are the same place.",
       "voice": "Thoughtful and skeptical, separating evidence from interpretation.",
       "provenance": "canon",
-      "portrait": "EALDRI"
+      "portrait": "EALDRI",
+      "avatar_creature": "ealdri"
     },
     {
       "name": "Queen Alisande",
@@ -1387,7 +1420,8 @@
       "knowledge": "Knows the Tear of Chaos is contained and the false Algoreth remains within it; the intervening years and the nature of other Tears remain unresolved.",
       "voice": "Warm, composed, and direct about responsibility.",
       "provenance": "canon",
-      "portrait": "ALISAN"
+      "portrait": "ALISAN",
+      "avatar_creature": "alisande"
     },
     {
       "name": "Archivist Nera",
@@ -1417,7 +1451,8 @@
       "knowledge": "Knows the comparison leaf is absent and that the Index Warden guards unindexed folios; does not know what the missing leaf would prove.",
       "voice": "Precise and patient, treating missing evidence as a question rather than a verdict.",
       "provenance": "adaptation",
-      "portrait": "NERA00"
+      "portrait": "NERA00",
+      "avatar_creature": "nera00"
     },
     {
       "name": "Index Warden",
@@ -1441,7 +1476,8 @@
           "line": "You called me to witness the missing comparison. The account remains sealed; answer the test, and I will yield the leaf."
         }
       ],
-      "portrait": "IDXWARD"
+      "portrait": "IDXWARD",
+      "avatar_creature": "idxward"
     }
   ],
   "tl0007": [
@@ -1471,7 +1507,8 @@
       "knowledge": "Knows what her wardens observed and that the Tear speaks with a familiar voice; its cause and outcome remain unknown.",
       "voice": "Regal and deliberate, asking for study before action.",
       "provenance": "canon",
-      "portrait": "VAELTH"
+      "portrait": "VAELTH",
+      "avatar_creature": "vaelth"
     },
     {
       "name": "Seraphina Everglow",
@@ -1499,7 +1536,8 @@
       "knowledge": "Knows the diagrams and instruments aboard the ship; has not examined Eldrador's Tear directly.",
       "voice": "Clear and reassuring, giving practical details without claiming certainty.",
       "provenance": "canon",
-      "portrait": "SERAPH"
+      "portrait": "SERAPH",
+      "avatar_creature": "seraph"
     }
   ],
   "tl0013": [
@@ -1565,7 +1603,8 @@
           "line": "Nera left the folio sealed. I will preserve the account while Ealdrin prepares a question for Eldrador’s warders."
         }
       ],
-      "portrait": "SELENE"
+      "portrait": "SELENE",
+      "avatar_creature": "selene"
     },
     {
       "name": "Ealdrin",
@@ -1593,7 +1632,8 @@
           "line": "The folio remains sealed. We will keep the missing comparison open and carry Ealdrin’s questions to Eldrador’s warders."
         }
       ],
-      "portrait": "EALDRI"
+      "portrait": "EALDRI",
+      "avatar_creature": "ealdri"
     }
   ],
   "tl0017": [
@@ -1625,7 +1665,8 @@
       "goal": "Prepare Edmon's promised horse and one useful field kit for the expedition.",
       "knowledge": "Knows the stables' available travel supplies and the horse's condition; has not travelled through the Mistwood herself.",
       "voice": "Competent and concise, focused on practical trade-offs.",
-      "provenance": "adaptation"
+      "provenance": "adaptation",
+      "avatar_creature": "edda00"
     },
     {
       "name": "Groom Tavin",
@@ -1653,7 +1694,8 @@
       "goal": "Make sure the expedition's supplies match the route it intends to take.",
       "knowledge": "Knows how to pack and handle horses, lanterns, and rope; has only hearsay about the Mistwood trail.",
       "voice": "Friendly and direct, comfortable admitting what he has not seen.",
-      "provenance": "adaptation"
+      "provenance": "adaptation",
+      "avatar_creature": "tavin0"
     }
   ],
   "tl0014": [
@@ -1697,7 +1739,8 @@
           "line": "Ealdrin carries questions for the warders; Selene’s original stays sealed in Alsperia. I will prepare for an inquiry guided by Eldrador’s testimony."
         }
       ],
-      "portrait": "AVEN00"
+      "portrait": "AVEN00",
+      "avatar_creature": "aven00"
     },
     {
       "name": "Seraphina Everglow",
@@ -1725,7 +1768,8 @@
       "knowledge": "Knows the diagrams and instruments aboard the ship; has not examined Eldrador's Tear directly.",
       "voice": "Clear and reassuring, giving practical details without claiming certainty.",
       "provenance": "canon",
-      "portrait": "SERAPH"
+      "portrait": "SERAPH",
+      "avatar_creature": "seraph"
     },
     {
       "name": "Alistair",
@@ -1796,7 +1840,8 @@
         }
       ],
       "dialog": "ALISTAR",
-      "portrait": "ALIST0"
+      "portrait": "ALIST0",
+      "avatar_creature": "alist0"
     }
   ],
   "tl0018": [
@@ -1828,7 +1873,8 @@
       "goal": "Protect the original patrol record while preparing the expedition to travel under the crown’s authority.",
       "knowledge": "Knows the current patrol schedule and its authorized copy rules; does not know what waits in Mistwood.",
       "voice": "Careful and procedural, balancing public safety with protection of royal records.",
-      "provenance": "adaptation"
+      "provenance": "adaptation",
+      "avatar_creature": "leora0"
     },
     {
       "name": "Page Nerin",
@@ -1856,7 +1902,8 @@
       "goal": "Keep the archive’s field maps legible and help authorized travellers understand the patrol marks.",
       "knowledge": "Knows the map table’s route marks and where schedules are stored; has not travelled west himself.",
       "voice": "Curious and clear, eager to explain what a map can and cannot prove.",
-      "provenance": "adaptation"
+      "provenance": "adaptation",
+      "avatar_creature": "nerin0"
     }
   ],
   "tl0019": [
@@ -1888,7 +1935,8 @@
       "knowledge": "Knows the ford, the exposed stepping stones, and where a handline can be secured; does not know what hunts the road.",
       "voice": "Practical and watchful, giving a clear warning before offering a route.",
       "provenance": "adaptation",
-      "portrait": "MAELIN"
+      "portrait": "MAELIN",
+      "avatar_creature": "maelin"
     },
     {
       "name": "Courier Eren",
@@ -1916,7 +1964,8 @@
       "knowledge": "Knows the dispatch concerns the road and patrol markers; has not read it or met the stalker.",
       "voice": "Urgent but composed, distinguishing what the document says from what it does not.",
       "provenance": "adaptation",
-      "portrait": "EREN00"
+      "portrait": "EREN00",
+      "avatar_creature": "eren00"
     }
   ],
   "tl0020": [
@@ -1960,7 +2009,8 @@
           "line": "Nera kept the folio sealed. We will preserve that choice and carry Ealdrin’s warder inquiry if you decide."
         }
       ],
-      "portrait": "EALDRI"
+      "portrait": "EALDRI",
+      "avatar_creature": "ealdri"
     },
     {
       "name": "Seraphina Everglow",
@@ -1988,7 +2038,8 @@
       "knowledge": "Knows the instruments and ward diagrams; has not examined Eldrador’s Tear directly.",
       "voice": "Clear and reassuring, with practical details and no claims of certainty.",
       "provenance": "canon",
-      "portrait": "SERAPH"
+      "portrait": "SERAPH",
+      "avatar_creature": "seraph"
     },
     {
       "name": "Queen Alisande",
@@ -2004,7 +2055,8 @@
       "knowledge": "Knows the party is preparing to investigate another Tear; its nature and outcome remain unknown.",
       "voice": "Warm, composed, and direct about shared responsibility.",
       "provenance": "canon",
-      "portrait": "ALISAN"
+      "portrait": "ALISAN",
+      "avatar_creature": "alisande"
     },
     {
       "name": "Alistair",
@@ -2021,7 +2073,8 @@
       "voice": "Inventive and exact, separating technical observations from conclusions.",
       "provenance": "canon",
       "dialog": "ALISTAR",
-      "portrait": "ALIST0"
+      "portrait": "ALIST0",
+      "avatar_creature": "alist0"
     }
   ],
   "tl0022": [
@@ -2081,7 +2134,8 @@
       "knowledge": "Knows that warders report a familiar voice and altered seal marks at the lower sanctuary; the cause and outcome remain unknown.",
       "voice": "Measured and hospitable, directing attention to what local people have observed.",
       "provenance": "canon",
-      "portrait": "VAELTH"
+      "portrait": "VAELTH",
+      "avatar_creature": "vaelth"
     },
     {
       "name": "Harbor Warden Oris",
@@ -2109,7 +2163,8 @@
       "goal": "Keep the road secure and give the expedition access to the local evidence it requests.",
       "knowledge": "Knows that the road is closed and that warders recorded warder testimonys and seal measurements; has no explanation for the Tear.",
       "voice": "Formal and practical, careful not to put words in the witnesses' mouths.",
-      "provenance": "adaptation"
+      "provenance": "adaptation",
+      "avatar_creature": "oris00"
     }
   ],
   "tl0023": [
@@ -2153,7 +2208,8 @@
       "knowledge": "Knows the party's selected evidence record; has not entered the sealed lower sanctuary with the expedition.",
       "voice": "Calm but concerned for her warders and people.",
       "provenance": "canon",
-      "portrait": "VAELTH"
+      "portrait": "VAELTH",
+      "avatar_creature": "vaelth"
     },
     {
       "name": "Ward-Captain Mereth",
@@ -2181,7 +2237,8 @@
       "goal": "Protect the sanctuary and make the expedition's approach observable and controlled.",
       "knowledge": "Knows the outer ring remains intact and the gate is sealed; the source of the pulse is unknown.",
       "voice": "Disciplined and precise, giving clear safety instructions.",
-      "provenance": "adaptation"
+      "provenance": "adaptation",
+      "avatar_creature": "mereth"
     },
     {
       "name": "Seraphina Everglow",
@@ -2197,7 +2254,8 @@
       "knowledge": "Carries listening instruments and ward diagrams; has not examined the source of Vaelthira's Tear.",
       "voice": "Clear, patient, and evidence-focused.",
       "provenance": "canon",
-      "portrait": "SERAPH"
+      "portrait": "SERAPH",
+      "avatar_creature": "seraph"
     }
   ],
   "tl0024": [
@@ -2232,7 +2290,8 @@
       "knowledge": "Knows the signal relay and patrol routes; only has the copied timing if Leora’s schedule was shared.",
       "voice": "Disciplined and restrained, stating the limits of the information at hand.",
       "provenance": "adaptation",
-      "portrait": "SAREN0"
+      "portrait": "SAREN0",
+      "avatar_creature": "saren0"
     },
     {
       "name": "Relay Keeper Orla",
@@ -2278,7 +2337,8 @@
       "goal": "Keep relay signals clear and avoid drawing a patrol without the traveller’s consent.",
       "knowledge": "Knows the one-flash and two-flash signal code; does not know what is beyond Lorian’s western arch.",
       "voice": "Practical and deliberate, giving instructions in short phrases.",
-      "provenance": "adaptation"
+      "provenance": "adaptation",
+      "avatar_creature": "orla00"
     }
   ],
   "tl0025": [
@@ -2313,7 +2373,8 @@
       "knowledge": "Knows which relay signal Algoreth chose, whether the schedule was copied, and whether the road ambush was defeated; cannot explain the stalker’s origin.",
       "voice": "Disciplined and reflective, reporting events without guessing at their cause.",
       "provenance": "adaptation",
-      "portrait": "SAREN0"
+      "portrait": "SAREN0",
+      "avatar_creature": "saren0"
     },
     {
       "name": "Courier Pell",
@@ -2376,7 +2437,8 @@
       "knowledge": "Knows the charcoal rubbing and the party’s Mistwood choices; does not know what lies beyond Dorian’s western arch.",
       "voice": "Quick and practical, attentive to what other travellers can safely use.",
       "provenance": "adaptation",
-      "portrait": "PELL00"
+      "portrait": "PELL00",
+      "avatar_creature": "pell00"
     }
   ]
 }

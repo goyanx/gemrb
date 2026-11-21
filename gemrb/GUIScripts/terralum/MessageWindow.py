@@ -101,7 +101,8 @@ def OnLoad():
 		if GemRB.GetGameVar("TLCAST") == chapter_index + 1:
 			return
 		for person in Story.cast(chapter["area"]):
-			actor = GemRB.CreateCreature(1, person["creature"], person["position"][0], person["position"][1])
+			actor = GemRB.CreateCreature(1, person.get("avatar_creature", person["creature"]),
+									 person["position"][0], person["position"][1])
 			GemRB.SetPlayerName(actor, person["name"], 0)
 			if person["creature"] in ("protagon", "riddler"):
 				palette = NPC_PALETTES_BY_NAME[person["name"]]
