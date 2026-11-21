@@ -24,19 +24,26 @@ CAST_FILE = PROJECT / "scene_cast.json"
 NATIVE_DIALOGUE_FILE = PROJECT / "native_dialogues.json"
 SEARCHMAP_FILE = PROJECT / "area_searchmaps.json"
 AREA_IMAGE = PROJECT / "art" / "observatory_courtyard.png"
-PORTRAIT_SHEET = PROJECT / "art" / "character_portraits_sheet.png"
-PORTRAIT_SHEET_2 = PROJECT / "art" / "character_portraits_sheet_2.png"
-PORTRAIT_SHEET_3 = PROJECT / "art" / "character_portraits_sheet_3.png"
+PORTRAIT_SHEETS = (
+    (PROJECT / "art" / "character_portraits_sheet.png", 3, 3),
+    (PROJECT / "art" / "character_portraits_sheet_2.png", 3, 3),
+    (PROJECT / "art" / "character_portraits_sheet_3.png", 3, 3),
+    (PROJECT / "art" / "character_portraits_sheet_4.png", 4, 3),
+)
 PORTRAITS = {
-    "ALGORE": (0, 0), "MARA00": (1, 0), "INESSA": (2, 0),
-    "ALISAN": (0, 1), "EDMON0": (1, 1), "TESSA0": (2, 1),
-    "WAYFAR": (0, 2), "PELL00": (1, 2), "SELENE": (2, 2),
-    "SERAPH": (3, 0), "SAREN0": (4, 0), "MAGVAE": (5, 0),
-    "EALDRI": (3, 1), "VAELTH": (4, 1), "OREN00": (5, 1),
-    "EREN00": (3, 2), "CELENE": (4, 2), "ALIST0": (5, 2),
-    "DORIAN": (6, 0), "ROVAN0": (7, 0), "ILYA00": (8, 0),
-    "HUNTER": (6, 1), "SELLA0": (7, 1), "MAELIN": (8, 1),
-    "NERA00": (6, 2), "IDXWARD": (7, 2), "AVEN00": (8, 2),
+    "ALGORE": (0, 0, 0), "MARA00": (0, 1, 0), "INESSA": (0, 2, 0),
+    "ALISAN": (0, 0, 1), "EDMON0": (0, 1, 1), "TESSA0": (0, 2, 1),
+    "WAYFAR": (0, 0, 2), "PELL00": (0, 1, 2), "SELENE": (0, 2, 2),
+    "SERAPH": (1, 0, 0), "SAREN0": (1, 1, 0), "MAGVAE": (1, 2, 0),
+    "EALDRI": (1, 0, 1), "VAELTH": (1, 1, 1), "OREN00": (1, 2, 1),
+    "EREN00": (1, 0, 2), "CELENE": (1, 1, 2), "ALIST0": (1, 2, 2),
+    "DORIAN": (2, 0, 0), "ROVAN0": (2, 1, 0), "ILYA00": (2, 2, 0),
+    "HUNTER": (2, 0, 1), "SELLA0": (2, 1, 1), "MAELIN": (2, 2, 1),
+    "NERA00": (2, 0, 2), "IDXWARD": (2, 1, 2), "AVEN00": (2, 2, 2),
+    "DOMA00": (3, 0, 0), "LORGUAR": (3, 1, 0), "GALLKEE": (3, 2, 0),
+    "DORIECH": (3, 3, 0), "FALSEAL": (3, 0, 1), "EDDA00": (3, 1, 1),
+    "TAVIN0": (3, 2, 1), "LEORA0": (3, 3, 1), "NERIN0": (3, 0, 2),
+    "ORIS00": (3, 1, 2), "MERETH": (3, 2, 2), "ORLA00": (3, 3, 2),
 }
 SETUP_FILE = ROOT / "gemrb" / "GUIScripts" / "terralum" / "SetupGame.py"
 AREAS = {
@@ -606,16 +613,25 @@ def build():
     if OUTPUT.exists():
         shutil.rmtree(OUTPUT)
     shutil.copytree(SOURCE, OUTPUT)
-    portrait_sheets = [Image.open(path).convert("RGB") for path in
-                       (PORTRAIT_SHEET, PORTRAIT_SHEET_2, PORTRAIT_SHEET_3)]
-    for portrait, (cell_index, row) in PORTRAITS.items():
-        sheet = portrait_sheets[cell_index // 3]
-        column = cell_index % 3
-        cell_width, cell_height = sheet.width // 3, sheet.height // 3
+    portrait_sheets = [(Image.open(path).convert("RGB"), columns, rows)
+                       for path, columns, rows in PORTRAIT_SHEETS]
+    for portrait, (sheet_index, column, row) in PORTRAITS.items():
+        sheet, columns, rows = portrait_sheets[sheet_index]
+        cell_width, cell_height = sheet.width // columns, sheet.height // rows
         cell = sheet.crop((column * cell_width, row * cell_height,
                            (column + 1) * cell_width, (row + 1) * cell_height))
         for suffix, size in (("M", (169, 224)), ("S", (64, 64))):
-            resized = cell.resize(size, Image.Resampling.LANCZOS)
+            desired_ratio = size[0] / size[1]
+            width, height = cell.size
+            if width / height > desired_ratio:
+                new_width = round(height * desired_ratio)
+                left = (width - new_width) // 2
+                cell_crop = cell.crop((left, 0, left + new_width, height))
+            else:
+                new_height = round(width / desired_ratio)
+                top = (height - new_height) // 2
+                cell_crop = cell.crop((0, top, width, top + new_height))
+            resized = cell_crop.resize(size, Image.Resampling.LANCZOS)
             resized.save(OUTPUT / "override" / f"{portrait}{suffix}.bmp", format="BMP")
     write_native_dialogues(native_dialogues)
     image = write_tis(AREA_IMAGE, SOURCE / "override" / "ar0100.tis", OUTPUT / "override" / "ar0100.tis")

@@ -14,7 +14,9 @@ GemRB applies stable hair and clothing palettes to the shared scene-creature ani
 
 ![Market NPCs with distinct green, orange, and teal clothing palettes](screenshots/alsperia-market-npc-palettes.png)
 
-Three generated portrait sheets now provide medium and small GemRB portrait resources for twenty-six named scene NPCs across the seven-act cast. Portraits are selected by NPC data and appear beside their dialogue.
+Four generated portrait sheets now provide medium and small GemRB portrait resources for all thirty-eight unique named NPCs across the seven-act cast. Portraits are selected by NPC data and appear beside their dialogue. The latest sheet adds distinct portraits for twelve previously unpictured characters.
+
+![Twelve new Terralum NPC portrait concepts for the complete cast](art/character_portraits_sheet_4.png)
 
 The Lost Wayfarer's native actor dialogue now runs in GemRB. This isolated capture shows the private-account outcome recorded in the Act II Journal.
 

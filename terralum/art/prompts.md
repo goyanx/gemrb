@@ -36,3 +36,15 @@ Generated with the built-in image generator for a distinct Act VII preparation s
 | `mistwood_river_crossing.png` | Mistwood river ford at dusk with a damaged footbridge, rope handline, courier cart, lantern, and open north/south approaches. |
 
 `mistwood_ruins.png`, `byzantem_arch.png`, and `council_chamber.png` are concept art from the earlier story draft and are not used in the current build.
+
+## NPC portraits
+
+`character_portraits_sheet_4.png` is a generated 4-column by 3-row sheet that completes conversation portraits for the 38 unique named cast identities. Read each row left to right:
+
+| Row | Characters |
+| --- | --- |
+| 1 | Carver Doma; Lorian Guardian; Gallery Keeper; Dorian's Echo |
+| 2 | False Algoreth; Stablemaster Edda; Groom Tavin; Archivist Leora |
+| 3 | Page Nerin; Harbor Warden Oris; Ward-Captain Mereth; Relay Keeper Orla |
+
+The portraits follow the painterly style of the first three character sheets. Their clothing, age, gender presentation, and facial details are visual adaptations, not new canon claims. False Algoreth echoes Algoreth's established portrait likeness, with a restrained silver-violet effect to mark the contained echo. The world-map creature animations remain the GemRB demo's two placeholder humanoid models; these portraits display during NPC dialogue.
