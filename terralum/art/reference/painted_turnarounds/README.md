@@ -8,6 +8,13 @@ These generated transparent turnarounds establish the corrected world-character 
 | King Edmon | `edmon0` | `edmon.png` |
 | Queen Alisande | `queen_alisande` | `alisande.png` |
 | Scout Tessa | `tessa0` | `tessa.png` |
+| Scholar Inessa | `inessa` | `inessa.png` |
+| Waywarden Saren | `saren0` | `saren.png` |
+| Lost Wayfarer | `wayfar` | `wayfarer.png` |
+| Dorian the Seer | `dorian` | `dorian.png` |
+| Royal Scribe Oren | `oren00` | `oren.png` |
+| Courier Pell | `pell00` | `pell.png` |
+| Courier Eren | `eren00` | `eren.png` |
 
 Convert a sheet into GemRB's nine directional 80x96 frame slots with:
 

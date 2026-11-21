@@ -10,11 +10,11 @@ These captures come from isolated GemRB sessions. Mistwood shows the optional Wa
 | --- | --- | --- |
 | ![The Lost Wayfarer offers two reporting choices on Mistwood Road](screenshots/mistwood-wayfarer-choice.png) | ![The Act II Journal records the anonymous warning](screenshots/mistwood-wayfarer-journal.png) | ![Courier Pell acknowledges the anonymous warning at the Watchpost](screenshots/ruined-watchpost-pell-callback.png) | ![Archivist Mara's custom portrait appears with her dialogue](screenshots/archivist-mara-dialogue-portrait.png) |
 
-The earlier 38-NPC avatar pass used low-poly Blender figures. That approach looked too much like blocky 3D game characters and is no longer the target art direction. The core recurring cast is now transitioning to hand-painted 2D world sprites; the first live Market pass replaces Mara while Edmon, Alisande, and Tessa have matching painted turnaround sources. Remaining cast members still need this conversion.
+The earlier 38-NPC avatar pass used low-poly Blender figures. That approach looked too much like blocky 3D game characters and is no longer the target art direction. The core recurring cast is now transitioning to hand-painted 2D world sprites. Eleven characters have painted turnaround sources and imported world frames; Mara, Edmon, and Alisande appear in a live Market capture. Remaining cast members and authored movement cycles still need this conversion.
 
 ![Live GemRB Market scene with painted Mara, Queen Alisande, and King Edmon sprites and the enlarged Algoreth player character](screenshots/painted-opening-cast.png)
 
-![Painted 2D turnarounds for Mara, King Edmon, Queen Alisande, and Scout Tessa](art/reference/painted_turnarounds/contact-sheet.png)
+![Painted 2D turnarounds for eleven Terralum characters](art/reference/painted_turnarounds/contact-sheet.png)
 
 The turnaround import tool is documented in [`art/reference/painted_turnarounds/README.md`](art/reference/painted_turnarounds/README.md). The current import fills the four walk slots with the same painted view, so idle rendering is usable but walking is not animation-complete. Review source sheets, then inspect the converted character in a built GemRB scene.
 
@@ -86,7 +86,9 @@ The campaign-flow mock checks scene progression and response effects. The MCP te
 
 ### NPC world-avatar pipeline
 
-World sprites are procedural Blender models rendered to 80×96 transparent frames: nine directions with four walk poses each. `render_cast_sprites.py` uses role profiles plus named silhouettes for recurring characters; Dorian, Lorian, Ilya, and Pell now have individual shapes, colors, and story props. Their generated concept sheet is reference art in [`art/reference/supporting-cast-avatar-concepts.png`](art/reference/supporting-cast-avatar-concepts.png), while the runtime models are rendered as animated BAMs. `build_npc_bams.py` compiles walk, ready, and awake BAMs, and `build_game.py` binds them through unique CRE resources and `avatars.2da` rows. With Blender available, regenerate missing frames and the contact sheet with:
+The preferred art direction for named NPCs is a hand-painted 2D fantasy sprite, with realistic proportions and readable costume details at the game's map scale. Eleven cast members currently have transparent 3×3 turnaround sources and imported directional idle frames in [`art/reference/painted_turnarounds/`](art/reference/painted_turnarounds/README.md). `import_painted_turnaround.py` crops nine views into GemRB's 80×96 frame slots; its current prototype repeats each idle view across the four walk-frame slots, so authored locomotion remains open work.
+
+`build_npc_bams.py` compiles walk, ready, and awake BAMs, and `build_game.py` binds each character through unique CRE resources and `avatars.2da` rows. The remaining cast still uses frames rendered by `render_cast_sprites.py` from procedural Blender models; these are placeholders pending painted sources. Review all visible NPCs in each scene, since changing only the named speaker leaves blocky supporting characters beside the new art. With Blender available, regenerate missing placeholder frames and the contact sheet with:
 
 ```powershell
 python tools/terralum/render_cast_sprites.py --blender path\to\blender.exe
