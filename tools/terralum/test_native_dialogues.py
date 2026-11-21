@@ -99,6 +99,15 @@ class NativeDialogueResourceTests(unittest.TestCase):
         self.assertEqual(bindings["MARA"], [("tl0001", "Archivist Mara")])
         self.assertEqual(bindings["OREN"], [("tl0011", "Royal Scribe Oren")])
         self.assertEqual(bindings["PELL"], [("tl0011", "Courier Pell")])
+        self.assertEqual(bindings["WAYFAR"], [("tl0002", "Lost Wayfarer")])
+        wayfarer = dialogues["WAYFAR"]["states"]
+        self.assertEqual(len(wayfarer), 5)
+        self.assertEqual([transition["set"][0]["value"]
+                          for transition in wayfarer[0]["transitions"]], [1, 2])
+        self.assertEqual([transition["set"][1]["flag"]
+                          for transition in wayfarer[0]["transitions"]],
+                         ["TLJRN_WAYFARER_PUBLIC", "TLJRN_WAYFARER_PRIVATE"])
+        self.assertIn("do not know what made the sound", wayfarer[0]["say"])
         self.assertEqual(bindings["DORIAN"], [("tl0003", "Dorian the Seer")])
         dorian = dialogues["DORIAN"]["states"]
         self.assertEqual(len(dorian), 7)

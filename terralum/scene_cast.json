@@ -378,6 +378,7 @@
     },
     {
       "name": "Lost Wayfarer",
+      "dialog": "WAYFAR",
       "creature": "riddler",
       "position": [
         930,

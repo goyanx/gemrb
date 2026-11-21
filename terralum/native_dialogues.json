@@ -61,6 +61,36 @@
       }
     ]
   },
+  "WAYFAR": {
+    "states": [
+      {
+        "when": [{"flag": "TLCHAP", "value": 3}, {"flag": "TLWAYFARER", "value": 0}],
+        "say": "Something circles the ruined watchpost. I heard it answer my name from the trees. I do not know what made the sound.",
+        "transitions": [
+          {"text": "Send Pell an anonymous warning about the answering voice.", "next": 1, "journal": "In Mistwood, Algoreth heard a traveller's account that a voice answered from the trees. He sent Courier Pell an anonymous warning; neither the witness nor the sound's source was identified.", "set": [{"flag": "TLWAYFARER", "value": 1}, {"flag": "TLJRN_WAYFARER_PUBLIC", "value": 1}]},
+          {"text": "Keep the account private; report only the unsafe road.", "next": 2, "journal": "In Mistwood, Algoreth heard a traveller's account that a voice answered from the trees. He kept the account private and asked Pell to report only that the road was unsafe; neither the witness nor the sound's source was identified.", "set": [{"flag": "TLWAYFARER", "value": 2}, {"flag": "TLJRN_WAYFARER_PRIVATE", "value": 1}]}
+        ]
+      },
+      {
+        "say": "Thank you for recording the warning without my name. I hope the next traveller hears caution, not a tale about me.",
+        "transitions": [{"text": "Pell will carry only the warning you allowed us to share.", "final": true}]
+      },
+      {
+        "say": "Thank you for leaving my account private. The road can carry a warning without carrying my name.",
+        "transitions": [{"text": "Pell will report only that the road is unsafe.", "final": true}]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 3}, {"flag": "TLWAYFARER", "value": 1}],
+        "say": "The warning can travel without my name. I still cannot tell you what answered from the trees.",
+        "transitions": [{"text": "The source stays unknown; I will keep the report precise.", "final": true}]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 3}, {"flag": "TLWAYFARER", "value": 2}],
+        "say": "You kept my account private. The unsafe road is warning enough; I cannot explain the voice.",
+        "transitions": [{"text": "Your name and account stay out of the report.", "final": true}]
+      }
+    ]
+  },
   "DORIAN": {
     "states": [
       {
