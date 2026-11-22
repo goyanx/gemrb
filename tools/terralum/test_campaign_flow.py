@@ -880,6 +880,7 @@ window.controls[20].press()
 assert events[-1][0:2] == ("target-mode", 2)
 assert events[-1][2] == (campaign.GA_NO_DEAD | campaign.GA_NO_SELF
                          | campaign.GA_NO_HIDDEN | campaign.GA_NO_NEUTRAL)
+assert "Target a hostile creature to attack." in window.controls[0].text
 window.controls[4].press()
 assert globals_["TLBEAT"] == 1
 assert "Mistwood stalker and Pale-stone prowler" in window.controls[0].text
