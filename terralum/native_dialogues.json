@@ -785,10 +785,26 @@
     "states": [
       {
         "when": [{"flag": "TLCHAP", "value": 11}, {"flag": "TLGALLERY", "value": 0}],
-        "say": "Three marks guard the arch: passage, return, and restraint. Name what must remain closed, and the warning can be carried home without opening the sealed niches.",
+        "say": "Three marks guard the arch: passage, return, and restraint. Ask what the marks mean, then name what must remain closed. The niches will stay sealed either way.",
         "transitions": [
-          {"text": "Name restraint; carry the warning back unopened.", "next": 1, "journal": "In the Byzantem Seal Gallery, Algoreth chose whether to name restraint or demand passage. The sealed niches remained closed, and the return court must decide what the scrolls may be used for.", "set": [{"flag": "TLGALLERY", "value": 1}, {"flag": "TLJRN_GALLERY_RESOLUTION", "value": 1}]},
-          {"text": "Demand passage through the arch.", "next": 2, "journal": "In the Byzantem Seal Gallery, Algoreth chose whether to name restraint or demand passage. The sealed niches remained closed, and the return court must decide what the scrolls may be used for.", "set": [{"flag": "TLGALLERY", "value": 2}, {"flag": "TLJRN_GALLERY_RESOLUTION", "value": 1}]}
+          {"text": "What does passage mean here?", "next": 1},
+          {"text": "Why is return carved beside it?", "next": 2},
+          {"text": "Name restraint; carry the warning back unopened.", "next": 3, "journal": "In the Byzantem Seal Gallery, Algoreth chose whether to name restraint or demand passage. The sealed niches remained closed, and the return court must decide what the scrolls may be used for.", "set": [{"flag": "TLGALLERY", "value": 1}, {"flag": "TLJRN_GALLERY_RESOLUTION", "value": 1}]},
+          {"text": "Demand passage through the arch.", "next": 4, "journal": "In the Byzantem Seal Gallery, Algoreth chose whether to name restraint or demand passage. The sealed niches remained closed, and the return court must decide what the scrolls may be used for.", "set": [{"flag": "TLGALLERY", "value": 2}, {"flag": "TLJRN_GALLERY_RESOLUTION", "value": 1}]}
+        ]
+      },
+      {
+        "say": "Passage names a route, not a reason to take it. The warning asks what a traveller intends before the arch is crossed.",
+        "transitions": [
+          {"text": "Ask about the return mark.", "next": 2},
+          {"text": "Return to the keeper's question.", "next": 0}
+        ]
+      },
+      {
+        "say": "Return is the duty to bring an account back. It does not prove the traveller understood what was found; the court must still decide what the scrolls may be used for.",
+        "transitions": [
+          {"text": "Ask about the passage mark.", "next": 1},
+          {"text": "Return to the keeper's question.", "next": 0}
         ]
       },
       {
@@ -816,7 +832,19 @@
       {
         "when": [{"flag": "TLCHAP", "value": 11}, {"flag": "TLGALLERY", "value": 0}],
         "say": "A warning is not a lock. It is a question the traveller must answer before choosing to cross. I repeat the inscription; I cannot tell you what lies behind the niches.",
-        "transitions": [{"text": "We will hear the keeper's answer first.", "final": true}]
+        "transitions": [
+          {"text": "Are you Dorian?", "next": 1},
+          {"text": "Do you know what is behind the niches?", "next": 2},
+          {"text": "We will hear the keeper's answer first.", "final": true}
+        ]
+      },
+      {
+        "say": "I cannot give you a name or a memory beyond the words I repeat. The gallery calls this an echo; I cannot establish more.",
+        "transitions": [{"text": "Then we will treat the words as a warning.", "final": true}]
+      },
+      {
+        "say": "No. The niches remain sealed, and I know only the inscription you have already heard.",
+        "transitions": [{"text": "We will ask the keeper about the marks.", "final": true}]
       },
       {
         "when": [{"flag": "TLCHAP", "value": 11}, {"flag": "TLGALLERY", "value": 1}],
