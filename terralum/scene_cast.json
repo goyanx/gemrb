@@ -354,6 +354,7 @@
     {
       "name": "Scout Tessa",
       "creature": "protagon",
+      "spawn_flag": "TLMISTWOOD_TESSA",
       "position": [
         820,
         700

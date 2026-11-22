@@ -26,7 +26,11 @@ def main():
 	parser.add_argument("asset", help="world sprite folder name, such as mara00")
 	parser.add_argument("--attack", action="store_true",
 		help="import directional attack views as attack_00.png through attack_08.png")
+	parser.add_argument("--scale", type=float, default=1.0,
+		help="scale the 80x96 frame canvas for a larger actor")
 	args = parser.parse_args()
+	if args.scale <= 0:
+		parser.error("--scale must be positive")
 	with Image.open(args.sheet) as source:
 		image = source.convert("RGBA")
 	output = ROOT / "terralum" / "art" / "world_sprites" / args.asset
@@ -40,9 +44,10 @@ def main():
 		if bounds is None:
 			raise ValueError(f"empty transparent cell at row {row}, column {column}")
 		cell = cell.crop(bounds)
-		cell.thumbnail((72, 88), Image.Resampling.LANCZOS)
-		frame = Image.new("RGBA", FRAME_SIZE, (0, 0, 0, 0))
-		frame.alpha_composite(cell, ((FRAME_SIZE[0] - cell.width) // 2, FRAME_SIZE[1] - cell.height))
+		frame_size = tuple(round(value * args.scale) for value in FRAME_SIZE)
+		cell.thumbnail((round(72 * args.scale), round(88 * args.scale)), Image.Resampling.LANCZOS)
+		frame = Image.new("RGBA", frame_size, (0, 0, 0, 0))
+		frame.alpha_composite(cell, ((frame_size[0] - cell.width) // 2, frame_size[1] - cell.height))
 		if args.attack:
 			frame.save(output / f"attack_{direction:02d}.png")
 		else:

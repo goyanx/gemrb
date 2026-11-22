@@ -606,6 +606,17 @@ def OnLoad():
 					GemRB.ExecuteString("Attack(Player1)", actor)
 					spawned_names.append(member["name"])
 				group_actors.append((member["name"], actor))
+			companion = beat.get("companion")
+			if companion and not GemRB.GetGameVar(companion["triggered_flag"]):
+				actor = GemRB.GetGameVar(companion["actor_flag"])
+				if actor:
+					GemRB.ExecuteString("Attack(NearestEnemyOf(Myself))", actor)
+					# ExecuteString adds actions to the front of the queue. Queue the
+					# attack first so JoinParty runs first and enables the ally turn.
+					GemRB.ExecuteString("Attack(NearestEnemyOf(Myself))", actor)
+					GemRB.ExecuteString("JoinParty()", actor)
+					GemRB.SetGlobal(companion["triggered_flag"], "GLOBAL", 1)
+					message.Append("\n\n" + companion["join_line"])
 			if spawned_names:
 				if not enemy:
 					GemRB.SetGlobal("TLENEMY", "GLOBAL", group_actors[0][1])

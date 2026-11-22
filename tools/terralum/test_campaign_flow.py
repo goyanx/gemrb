@@ -97,6 +97,7 @@ globals_ = {"CHAPTER": 1, "TLCHAP": 0, "TLBEAT": 0, "TLENEMY": 0, "TLENEMY_STALK
 globals_.update({"TLMARADETAIL": 0, "TLJRN_MARA": 0, "TLJRN_LIBRARY_COPY": 0,
                  "TLJRN_LIBRARY_SEAL": 0, "TLFOLLOWPENDING": 0,
                  "TLFOLLOWNPC": 0, "TLFOLLOWCHOICE": 0, "TLWITNESS": 0,
+                 "TLMISTWOOD_TESSA": 0, "TLMISTWOOD_TESSA_COMBAT_CUE": 0,
                  "TLORENDOCKET": 0, "TLJRN_COURT_RECORD": 0, "TLRELAY": 0, "TLJRN_RELAY": 0, "TLRETURNMARK": 0, "TLJRN_RETURNMARK": 0})
 enemy_dead = False
 dead_actors = set()
@@ -821,7 +822,8 @@ globals_.update({"TLCHAP": chapter_index_by_area["tl0002"], "TLBEAT": 1, "TLENEM
                  "TLMARALEAD": 3, "TLLIBRARYCLUE": 2, "TLHUNTER": 2,
                  "TLHUNTERTRACK": 0, "TLTRAVELKIT": 0, "TLROYALORDER": 0,
                  "TLRIVERROUTE": 0, "TLMISTWOODSAFE": 0, "TLMISTWOODVICTORY": 0,
-                 "TLJRN_MISTWOOD_AMBUSH": 0})
+                 "TLJRN_MISTWOOD_AMBUSH": 0, "TLMISTWOOD_TESSA": 0,
+                 "TLMISTWOOD_TESSA_COMBAT_CUE": 0})
 campaign.OnLoad()
 while timed_events:
     timed_events.pop(0)()
@@ -831,7 +833,11 @@ assert [event[1] for event in events if event[0] == "spawn"][-2:] == [
 assert globals_["TLENEMY_STALKER"] > 1001
 assert globals_["TLENEMY_PROWLER"] > globals_["TLENEMY_STALKER"]
 assert globals_["TLENEMY"] == globals_["TLENEMY_STALKER"]
-assert sum(event[0] == "attack" for event in events) == 2
+assert sum(event[0] == "attack" and event[1] == "Attack(Player1)" for event in events) == 2
+queued_actions = [event[1] for event in events if event[0] == "attack"]
+assert queued_actions.index("Attack(NearestEnemyOf(Myself))") < queued_actions.index("JoinParty()")
+assert globals_["TLMISTWOOD_TESSA_COMBAT_CUE"] == 1
+assert "Tessa points out the prowler and calls for Algoreth to hold the road." in window.controls[0].text
 window.controls[4].press()
 assert globals_["TLBEAT"] == 1
 assert "Mistwood stalker and Pale-stone prowler" in window.controls[0].text

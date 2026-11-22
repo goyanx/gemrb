@@ -275,6 +275,11 @@
           "text": "These tracks circle us. Two shapes are moving from the ruins, one cutting off the road while the other closes from the trees.",
           "action": "Face the ambush",
           "encounter": "Mistwood ambush",
+          "companion": {
+            "actor_flag": "TLMISTWOOD_TESSA",
+            "triggered_flag": "TLMISTWOOD_TESSA_COMBAT_CUE",
+            "join_line": "Tessa points out the prowler and calls for Algoreth to hold the road."
+          },
           "victory_journal": {
             "flag": "TLJRN_MISTWOOD_AMBUSH",
             "section": 2,

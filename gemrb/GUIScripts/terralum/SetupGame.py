@@ -28,6 +28,8 @@ def OnLoad():
 	GemRB.SetGlobal("TLENEMY_STALKER", "GLOBAL", 0)
 	GemRB.SetGlobal("TLENEMY_PROWLER", "GLOBAL", 0)
 	GemRB.SetGlobal("TLMISTWOODVICTORY", "GLOBAL", 0)
+	GemRB.SetGlobal("TLMISTWOOD_TESSA", "GLOBAL", 0)
+	GemRB.SetGlobal("TLMISTWOOD_TESSA_COMBAT_CUE", "GLOBAL", 0)
 	GemRB.SetGlobal("TLWAYFARER", "GLOBAL", 0)
 	GemRB.SetGlobal("TLCAST", "GLOBAL", 0)
 	GemRB.SetGlobal("TLMARALEAD", "GLOBAL", 0)
