@@ -31,6 +31,9 @@ CHARACTERS = (
 	("Archivist Selene", "selene.png"),
 	("Archivist Nera", "nera.png"),
 	("Ealdrin", "ealdrin.png"),
+	("Queen Vaelthira", "vaelthira.png"),
+	("Seraphina Everglow", "seraphina.png"),
+	("Alistair", "alistair.png"),
 )
 CELL = (240, 252)
 COLUMNS = 3

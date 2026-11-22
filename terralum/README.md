@@ -16,11 +16,11 @@ A blue ring with a pale arrow on open terrain is GemRB's last movement destinati
 
 ![Mistwood Road showing a blue movement destination marker on open ground](screenshots/mistwood-blue-marker-removed.png)
 
-The earlier 38-NPC avatar pass used low-poly Blender figures. That approach looked too much like blocky 3D game characters and is no longer the target art direction. The core recurring cast is now transitioning to hand-painted 2D world sprites. Twenty characters now have painted turnaround sources and imported world frames; Mara, Edmon, and Alisande appear in a live Market capture. Remaining cast members and authored movement cycles still need this conversion.
+The earlier 38-NPC avatar pass used low-poly Blender figures. That approach looked too much like blocky 3D game characters and is no longer the target art direction. The core recurring cast is now transitioning to hand-painted 2D world sprites. Twenty-three characters now have painted turnaround sources and imported world frames; Mara, Edmon, and Alisande appear in a live Market capture. Remaining cast members and authored movement cycles still need this conversion.
 
 ![Live GemRB Market scene with painted Mara, Queen Alisande, and King Edmon at a balanced Algoreth player scale](screenshots/player-scale-balanced-market.png)
 
-![Painted 2D turnarounds for twenty Terralum characters](art/reference/painted_turnarounds/contact-sheet.png)
+![Painted 2D turnarounds for twenty-three Terralum characters](art/reference/painted_turnarounds/contact-sheet.png)
 
 The turnaround import tool is documented in [`art/reference/painted_turnarounds/README.md`](art/reference/painted_turnarounds/README.md). The current import fills the four walk slots with the same painted view, so idle rendering is usable but walking is not animation-complete. Review source sheets, then inspect the converted character in a built GemRB scene.
 
