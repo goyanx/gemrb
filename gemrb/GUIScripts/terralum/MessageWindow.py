@@ -252,7 +252,10 @@ def OnLoad():
 		save_name = "Terralum {:03d} - {}".format(serial, place)
 		result = GemRB.SaveGame(None, save_name, -1, GemRB.GetGamePreview())
 		if result == 0:
-			message.SetText("TERRALUM  |  GAME SAVED\n\n" + save_name + "\n\nYour party, current area, campaign decisions, and journal have been saved.")
+			saved_text = "TERRALUM  |  GAME SAVED\n\n" + save_name + "\n\nYour party, current area, campaign decisions, and journal have been saved."
+			if dialogue_state["must_finish_followup"]:
+				saved_text += "\n\nChoose a response to finish the open conversation before continuing."
+			message.SetText(saved_text)
 		elif result in (3, 7):
 			message.SetText("TERRALUM  |  SAVE UNAVAILABLE\n\nYou cannot save during combat or while enemies are close. Finish the encounter, then save from a safe place.")
 		else:
@@ -366,7 +369,12 @@ def OnLoad():
 	}
 
 	def show_dialogue_choices(person, choices):
-		for index, button in enumerate(choice_buttons):
+		pending_followup = dialogue_state["must_finish_followup"]
+		choice_positions = (183, 356, 529) if pending_followup else (10, 183, 356)
+		for index, (button, x) in enumerate(zip(choice_buttons, choice_positions)):
+			frame = button.GetFrame()
+			frame["x"] = x
+			button.SetFrame(frame)
 			button.SetVisible(index < len(choices))
 			if index < len(choices):
 				choice = choices[index]
@@ -379,8 +387,13 @@ def OnLoad():
 		party_button.SetVisible(not bool(choices) and GemRB.GetPartySize() > 1)
 		journal_button.SetVisible(not bool(choices))
 		cast.SetVisible(not bool(choices))
-		save_button.SetVisible(not bool(choices))
-		load_button.SetVisible(not bool(choices))
+		# Keep named saves available during a required second-stage response.
+		# Its NPC/choice indexes are persisted in globals and restored by OnLoad.
+		save_button.SetVisible(not bool(choices) or pending_followup)
+		load_button.SetVisible(not bool(choices) or pending_followup)
+		if pending_followup:
+			actor_talk.SetVisible(False)
+			voice.SetVisible(False)
 
 	def choose_dialogue(person, choice):
 		set_portrait(person)

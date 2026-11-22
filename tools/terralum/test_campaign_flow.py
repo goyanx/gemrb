@@ -1014,11 +1014,15 @@ for selected, expected, response in (
     assert globals_["TLARCHIVE"] == 2
     assert globals_["TLFOLLOWPENDING"] == 1
     assert selene_followup["line"] in window.controls[0].text
+    assert window.controls[18].visible and window.controls[19].visible
+    assert [window.controls[index].frame["x"] for index in (12, 13, 14)] == [183, 356, 529]
+    assert not window.controls[16].visible and not window.controls[10].visible
     campaign.OnLoad()  # The pending question survives GUI script reload.
     while timed_events:
         timed_events.pop(0)()
     assert globals_["TLFOLLOWPENDING"] == 1
     assert selene_followup["line"] in window.controls[0].text
+    assert window.controls[18].visible and window.controls[19].visible
     window.controls[11 + selected].press()
     assert globals_["TLARCHIVEQUESTION"] == selected
     assert globals_["TLFOLLOWPENDING"] == 0

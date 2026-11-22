@@ -56,6 +56,13 @@ The Ruined Watchpost courier has a victory-aware follow-up. A GemRB scene seeded
 
 The named save/load flow preserves both outcomes of Mara's campaign-panel ledger decision across area transitions. The native DLG sealed-ledger branch has also been saved and reloaded, and Inessa's Library response matches it. The shared quest and ledger record remain in the Journal.
 
+Two-stage conversations can now be saved between the first answer and required follow-up. Reloading restores the open response choices, and completing the answer records the expected Journal event:
+
+<p align="center">
+  <a href="terralum/screenshots/pending-followup-saved.png"><img src="terralum/screenshots/pending-followup-saved.png" alt="Terralum save panel while Mara's required second-stage dialogue response is open" width="48%"></a>
+  <a href="terralum/screenshots/pending-followup-restored.png"><img src="terralum/screenshots/pending-followup-restored.png" alt="Mara's pending follow-up choices restored from a named GemRB save" width="48%"></a>
+</p>
+
 <p align="center">
   <a href="terralum/screenshots/save-load-mara-journal.png"><img src="terralum/screenshots/save-load-mara-journal.png" alt="Terralum Journal after reloading a save, showing the route quest and Mara's ledger decision" width="48%"></a>
   <a href="terralum/screenshots/save-load-downstream-inessa-live.png"><img src="terralum/screenshots/save-load-downstream-inessa-live.png" alt="Scholar Inessa responds to Mara's copied-landmarks decision after loading a saved game and traveling to the Library" width="48%"></a>
