@@ -1687,8 +1687,8 @@
       "dialog": "TAVIN",
       "creature": "riddler",
       "position": [
-        1000,
-        500
+        900,
+        580
       ],
       "line": "Rope helps where the path narrows. A lantern helps only if its bearer chooses when to show it.",
       "responses": [
