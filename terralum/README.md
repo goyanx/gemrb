@@ -10,6 +10,12 @@ These captures come from isolated GemRB sessions. Mistwood shows the optional Wa
 | --- | --- | --- |
 | ![The Lost Wayfarer offers two reporting choices on Mistwood Road](screenshots/mistwood-wayfarer-choice.png) | ![The Act II Journal records the anonymous warning](screenshots/mistwood-wayfarer-journal.png) | ![Courier Pell acknowledges the anonymous warning at the Watchpost](screenshots/ruined-watchpost-pell-callback.png) | ![Archivist Mara's custom portrait appears with her dialogue](screenshots/archivist-mara-dialogue-portrait.png) |
 
+### Reading ground markers
+
+A blue ring with a pale arrow on open terrain is GemRB's last movement destination marker, not a missing NPC or spell effect. A hostile actor's circle sits directly beneath its visible sprite; hover over it to confirm the actor name. In Attack mode, click a hostile creature to target it—clicking open ground only places a movement marker.
+
+![Mistwood Road showing a blue movement destination marker on open ground](screenshots/mistwood-blue-marker-removed.png)
+
 The earlier 38-NPC avatar pass used low-poly Blender figures. That approach looked too much like blocky 3D game characters and is no longer the target art direction. The core recurring cast is now transitioning to hand-painted 2D world sprites. Eleven characters have painted turnaround sources and imported world frames; Mara, Edmon, and Alisande appear in a live Market capture. Remaining cast members and authored movement cycles still need this conversion.
 
 ![Live GemRB Market scene with painted Mara, Queen Alisande, and King Edmon sprites and the enlarged Algoreth player character](screenshots/painted-opening-cast.png)
