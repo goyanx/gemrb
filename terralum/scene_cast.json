@@ -355,8 +355,8 @@
       "name": "Scout Tessa",
       "creature": "protagon",
       "position": [
-        680,
-        520
+        820,
+        700
       ],
       "line": "Pale stones mark the safe ground. The moss hides old snares, so watch where you step.",
       "route_lines": {

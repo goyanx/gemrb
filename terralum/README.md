@@ -50,6 +50,10 @@ Four generated portrait sheets now provide medium and small GemRB portrait resou
 
 Mistwood's two ambushers use their own painted 2D enemy sprites instead of generic protagonist/riddler placeholders. Their encounter CREs and animation rows are registered separately from neutral scene NPCs in `enemy_avatars.json`. Each enemy has a directional painted attack sheet and idle–strike–recovery melee BAMs. A live battle capture shows the Stalker and Pale-stone Prowler attacking the enlarged player; defeat/reload recovery and combat balance still need work.
 
+Scout Tessa now stands visibly on the Mistwood road near Algoreth rather than below the camera's play area:
+
+![Scout Tessa staged on the Mistwood road beside Algoreth](screenshots/mistwood-tessa-road-live.png)
+
 ![Live GemRB screenshot of the Mistwood ambush with unique enemy sprites and enlarged player](screenshots/mistwood-unique-enemies-live.png)
 
 The Royal Stables now stage Stablemaster Edda clearly in the courtyard beside Groom Tavin.
