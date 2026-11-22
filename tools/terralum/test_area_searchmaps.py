@@ -149,6 +149,11 @@ expected = {
         "blocked": [(8, 50), (20, 84), (82, 84), (96, 45), (27, 29), (78, 41)],
         "description": "return to the Ruined Watchpost, cleared courier approach, and north/south routes",
     },
+    "tl0026": {
+        "routes": [(50, 33), (50, 87)],
+        "blocked": [(7, 50), (92, 50), (50, 15), (25, 38), (75, 38)],
+        "description": "Archives trial dais, open central floor, and water channels along both sides",
+    },
 }
 assert set(searchmap_specs) == set(expected)
 cast_by_area = json.loads(build_game.CAST_FILE.read_text(encoding="utf-8"))

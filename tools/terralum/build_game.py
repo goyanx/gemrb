@@ -32,6 +32,7 @@ PORTRAIT_SHEETS = (
     (PROJECT / "art" / "character_portraits_sheet_2.png", 3, 3),
     (PROJECT / "art" / "character_portraits_sheet_3.png", 3, 3),
     (PROJECT / "art" / "character_portraits_sheet_4.png", 4, 3),
+    (PROJECT / "art" / "character_portraits_sheet_5.png", 2, 2),
 )
 PORTRAITS = {
     "ALGORE": (0, 0, 0), "MARA00": (0, 1, 0), "INESSA": (0, 2, 0),
@@ -47,6 +48,8 @@ PORTRAITS = {
     "DORIECH": (3, 3, 0), "FALSEAL": (3, 0, 1), "EDDA00": (3, 1, 1),
     "TAVIN0": (3, 2, 1), "LEORA0": (3, 3, 1), "NERIN0": (3, 0, 2),
     "ORIS00": (3, 1, 2), "MERETH": (3, 2, 2), "ORLA00": (3, 3, 2),
+    "THALOR": (4, 0, 0), "VORSATH": (4, 1, 0),
+    "ELARIS": (4, 0, 1), "THALORX": (4, 1, 1),
 }
 PORTRAIT_ART_OVERRIDES = {
     "EDMONV": PROJECT / "art" / "character_avatars" / "edmon0.png",
@@ -200,6 +203,7 @@ AREAS = {
     "tl0023": "eldrador_sanctuary_threshold.png",
     "tl0024": "mistwood_waywarden_relay.png",
     "tl0025": "mistwood_ruins.png",
+    "tl0026": "eternal_archives_trial.png",
 }
 AREA_SONG_INDEX = {
     "tl0001": 1, "tl0002": 3, "tl0003": 2, "tl0004": 1,
@@ -209,6 +213,7 @@ AREA_SONG_INDEX = {
     "tl0016": 3, "tl0017": 1, "tl0018": 1, "tl0019": 3, "tl0020": 1,
     "tl0021": 2,
     "tl0022": 1, "tl0023": 2, "tl0024": 3, "tl0025": 3,
+    "tl0026": 2,
 }
 
 

@@ -24,6 +24,10 @@ CHARACTERS = (
 	("Courier Eren", "eren.png"),
 	("Groom Tavin", "tavin.png"),
 	("Stablemaster Edda", "edda.png"),
+	("Tidewarden Thalor", "thalor.png"),
+	("Spectral Warden Vorsath", "vorsath.png"),
+	("Spectral Warden Elaris", "elaris.png"),
+	("Spectral Warden Thalorix", "thalorix.png"),
 )
 CELL = (240, 252)
 COLUMNS = 3

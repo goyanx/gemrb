@@ -231,6 +231,46 @@ class NativeDialogueResourceTests(unittest.TestCase):
         self.assertNotIn("Dorian", identity_state["say"])
         self.assertIn("niches remain sealed", contents_state["say"])
 
+    def test_archives_trial_requires_all_three_warders_and_records_both_routes(self):
+        dialogues = read_native_dialogues()
+        cast = json.loads((PROJECT / "scene_cast.json").read_text(encoding="utf-8"))
+        actors = {person["name"]: person for person in cast["tl0026"]}
+        self.assertEqual(set(actors), {"Tidewarden Thalor", "Vorsath", "Elaris", "Thalorix"})
+        self.assertEqual({person["dialog"] for person in actors.values()},
+                         {"THALOR", "VORSATH", "ELARIS", "THALORX"})
+
+        globals_ = {"TLARCHIVETRIAL": 0, "TLWARDVORSATH": 0,
+                    "TLWARDELARIS": 0, "TLWARDTHALORX": 0}
+        thalor = dialogues["THALOR"]["states"]
+
+        def active_state(states):
+            return next(index for index, state in enumerate(states)
+                        if all(globals_[condition["flag"]] == condition["value"]
+                               for condition in state["when"]))
+
+        self.assertNotEqual(active_state(thalor), 0)
+        for name, flag in (("VORSATH", "TLWARDVORSATH"),
+                           ("ELARIS", "TLWARDELARIS"),
+                           ("THALORX", "TLWARDTHALORX")):
+            state = dialogues[name]["states"][0]
+            self.assertIn("spectral guardian", actors[
+                {"VORSATH": "Vorsath", "ELARIS": "Elaris", "THALORX": "Thalorix"}[name]
+            ]["role"].lower())
+            self.assertEqual(state["transitions"][0]["set"], [{"flag": flag, "value": 1}])
+            globals_[flag] = 1
+        self.assertEqual(active_state(thalor), 0)
+        choices = thalor[0]["transitions"]
+        self.assertEqual([choice["set"] for choice in choices], [
+            [{"flag": "TLARCHIVETRIAL", "value": 1}],
+            [{"flag": "TLARCHIVETRIAL", "value": 2}],
+        ])
+        self.assertTrue(all("journal" in choice for choice in choices))
+        self.assertTrue(all("not a verdict" in choice["journal"] or "unknown" in choice["journal"]
+                            for choice in choices))
+        ealdrin = next(person for person in cast["tl0020"] if person["name"] == "Ealdrin")
+        self.assertEqual({response["value"] for response in ealdrin["responses"]
+                          if response["flag"] == "TLARCHIVETRIAL"}, {1, 2})
+
     def test_compiled_alistair_dialogue_and_tlk(self):
         pack = Path(os.environ.get("TERRALUM_GAME_OUTPUT", PROJECT / "build" / "game")).resolve()
         dlg_path = pack / "override" / "alistar.dlg"

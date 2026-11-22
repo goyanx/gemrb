@@ -616,6 +616,9 @@ def OnLoad():
 		if chapter["area"] == "tl0025" and beat_index == 1 and not GemRB.GetGameVar("TLRETURNMARK"):
 			message.Append("\n\nPell is waiting for the route record. Speak with him and decide what the next travellers should learn.")
 			return
+		if chapter["area"] == "tl0026" and beat_index == 0 and not GemRB.GetGameVar("TLARCHIVETRIAL"):
+			message.Append("\n\nThalor is waiting for the three warders' accounts. Hear Vorsath, Elaris, and Thalorix, then return to record your principle.")
+			return
 		if chapter["area"] == "tl0024" and beat_index == 1 and not GemRB.GetGameVar("TLRELAY"):
 			message.Append("\n\nThe relay is still unassigned. Speak with Orla and decide whether to signal the west patrol.")
 			return

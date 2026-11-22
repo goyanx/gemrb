@@ -1650,6 +1650,80 @@
       "avatar_creature": "ealdri"
     }
   ],
+  "tl0026": [
+    {
+      "name": "Tidewarden Thalor",
+      "portrait": "THALOR",
+      "creature": "riddler",
+      "dialog": "THALOR",
+      "position": [
+        800,
+        400
+      ],
+      "line": "The old account remembers a trial, not a verdict. Hear each warden before you choose how a boundary should hold.",
+      "role": "Tidewarden of the Archives",
+      "faction": "Archive Wardens",
+      "goal": "Test Algoreth’s approach to the reported Tears without claiming knowledge of Eldrador’s outcome.",
+      "knowledge": "Knows the warders’ challenge and its warning about a sealer becoming a gate; cannot identify whether the Deep and Eternal Archives are the same place.",
+      "voice": "Measured and formal, attentive to uncertainty.",
+      "provenance": "adaptation",
+      "avatar_creature": "thalor"
+    },
+    {
+      "name": "Vorsath",
+      "portrait": "VORSATH",
+      "creature": "riddler",
+      "dialog": "VORSATH",
+      "position": [
+        560,
+        520
+      ],
+      "line": "A boundary without purpose becomes a wall. A purpose without a boundary consumes what it claims to protect.",
+      "role": "Spectral guardian",
+      "faction": "Archive Wardens",
+      "goal": "Make the traveller consider both protection and restraint.",
+      "knowledge": "Knows the guardian test and its warning; does not know the outcome of the Eldrador Tear.",
+      "voice": "Grave and exact, with deliberate pauses.",
+      "provenance": "adaptation",
+      "avatar_creature": "vorsath"
+    },
+    {
+      "name": "Elaris",
+      "portrait": "ELARIS",
+      "creature": "riddler",
+      "dialog": "ELARIS",
+      "position": [
+        1040,
+        520
+      ],
+      "line": "A voice may borrow the shape of someone you know. Recognition alone cannot tell you whether it speaks the truth.",
+      "role": "Spectral guardian",
+      "faction": "Archive Wardens",
+      "goal": "Test whether the traveller separates resemblance from evidence.",
+      "knowledge": "Knows the guardian test and the limits of recognition; cannot identify the voice reported by another Tear.",
+      "voice": "Soft and clear, without claiming a personal history.",
+      "provenance": "adaptation",
+      "avatar_creature": "elaris"
+    },
+    {
+      "name": "Thalorix",
+      "portrait": "THALORX",
+      "creature": "riddler",
+      "dialog": "THALORX",
+      "position": [
+        800,
+        650
+      ],
+      "line": "Order cannot be proved by silencing every contradiction. Ask what form can hold two truths without devouring either.",
+      "role": "Spectral guardian",
+      "faction": "Archive Wardens",
+      "goal": "Test whether the traveller seeks a durable form instead of brute erasure.",
+      "knowledge": "Knows the guardian test’s principle of reconciliation; does not know how Vaelthira’s Tear will answer.",
+      "voice": "Low and resonant, but never threatening.",
+      "provenance": "adaptation",
+      "avatar_creature": "thalorx"
+    }
+  ],
   "tl0017": [
     {
       "name": "Stablemaster Edda",
@@ -2024,6 +2098,16 @@
           "flag": "TLARCHIVEWARD",
           "value": 2,
           "line": "Nera kept the folio sealed. We will preserve that choice and carry Ealdrin’s warder inquiry if you decide."
+        },
+        {
+          "flag": "TLARCHIVETRIAL",
+          "value": 1,
+          "line": "The warders’ trial gives us a boundary to consider, not an answer about the Tear. I will carry both the principle and the uncertainty."
+        },
+        {
+          "flag": "TLARCHIVETRIAL",
+          "value": 2,
+          "line": "The warders recorded your forceful answer alongside their warning. We should not mistake that record for proof of what the Tear will do."
         }
       ],
       "portrait": "EALDRI",

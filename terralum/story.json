@@ -919,6 +919,39 @@
       ]
     },
     {
+      "title": "VI. The Living Record — Tidewarden’s Trial",
+      "act": 6,
+      "area": "tl0026",
+      "place": "Archives Trial Hall",
+      "music": "tlcave.mus",
+      "voice": "tln0026",
+      "narration": "The recovered account remembers Tidewarden Thalor and three spectral wardens testing Algoreth. It does not settle whether this hall lies within the Deep Archives or the Eternal Archives, nor whether the names describe one place or two.",
+      "beats": [
+        {
+          "speaker": "Tidewarden Thalor",
+          "text": "The warders will each speak to one danger: a boundary without purpose, a voice mistaken for truth, and a law that leaves no room for the other. Hear them before you answer.",
+          "action": "HEAR THE WARDERS"
+        },
+        {
+          "speaker": "Tidewarden Thalor",
+          "text": "Your answer is entered as a principle for the expedition, not a verdict on the Tear or what waits beyond its threshold.",
+          "action": "CONTINUE",
+          "routes": [
+            {
+              "flag": "TLARCHIVETRIAL",
+              "value": 1,
+              "text": "Algoreth records that a boundary should protect without claiming what lies beyond it. The warders leave the question of the Tear unresolved."
+            },
+            {
+              "flag": "TLARCHIVETRIAL",
+              "value": 2,
+              "text": "Algoreth records a forceful answer, while the warders preserve their warning that force alone may make the sealer a gate."
+            }
+          ]
+        }
+      ]
+    },
+    {
       "title": "VII. The Eldrador Expedition — Chart Room",
       "act": 7,
       "area": "tl0020",

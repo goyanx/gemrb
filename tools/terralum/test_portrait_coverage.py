@@ -30,7 +30,7 @@ class PortraitCoverageTests(unittest.TestCase):
 		cls.pack = Path(os.environ.get("TERRALUM_GAME_OUTPUT", PROJECT / "build" / "game")).resolve()
 
 	def test_every_named_npc_has_a_unique_portrait_resource(self):
-		self.assertEqual(len(self.by_name), 38)
+		self.assertEqual(len(self.by_name), 42)
 		refs = {person.get("portrait") for person in self.by_name.values()}
 		self.assertNotIn(None, refs)
 		self.assertEqual(len(refs), len(self.by_name))

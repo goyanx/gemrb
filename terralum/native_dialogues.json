@@ -894,5 +894,261 @@
         "transitions": [{"text": "We will not claim permission we were denied.", "final": true}]
       }
     ]
+  },
+  "VORSATH": {
+    "states": [
+      {
+        "when": [
+          {
+            "flag": "TLWARDVORSATH",
+            "value": 0
+          }
+        ],
+        "say": "A boundary without purpose is a wall. A purpose without a boundary consumes what it claims to protect.",
+        "transitions": [
+          {
+            "text": "Record Vorsath’s warning.",
+            "set": [
+              {
+                "flag": "TLWARDVORSATH",
+                "value": 1
+              }
+            ],
+            "final": true
+          }
+        ]
+      },
+      {
+        "when": [
+          {
+            "flag": "TLWARDVORSATH",
+            "value": 1
+          }
+        ],
+        "say": "Protection and restraint must remain answerable to one another.",
+        "transitions": [
+          {
+            "text": "Return to Thalor.",
+            "final": true
+          }
+        ]
+      }
+    ]
+  },
+  "ELARIS": {
+    "states": [
+      {
+        "when": [
+          {
+            "flag": "TLWARDELARIS",
+            "value": 0
+          }
+        ],
+        "say": "A voice may borrow the shape of someone you know. Recognition alone cannot tell you whether it speaks the truth.",
+        "transitions": [
+          {
+            "text": "Record Elaris’s warning.",
+            "set": [
+              {
+                "flag": "TLWARDELARIS",
+                "value": 1
+              }
+            ],
+            "final": true
+          }
+        ]
+      },
+      {
+        "when": [
+          {
+            "flag": "TLWARDELARIS",
+            "value": 1
+          }
+        ],
+        "say": "Keep what you recognize separate from what you can prove.",
+        "transitions": [
+          {
+            "text": "Return to Thalor.",
+            "final": true
+          }
+        ]
+      }
+    ]
+  },
+  "THALORX": {
+    "states": [
+      {
+        "when": [
+          {
+            "flag": "TLWARDTHALORX",
+            "value": 0
+          }
+        ],
+        "say": "Order cannot be proved by silencing every contradiction. Ask what form can hold two truths without devouring either.",
+        "transitions": [
+          {
+            "text": "Record Thalorix’s warning.",
+            "set": [
+              {
+                "flag": "TLWARDTHALORX",
+                "value": 1
+              }
+            ],
+            "final": true
+          }
+        ]
+      },
+      {
+        "when": [
+          {
+            "flag": "TLWARDTHALORX",
+            "value": 1
+          }
+        ],
+        "say": "A lasting form must give the opposing truth somewhere to stand.",
+        "transitions": [
+          {
+            "text": "Return to Thalor.",
+            "final": true
+          }
+        ]
+      }
+    ]
+  },
+  "THALOR": {
+    "states": [
+      {
+        "when": [
+          {
+            "flag": "TLARCHIVETRIAL",
+            "value": 0
+          },
+          {
+            "flag": "TLWARDVORSATH",
+            "value": 1
+          },
+          {
+            "flag": "TLWARDELARIS",
+            "value": 1
+          },
+          {
+            "flag": "TLWARDTHALORX",
+            "value": 1
+          }
+        ],
+        "say": "The three warders have spoken. The recovered account does not settle whether this hall is within the Deep Archives or the Eternal Archives. What principle will you carry toward Eldrador?",
+        "transitions": [
+          {
+            "text": "Set a boundary that protects without claiming what lies beyond it.",
+            "set": [
+              {
+                "flag": "TLARCHIVETRIAL",
+                "value": 1
+              }
+            ],
+            "journal": "Algoreth heard the three warders and chose to set a boundary without claiming what lies beyond it. Their trial offers a principle, not a verdict on either Tear.",
+            "final": true
+          },
+          {
+            "text": "Close the question by force before it can answer.",
+            "set": [
+              {
+                "flag": "TLARCHIVETRIAL",
+                "value": 2
+              }
+            ],
+            "journal": "Algoreth heard the three warders and chose a forceful answer. Their warning remains: force alone may make the would-be sealer a gate. The outcome of either Tear remains unknown.",
+            "final": true
+          }
+        ]
+      },
+      {
+        "when": [
+          {
+            "flag": "TLARCHIVETRIAL",
+            "value": 0
+          },
+          {
+            "flag": "TLWARDVORSATH",
+            "value": 0
+          }
+        ],
+        "say": "Vorsath has not yet given its account. Hear all three warders, then return when you are ready to choose.",
+        "transitions": [
+          {
+            "text": "I will listen first.",
+            "final": true
+          }
+        ]
+      },
+      {
+        "when": [
+          {
+            "flag": "TLARCHIVETRIAL",
+            "value": 0
+          },
+          {
+            "flag": "TLWARDELARIS",
+            "value": 0
+          }
+        ],
+        "say": "Elaris has not yet given its account. Hear all three warders, then return when you are ready to choose.",
+        "transitions": [
+          {
+            "text": "I will listen first.",
+            "final": true
+          }
+        ]
+      },
+      {
+        "when": [
+          {
+            "flag": "TLARCHIVETRIAL",
+            "value": 0
+          },
+          {
+            "flag": "TLWARDTHALORX",
+            "value": 0
+          }
+        ],
+        "say": "Thalorix has not yet given its account. Hear all three warders, then return when you are ready to choose.",
+        "transitions": [
+          {
+            "text": "I will listen first.",
+            "final": true
+          }
+        ]
+      },
+      {
+        "when": [
+          {
+            "flag": "TLARCHIVETRIAL",
+            "value": 1
+          }
+        ],
+        "say": "You chose a boundary that protects without claiming what lies beyond it. The warders record the principle; the unknown remains unknown.",
+        "transitions": [
+          {
+            "text": "Keep the trial in the expedition record.",
+            "final": true
+          }
+        ]
+      },
+      {
+        "when": [
+          {
+            "flag": "TLARCHIVETRIAL",
+            "value": 2
+          }
+        ],
+        "say": "You chose force. The warders preserve their warning, but their record does not declare what either Tear will do.",
+        "transitions": [
+          {
+            "text": "Keep the trial in the expedition record.",
+            "final": true
+          }
+        ]
+      }
+    ]
   }
 }

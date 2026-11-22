@@ -81,7 +81,7 @@ events = []
 globals_ = {"CHAPTER": 1, "TLCHAP": 0, "TLBEAT": 0, "TLENEMY": 0, "TLENEMY_STALKER": 0,
             "TLENEMY_PROWLER": 0, "TLCAST": 0, "TLWAYFARER": 0, "TLJRN_WAYFARER_PUBLIC": 0, "TLJRN_WAYFARER_PRIVATE": 0,
             "TLMARALEAD": 0, "TLLIBRARYCLUE": 0, "TLWATCHPOST": 0, "TLHUNTER": 0,
-            "TLGALLERY": 0, "TLGALLSOLVED": 0, "TLCOURT": 0, "TLECHO": 0, "TLECHOPHASE": 0, "TLFALSE_ALGORETH": 0, "TLWARDING": 0, "TLJRN_WARDING": 0, "TLMISTWOODSAFE": 0, "TLMISTWOODVICTORY": 0, "TLARCHIVE": 0, "TLVOYAGE": 0, "TLBRIEFING": 0,
+            "TLGALLERY": 0, "TLGALLSOLVED": 0, "TLCOURT": 0, "TLECHO": 0, "TLECHOPHASE": 0, "TLFALSE_ALGORETH": 0, "TLWARDING": 0, "TLJRN_WARDING": 0, "TLMISTWOODSAFE": 0, "TLMISTWOODVICTORY": 0, "TLARCHIVE": 0, "TLARCHIVETRIAL": 0, "TLWARDVORSATH": 0, "TLWARDELARIS": 0, "TLWARDTHALORX": 0, "TLVOYAGE": 0, "TLBRIEFING": 0,
             "TLARCHIVEWARD": 0, "TLDEEP_ARCHIVE_WARDEN": 0, "TLJRN_ARCHIVE_WARD": 0,
             "TLJRN_BYZANTEM": 0, "TLJRN_MISTWOOD": 0, "TLJRN_MISTWOOD_AMBUSH": 0, "TLJRN_HUNTER": 0, "TLJRN_HUNTER_RESOLVED": 0,
             "TLHUNTERTRACK": 0, "TLJRN_TRACKS": 0, "TLTRAVELKIT": 0, "TLJRN_TRAVELKIT": 0, "TLROYALORDER": 0, "TLJRN_ROYALORDER": 0, "TLRIVER": 0, "TLRIVERROUTE": 0, "TLJRN_RIVER": 0,
@@ -233,8 +233,8 @@ assert len(set(voice_resources)) == len(chapters)
 assert all((ROOT / "terralum" / "audio" / (voice + ".ogg")).is_file()
 		   for voice in voice_resources)
 chapter_index_by_area = {chapter["area"]: index for index, chapter in enumerate(chapters)}
-assert len(chapters) == 25
-assert sum(len(chapter["beats"]) for chapter in chapters) == 63
+assert len(chapters) == 26
+assert sum(len(chapter["beats"]) for chapter in chapters) == 65
 assert sorted({chapter["act"] for chapter in chapters}) == list(range(1, 8))
 for chapter_index, chapter in enumerate(chapters):
     assert globals_["TLCHAP"] == chapter_index
@@ -245,6 +245,13 @@ for chapter_index, chapter in enumerate(chapters):
         globals_["TLGALLSOLVED"] = 1
         globals_["TLGALLERY"] = 1
     people = campaign.Story.cast(chapter["area"])
+    if chapter["area"] == "tl0026":
+        window.controls[4].press()
+        assert "three warders\' accounts" in window.controls[0].text
+        globals_["TLWARDVORSATH"] = 1
+        globals_["TLWARDELARIS"] = 1
+        globals_["TLWARDTHALORX"] = 1
+        globals_["TLARCHIVETRIAL"] = 1
     assert len(people) >= 2
     assert all(all(person.get(field) for field in
                    ("role", "faction", "goal", "knowledge", "voice", "provenance"))
@@ -390,11 +397,12 @@ assert globals_["TLJRN_COURT_OPEN"] == 1
 assert globals_["TLJRN_COURT_RESTRICTED"] == 0
 assert globals_["TLECHO"] == 1
 assert globals_["TLARCHIVEWARD"] == 2
-assert len([event for event in events if event[0] == "area"]) == 24
+assert len([event for event in events if event[0] == "area"]) == 25
 voice_cues = len([event for event in events if event[0] == "voice"])
 assert voice_cues >= len(chapters)
 assert len([event for event in events if event[0] == "attack"]) == 3, [event for event in events if event[0] == "attack"]
 assert len(journal_entries) == 25
+assert globals_["TLARCHIVETRIAL"] == 1
 assert globals_["TLJRN_WAYSTONE"] == 1
 assert any("Three-Cairn Fork" in entry["value"] for entry in journal_entries)
 assert globals_["TLJRN_LORIAN_PURPOSE"] == 1
@@ -1682,4 +1690,4 @@ for choice_value, victory in ((1, 0), (1, 1), (2, 0), (2, 1)):
 assert choice_count == 56
 
 print(len(chapters), "scenes across seven acts,", sum(len(campaign.Story.cast(chapter["area"])) for chapter in chapters),
-      "named scene actors, keyboard controls, authored journal events, four-state NPC response conditions, all 56 campaign-panel response options, Seal Gallery native DLG puzzle routing, three market routes, four encounter gates, twenty-four transitions, and narration for all", len(chapters), "scenes passed with", voice_cues, "playback cues")
+      "named scene actors, keyboard controls, authored journal events, four-state NPC response conditions, all 56 campaign-panel response options, Seal Gallery native DLG puzzle routing, three market routes, four encounter gates, twenty-five transitions, and narration for all", len(chapters), "scenes passed with", voice_cues, "playback cues")

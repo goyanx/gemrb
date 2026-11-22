@@ -101,7 +101,7 @@ The latest supporting-cast art pass adds named silhouettes and story props for D
 <p align="center">
   <a href="terralum/screenshots/supporting-cast-library-live.png"><img src="terralum/screenshots/supporting-cast-library-live.png" alt="Live GemRB Library scene with differently dressed Scholar Inessa and Royal Scribe Oren" width="82%"></a>
 </p>
-<p align="center"><em>Live Library scene: Inessa's red scroll-carrying outfit and Oren's teal scholar coat are distinct at game scale. The project contact sheet previews all 38 cast sprites.</em></p>
+<p align="center"><em>Live Library scene: Inessa's red scroll-carrying outfit and Oren's teal scholar coat are distinct at game scale. The legacy contact sheet previews the original 38 procedural cast sprites; the current story cast has 42 named identities.</em></p>
 
 <p align="center">
   <a href="terralum/screenshots/distinctive-cast-market.png"><img src="terralum/screenshots/distinctive-cast-market.png" alt="Live GemRB Royal Dispatch Archive showing Archivist Leora in her custom purple hood and dispatch-scroll world sprite, with her distinct portrait" width="78%"></a>

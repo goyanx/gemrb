@@ -16,6 +16,10 @@ These generated transparent turnarounds establish the corrected world-character 
 | Courier Pell | `pell00` | `pell.png` |
 | Courier Eren | `eren00` | `eren.png` |
 | Gallery Keeper | `gallkee` | `gallery_keeper.png` |
+| Tidewarden Thalor | `thalor` | `thalor.png` |
+| Vorsath | `vorsath` | `vorsath.png` |
+| Elaris | `elaris` | `elaris.png` |
+| Thalorix | `thalorx` | `thalorix.png` |
 | Algoreth Jon Goren (player) | `TLPG` | `algoreth.png`; directional staff attacks in `algoreth_attack.png` |
 | Mistwood Stalker (encounter enemy) | `mistalk` | `mistwood_stalker.png` |
 | Pale-Stone Prowler (encounter enemy) | `paleprow` | `pale_stone_prowler.png` |
