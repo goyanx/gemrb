@@ -68,6 +68,10 @@ The Royal Stables now stage Stablemaster Edda clearly in the courtyard beside Gr
 
 ![Live GemRB screenshot of Edda, the player, and Tavin in the Royal Stables](screenshots/stables-edda-position-test.png)
 
+Groom Tavin now has his own compiled, kit-aware native dialogue. The isolated GemRB scene shows his named actor in Talk mode; his opening lines and both route callbacks still need live confirmation.
+
+![Live GemRB Royal Stables scene with the Talk prompt identifying Groom Tavin](screenshots/tavin-stables-dialog-live.png)
+
 ![Twelve new Terralum NPC portrait concepts for the complete cast](art/character_portraits_sheet_4.png)
 
 The Lost Wayfarer's native actor dialogue now runs in GemRB. This isolated capture shows the private-account outcome recorded in the Act II Journal.
