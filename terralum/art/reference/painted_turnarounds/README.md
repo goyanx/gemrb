@@ -22,6 +22,7 @@ These generated transparent turnarounds establish the corrected world-character 
 | Thalorix | `thalorx` | `thalorix.png` |
 | Archivist Selene | `selene` | `selene.png` |
 | Archivist Nera | `nera00` | `nera.png` |
+| Index Warden | `idxward` | `index_warden.png` |
 | Ealdrin | `ealdri` | `ealdrin.png` |
 | Queen Vaelthira | `vaelth` | `vaelthira.png` |
 | Seraphina Everglow | `seraph` | `seraphina.png` |
@@ -34,7 +35,7 @@ These generated transparent turnarounds establish the corrected world-character 
 | Pale-Stone Prowler (encounter enemy) | `paleprow` | `pale_stone_prowler.png` |
 | Ward Shard (Academy encounter enemy) | `wardshard` | `ward_shard.png` |
 
-The Stalker and Prowler also have directional attack turnarounds in `mistwood_stalker_attack.png` and `pale_stone_prowler_attack.png`. Import their attack poses with `python tools/terralum/import_painted_turnaround.py <sheet> <asset> --attack`. The BAM builder uses these frames for all nine mirrored-human melee attack resources, with an idle/strike/recovery sequence per direction.
+The Index Warden sheet has eight authored headings; the forward view occupies the ninth center slot. The Stalker and Prowler also have directional attack turnarounds in `mistwood_stalker_attack.png` and `pale_stone_prowler_attack.png`. Import their attack poses with `python tools/terralum/import_painted_turnaround.py <sheet> <asset> --attack`. The BAM builder uses these frames for all nine mirrored-human melee attack resources, with an idle/strike/recovery sequence per direction.
 
 Convert a sheet into GemRB's nine directional 80x96 frame slots with:
 

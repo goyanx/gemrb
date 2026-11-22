@@ -41,6 +41,12 @@ Magister Vael's mint-green, blocky-looking figure has been replaced with a paint
   <a href="terralum/screenshots/magister-vael-painted-live.png"><img src="terralum/screenshots/magister-vael-painted-live.png" alt="Live GemRB Observatory Vault scene with Magister Vael in painted indigo robes, beside Queen Alisande and the Ward Shard" width="92%"></a>
 </p>
 
+The Act VI Index Warden now has a separate painted stone-and-brass form instead of the shared procedural body. Its built sprite is included in the isolated review pack; live placement and facing still need review in the Deep Archives and Index Hall.
+
+<p align="center">
+  <a href="terralum/art/reference/painted_turnarounds/index_warden.png"><img src="terralum/art/reference/painted_turnarounds/index_warden.png" alt="Painted Index Warden turnaround in pale stone armor, a deep teal mantle, and brass archive fittings" width="40%"></a>
+</p>
+
 The Academy fight temporarily improves party accuracy to keep the two-person encounter playable. Live GemRB combat confirmed both Algoreth and Tessa landing hits, defeating the Ward Shard, and bringing in False Algoreth as phase two. The second phase victory and recovery path remain under verification.
 
 <p align="center">
