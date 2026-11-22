@@ -16,7 +16,7 @@ Would you like to create a game like Baldur's Gate?
 
 ## Play Terralum
 
-This fork includes **Terralum: Scrolls of Byzantem**, an original, story-driven Infinity Engine style RPG campaign built on GemRB. Follow Algoreth Jon Goren from the court of Alsperia through the Mistwood, Lorian, the eastern academy, the Deep Archives, and onward to Eldrador. The current prototype spans **26 areas across seven acts**, with local NPCs, branching choices, journaled consequences, encounters, optional narration, and ambient music.
+This fork includes **Terralum: Scrolls of Byzantem**, an original, story-driven Infinity Engine style RPG campaign built on GemRB. Follow Algoreth Jon Goren from the court of Alsperia through the Mistwood, Lorian, the eastern academy, the Deep Archives, and onward to Eldrador. The current prototype spans **27 areas across eight acts**, with local NPCs, branching choices, journaled consequences, encounters, optional narration, and ambient music.
 
 <p align="center">
   <a href="terralum/screenshots/alsperia-market-live.png"><img src="terralum/screenshots/alsperia-market-live.png" alt="Actual GemRB capture of the opening Alsperia Market scene, with the party, three local cast actors, story text, journal, Talk, Continue, and Narrate controls" width="92%"></a>
@@ -27,6 +27,11 @@ This fork includes **Terralum: Scrolls of Byzantem**, an original, story-driven 
   <a href="terralum/screenshots/avatar-pass-market-live.png"><img src="terralum/screenshots/avatar-pass-market-live.png" alt="Fresh GemRB Market capture with Mara in blue, Edmon in crimson, and Alisande in teal, each with a different animated world sprite" width="92%"></a>
 </p>
 <p align="center"><em>Fresh live capture: Mara's archive-blue hood, Edmon's royal red, and Alisande's teal gown create separate silhouettes for the opening cast.</em></p>
+
+<p align="center">
+  <a href="terralum/screenshots/eldrador-outer-watch-act8-live.png"><img src="terralum/screenshots/eldrador-outer-watch-act8-live.png" alt="Live GemRB capture of the new Eldrador Outer Watch Camp with Algoreth, four local NPCs, the watchbook opening dialogue, and the sealed sanctuary beyond" width="92%"></a>
+</p>
+<p align="center"><em>Act VIII reaches Eldrador’s exterior watch camp. The adaptation keeps the sanctuary sealed and the voice unexplained.</em></p>
 
 The character-art direction is shifting to hand-painted 2D figures. This current GemRB capture shows the painted Mara, Queen Alisande, and King Edmon sprites in the Market; the [turnaround sheet](terralum/art/reference/painted_turnarounds/contact-sheet.png) and [import workflow](terralum/art/reference/painted_turnarounds/README.md) document the prototype.
 
@@ -67,10 +72,10 @@ The Academy fight temporarily improves party accuracy to keep the two-person enc
   <a href="terralum/screenshots/academy-phase-two-live.png"><img src="terralum/screenshots/academy-phase-two-live.png" alt="Live Academy vault scene after the Ward Shard falls and False Algoreth enters the second phase" width="92%"></a>
 </p>
 
-The playable Algoreth is now scaled to 125% of the painted NPC source, matching the other party members and named cast without dominating the scene. A fresh opening capture verifies the actual party character in GemRB:
+Playable Algoreth now uses a custom painted 2D sprite family with a fitted emerald travel coat, trousers, shoulder mantle, satchel, and matching amber staff attack poses. The fresh Act VIII capture verifies the rebuilt player sprite in GemRB:
 
 <p align="center">
-  <a href="terralum/screenshots/player-scale-balanced-market.png"><img src="terralum/screenshots/player-scale-balanced-market.png" alt="Fresh live GemRB opening scene showing playable Algoreth at a scale balanced with the distinct market cast" width="92%"></a>
+  <a href="terralum/screenshots/eldrador-outer-watch-act8-live.png"><img src="terralum/screenshots/eldrador-outer-watch-act8-live.png" alt="Fresh live GemRB scene showing the new painted Algoreth beside four distinct Eldrador actors" width="92%"></a>
 </p>
 
 The Mistwood ambush now plays through both defeats, records its victory Journal entry, and preserves that entry through a named save and reload:
@@ -133,7 +138,7 @@ The latest supporting-cast art pass adds named silhouettes and story props for D
 <p align="center">
   <a href="terralum/screenshots/supporting-cast-library-live.png"><img src="terralum/screenshots/supporting-cast-library-live.png" alt="Live GemRB Library scene with differently dressed Scholar Inessa and Royal Scribe Oren" width="82%"></a>
 </p>
-<p align="center"><em>Live Library scene: Inessa's red scroll-carrying outfit and Oren's teal scholar coat are distinct at game scale. The legacy contact sheet previews the original 38 procedural cast sprites; the current story cast has 42 named identities.</em></p>
+<p align="center"><em>Live Library scene: Inessa's red scroll-carrying outfit and Oren's teal scholar coat are distinct at game scale. The legacy contact sheet previews the original 38 procedural cast sprites; the current story cast has 43 named identities.</em></p>
 
 <p align="center">
   <a href="terralum/screenshots/distinctive-cast-market.png"><img src="terralum/screenshots/distinctive-cast-market.png" alt="Live GemRB Royal Dispatch Archive showing Archivist Leora in her custom purple hood and dispatch-scroll world sprite, with her distinct portrait" width="78%"></a>
@@ -189,7 +194,7 @@ The latest supporting-cast art pass adds named silhouettes and story props for D
 
 **[Campaign guide](terralum/README.md)** · **[Gold Standard pipeline](terralum/GOLD_STANDARD_GAME_DESIGN_PIPELINE.md)** · **[Campaign plan](terralum/campaign_plan.md)** · **[Current TODO](TODO.md)**
 
-> **Prototype status:** This is an expanding playable slice, not a finished full-length RPG. All 42 named cast members have custom world sprites, though most still reuse idle artwork for walking. New character-specific in-scene designs give Archivist Mara her archive-blue hood, braid, spectacles, and route folio, Archivist Leora her purple hood and sealed dispatch tube, and Magister Vael his silver hair, indigo academy robes, and crystal staff; the rebuilt Academy has been viewed live in GemRB. Fresh captures verify the opening Market, Library, Royal Dispatch Archive, and Observatory Vault casts; review the remaining scenes in-engine. All 26 areas still inherit the demo's WED layout and terrain. Live-tested native actor dialogue includes Mara and Queen Alisande in the Market, Inessa in the Library, and Leora in the Archive. Mara's copy-landmarks and sealed-ledger branches work; Inessa's copy and seal branches each show their own re-entry line and Act I Journal entry. Leora's copy-schedule and sealed-schedule branches and their re-entry lines work; Saren's later response remains open. Other branches, scene movement, and save/load still need playtesting. See the [campaign guide](terralum/README.md) for build steps and current verification limits.
+> **Prototype status:** This is an expanding playable slice, not a finished full-length RPG. All 43 named cast identities have resource-bound world sprites, though some still use procedural placeholder art and most reuse idle artwork for walking. Painted in-scene designs now include Archivist Mara, Archivist Leora, Magister Vael, and the updated playable Algoreth; the Academy and Act VIII Eldrador camp have been reviewed live in GemRB. Fresh captures verify selected Market, Library, Royal Dispatch Archive, Observatory Vault, and Eldrador scenes; review the remaining scenes in-engine. All 27 areas still inherit the demo's WED layout and terrain. Live-tested dialogue covers Mara, Alisande, Inessa, and Leora, with more scenes and branches still open. Save/load and scene transitions need broader playtesting. See the [campaign guide](terralum/README.md) for current build and verification details.
 
 To try it out you either need some of the ORIGINAL game's data or you can
 get a tiny sneak peek by running the included trivial game demo.
@@ -209,11 +214,11 @@ list of [options, tips and priorities](https://github.com/gemrb/gemrb/blob/maste
 
 **An original Infinity Engine style RPG campaign, built on GemRB.** In **Terralum: Scrolls of Byzantem**, Algoreth Jon Goren leaves the court of Alsperia to recover the lost scrolls. The trail leads through the Mistwood and Caverns of Lorian, then toward the eastern academy, the Deep Archives, and the mysteries of the Tears.
 
-The playable prototype currently covers **26 scene areas and 65 story beats across seven acts**. Its 66 named scene-actor placements represent 42 character identities. Stateful conversations carry across scenes: Mara's ledger handling changes Scholar Inessa's later Library response; the optional Mistwood Wayfarer side quest changes whether Pell carries an anonymous warning about an answering voice or only an unsafe-road notice, without assigning a source to the sound; Captain Rovan’s Council policy governs open road access or restricted scroll access; Oren’s docket preserves whether route testimony and the scroll account are paired or separate; Pell's optional deposition determines whether the public docket carries only his warning or the crown keeps full route details, later combined with Oren’s paired/separate docket decision in Queen Alisande’s response; and Keeper Orla's Waywarden Relay lets Algoreth decide whether to call the patrol. Saren's dialogue reflects whether the party copied Leora's schedule; both relay outcomes are journaled. After Lorian, the party returns to the watchpost: Pell records whether the route marker is public or held in Edmon's court archive, and King Edmon and Queen Alisande respond to the decision. In Act VII, engineer Alistair's hangar dialogue reacts to both the expedition record and the ship's preparation. The campaign also has ambient music, optional Kokoro narration, and four gated encounters. In Act VI, if the Deep Archives account stays sealed, Algoreth chooses which bounded question Ealdrin carries to Eldrador; Vaelthira’s response changes, while the record’s speaker remains unknown. Act VII continues from the Aethercraft departure into an Eldrador landing and sanctuary-threshold investigation. The party records testimony or ward measurements, then chooses a cautious approach; the game stops before the inner sanctuary is entered, leaving the Tear unresolved as the recovered lore requires. It is an active prototype: campaign content and systems are growing, and the full-length RPG is still ahead.
+The playable prototype currently covers **27 scene areas and 68 story beats across eight acts**. Its 70 scene-actor placements represent 43 named character identities. Stateful conversations carry across scenes: Mara's ledger handling changes Scholar Inessa's later Library response; the optional Mistwood Wayfarer side quest changes whether Pell carries an anonymous warning about an answering voice or only an unsafe-road notice, without assigning a source to the sound; Captain Rovan’s Council policy governs open road access or restricted scroll access; Oren’s docket preserves whether route testimony and the scroll account are paired or separate; Pell's optional deposition determines whether the public docket carries only his warning or the crown keeps full route details, later combined with Oren’s paired/separate docket decision in Queen Alisande’s response; and Keeper Orla's Waywarden Relay lets Algoreth decide whether to call the patrol. Saren's dialogue reflects whether the party copied Leora's schedule; both relay outcomes are journaled. After Lorian, the party returns to the watchpost: Pell records whether the route marker is public or held in Edmon's court archive, and King Edmon and Queen Alisande respond to the decision. In Act VII, engineer Alistair's hangar dialogue reacts to both the expedition record and the ship's preparation. In Act VIII, Nerys asks the party to record testimony and measurements separately; Seraphina closes the scene while the sanctuary remains sealed and the voice unidentified. The campaign also has ambient music, optional Kokoro narration, and four gated encounters. In Act VI, if the Deep Archives account stays sealed, Algoreth chooses which bounded question Ealdrin carries to Eldrador; Vaelthira’s response changes, while the record’s speaker remains unknown. The campaign is an active prototype: content and systems are growing, and the full-length RPG is still ahead.
 
 ### Campaign location gallery
 
-Twenty-three distinct generated concept backdrops preview the twenty-six scene areas; the Deep Archives and returning Mistwood Watchpost reuse existing location art. They are visual targets for the current prototype. All twenty-six scenes have custom data-authored searchmaps, including the Market, Royal Court, Observatory Vault, Skyport, Library, Academy Courtyard, Index Hall, and Hangar. All twenty-six areas still use the demo's shared WED layout and other terrain resources.
+Twenty-four distinct generated concept backdrops preview the twenty-seven scene areas; the Deep Archives and returning Mistwood Watchpost reuse existing location art. They are visual targets for the current prototype. All twenty-seven scenes have custom data-authored searchmaps, including the Market, Royal Court, Observatory Vault, Skyport, Library, Academy Courtyard, Index Hall, and Hangar. All twenty-seven areas still use the demo's shared WED layout and other terrain resources.
 
 <table>
   <tr>
@@ -264,10 +269,10 @@ Twenty-three distinct generated concept backdrops preview the twenty-six scene a
 
 - [Terralum project guide](terralum/README.md) — build, play, audio, and MCP authoring setup.
 - [Gold Standard design pipeline](terralum/GOLD_STANDARD_GAME_DESIGN_PIPELINE.md) — BG2-informed scene and content workflow.
-- [Campaign plan](terralum/campaign_plan.md) — seven-act story spine and planned expansion.
+- [Campaign plan](terralum/campaign_plan.md) — eight-act story spine and planned expansion.
 - [TODO and handoff](TODO.md) — completed, ongoing, and next work.
 
-Terralum is an in-progress prototype, not a finished or full-length RPG. All 42 named cast identities have custom resource-bound animated world sprites, though several still use procedural placeholder art; painted replacements now include the Index Warden, whose in-game placement remains to review. Opening Market actors and selected later scenes have been checked live, while other scenes still need art review. All twenty-six areas inherit the demo WED layout; the project supplies custom searchmaps with structural connectivity checks for each. Named save/load is live-verified for Mara's branch outcomes and the Mistwood victory; later campaign saves and all scene paths still need broader regression. The project guide and handoff describe current playability and verification gaps.
+Terralum is an in-progress prototype, not a finished or full-length RPG. All 43 named cast identities have custom resource-bound animated world sprites, though several still use procedural placeholder art; painted replacements now include the Index Warden, whose in-game placement remains to review. Opening Market actors and selected later scenes have been checked live, while other scenes still need art review. All twenty-seven areas inherit the demo WED layout; the project supplies custom searchmaps with structural connectivity checks for each. Named save/load is live-verified for Mara's branch outcomes and the Mistwood victory; later campaign saves and all scene paths still need broader regression. The project guide and handoff describe current playability and verification gaps.
 
 ## Supported platforms
 

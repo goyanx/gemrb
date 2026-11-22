@@ -1338,7 +1338,6 @@
       ],
       "provenance": "adaptation",
       "avatar_creature": "falseal",
-      "spawn_flag": "TLFALSE_ALGORETH",
       "spawn_beat": 3
     }
   ],
@@ -2543,6 +2542,126 @@
       "provenance": "adaptation",
       "portrait": "PELL00",
       "avatar_creature": "pell00"
+    }
+  ],
+  "tl0027": [
+    {
+      "name": "Warden-Scribe Nerys",
+      "creature": "riddler",
+      "position": [
+        900,
+        740
+      ],
+      "line": "The outer watchbook has room for both testimony and measurements. Keep what was heard distinct from what was measured.",
+      "choices": [
+        {
+          "label": "Keep each witness’s words attributed",
+          "reply": "Nerys leaves names beside testimony and reserves another column for instrument readings.",
+          "flag": "TLVIGIL",
+          "value": 1
+        },
+        {
+          "label": "Separate names from instrument readings",
+          "reply": "Nerys keeps the witness index apart from the measured marks, preserving both for comparison.",
+          "flag": "TLVIGIL",
+          "value": 2
+        }
+      ],
+      "responses": [
+        {
+          "flag": "TLVIGIL",
+          "value": 1,
+          "line": "The witnesses remain credited in the record; the instrument readings stay separate."
+        },
+        {
+          "flag": "TLVIGIL",
+          "value": 2,
+          "line": "The witness index is separate from the instrument readings, but neither has been discarded."
+        }
+      ],
+      "role": "Warden-scribe of the outer watch",
+      "faction": "Eldrador Sanctuary Warders",
+      "goal": "Keep testimony and measurements legible without treating either as an explanation.",
+      "knowledge": "Knows the outer watch procedures and the reports gathered since the gate was sealed; does not know the voice’s source or the Tear’s outcome.",
+      "voice": "Careful and even, precise about what was observed and who reported it.",
+      "provenance": "adaptation",
+      "portrait": "NERYS",
+      "avatar_creature": "nerys"
+    },
+    {
+      "name": "Queen Vaelthira",
+      "creature": "riddler",
+      "position": [
+        900,
+        600
+      ],
+      "line": "The lower sanctuary remains sealed. Our watch can preserve observations without claiming to explain them.",
+      "responses": [
+        {
+          "flag": "TLVIGIL",
+          "value": 1,
+          "line": "Keep each witness’s account distinct from the measured marks. We will review both."
+        },
+        {
+          "flag": "TLVIGIL",
+          "value": 2,
+          "line": "The separate index will make it easier to compare reports without confusing testimony with measurement."
+        }
+      ],
+      "role": "Queen of Eldrador",
+      "faction": "Eldrador",
+      "goal": "Maintain a measured watch while honoring the invitation and the sealed sanctuary boundary.",
+      "knowledge": "Knows the lower sanctuary is sealed and that a familiar voice was reported; its source and the Tear’s outcome remain unknown.",
+      "voice": "Regal, composed, and candid about uncertainty.",
+      "provenance": "canon",
+      "portrait": "VAELTH",
+      "avatar_creature": "vaelth"
+    },
+    {
+      "name": "Ward-Captain Mereth",
+      "creature": "riddler",
+      "position": [
+        1020,
+        700
+      ],
+      "line": "The watch line is quiet. We have no order to cross the sealed threshold.",
+      "role": "Captain of the sanctuary watch",
+      "faction": "Eldrador Sanctuary Warders",
+      "goal": "Keep the outer camp orderly and the sanctuary boundary respected.",
+      "knowledge": "Knows the watch positions and current boundary orders; cannot identify the voice or explain the pulse.",
+      "voice": "Direct and disciplined, giving only confirmed observations.",
+      "provenance": "adaptation",
+      "portrait": "MERETH",
+      "avatar_creature": "mereth"
+    },
+    {
+      "name": "Seraphina Everglow",
+      "creature": "riddler",
+      "position": [
+        700,
+        700
+      ],
+      "line": "A record can preserve what happened without deciding what it means.",
+      "responses": [
+        {
+          "flag": "TLVIGIL",
+          "value": 1,
+          "line": "Attribution helps us revisit what each witness actually heard."
+        },
+        {
+          "flag": "TLVIGIL",
+          "value": 2,
+          "line": "Keeping names apart from measurements lets us compare the records without conflating their sources."
+        }
+      ],
+      "role": "Expedition chronicler",
+      "faction": "Alsperia expedition",
+      "goal": "Preserve observations while leaving room for later evidence.",
+      "knowledge": "Knows the expedition record and the sealed gate; does not know the familiar voice’s source or the Tear’s resolution.",
+      "voice": "Warm, thoughtful, and exact about the limits of the evidence.",
+      "provenance": "adaptation",
+      "portrait": "SERAPH",
+      "avatar_creature": "seraph"
     }
   ]
 }

@@ -29,8 +29,9 @@ These generated transparent turnarounds establish the corrected world-character 
 | Alistair | `alist0` | `alistair.png` |
 | Harbor Warden Oris | `oris00` | `oris.png` |
 | Ward-Captain Mereth | `mereth` | `mereth.png` |
+| Warden-Scribe Nerys | `nerys` | `nerys.png` |
 | Flight Marshal Aven | `aven00` | `aven.png` |
-| Algoreth Jon Goren (player) | `TLPG` | `algoreth.png`; directional staff attacks in `algoreth_attack.png` |
+| Algoreth Jon Goren (player) | `TLPG` | Refreshed split-coat turnaround in `algoreth.png`; matching directional staff attacks in `algoreth_attack.png` |
 | Mistwood Stalker (encounter enemy) | `mistalk` | `mistwood_stalker.png` |
 | Pale-Stone Prowler (encounter enemy) | `paleprow` | `pale_stone_prowler.png` |
 | Ward Shard (Academy encounter enemy) | `wardshard` | `ward_shard.png` |
@@ -44,4 +45,4 @@ Convert a sheet into GemRB's nine directional 80x96 frame slots with:
 python tools/terralum/import_painted_turnaround.py terralum/art/reference/painted_turnarounds/mara.png mara00
 ```
 
-The initial import duplicates each direction into four walk slots. It provides painted idle views, not hand-painted locomotion; the repeated walk frames are a prototype limitation and must be replaced with authored motion before final acceptance. Always inspect the built BAM in a live scene for palette, transparency, scale, facing, and ground anchoring.
+The initial import duplicates each direction into four walk slots. Its optional `--scale` increases the frame canvas and figure together. Algoreth uses the standard 80×96 player frames; the four Eldrador outer-watch actors use `--scale 1.35` for their larger silhouettes. This provides painted idle views, not hand-painted locomotion; repeated walk frames are a prototype limitation and must be replaced with authored motion before final acceptance. Always inspect the built BAM in a live scene for palette, transparency, scale, facing, and ground anchoring.

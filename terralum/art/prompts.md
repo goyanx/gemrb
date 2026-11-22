@@ -48,3 +48,7 @@ Generated with the built-in image generator for a distinct Act VII preparation s
 | 3 | Page Nerin; Harbor Warden Oris; Ward-Captain Mereth; Relay Keeper Orla |
 
 The portraits follow the painterly style of the first three character sheets. Their clothing, age, gender presentation, and facial details are visual adaptations, not new canon claims. False Algoreth echoes Algoreth's established portrait likeness, with a restrained silver-violet effect to mark the contained echo. Conversation portraits and animated map sprites are separate assets. The sprites are rendered as 9-direction custom BAM animations; Mara and Leora now have character-specific silhouettes and equipment beyond the shared role profiles.
+
+## Algoreth playable sprite refresh
+
+`reference/painted_turnarounds/algoreth.png` and `algoreth_attack.png` were regenerated as transparent 3×3 direction sheets for the playable Algoreth. The attached green-robed wizard was used only as a color and staff reference. The replacement keeps the emerald-and-amber wizard identity while changing the blocky robe silhouette to a human-proportioned split travel coat, trousers, boots, shoulder mantle, and satchel. Both sheets are imported into `world_sprites/algoreth/` and compiled into the custom `TLPG` player animation family. This is a visual adaptation, not a new lore claim.

@@ -50,12 +50,14 @@ PORTRAITS = {
     "ORIS00": (3, 1, 2), "MERETH": (3, 2, 2), "ORLA00": (3, 3, 2),
     "THALOR": (4, 0, 0), "VORSATH": (4, 1, 0),
     "ELARIS": (4, 0, 1), "THALORX": (4, 1, 1),
+    "NERYS": (4, 0, 0),
 }
 PORTRAIT_ART_OVERRIDES = {
     "EDMONV": PROJECT / "art" / "character_avatars" / "edmon0.png",
     "ALISAV": PROJECT / "art" / "character_avatars" / "alisan.png",
     "MARAAV": PROJECT / "art" / "character_avatars" / "mara00.png",
     "ALGOVR": PROJECT / "art" / "character_avatars" / "algore.png",
+    "NERYS": PROJECT / "art" / "character_avatars" / "nerys.png",
 }
 def avatar_profile(person):
 	text = (person.get("name", "") + " " + person.get("role", "")).lower()
@@ -206,6 +208,7 @@ AREAS = {
     "tl0024": "mistwood_waywarden_relay.png",
     "tl0025": "mistwood_ruins.png",
     "tl0026": "eternal_archives_trial.png",
+    "tl0027": "eldrador_outer_watch.png",
 }
 AREA_SONG_INDEX = {
     "tl0001": 1, "tl0002": 3, "tl0003": 2, "tl0004": 1,
@@ -216,6 +219,7 @@ AREA_SONG_INDEX = {
     "tl0021": 2,
     "tl0022": 1, "tl0023": 2, "tl0024": 3, "tl0025": 3,
     "tl0026": 2,
+    "tl0027": 2,
 }
 
 
@@ -236,11 +240,23 @@ def read_story():
     initialized_flags = set(re.findall(r'GemRB\.SetGlobal\("(TL[A-Z0-9_]+)", "GLOBAL", 0\)', setup_text))
     for chapter in chapters:
         if (chapter.get("area") not in AREAS or not chapter.get("beats")
-                or type(chapter.get("act")) is not int or not 1 <= chapter["act"] <= 7):
+                or type(chapter.get("act")) is not int or not 1 <= chapter["act"] <= 8):
             raise ValueError("each chapter needs a built area and story beats")
         if not all(beat.get("speaker") and beat.get("text") and beat.get("action") for beat in chapter["beats"]):
             raise ValueError("each story beat needs a speaker, text, and action")
         for beat_index, beat in enumerate(chapter["beats"]):
+            gate = beat.get("advance_gate")
+            if gate is not None and (
+                    not isinstance(gate, dict)
+                    or not isinstance(gate.get("flag"), str)
+                    or not re.fullmatch(r"TL[A-Z][A-Z0-9_]{1,28}", gate["flag"])
+                    or gate["flag"] not in initialized_flags
+                    or not isinstance(gate.get("values"), list)
+                    or not gate["values"]
+                    or any(type(value) is not int for value in gate["values"])
+                    or not isinstance(gate.get("prompt"), str)
+                    or not gate["prompt"].strip()):
+                raise ValueError(f"advance gate for {chapter['area']} needs an initialized flag, integer values, and a prompt")
             party_to_hit = beat.get("party_to_hit")
             if party_to_hit is not None and (
                     not beat.get("encounter") or type(party_to_hit) is not int

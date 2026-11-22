@@ -644,6 +644,10 @@ def OnLoad():
 		beat_index = GemRB.GetGameVar("TLBEAT")
 		chapter = chapters[chapter_index]
 		beat = chapter["beats"][beat_index]
+		gate = beat.get("advance_gate")
+		if gate and GemRB.GetGameVar(gate["flag"]) not in gate["values"]:
+			message.Append("\n\n" + gate["prompt"])
+			return
 		if dialogue_state["must_finish_followup"]:
 			message.Append("\n\nFinish this conversation before continuing.")
 			return
@@ -845,7 +849,7 @@ def OnLoad():
 			chapter_index += 1
 			beat_index = 0
 			if chapter_index >= len(chapters):
-				message.SetText("[cap]T[/cap]ERRALUM  |  TO BE CONTINUED\n\nThe party has reached the lower sanctuary threshold. Its inner gate remains sealed; Eldrador's Tear has not been entered or resolved.")
+				message.SetText("[cap]T[/cap]ERRALUM  |  THE OUTER WATCH CONTINUES\n\nThe party's watch remains beyond the sealed lower sanctuary. The Tear has not been entered or resolved.")
 				action.SetText("FINISHED")
 				action.OnPress(lambda: None)
 				return

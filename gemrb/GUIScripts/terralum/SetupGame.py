@@ -106,4 +106,6 @@ def OnLoad():
 	GemRB.SetGlobal("TLSANCTUARY", "GLOBAL", 0)
 	GemRB.SetGlobal("TLJRN_ARRIVAL", "GLOBAL", 0)
 	GemRB.SetGlobal("TLJRN_SANCTUARY", "GLOBAL", 0)
+	GemRB.SetGlobal("TLVIGIL", "GLOBAL", 0)
+	GemRB.SetGlobal("TLJRN_VIGIL", "GLOBAL", 0)
 	GemRB.EnterGame()

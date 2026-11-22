@@ -154,6 +154,11 @@ expected = {
         "blocked": [(7, 50), (92, 50), (50, 15), (25, 38), (75, 38)],
         "description": "Archives trial dais, open central floor, and water channels along both sides",
     },
+    "tl0027": {
+        "routes": [(50, 10), (50, 90)],
+        "blocked": [(15, 30), (80, 30), (42, 18)],
+        "description": "Eldrador outer watch camp, open flagstone floor, and tent perimeter",
+    },
 }
 assert set(searchmap_specs) == set(expected)
 cast_by_area = json.loads(build_game.CAST_FILE.read_text(encoding="utf-8"))

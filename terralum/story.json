@@ -1113,6 +1113,57 @@
           ]
         }
       ]
+    },
+    {
+      "title": "VIII. The Eldrador Expedition — Outer Watch",
+      "act": 8,
+      "area": "tl0027",
+      "place": "Eldrador Outer Watch Camp",
+      "music": "tlcave.mus",
+      "voice": "tln0027",
+      "narration": "Beyond the sealed lower sanctuary, Eldrador's warders keep an outer watch. The expedition can record what witnesses say and what the markers show without claiming either explains the pulse.",
+      "beats": [
+        {
+          "speaker": "Warden-Scribe Nerys",
+          "text": "The outer watchbook has room for both testimony and measurements. Keep what was heard distinct from what was measured.",
+          "action": "Set the watch"
+        },
+        {
+          "speaker": "Queen Vaelthira",
+          "text": "The watch is set. The gate remains sealed, and the reports do not identify a source.",
+          "action": "Review the record",
+          "advance_gate": {
+            "flag": "TLVIGIL",
+            "values": [
+              1,
+              2
+            ],
+            "prompt": "Speak with Warden-Scribe Nerys and choose how the watchbook records the reports."
+          },
+          "journal": {
+            "flag": "TLJRN_VIGIL",
+            "section": 4,
+            "text": "The party established a watch beyond Eldrador's sealed sanctuary. Witness testimony and outer-ring measurements were kept distinct; the voice and the Tear's cause remain unknown."
+          },
+          "routes": [
+            {
+              "flag": "TLVIGIL",
+              "value": 1,
+              "text": "The watchbook preserves each witness’s words with attribution and keeps measurements in a separate column."
+            },
+            {
+              "flag": "TLVIGIL",
+              "value": 2,
+              "text": "The watchbook separates names from instrument readings while preserving both records for comparison."
+            }
+          ]
+        },
+        {
+          "speaker": "Seraphina Everglow",
+          "text": "The watchbook holds the reports, not an answer. We keep the gate sealed and continue observing from here.",
+          "action": "Close the watchbook"
+        }
+      ]
     }
   ]
 }
