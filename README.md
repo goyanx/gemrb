@@ -47,7 +47,16 @@ The Act VI Index Warden now has a separate painted stone-and-brass form instead 
   <a href="terralum/art/reference/painted_turnarounds/index_warden.png"><img src="terralum/art/reference/painted_turnarounds/index_warden.png" alt="Painted Index Warden turnaround in pale stone armor, a deep teal mantle, and brass archive fittings" width="40%"></a>
 </p>
 
-The Academy fight temporarily improves party accuracy to keep the two-person encounter playable. Live GemRB combat confirmed both Algoreth and Tessa landing hits, defeating the Ward Shard, and bringing in False Algoreth as phase two. The second phase victory and recovery path remain under verification.
+The Academy fight temporarily improves party accuracy to keep the two-person encounter playable. A normal-stat GemRB run now defeats the Ward Shard, brings in the painted False Algoreth at a separated position, records attacks and hits from both Algoreth and Tessa, and reaches the seal text. This is one successful combat pass; defeat recovery, repeatability, Journal state, and post-victory save/load still need review.
+
+<p align="center">
+  <a href="terralum/screenshots/academy-falseal-normal-phase2-live.png"><img src="terralum/screenshots/academy-falseal-normal-phase2-live.png" alt="Live Academy phase two with painted False Algoreth separated from the Ward Shard remains" width="92%"></a>
+</p>
+<p align="center"><em>Academy combat: the painted echo is visible and separately targetable after it enters the ward room.</em></p>
+<p align="center">
+  <a href="terralum/screenshots/academy-falseal-normal-seal-gate.png"><img src="terralum/screenshots/academy-falseal-normal-seal-gate.png" alt="Live GemRB seal text after the normal-stat Academy encounter" width="92%"></a>
+</p>
+<p align="center"><em>One normal-stat run reached the seal gate after both encounter phases.</em></p>
 
 <p align="center">
   <a href="terralum/screenshots/academy-phase-two-live.png"><img src="terralum/screenshots/academy-phase-two-live.png" alt="Live Academy vault scene after the Ward Shard falls and False Algoreth enters the second phase" width="92%"></a>
