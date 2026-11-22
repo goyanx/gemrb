@@ -10,6 +10,8 @@ This file records verified implementation findings and mistakes that should info
 
 ## Area resources and build errors
 
+- **Replace the player animation resource, not just its concept art.** A painted Algoreth turnaround already existed while an open GemRB session still displayed the earlier low-poly actor. Re-import the sheet into the player frame folder, rebuild the custom `TLPG` BAM family into an isolated pack, and launch a fresh session because open sessions retain loaded BAMs. Check the turnaround row order against `import_painted_turnaround.py`; front, side, and back rows must map to the engine's directional stance order.
+
 - **ARE headers use mixed-width counts.** In the demo area header, actor count is a 16-bit value at `0x58`, region count at `0x5A`, and spawn count is a 32-bit value at `0x64`. The field at `0x6C` is the 32-bit entrance count, not spawn count. Writing zero there silently removes entrances. Verify field offsets against the local importer and binary template before patching.
 - **ARE doors must agree with WED doors.** Leaving a demo ARE door while replacing or clearing its WED counterpart causes GemRB's `Found door without WED entry!` error. Clear both sides or author a matching door; do not just rename the area resref.
 - **The per-scene TIS is not per-scene geometry.** `build_game.py` creates each area's 25×18 TIS tiles from its painted backdrop, while renaming the shared AR0100 ARE/WED and clearing the ARE's regions and doors. The main WED overlay also remains 25×18, so artwork changes without changing the map's spatial layout. A true seal object or travel door needs a matching ARE region/door and WED entry; don't call a dialogue sequence a physical world object.
