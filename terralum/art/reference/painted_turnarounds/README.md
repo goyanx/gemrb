@@ -26,6 +26,9 @@ These generated transparent turnarounds establish the corrected world-character 
 | Queen Vaelthira | `vaelth` | `vaelthira.png` |
 | Seraphina Everglow | `seraph` | `seraphina.png` |
 | Alistair | `alist0` | `alistair.png` |
+| Harbor Warden Oris | `oris00` | `oris.png` |
+| Ward-Captain Mereth | `mereth` | `mereth.png` |
+| Flight Marshal Aven | `aven00` | `aven.png` |
 | Algoreth Jon Goren (player) | `TLPG` | `algoreth.png`; directional staff attacks in `algoreth_attack.png` |
 | Mistwood Stalker (encounter enemy) | `mistalk` | `mistwood_stalker.png` |
 | Pale-Stone Prowler (encounter enemy) | `paleprow` | `pale_stone_prowler.png` |

@@ -34,6 +34,9 @@ CHARACTERS = (
 	("Queen Vaelthira", "vaelthira.png"),
 	("Seraphina Everglow", "seraphina.png"),
 	("Alistair", "alistair.png"),
+	("Harbor Warden Oris", "oris.png"),
+	("Ward-Captain Mereth", "mereth.png"),
+	("Flight Marshal Aven", "aven.png"),
 )
 CELL = (240, 252)
 COLUMNS = 3
