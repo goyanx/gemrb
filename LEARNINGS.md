@@ -5,6 +5,7 @@ This file records verified implementation findings and mistakes that should info
 ## Engine and architecture
 
 - **Keep optional NPC topics separate from choice ownership.** Hunter Fen’s native dialogue reads Tessa’s `TLHUNTER` decision and offers trail/signal questions, while Tessa remains the only speaker who commits the lantern choice. This lets direct actor conversations react to the scene without duplicating its required decision.
+- **Make route feasibility reflect carried gear in every interaction path.** Maelin’s River Crossing DLG branches on the travel kit and shares `TLRIVER` with the campaign panel. An attempted handline without rope still resolves to the exposed ford; the next story beat alone writes the one-time Journal entry and derives `TLRIVERROUTE`. Keep actor replies neutral until the actual route is resolved.
 
 - **GemRB is an engine/runtime, not a visual game editor.** Terralum content is assembled from Infinity Engine resources, Python GUI scripts, and game data. Use resource editors or authoring tools for area formats; use GemRB to play and verify.
 - **Prefer content over engine changes for scene work.** The existing game already loads a custom chapter UI. NPCs, area transitions, music, and timed callbacks can be implemented with game resources and GUIScripts.

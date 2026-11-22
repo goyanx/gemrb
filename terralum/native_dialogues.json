@@ -228,6 +228,53 @@
       }
     ]
   },
+  "MAELIN": {
+    "states": [
+      {
+        "when": [{"flag": "TLCHAP", "value": 5}, {"flag": "TLRIVER", "value": 0}, {"flag": "TLTRAVELKIT", "value": 2}],
+        "say": "The bridge pins are gone and the current is rising. Your expedition rope can serve as a handline if we secure it. Shall we rig it, or guide Eren over the stones and leave the cart?",
+        "transitions": [
+          {"text": "Rig the rope handline for Eren and his dispatch.", "next": 2, "set": [{"flag": "TLRIVER", "value": 1}]},
+          {"text": "Guide Eren over the stepping stones; leave the cart.", "next": 4, "set": [{"flag": "TLRIVER", "value": 2}]}
+        ]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 5}, {"flag": "TLRIVER", "value": 0}, {"flag": "TLTRAVELKIT", "value": 1}],
+        "say": "Your kit has a shuttered lantern, not rope. We cannot secure a handline, so Eren can cross the exposed stones while the loaded cart stays here. The watched road will remain a risk.",
+        "transitions": [
+          {"text": "Try to rig a handline anyway.", "next": 3, "set": [{"flag": "TLRIVER", "value": 1}]},
+          {"text": "Guide Eren over the stepping stones; leave the cart.", "next": 4, "set": [{"flag": "TLRIVER", "value": 2}]}
+        ]
+      },
+      {
+        "say": "I'll anchor the rope above the current. If the line holds, Eren can bring the sealed dispatch and loaded cart across with us.",
+        "transitions": [{"text": "Keep tension on the handline.", "final": true}]
+      },
+      {
+        "say": "There is no rope to secure. Eren can carry the dispatch over the exposed stones, but the loaded cart must stay on this bank.",
+        "transitions": [{"text": "We will get Eren and the dispatch across.", "final": true}]
+      },
+      {
+        "say": "I'll lead Eren over the shallow stones. The loaded cart stays above the water, and the exposed route may draw the watcher's attention.",
+        "transitions": [{"text": "Guide him across carefully.", "final": true}]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 5}, {"flag": "TLRIVER", "value": 1}, {"flag": "TLTRAVELKIT", "value": 2}],
+        "say": "The handline is ready. Eren and his sealed dispatch can cross with the cart if the rope holds.",
+        "transitions": [{"text": "We will cross by the secured line.", "final": true}]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 5}, {"flag": "TLRIVER", "value": 1}, {"flag": "TLTRAVELKIT", "value": 1}],
+        "say": "Without rope we could not secure the line. Eren can carry the dispatch over the stones, but the cart stays behind and the road remains watched.",
+        "transitions": [{"text": "We will take Eren across and leave the cart.", "final": true}]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 5}, {"flag": "TLRIVER", "value": 2}],
+        "say": "You chose the stones. Eren can carry the sealed dispatch across, but the loaded cart remains on this bank and the crossing is exposed.",
+        "transitions": [{"text": "Keep to the marked stones.", "final": true}]
+      }
+    ]
+  },
   "SAREN": {
     "states": [
       {

@@ -2002,6 +2002,7 @@
   "tl0019": [
     {
       "name": "Fordkeeper Maelin",
+      "dialog": "MAELIN",
       "creature": "protagon",
       "position": [
         560,
@@ -2011,7 +2012,7 @@
       "choices": [
         {
           "label": "Rig the rope handline",
-          "reply": "You set the expedition rope across the current. If it reaches the far bank, Eren can save his dispatch with the cart.",
+          "reply": "You try to establish a handline across the current. What reaches the far bank will depend on the gear available.",
           "flag": "TLRIVER",
           "value": 1
         },
