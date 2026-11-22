@@ -35,10 +35,10 @@ The character-art direction is shifting to hand-painted 2D figures. This current
 </p>
 <p align="center"><em>Painted 2D NPC sprite prototype in the live Alsperia Market scene.</em></p>
 
-Magister Vael's mint-green, blocky-looking figure has been replaced with a painted silver-haired academy mage in layered indigo robes and a crystal staff. The new nine-direction sprite is visible in the rebuilt Observatory Vault:
+Magister Vael's mint-green, blocky-looking figure has been replaced with a painted silver-haired academy mage in layered indigo robes and a crystal staff. A fresh run using the current main game pack shows his nine-direction sprite in the Observatory Vault:
 
 <p align="center">
-  <a href="terralum/screenshots/magister-vael-painted-live.png"><img src="terralum/screenshots/magister-vael-painted-live.png" alt="Live GemRB Observatory Vault scene with Magister Vael in painted indigo robes, beside Queen Alisande and the Ward Shard" width="92%"></a>
+  <a href="terralum/screenshots/magister-vael-current-build-review.png"><img src="terralum/screenshots/magister-vael-current-build-review.png" alt="Fresh GemRB run from the current pack showing Magister Vael in painted indigo robes in the Observatory Vault" width="92%"></a>
 </p>
 
 The Act VI Index Warden now has a separate painted stone-and-brass form instead of the shared procedural body. Its built sprite is included in the isolated review pack; live placement and facing still need review in the Deep Archives and Index Hall.
