@@ -80,6 +80,10 @@ The game panel has **SAVE** and **LOAD** controls. SAVE creates a named snapshot
 
 ![Terralum showing a successful named save in the game panel](screenshots/save-load-saved.png)
 
+During active combat, the save control explains that GemRB blocks saving and directs the player to finish the encounter first:
+
+![Terralum explaining the safe-save restriction during the Mistwood encounter](screenshots/combat-save-restriction.png)
+
 ![Terralum after loading back into the saved Market scene](screenshots/save-load-restored.png)
 
 ## Build and play
