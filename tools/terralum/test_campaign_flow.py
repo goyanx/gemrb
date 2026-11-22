@@ -1461,7 +1461,7 @@ for warding in (1, 2):
     assert globals_["TLECHOPHASE"] == 1
     false_algoreth = globals_["TLFALSE_ALGORETH"]
     assert false_algoreth == globals_["TLENEMY"]
-    assert (1, "falseal", 1030, 540) in [event[1] for event in events if event[0] == "spawn"]
+    assert (1, "falseal", 850, 540) in [event[1] for event in events if event[0] == "spawn"]
     assert ("name", false_algoreth, "False Algoreth") in events
     assert ("attack", "Attack(Player1)", false_algoreth) in events
     assert ("set-stat", false_algoreth, campaign.IE_MAXHITPOINTS, 14) in events
