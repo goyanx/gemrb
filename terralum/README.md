@@ -52,6 +52,10 @@ Mistwood's two ambushers use their own painted 2D enemy sprites instead of gener
 
 ![Live GemRB screenshot of the Mistwood ambush with unique enemy sprites and enlarged player](screenshots/mistwood-unique-enemies-live.png)
 
+The Royal Stables now stage Stablemaster Edda clearly in the courtyard beside Groom Tavin.
+
+![Live GemRB screenshot of Edda, the player, and Tavin in the Royal Stables](screenshots/stables-edda-position-test.png)
+
 ![Twelve new Terralum NPC portrait concepts for the complete cast](art/character_portraits_sheet_4.png)
 
 The Lost Wayfarer's native actor dialogue now runs in GemRB. This isolated capture shows the private-account outcome recorded in the Act II Journal.

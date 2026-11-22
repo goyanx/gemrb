@@ -163,6 +163,16 @@ ENCOUNTER_AVATARS = encounter_avatar_catalog()
 SUPPORTED_CREATURES = ({"protagon", "riddler"}
                        | {avatar["creature"] for avatar in NPC_AVATARS}
                        | {avatar["creature"] for avatar in ENCOUNTER_AVATARS})
+
+
+def clear_clone_default_script(creature):
+    """Do not give generated NPCs the player-only DPLAYER3 default script."""
+    if creature[:8] != b"CRE V1.0":
+        raise ValueError("generated avatar source must be CRE V1.0")
+    # CRE V1.0 stores five script resrefs at 0x248..0x270; 0x268 is default.
+    creature[0x268:0x270] = b"NONE\0\0\0\0"
+
+
 SETUP_FILE = ROOT / "gemrb" / "GUIScripts" / "terralum" / "SetupGame.py"
 AREAS = {
     "tl0001": "alsperia_market.png",
@@ -743,6 +753,7 @@ def build():
             creature = bytearray((OUTPUT / "override" / f"{avatar['base_creature']}.cre").read_bytes())
             if creature[:8] != b"CRE V1.0":
                 raise ValueError(f"{avatar['base_creature']}.cre must be a supported CRE V1.0 source")
+            clear_clone_default_script(creature)
             struct.pack_into("<I", creature, 0x28, avatar["animation_id"])
             (OUTPUT / "override" / f"{avatar['creature']}.cre").write_bytes(creature)
         for avatar in ENCOUNTER_AVATARS:
@@ -750,6 +761,7 @@ def build():
                         f"{avatar['prefix']} {avatar['prefix']} 0 2 1 *")
             write_npc_avatar(avatar["asset"], avatar["prefix"], OUTPUT / "override")
             creature = bytearray((OUTPUT / "override" / f"{avatar['base_creature']}.cre").read_bytes())
+            clear_clone_default_script(creature)
             struct.pack_into("<I", creature, 0x28, avatar["animation_id"])
             (OUTPUT / "override" / f"{avatar['creature']}.cre").write_bytes(creature)
     write_scaled_player_avatar(SOURCE / "override", OUTPUT / "override", factor=2.00)

@@ -1654,8 +1654,8 @@
       "dialog": "EDDA",
       "creature": "protagon",
       "position": [
-        600,
-        520
+        700,
+        620
       ],
       "line": "The king's horse and map are ready. Choose whether the pack carries shuttered lantern oil or rope and trail rations.",
       "choices": [
