@@ -93,7 +93,7 @@ This is the current work ledger for human and AI contributors. Read [AGENTS.md](
 
 ## Ongoing
 
-- [ ] **Complete the painted 2D cast conversion.** Eleven recurring characters now have painted turnaround sources and imported frames; Mara, Edmon, and Alisande are live in the Market. Generate approved sheets for the remaining cast, replace repeated static walk poses with hand-painted motion, and review every converted NPC at scene scale. The Library and Watchpost previously showed low-poly companions beside painted leads; verify all three actors in each scene after the latest rebuild.
+- [ ] **Complete the painted 2D cast conversion.** Twelve recurring characters now have painted turnaround sources and imported frames; Mara, Edmon, and Alisande are live in the Market. Generate approved sheets for the remaining cast, replace repeated static walk poses with hand-painted motion, and review every converted NPC at scene scale. The Library and Watchpost previously showed low-poly companions beside painted leads; verify all three actors in each scene after the latest rebuild. The Gallery Keeper now has a painted turnaround and imported directional frames; inspect it in the Gallery at live game scale. Dorian’s Echo remains a procedural placeholder.
 
 - [ ] **Finish scene-scale art validation.** The Lost Wayfarer's earlier white silhouette issue was cleared in a direct Mistwood scene capture. Scout Tessa is now visible beside Algoreth on the Mistwood road. Tavin and Edda are visible together in the Royal Stables after moving Edda onto open courtyard floor. Oren's Library sprite now renders after moving him clear of the lectern. Inspect remaining actors, palettes, facing, and scale in the Library, Watchpost, and every other converted scene.
 
