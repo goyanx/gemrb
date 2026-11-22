@@ -28,6 +28,9 @@ CHARACTERS = (
 	("Spectral Warden Vorsath", "vorsath.png"),
 	("Spectral Warden Elaris", "elaris.png"),
 	("Spectral Warden Thalorix", "thalorix.png"),
+	("Archivist Selene", "selene.png"),
+	("Archivist Nera", "nera.png"),
+	("Ealdrin", "ealdrin.png"),
 )
 CELL = (240, 252)
 COLUMNS = 3
