@@ -2129,7 +2129,7 @@
       ],
       "choices": [
         {
-          "label": "Hear the warders' witnesses",
+          "label": "Hear the warders' testimony",
           "reply": "We will record each warder's account separately and keep testimony distinct from what the expedition infers.",
           "flag": "TLELDRADOR",
           "value": 1
