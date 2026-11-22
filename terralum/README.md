@@ -18,7 +18,7 @@ A blue ring with a pale arrow on open terrain is GemRB's last movement destinati
 
 The earlier 38-NPC avatar pass used low-poly Blender figures. That approach looked too much like blocky 3D game characters and is no longer the target art direction. The core recurring cast is now transitioning to hand-painted 2D world sprites. Eleven characters have painted turnaround sources and imported world frames; Mara, Edmon, and Alisande appear in a live Market capture. Remaining cast members and authored movement cycles still need this conversion.
 
-![Live GemRB Market scene with painted Mara, Queen Alisande, and King Edmon sprites and the enlarged Algoreth player character](screenshots/painted-opening-cast.png)
+![Live GemRB Market scene with painted Mara, Queen Alisande, and King Edmon at a balanced Algoreth player scale](screenshots/player-scale-balanced-market.png)
 
 ![Painted 2D turnarounds for eleven Terralum characters](art/reference/painted_turnarounds/contact-sheet.png)
 
@@ -54,7 +54,9 @@ The latest readability pass gives Scout Tessa a blue-green cloak, rust signal ma
 
 Four generated portrait sheets now provide medium and small GemRB portrait resources for all thirty-eight unique named NPCs across the seven-act cast. These dialogue portraits are separate from the animated world sprites. Portraits are selected by NPC data and appear beside their dialogue. The latest sheet adds distinct portraits for twelve previously unpictured characters.
 
-Mistwood's two ambushers use their own painted 2D enemy sprites instead of generic protagonist/riddler placeholders. Their encounter CREs and animation rows are registered separately from neutral scene NPCs in `enemy_avatars.json`. Each enemy has a directional painted attack sheet and idle–strike–recovery melee BAMs. Algoreth now has a separate painted 3x3 turnaround and nine directional staff attack views; the build emits all `TLPGa1–a9` BAMs, which were missing from the earlier enlarged prototype and caused combat animation errors. A fresh two-party live run confirms both player characters attack, but the party still falls before defeating the ambushers; encounter balance remains in progress.
+Mistwood's two ambushers use their own painted 2D enemy sprites instead of generic protagonist/riddler placeholders. Their encounter CREs and animation rows are registered separately from neutral scene NPCs in `enemy_avatars.json`. Each enemy has a directional painted attack sheet and idle–strike–recovery melee BAMs. Algoreth has a painted 3×3 turnaround and nine directional staff attack views. The Pale-stone Prowler's old `(1120, 560)` road spawn showed its hostile circle without its body; moving it to `(1080, 480)` makes the painted enemy visible in a fresh GemRB build. A live targeted pass confirms Tessa damages the visible Prowler, which had 4 HP remaining at capture. Victory and post-battle save/load remain unverified.
+
+![Fresh GemRB Mistwood ambush showing the painted Stalker, armored Prowler, and balanced player scale](screenshots/player-scale-balanced-live.png)
 
 The custom story panel includes an **ATTACK** button and `A` shortcut that enter GemRB's standard attack-target mode, with neutral NPCs filtered out of attack targeting. Tessa joins the Mistwood party through GemRB's `JoinParty()` action, and separate **HERO** and **TESSA** selectors let the player choose who attacks. The two foes have authored health and damage values, split their attacks across both party members, and temporarily receive a modest accuracy advantage for the party that resets after victory. Live logs confirm both party members take turns and attack; one five-round pass left the Prowler at 4 HP while the party survived. Defeat recovery and pre-battle reload are verified; a complete victory, balance, and post-victory save/load still need live playtesting.
 
@@ -64,15 +66,15 @@ The live Market capture confirms the ATTACK prompt now explains that an open-gro
 
 ![Live GemRB Attack prompt explaining that open ground clicks set a move marker](screenshots/attack-target-ground-instruction-live.png)
 
-The player sprite uses the painted BAM palette directly. This prevents GemRB's classic paper-doll recoloring from turning Algoreth into a blue, scrambled silhouette; the fresh isolated Market run shows the full-sized player rendered clearly.
+The player sprite uses the painted BAM palette directly. This prevents GemRB's classic paper-doll recoloring from turning Algoreth into a blue, scrambled silhouette. The earlier 2× player frames overwhelmed the NPCs; regenerated 1.25× frames now keep Algoreth slightly prominent while matching the painted cast's scene scale.
 
-![Live GemRB Market screenshot confirming the full-sized painted Algoreth player renders clearly](screenshots/player-palette-fix-live.png)
+![Live GemRB Market screenshot confirming Algoreth's balanced scale beside the painted NPCs](screenshots/player-scale-balanced-market.png)
 
 Scout Tessa now stands visibly on the Mistwood road near Algoreth rather than below the camera's play area:
 
 ![Scout Tessa staged on the Mistwood road beside Algoreth](screenshots/mistwood-tessa-road-live.png)
 
-![Live GemRB screenshot of the Mistwood ambush with unique enemy sprites and enlarged player](screenshots/mistwood-unique-enemies-live.png)
+![Live GemRB screenshot of the Mistwood ambush with unique enemy sprites and balanced player scale](screenshots/player-scale-balanced-live.png)
 
 The Royal Stables now stage Stablemaster Edda clearly in the courtyard beside Groom Tavin.
 
@@ -141,7 +143,7 @@ The campaign-flow mock checks scene progression and response effects. The MCP te
 
 The preferred art direction for named NPCs is a hand-painted 2D fantasy sprite, with realistic proportions and readable costume details at the game's map scale. Eleven cast members currently have transparent 3×3 turnaround sources and imported directional idle frames in [`art/reference/painted_turnarounds/`](art/reference/painted_turnarounds/README.md). `import_painted_turnaround.py` crops nine views into GemRB's 80×96 frame slots; its current prototype repeats each idle view across the four walk-frame slots, so authored locomotion remains open work.
 
-`build_npc_bams.py` compiles walk, ready, awake, and attack BAMs, and `build_game.py` binds each character through unique CRE resources and `avatars.2da` rows. Algoreth's staff-bearing player sprite uses 2× 160×192 source frames and its own directional attack sheet; pass `--scale 2` to the turnaround importer for player-sized frames. The remaining cast still uses frames rendered by `render_cast_sprites.py` from procedural Blender models; these are placeholders pending painted sources. Review all visible NPCs in each scene, since changing only the named speaker leaves blocky supporting characters beside the new art. With Blender available, regenerate missing placeholder frames and the contact sheet with:
+`build_npc_bams.py` compiles walk, ready, awake, and attack BAMs, and `build_game.py` binds each character through unique CRE resources and `avatars.2da` rows. Algoreth's staff-bearing player sprite now uses 1.25× 100×120 frames and its own directional attack sheet; import both his turnaround and attacks with `--scale 1.25` so he remains slightly prominent without overpowering NPCs. The remaining cast still uses frames rendered by `render_cast_sprites.py` from procedural Blender models; these are placeholders pending painted sources. Review all visible NPCs in each scene, since changing only the named speaker leaves blocky supporting characters beside the new art. With Blender available, regenerate missing placeholder frames and the contact sheet with:
 
 ```powershell
 python tools/terralum/render_cast_sprites.py --blender path\to\blender.exe

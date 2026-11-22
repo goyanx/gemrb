@@ -188,8 +188,8 @@ def _vhr_fallback_bam(data, first_cycle):
 	return header + frame_records + cycle_records + palette + lookup_bytes + pixels
 
 
-def write_scaled_player_avatar(source_override, output_override, factor=2.00):
-	"""Give the playable Algoreth and his scene cameo one larger animation."""
+def write_scaled_player_avatar(source_override, output_override, factor=1.25):
+	"""Give playable Algoreth a modest size increase over other world actors."""
 	base_creature = bytearray((source_override / "protagon.cre").read_bytes())
 	if base_creature[:8] != b"CRE V1.0":
 		raise ValueError("protagon.cre must be a supported CRE V1.0 source")

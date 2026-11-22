@@ -850,7 +850,7 @@ while timed_events:
     timed_events.pop(0)()
 window.controls[4].press()
 assert [event[1] for event in events if event[0] == "spawn"][-2:] == [
-	(1, "mistalk", 1008, 444), (1, "paleprow", 1120, 560)]
+	(1, "mistalk", 1008, 444), (1, "paleprow", 1080, 480)]
 assert globals_["TLENEMY_STALKER"] > 1001
 assert globals_["TLENEMY_PROWLER"] > globals_["TLENEMY_STALKER"]
 assert globals_["TLENEMY"] == globals_["TLENEMY_STALKER"]

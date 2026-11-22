@@ -304,8 +304,8 @@
               "hit_points": 8,
               "damage_bonus": -2,
               "position": [
-                1120,
-                560
+                1080,
+                480
               ],
               "flag": "TLENEMY_PROWLER"
             }

@@ -764,9 +764,9 @@ def build():
             clear_clone_default_script(creature)
             struct.pack_into("<I", creature, 0x28, avatar["animation_id"])
             (OUTPUT / "override" / f"{avatar['creature']}.cre").write_bytes(creature)
-    write_scaled_player_avatar(SOURCE / "override", OUTPUT / "override", factor=2.00)
-    # The enlarged protagonist uses a private TLPG animation family. Build its
-    # directional walk, idle, and attack BAMs from the painted Algoreth sheets;
+    write_scaled_player_avatar(SOURCE / "override", OUTPUT / "override", factor=1.25)
+    # The protagonist uses a slightly enlarged private TLPG animation family.
+    # Build its directional walk, idle, and attack BAMs from the painted sheets;
     # the scaled demo source supplied only G stances, so TLPGa1-a9 were missing.
     write_npc_avatar("algoreth", "TLPG", OUTPUT / "override")
     portrait_sheets = [(Image.open(path).convert("RGB"), columns, rows)
