@@ -2625,6 +2625,18 @@
         700
       ],
       "line": "The watch line is quiet. We have no order to cross the sealed threshold.",
+      "responses": [
+        {
+          "flag": "TLVIGIL",
+          "value": 1,
+          "line": "With each witness named beside their account, my sentries can report what they saw without turning it into an order to cross."
+        },
+        {
+          "flag": "TLVIGIL",
+          "value": 2,
+          "line": "The separate index lets us compare patrol accounts with the measurements. The watch line still holds."
+        }
+      ],
       "role": "Captain of the sanctuary watch",
       "faction": "Eldrador Sanctuary Warders",
       "goal": "Keep the outer camp orderly and the sanctuary boundary respected.",

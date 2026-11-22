@@ -12,7 +12,7 @@ After the party's threshold decision, Queen Vaelthira establishes an observation
 
 The recovered codex supports an Eldrador Tear in a lower sanctuary, a familiar voice, Vaelthira's invitation, and the Alsperian party's departure to investigate. It does not support the arrival's exact sequence, a speaking identity, a ward response, or the Tear's resolution. The camp, its ward-scribe, its procedure, and the player choice are **adaptation**. Dialogue must label reports as witness accounts or measurements and must not connect the voice to False Algoreth.
 
-The scene uses four named NPCs: new adaptation character Warden-Scribe Nerys, recurring Queen Vaelthira, Ward-Captain Mereth, and Seraphina Everglow. Nerys asks the player to choose one of two record policies: keep each witness attached to their own words, or separate testimony from measurements during comparison. The choice changes Mereth's and Vaelthira's responses and is recorded in one Act VIII Journal entry. A beat gate prevents the scene from ending before the player speaks with Nerys and makes the choice.
+The scene uses four named NPCs: new adaptation character Warden-Scribe Nerys, recurring Queen Vaelthira, Ward-Captain Mereth, and Seraphina Everglow. Nerys asks the player to choose one of two record policies: keep each witness attached to their own words, or separate testimony from measurements during comparison. The choice changes Mereth's, Vaelthira's, and Seraphina's responses and is recorded in one Act VIII Journal entry. A beat gate prevents the scene from ending before the player speaks with Nerys and makes the choice. Both Mereth response paths have now been live-reviewed.
 
 ## Beat and state outline
 
