@@ -189,6 +189,45 @@
       }
     ]
   },
+  "FEN": {
+    "states": [
+      {
+        "when": [{"flag": "TLCHAP", "value": 4}, {"flag": "TLHUNTER", "value": 0}],
+        "say": "The pale stones mark the quiet bend. A shuttered flame can point the way without carrying far through the trees.",
+        "transitions": [
+          {"text": "How far does the shuttered light carry?", "next": 1},
+          {"text": "Have you met the thing on the road?", "next": 2},
+          {"text": "That is enough for now.", "final": true}
+        ]
+      },
+      {
+        "say": "Only as far as the marked stones. The signal shows a route; it cannot tell us what is moving along it.",
+        "transitions": [{"text": "I will keep the signal narrow.", "final": true}]
+      },
+      {
+        "say": "No. I have not met the stalker. I can describe where the trail breaks and where the pale stones continue, but not what leaves those signs.",
+        "transitions": [{"text": "Then we will follow the signs, not guess at their source.", "final": true}]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 4}, {"flag": "TLHUNTER", "value": 1}],
+        "say": "The shuttered lantern marks the pale-stone bend. It shows a route, not what follows it.",
+        "transitions": [
+          {"text": "How far does the shuttered light carry?", "next": 1},
+          {"text": "Have you met the thing on the road?", "next": 2},
+          {"text": "We will take the marked bend.", "final": true}
+        ]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 4}, {"flag": "TLHUNTER", "value": 2}],
+        "say": "The camp stays dark. The trail remains uncertain, and I have no word on what made the tracks.",
+        "transitions": [
+          {"text": "How far would the shuttered light carry?", "next": 1},
+          {"text": "Have you met the thing on the road?", "next": 2},
+          {"text": "We will move without a signal.", "final": true}
+        ]
+      }
+    ]
+  },
   "SAREN": {
     "states": [
       {

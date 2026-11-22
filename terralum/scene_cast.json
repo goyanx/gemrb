@@ -242,7 +242,8 @@
       ],
       "faction": "Mistwood Hunters",
       "portrait": "HUNTER",
-      "avatar_creature": "hunter"
+      "avatar_creature": "hunter",
+      "dialog": "FEN"
     },
     {
       "name": "Ranger Ilya",
