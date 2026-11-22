@@ -35,6 +35,12 @@ The character-art direction is shifting to hand-painted 2D figures. This current
 </p>
 <p align="center"><em>Painted 2D NPC sprite prototype in the live Alsperia Market scene, with Algoreth scaled up for readability.</em></p>
 
+The latest player-scale fix applies the enlarged animation to the playable `protagon.cre` as well as the scripted Algoreth cameo. A fresh opening-scene capture verifies the actual party character in GemRB:
+
+<p align="center">
+  <a href="terralum/screenshots/player-scale-fixed-live.png"><img src="terralum/screenshots/player-scale-fixed-live.png" alt="Fresh live GemRB opening scene showing the enlarged playable Algoreth among the distinct market cast" width="92%"></a>
+</p>
+
 <p align="center">
   <a href="terralum/screenshots/terralum-cast-avatars-live.png"><img src="terralum/screenshots/terralum-cast-avatars-live.png" alt="Live GemRB opening scene with the custom Queen, King, and Archivist avatars" width="65%"></a>
   <a href="terralum/art/world_sprites/cast-contact-sheet.png"><img src="terralum/art/world_sprites/cast-contact-sheet.png" alt="Contact sheet of 38 custom Terralum NPC world avatars" width="30%"></a>

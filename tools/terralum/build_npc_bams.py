@@ -189,13 +189,17 @@ def _vhr_fallback_bam(data, first_cycle):
 
 
 def write_scaled_player_avatar(source_override, output_override, factor=2.00):
-	"""Give Algoreth a larger version of the existing animated protagonist art."""
+	"""Give the playable Algoreth and his scene cameo one larger animation."""
 	base_creature = bytearray((source_override / "protagon.cre").read_bytes())
 	if base_creature[:8] != b"CRE V1.0":
 		raise ValueError("protagon.cre must be a supported CRE V1.0 source")
 	animation_id, prefix = 0xC8F0, "TLPG"
 	struct.pack_into("<I", base_creature, 0x28, animation_id)
 	(output_override / "algopc.cre").write_bytes(base_creature)
+	# The game party is instantiated from protagonist.cre. Previously only the
+	# scripted scene cameo used algopc.cre, so it looked enlarged while the
+	# controllable character stayed at the demo's original scale.
+	(output_override / "protagon.cre").write_bytes(base_creature)
 	with (output_override / "avatars.2da").open("a", encoding="utf-8", newline="") as table:
 		table.write(f"\n0x{animation_id:04X} {prefix} {prefix} {prefix} {prefix} 0 2 0 *")
 	player_stances = {}
