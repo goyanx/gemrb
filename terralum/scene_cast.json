@@ -541,6 +541,7 @@
     },
     {
       "name": "Courier Eren",
+      "dialog": "EREN",
       "creature": "riddler",
       "position": [
         1000,

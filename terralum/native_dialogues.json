@@ -275,6 +275,67 @@
       }
     ]
   },
+  "EREN": {
+    "states": [
+      {
+        "when": [{"flag": "TLCHAP", "value": 5}, {"flag": "TLRIVER", "value": 0}, {"flag": "TLTRAVELKIT", "value": 2}],
+        "say": "This dispatch is sealed against water. It records the road, not what moves under these trees. I brought rope, but Maelin must anchor the line before the cart can cross.",
+        "transitions": [
+          {"text": "What does the dispatch say about the road?", "next": 1},
+          {"text": "What can you bring across on the handline?", "next": 2},
+          {"text": "Wait for Maelin to choose the crossing.", "final": true}
+        ]
+      },
+      {
+        "say": "I have not opened the crown seal. The dispatch records road marks and patrol notes; it does not name whatever moves through Mistwood.",
+        "transitions": [{"text": "Keep the dispatch sealed until it reaches the next courier.", "final": true}]
+      },
+      {
+        "say": "If Maelin secures the line, I can keep the dispatch dry and bring the cart across with it, provided the rope holds.",
+        "transitions": [{"text": "We will keep the load secured.", "final": true}]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 5}, {"flag": "TLRIVER", "value": 0}, {"flag": "TLTRAVELKIT", "value": 1}],
+        "say": "This dispatch is sealed against water. The kit has a lantern, not rope, so I can carry the document over the stones, but the cart must stay on this bank.",
+        "transitions": [
+          {"text": "What does the dispatch say about the road?", "next": 1},
+          {"text": "How will you cross without a handline?", "next": 4},
+          {"text": "Wait for Maelin to choose the crossing.", "final": true}
+        ]
+      },
+      {
+        "say": "I can carry the sealed dispatch over the exposed stones. The cart stays above the water; I will not risk the crown's record in the current.",
+        "transitions": [{"text": "Carry the dispatch carefully.", "final": true}]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 5}, {"flag": "TLRIVER", "value": 1}, {"flag": "TLTRAVELKIT", "value": 2}],
+        "say": "The party chose the rope. Maelin can secure the line, and I can bring the cart and sealed dispatch across if it holds.",
+        "transitions": [
+          {"text": "What does the dispatch say about the road?", "next": 1},
+          {"text": "What can you bring across on the handline?", "next": 2},
+          {"text": "Keep the load ready.", "final": true}
+        ]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 5}, {"flag": "TLRIVER", "value": 1}, {"flag": "TLTRAVELKIT", "value": 1}],
+        "say": "The party chose a handline, but no rope came with us. I will carry the dispatch over the stones and leave the loaded cart behind.",
+        "transitions": [
+          {"text": "What does the dispatch say about the road?", "next": 1},
+          {"text": "How will you cross without a handline?", "next": 4},
+          {"text": "Keep the dispatch close.", "final": true}
+        ]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 5}, {"flag": "TLRIVER", "value": 2}],
+        "say": "The party chose the stones. I can carry the sealed dispatch across, but the cart stays behind and the ford remains exposed.",
+        "transitions": [
+          {"text": "What does the dispatch say about the road?", "next": 1},
+          {"text": "How will you carry it over?", "next": 4},
+          {"text": "Keep the dispatch dry.", "final": true}
+        ]
+      }
+    ]
+  },
   "SAREN": {
     "states": [
       {

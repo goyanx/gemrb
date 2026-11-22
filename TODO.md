@@ -4,6 +4,8 @@ This is the current work ledger for human and AI contributors. Read [AGENTS.md](
 
 ## Done
 
+- [x] Authored Courier Eren's optional River Crossing DLG and bound it to his scene actor. Entry and re-entry lines reflect the current crossing decision and whether the expedition carries rope; the dialogue keeps the crown dispatch sealed, does not claim it identifies the Mistwood threat, and does not write Maelin's route choice or the story beat's Journal event. Compiled validation is complete; click-to-talk and branch review in GemRB remain open.
+
 - [x] Added Act VIII’s Eldrador Outer Watch Camp as a lore-bounded adaptation with original painted background, Warden-Scribe Nerys portrait and world sprite, four individually bound NPCs, three story beats, female Kokoro narration, and existing cavern ambience. Built all 27 areas; the live isolated scene displays all four actors, blocks Continue until Nerys’s record policy is selected, then reaches Seraphina’s closing beat and the Act VIII Journal entry (`terralum/screenshots/eldrador-outer-watch-act8-live.png`, `terralum/screenshots/eldrador-outer-watch-act8-gate.png`, `terralum/screenshots/eldrador-outer-watch-act8-dialogue.png`, `terralum/screenshots/eldrador-outer-watch-act8-journal.png`). A named save/reload preserves the selected policy response and Journal entry (`terralum/screenshots/eldrador-outer-watch-act8-saved-v5.png`, `terralum/screenshots/eldrador-outer-watch-act8-reloaded-response-v5.png`, `terralum/screenshots/eldrador-outer-watch-act8-reloaded-journal-v5.png`). Live tests also verify distinct policy acknowledgments from Ward-Captain Mereth (`terralum/screenshots/eldrador-mereth-policy-1-live.png`, `terralum/screenshots/eldrador-mereth-policy-2-live.png`).
 
 
