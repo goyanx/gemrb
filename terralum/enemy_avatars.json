@@ -1,0 +1,12 @@
+[
+  {
+    "creature": "mistalk",
+    "asset": "mistalk",
+    "base_creature": "riddler"
+  },
+  {
+    "creature": "paleprow",
+    "asset": "paleprow",
+    "base_creature": "protagon"
+  }
+]

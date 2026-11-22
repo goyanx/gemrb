@@ -25,6 +25,7 @@ OUTPUT = Path(os.environ.get("TERRALUM_GAME_OUTPUT", PROJECT / "build" / "game")
 CAST_FILE = PROJECT / "scene_cast.json"
 NATIVE_DIALOGUE_FILE = PROJECT / "native_dialogues.json"
 SEARCHMAP_FILE = PROJECT / "area_searchmaps.json"
+ENEMY_AVATAR_FILE = PROJECT / "enemy_avatars.json"
 AREA_IMAGE = PROJECT / "art" / "observatory_courtyard.png"
 PORTRAIT_SHEETS = (
     (PROJECT / "art" / "character_portraits_sheet.png", 3, 3),
@@ -136,7 +137,32 @@ def world_avatar_catalog():
 
 
 NPC_AVATARS = world_avatar_catalog()
-SUPPORTED_CREATURES = {"protagon", "riddler"} | {avatar["creature"] for avatar in NPC_AVATARS}
+
+
+def encounter_avatar_catalog():
+    specs = json.loads(ENEMY_AVATAR_FILE.read_text(encoding="utf-8"))
+    used_creatures = {avatar["creature"] for avatar in NPC_AVATARS}
+    other_index = sum(avatar["name"] != "Queen Alisande" for avatar in NPC_AVATARS)
+    avatars = []
+    for spec in specs:
+        if (not isinstance(spec, dict) or not spec.get("creature") or not spec.get("asset")
+                or spec.get("base_creature") not in ("protagon", "riddler")
+                or spec["creature"] in used_creatures):
+            raise ValueError("enemy_avatars.json entries need unique creature/asset names and a supported base CRE")
+        avatars.append({
+            **spec,
+            "animation_id": 0xC901 + other_index,
+            "prefix": f"TL{other_index:02X}",
+        })
+        used_creatures.add(spec["creature"])
+        other_index += 1
+    return tuple(avatars)
+
+
+ENCOUNTER_AVATARS = encounter_avatar_catalog()
+SUPPORTED_CREATURES = ({"protagon", "riddler"}
+                       | {avatar["creature"] for avatar in NPC_AVATARS}
+                       | {avatar["creature"] for avatar in ENCOUNTER_AVATARS})
 SETUP_FILE = ROOT / "gemrb" / "GUIScripts" / "terralum" / "SetupGame.py"
 AREAS = {
     "tl0001": "alsperia_market.png",
@@ -209,7 +235,7 @@ def read_story():
                     flag = member.get("flag") if isinstance(member, dict) else None
                     if (not isinstance(member, dict) or not isinstance(member.get("name"), str)
                             or not member["name"].strip() or len(member["name"]) > 120
-                            or member.get("creature") not in ("protagon", "riddler")
+                            or member.get("creature") not in SUPPORTED_CREATURES
                             or not isinstance(position, list) or len(position) != 2
                             or any(type(value) is not int or not 0 <= value <= 32767 for value in position)
                             or not isinstance(flag, str) or not re.fullmatch(r"TL[A-Z][A-Z0-9_]{1,28}", flag)
@@ -719,7 +745,14 @@ def build():
                 raise ValueError(f"{avatar['base_creature']}.cre must be a supported CRE V1.0 source")
             struct.pack_into("<I", creature, 0x28, avatar["animation_id"])
             (OUTPUT / "override" / f"{avatar['creature']}.cre").write_bytes(creature)
-    write_scaled_player_avatar(SOURCE / "override", OUTPUT / "override", factor=1.70)
+        for avatar in ENCOUNTER_AVATARS:
+            table.write(f"\n0x{avatar['animation_id']:04X} {avatar['prefix']} {avatar['prefix']} "
+                        f"{avatar['prefix']} {avatar['prefix']} 0 2 1 *")
+            write_npc_avatar(avatar["asset"], avatar["prefix"], OUTPUT / "override")
+            creature = bytearray((OUTPUT / "override" / f"{avatar['base_creature']}.cre").read_bytes())
+            struct.pack_into("<I", creature, 0x28, avatar["animation_id"])
+            (OUTPUT / "override" / f"{avatar['creature']}.cre").write_bytes(creature)
+    write_scaled_player_avatar(SOURCE / "override", OUTPUT / "override", factor=2.00)
     portrait_sheets = [(Image.open(path).convert("RGB"), columns, rows)
                        for path, columns, rows in PORTRAIT_SHEETS]
     for portrait, (sheet_index, column, row) in PORTRAITS.items():

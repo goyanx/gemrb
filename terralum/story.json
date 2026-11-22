@@ -283,7 +283,7 @@
           "enemies": [
             {
               "name": "Mistwood stalker",
-              "creature": "riddler",
+              "creature": "mistalk",
               "position": [
                 1008,
                 444
@@ -292,7 +292,7 @@
             },
             {
               "name": "Pale-stone prowler",
-              "creature": "protagon",
+              "creature": "paleprow",
               "position": [
                 1120,
                 560

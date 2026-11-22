@@ -143,7 +143,52 @@ def _scale_bam_v1(data, factor):
 	return header + frame_table + cycle_table + palette + lookups + new_pixels
 
 
-def write_scaled_player_avatar(source_override, output_override, factor=1.70):
+def _vhr_fallback_bam(data, first_cycle):
+	"""Reuse G17 idle directions at a VHR stance's fixed cycle offset."""
+	if data[:8] != b"BAM V1  ":
+		raise ValueError("VHR fallback source must be BAM V1")
+	frame_count, cycle_count, compressed, frame_offset, palette_offset, lookup_offset = \
+		struct.unpack_from("<HBBIII", data, 8)
+	if compressed:
+		raise ValueError("compressed BAM V1 frames cannot back VHR fallback stances")
+	frames = [struct.unpack_from("<HHhhI", data, frame_offset + index * 12)
+		for index in range(frame_count)]
+	cycle_offset = frame_offset + frame_count * 12
+	cycles = [struct.unpack_from("<HH", data, cycle_offset + index * 4)
+		for index in range(cycle_count)]
+	lookup_count = max((start + count for count, start in cycles), default=0)
+	lookups = [struct.unpack_from("<H", data, lookup_offset + index * 2)[0]
+		for index in range(lookup_count)]
+	idle_frames = []
+	for direction in range(9):
+		count, start = cycles[63 + direction]
+		if not count:
+			raise ValueError("G17 source is missing an awake idle direction")
+		idle_frames.append(lookups[start])
+	old_data_offset = lookup_offset + lookup_count * 2
+	pixels = data[old_data_offset:]
+	new_cycle_count = first_cycle + 9
+	cycle_lookups = [idle_frames[0]] * first_cycle + idle_frames
+	new_frame_offset = 24
+	new_cycle_offset = new_frame_offset + frame_count * 12
+	new_palette_offset = new_cycle_offset + new_cycle_count * 4
+	new_lookup_offset = new_palette_offset + 1024
+	new_data_offset = new_lookup_offset + new_cycle_count * 2
+	frame_table = []
+	for width, height, center_x, center_y, frame_flags in frames:
+		old_pixels_offset = frame_flags & 0x7FFFFFFF
+		new_flags = 0x80000000 | (new_data_offset + old_pixels_offset - old_data_offset)
+		frame_table.append((width, height, center_x, center_y, new_flags))
+	header = b"BAM V1  " + struct.pack("<HBBIII", frame_count, new_cycle_count, 0,
+		new_frame_offset, new_palette_offset, new_lookup_offset)
+	frame_records = b"".join(struct.pack("<HHhhI", *record) for record in frame_table)
+	cycle_records = b"".join(struct.pack("<HH", 1, index) for index in range(new_cycle_count))
+	lookup_bytes = b"".join(struct.pack("<H", index) for index in cycle_lookups)
+	palette = data[palette_offset:palette_offset + 1024]
+	return header + frame_records + cycle_records + palette + lookup_bytes + pixels
+
+
+def write_scaled_player_avatar(source_override, output_override, factor=2.00):
 	"""Give Algoreth a larger version of the existing animated protagonist art."""
 	base_creature = bytearray((source_override / "protagon.cre").read_bytes())
 	if base_creature[:8] != b"CRE V1.0":
@@ -161,11 +206,13 @@ def write_scaled_player_avatar(source_override, output_override, factor=1.70):
 		source = source_override / f"CHMB1{source_suffix}.BAM"
 		player_stances[suffix] = _scale_bam_v1(source.read_bytes(), factor)
 		(output_override / f"{prefix}{suffix}.BAM").write_bytes(player_stances[suffix])
-	# CODE_MIRROR may request these VHR stance suffixes for head turns,
-	# damage, death, sleep, and emergence. The demo G17 BAM includes their
-	# indexed cycles, so scaled G17 is a valid fallback for those poses.
-	for suffix in ("G12", "G13", "G14", "G15", "G16", "G18", "G19"):
-		(output_override / f"{prefix}{suffix}.BAM").write_bytes(player_stances["G17"])
+	# VHR stances address fixed cycle offsets. The source G17 BAM only has
+	# populated awake orientations at 63-71; aliases must explicitly map those
+	# nine frames to each requested stance offset, including G1 ready at 9-17.
+	for suffix, first_cycle in (("G1", 9), ("G12", 18), ("G13", 27), ("G14", 36),
+							("G15", 45), ("G16", 54), ("G18", 72), ("G19", 81)):
+		(output_override / f"{prefix}{suffix}.BAM").write_bytes(
+			_vhr_fallback_bam(player_stances["G17"], first_cycle))
 
 
 def write_npc_avatar(name, prefix, output_override):

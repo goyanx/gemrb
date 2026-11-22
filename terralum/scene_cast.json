@@ -1862,8 +1862,8 @@
       "portrait": "LEORA0",
       "creature": "protagon",
       "position": [
-        700,
-        650
+        752,
+        648
       ],
       "line": "The west-road patrol schedule is current. I can copy it for the journey, or keep the sealed original here.",
       "choices": [

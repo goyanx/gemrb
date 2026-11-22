@@ -111,6 +111,8 @@ In the current prototype, `terralum/area_searchmaps.json` stores polygon coordin
 
 For every encounter or puzzle, specify the player-facing clue, expected tactics, difficulty target, party assumptions, failure state, victory state, and quest effect. Provide a noncombat route when it fits the characters and scene. Rewards should arrive at the moment promised and be recorded in the journal or world state. Persistent story events must survive save/load without duplication.
 
+Give named enemies their own visible CRE and world-sprite resources when the encounter depends on recognizing them. Keep encounter-only actors in a separate enemy avatar catalog so the area cast does not spawn a neutral duplicate before combat. Distinct names in the log or panel do not replace a visible enemy silhouette.
+
 **Pass:** The encounter is winnable with the expected party, loss cannot softlock the campaign, and victory or resolution visibly changes the scene or quest.
 
 ### Gate G — Script and resource integration

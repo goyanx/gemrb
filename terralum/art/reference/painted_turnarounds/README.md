@@ -15,6 +15,8 @@ These generated transparent turnarounds establish the corrected world-character 
 | Royal Scribe Oren | `oren00` | `oren.png` |
 | Courier Pell | `pell00` | `pell.png` |
 | Courier Eren | `eren00` | `eren.png` |
+| Mistwood Stalker (encounter enemy) | `mistalk` | `mistwood_stalker.png` |
+| Pale-Stone Prowler (encounter enemy) | `paleprow` | `pale_stone_prowler.png` |
 
 Convert a sheet into GemRB's nine directional 80x96 frame slots with:
 
