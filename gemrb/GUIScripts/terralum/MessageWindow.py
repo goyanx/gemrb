@@ -518,6 +518,15 @@ def OnLoad():
 			# GemRB may remove the actor once its death animation ends.
 			return False
 
+	def apply_encounter_phase_stats(enemy, phase):
+		hit_points = phase.get("hit_points")
+		if hit_points is not None:
+			GemRB.SetPlayerStat(enemy, IE_MAXHITPOINTS, hit_points)
+			GemRB.SetPlayerStat(enemy, IE_HITPOINTS, hit_points)
+		damage_bonus = phase.get("damage_bonus")
+		if damage_bonus is not None:
+			GemRB.SetPlayerStat(enemy, IE_DAMAGEBONUS, damage_bonus)
+
 	def narrate():
 		chapter = chapters[GemRB.GetGameVar("TLCHAP")]
 		if chapter.get("voice"):
@@ -775,6 +784,7 @@ def OnLoad():
 				if spawn_flag:
 					GemRB.SetGlobal(spawn_flag, "GLOBAL", enemy)
 			GemRB.SetPlayerStat(enemy, IE_EA, ENEMY)
+			apply_encounter_phase_stats(enemy, phase)
 			GemRB.ExecuteString("Attack(Player1)", enemy)
 			encounter_name = phase.get("name", beat["encounter"])
 			encounter_text = phase.get("text", encounter_name + " emerges.")
@@ -811,6 +821,7 @@ def OnLoad():
 				if spawn_flag:
 					GemRB.SetGlobal(spawn_flag, "GLOBAL", enemy)
 				GemRB.SetPlayerStat(enemy, IE_EA, ENEMY)
+				apply_encounter_phase_stats(enemy, phase)
 				GemRB.ExecuteString("Attack(Player1)", enemy)
 				message.Append("\n\nENCOUNTER: " + phase["text"] + " Defeat it to continue.")
 				action.SetText("CONTINUE")

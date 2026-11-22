@@ -1448,6 +1448,10 @@ for warding in (1, 2):
     window.controls[4].press()
     assert "Ward Shard" in window.controls[0].text, window.controls[0].text
     assert (1, "wrdshard", 930, 600) in [event[1] for event in events if event[0] == "spawn"]
+    ward_shard = globals_["TLENEMY"]
+    assert ("set-stat", ward_shard, campaign.IE_MAXHITPOINTS, 10) in events
+    assert ("set-stat", ward_shard, campaign.IE_HITPOINTS, 10) in events
+    assert ("set-stat", ward_shard, campaign.IE_DAMAGEBONUS, -2) in events
     enemy_dead = True
     window.controls[4].press()
     assert "False Algoreth" in window.controls[0].text
@@ -1458,6 +1462,9 @@ for warding in (1, 2):
     assert (1, "falseal", 1250, 600) in [event[1] for event in events if event[0] == "spawn"]
     assert ("name", false_algoreth, "False Algoreth") in events
     assert ("attack", "Attack(Player1)", false_algoreth) in events
+    assert ("set-stat", false_algoreth, campaign.IE_MAXHITPOINTS, 14) in events
+    assert ("set-stat", false_algoreth, campaign.IE_HITPOINTS, 14) in events
+    assert ("set-stat", false_algoreth, campaign.IE_DAMAGEBONUS, -1) in events
     assert globals_["TLJRN_TEAR"] == 0
     window.controls[4].press()
     resolution = next(route for route in campaign.Story.chapters()[chapter_index_by_area["tl0005"]]["beats"][3]["routes"]

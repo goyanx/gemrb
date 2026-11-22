@@ -280,10 +280,16 @@ def read_story():
                     phase_flag = phase.get("actor_flag") if isinstance(phase, dict) else None
                     spawn_flag = phase.get("spawn_flag") if isinstance(phase, dict) else None
                     phase_creature = phase.get("creature", "riddler") if isinstance(phase, dict) else None
+                    phase_hp = phase.get("hit_points") if isinstance(phase, dict) else None
+                    phase_damage = phase.get("damage_bonus") if isinstance(phase, dict) else None
                     if (not isinstance(phase, dict) or not isinstance(phase.get("name"), str)
                             or not phase["name"].strip() or not phase.get("text")
                             or not isinstance(phase_creature, str)
                             or phase_creature not in SUPPORTED_CREATURES
+                            or (phase_hp is not None and (type(phase_hp) is not int
+                                or not 1 <= phase_hp <= 100))
+                            or (phase_damage is not None and (type(phase_damage) is not int
+                                or not -20 <= phase_damage <= 20))
                             or (spawn_flag is not None and (not isinstance(spawn_flag, str)
                                 or not re.fullmatch(r"TL[A-Z][A-Z0-9_]{1,28}", spawn_flag)
                                 or spawn_flag not in initialized_flags))
