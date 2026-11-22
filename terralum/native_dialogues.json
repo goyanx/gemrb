@@ -336,6 +336,68 @@
       }
     ]
   },
+  "SELLA": {
+    "states": [
+      {
+        "when": [{"flag": "TLCHAP", "value": 6}, {"flag": "TLWAYSTONE", "value": 0}],
+        "say": "The storm turned the center stone. Its notch survives, but the marker does not name its maker or promise safe ground. The pale stones still lead toward the ruined watchpost.",
+        "transitions": [
+          {"text": "Why leave the choice to each traveler?", "next": 1},
+          {"text": "Can the pale stones still guide us?", "next": 2},
+          {"text": "I will read the fork before deciding.", "final": true}
+        ]
+      },
+      {
+        "say": "A keeper can maintain a marker. I should not turn an old notch into a command for everyone who passes, especially when I cannot vouch for the road beyond it.",
+        "transitions": [{"text": "Then we will judge the route ourselves.", "final": true}]
+      },
+      {
+        "say": "The pale stones run toward the ruined watchpost. They show a route people used; they cannot tell us what waits along it.",
+        "transitions": [{"text": "We will keep watch as we travel.", "final": true}]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 6}, {"flag": "TLWAYSTONE", "value": 1}],
+        "say": "You set the marker upright. Its worn notch points toward the ruined watchpost, but it still names no maker and promises no safety.",
+        "transitions": [{"text": "We will follow the pale stones carefully.", "final": true}]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 6}, {"flag": "TLWAYSTONE", "value": 2}],
+        "say": "You left the marker turned. The pale stones remain, but the old notch will not speak for the trail.",
+        "transitions": [{"text": "We will find the route without trusting the sign.", "final": true}]
+      }
+    ]
+  },
+  "DOMA": {
+    "states": [
+      {
+        "when": [{"flag": "TLCHAP", "value": 6}, {"flag": "TLWAYSTONE", "value": 0}],
+        "say": "A notch can point toward a road. It cannot tell you what waits on it, and weather has worn away any mark that might have named the carver.",
+        "transitions": [
+          {"text": "Can you tell who cut the notch?", "next": 1},
+          {"text": "Would the socket hold the stone upright?", "next": 2},
+          {"text": "I will hear Sella before choosing.", "final": true}
+        ]
+      },
+      {
+        "say": "No name remains. I can read the weathering and the socket, not the hand that first shaped it. Anything more would be a guess.",
+        "transitions": [{"text": "Then we will leave its maker unknown.", "final": true}]
+      },
+      {
+        "say": "The socket is sound enough to seat the marker. That makes the direction plain again, not the trail safe. The choice belongs to the travelers who will take it.",
+        "transitions": [{"text": "We will decide after we inspect the fork.", "final": true}]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 6}, {"flag": "TLWAYSTONE", "value": 1}],
+        "say": "The stone sits true again. Keep the worn notch as a direction only; the old cut says nothing about safety.",
+        "transitions": [{"text": "We understand the limit of the sign.", "final": true}]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 6}, {"flag": "TLWAYSTONE", "value": 2}],
+        "say": "You left it turned. Better an unread mark than a promise neither of us can make about the trail.",
+        "transitions": [{"text": "We will keep to the pale stones.", "final": true}]
+      }
+    ]
+  },
   "SAREN": {
     "states": [
       {

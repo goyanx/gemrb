@@ -292,6 +292,7 @@
   "tl0016": [
     {
       "name": "Waykeeper Sella",
+      "dialog": "SELLA",
       "role": "Caretaker of the Mistwood trail markers",
       "goal": "Keep the fork legible for travelers without claiming the old marker points to safe ground.",
       "knowledge": "Knows the pale stones still lead toward the ruined watchpost; cannot date or identify the waystone's maker.",
@@ -323,6 +324,7 @@
     },
     {
       "name": "Carver Doma",
+      "dialog": "DOMA",
       "portrait": "DOMA00",
       "role": "Stoneworker who maintains the old trail signs",
       "goal": "Preserve the remaining cuts in the waystone and stop visitors from mistaking a route for a promise of safety.",
