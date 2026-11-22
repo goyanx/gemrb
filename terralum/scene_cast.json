@@ -1943,8 +1943,8 @@
       "portrait": "LEORA0",
       "creature": "protagon",
       "position": [
-        752,
-        648
+        760,
+        925
       ],
       "line": "The west-road patrol schedule is current. I can copy it for the journey, or keep the sealed original here.",
       "choices": [
@@ -1975,8 +1975,8 @@
       "portrait": "NERIN0",
       "creature": "riddler",
       "position": [
-        1000,
-        650
+        900,
+        985
       ],
       "line": "The patrol turns at the old watchpost. The map table shows where a lawful diversion could draw danger away from the road.",
       "responses": [
