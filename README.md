@@ -41,7 +41,7 @@ The latest player-scale fix applies the enlarged animation to the playable `prot
   <a href="terralum/screenshots/player-scale-fixed-live.png"><img src="terralum/screenshots/player-scale-fixed-live.png" alt="Fresh live GemRB opening scene showing the enlarged playable Algoreth among the distinct market cast" width="92%"></a>
 </p>
 
-The named save/load flow preserves both outcomes of Mara's ledger decision across area transitions. After saving and reloading either choice, Inessa's Library response matches it; the shared quest and ledger record remain in the Journal.
+The named save/load flow preserves both outcomes of Mara's campaign-panel ledger decision across area transitions. The native DLG sealed-ledger branch has also been saved and reloaded, and Inessa's Library response matches it. The shared quest and ledger record remain in the Journal.
 
 <p align="center">
   <a href="terralum/screenshots/save-load-mara-journal.png"><img src="terralum/screenshots/save-load-mara-journal.png" alt="Terralum Journal after reloading a save, showing the route quest and Mara's ledger decision" width="48%"></a>
@@ -49,6 +49,10 @@ The named save/load flow preserves both outcomes of Mara's ledger decision acros
 </p>
 <p align="center">
   <a href="terralum/screenshots/save-load-downstream-inessa-sealed-live.png"><img src="terralum/screenshots/save-load-downstream-inessa-sealed-live.png" alt="Scholar Inessa responds to Mara's sealed-ledger decision after loading a saved game and traveling to the Library" width="70%"></a>
+</p>
+<p align="center">
+  <a href="terralum/screenshots/native-dlg-mara-saved.png"><img src="terralum/screenshots/native-dlg-mara-saved.png" alt="Named game save created after completing Mara's native Infinity Engine dialogue" width="48%"></a>
+  <a href="terralum/screenshots/native-dlg-inessa-callback.png"><img src="terralum/screenshots/native-dlg-inessa-callback.png" alt="Inessa's later Library response after reloading Mara's native sealed-ledger dialogue choice" width="48%"></a>
 </p>
 <p align="center"><em>Live GemRB persistence check: the Journal and a later NPC response both reflect the saved branch.</em></p>
 
