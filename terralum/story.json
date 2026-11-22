@@ -1005,13 +1005,13 @@
           "journal": {
             "flag": "TLJRN_ARRIVAL",
             "section": 4,
-            "text": "The party arrived in Eldrador. Algoreth chose whether the expedition would begin with the warders' warder inquirys or their measured seal records. The cause and outcome of Vaelthira's Tear remain unknown."
+            "text": "The party arrived in Eldrador. Algoreth chose whether the expedition would begin with the warders' testimony or their measured seal records. The cause and outcome of Vaelthira's Tear remain unknown."
           },
           "routes": [
             {
               "flag": "TLELDRADOR",
               "value": 1,
-              "text": "The warders' warder inquirys are kept as testimony, with each speaker's words separate from the expedition's conclusions."
+              "text": "The warders' testimony is kept with each speaker's words separate from the expedition's conclusions."
             },
             {
               "flag": "TLELDRADOR",

@@ -41,6 +41,14 @@ The latest player-scale fix applies the enlarged animation to the playable `prot
   <a href="terralum/screenshots/player-scale-fixed-live.png"><img src="terralum/screenshots/player-scale-fixed-live.png" alt="Fresh live GemRB opening scene showing the enlarged playable Algoreth among the distinct market cast" width="92%"></a>
 </p>
 
+The named save/load flow also preserves dialogue decisions across area transitions. In the live test, the player copied Mara's route landmarks, saved and reloaded, then reached the Library: Mara's decision remained in the Journal and Inessa acknowledged the copied record.
+
+<p align="center">
+  <a href="terralum/screenshots/save-load-mara-journal.png"><img src="terralum/screenshots/save-load-mara-journal.png" alt="Terralum Journal after reloading a save, showing the route quest and Mara's ledger decision" width="48%"></a>
+  <a href="terralum/screenshots/save-load-downstream-inessa-live.png"><img src="terralum/screenshots/save-load-downstream-inessa-live.png" alt="Scholar Inessa responds to Mara's copied-landmarks decision after loading a saved game and traveling to the Library" width="48%"></a>
+</p>
+<p align="center"><em>Live GemRB persistence check: the Journal and a later NPC response both reflect the saved branch.</em></p>
+
 <p align="center">
   <a href="terralum/screenshots/terralum-cast-avatars-live.png"><img src="terralum/screenshots/terralum-cast-avatars-live.png" alt="Live GemRB opening scene with the custom Queen, King, and Archivist avatars" width="65%"></a>
   <a href="terralum/art/world_sprites/cast-contact-sheet.png"><img src="terralum/art/world_sprites/cast-contact-sheet.png" alt="Contact sheet of 38 custom Terralum NPC world avatars" width="30%"></a>

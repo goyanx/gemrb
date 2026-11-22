@@ -157,7 +157,7 @@
       "creature": "protagon",
       "position": [
         930,
-        500
+        700
       ],
       "line": "Dorian's name appears in the oldest catalog. The entry says he feared the purpose of the traveller more than the road itself.",
       "role": "Keeper of the royal catalogue",
@@ -2174,7 +2174,7 @@
       "role": "Harbor and sanctuary road warden",
       "faction": "Eldrador Wardens",
       "goal": "Keep the road secure and give the expedition access to the local evidence it requests.",
-      "knowledge": "Knows that the road is closed and that warders recorded warder testimonys and seal measurements; has no explanation for the Tear.",
+      "knowledge": "Knows that the road is closed and that warders recorded testimony and seal measurements; has no explanation for the Tear.",
       "voice": "Formal and practical, careful not to put words in the witnesses' mouths.",
       "provenance": "adaptation",
       "avatar_creature": "oris00"
