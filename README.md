@@ -54,6 +54,9 @@ The named save/load flow preserves both outcomes of Mara's campaign-panel ledger
   <a href="terralum/screenshots/native-dlg-mara-saved.png"><img src="terralum/screenshots/native-dlg-mara-saved.png" alt="Named game save created after completing Mara's native Infinity Engine dialogue" width="48%"></a>
   <a href="terralum/screenshots/native-dlg-inessa-callback.png"><img src="terralum/screenshots/native-dlg-inessa-callback.png" alt="Inessa's later Library response after reloading Mara's native sealed-ledger dialogue choice" width="48%"></a>
 </p>
+<p align="center">
+  <a href="terralum/screenshots/native-dlg-inessa-copy-callback.png"><img src="terralum/screenshots/native-dlg-inessa-copy-callback.png" alt="Inessa's later Library response after reloading Mara's native copied-landmarks dialogue choice" width="70%"></a>
+</p>
 <p align="center"><em>Live GemRB persistence check: the Journal and a later NPC response both reflect the saved branch.</em></p>
 
 <p align="center">
