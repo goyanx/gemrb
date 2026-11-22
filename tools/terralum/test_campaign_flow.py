@@ -1439,11 +1439,18 @@ for warding in (1, 2):
     window.controls[4].press()
     window.controls[4].press()
     assert "Ward Shard" in window.controls[0].text, window.controls[0].text
+    assert (1, "wrdshard", 1100, 680) in [event[1] for event in events if event[0] == "spawn"]
     enemy_dead = True
     window.controls[4].press()
     assert "False Algoreth" in window.controls[0].text
     assert "Next time, I will have learned" in window.controls[0].text
     assert globals_["TLECHOPHASE"] == 1
+    false_algoreth = globals_["TLFALSE_ALGORETH"]
+    assert false_algoreth == globals_["TLENEMY"]
+    assert any(event[0] == "spawn" and event[1][:2] == (1, "falseal")
+               for event in events)
+    assert ("name", false_algoreth, "False Algoreth") in events
+    assert ("attack", "Attack(Player1)", false_algoreth) in events
     assert globals_["TLJRN_TEAR"] == 0
     window.controls[4].press()
     resolution = next(route for route in campaign.Story.chapters()[chapter_index_by_area["tl0005"]]["beats"][3]["routes"]
