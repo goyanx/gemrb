@@ -278,7 +278,7 @@
           "companion": {
             "actor_flag": "TLMISTWOOD_TESSA",
             "triggered_flag": "TLMISTWOOD_TESSA_COMBAT_CUE",
-            "party_to_hit": 17,
+            "party_to_hit": 14,
             "join_line": "Tessa points out the prowler and calls for Algoreth to hold the road."
           },
           "victory_journal": {

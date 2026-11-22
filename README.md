@@ -33,12 +33,19 @@ The character-art direction is shifting to hand-painted 2D figures. This current
 <p align="center">
   <a href="terralum/screenshots/painted-opening-cast.png"><img src="terralum/screenshots/painted-opening-cast.png" alt="Live GemRB scene with painted two-dimensional sprites for Archivist Mara, King Edmon, and Queen Alisande" width="92%"></a>
 </p>
-<p align="center"><em>Painted 2D NPC sprite prototype in the live Alsperia Market scene, with Algoreth scaled up for readability.</em></p>
+<p align="center"><em>Painted 2D NPC sprite prototype in the live Alsperia Market scene.</em></p>
 
-The latest player-scale fix applies the enlarged animation to the playable `protagon.cre` as well as the scripted Algoreth cameo. A fresh opening-scene capture verifies the actual party character in GemRB:
+The playable Algoreth is now scaled to 125% of the painted NPC source, matching the other party members and named cast without dominating the scene. A fresh opening capture verifies the actual party character in GemRB:
 
 <p align="center">
-  <a href="terralum/screenshots/player-scale-fixed-live.png"><img src="terralum/screenshots/player-scale-fixed-live.png" alt="Fresh live GemRB opening scene showing the enlarged playable Algoreth among the distinct market cast" width="92%"></a>
+  <a href="terralum/screenshots/player-scale-balanced-market.png"><img src="terralum/screenshots/player-scale-balanced-market.png" alt="Fresh live GemRB opening scene showing playable Algoreth at a scale balanced with the distinct market cast" width="92%"></a>
+</p>
+
+The Mistwood ambush now plays through both defeats, records its victory Journal entry, and preserves that entry through a named save and reload:
+
+<p align="center">
+  <a href="terralum/screenshots/mistwood-victory-saved.png"><img src="terralum/screenshots/mistwood-victory-saved.png" alt="GemRB showing a successful named save after the Mistwood ambush" width="48%"></a>
+  <a href="terralum/screenshots/mistwood-victory-reloaded-journal.png"><img src="terralum/screenshots/mistwood-victory-reloaded-journal.png" alt="Mistwood victory Journal entry after loading the post-battle save" width="48%"></a>
 </p>
 
 The named save/load flow preserves both outcomes of Mara's campaign-panel ledger decision across area transitions. The native DLG sealed-ledger branch has also been saved and reloaded, and Inessa's Library response matches it. The shared quest and ledger record remain in the Journal.

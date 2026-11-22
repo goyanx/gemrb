@@ -863,8 +863,8 @@ assert ("set-stat", globals_["TLENEMY_PROWLER"], campaign.IE_DAMAGEBONUS, -2) in
 assert any(event[0] == "attack" and event[1] == "JoinParty()" for event in events)
 while timed_events:
     timed_events.pop(0)()
-assert ("set-stat", 1, campaign.IE_TOHIT, 17) in events, [event for event in events if event[0] == "set-stat"]
-assert ("set-stat", globals_["TLMISTWOOD_TESSA"], campaign.IE_TOHIT, 17) in events
+assert ("set-stat", 1, campaign.IE_TOHIT, 14) in events, [event for event in events if event[0] == "set-stat"]
+assert ("set-stat", globals_["TLMISTWOOD_TESSA"], campaign.IE_TOHIT, 14) in events
 assert sum(event[0] == "attack" and event[1] == "Attack(Player1)" for event in events) == 1
 assert sum(event[0] == "attack" and event[1] == "Attack(Player2)" for event in events) == 1
 assert globals_["TLMISTWOOD_TESSA_COMBAT_CUE"] == 1
