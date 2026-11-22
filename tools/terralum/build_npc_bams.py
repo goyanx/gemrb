@@ -201,7 +201,10 @@ def write_scaled_player_avatar(source_override, output_override, factor=2.00):
 	# controllable character stayed at the demo's original scale.
 	(output_override / "protagon.cre").write_bytes(base_creature)
 	with (output_override / "avatars.2da").open("a", encoding="utf-8", newline="") as table:
-		table.write(f"\n0x{animation_id:04X} {prefix} {prefix} {prefix} {prefix} 0 2 0 *")
+		# These painted BAMs already contain their finished costume colors.
+		# Palette mode 0 applies CRE paper-doll remapping to their quantized
+		# palette, turning the player into a mottled, nearly invisible figure.
+		table.write(f"\n0x{animation_id:04X} {prefix} {prefix} {prefix} {prefix} 0 2 1 *")
 	player_stances = {}
 	for suffix in ("G11", "G1", "G17"):
 		# The demo has no separate G1 ready BAM; its G17 is the idle stance

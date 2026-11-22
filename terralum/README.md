@@ -58,6 +58,10 @@ The live Market capture confirms the ATTACK prompt now explains that an open-gro
 
 ![Live GemRB Attack prompt explaining that open ground clicks set a move marker](screenshots/attack-target-ground-instruction-live.png)
 
+The player sprite uses the painted BAM palette directly. This prevents GemRB's classic paper-doll recoloring from turning Algoreth into a blue, scrambled silhouette; the fresh isolated Market run shows the full-sized player rendered clearly.
+
+![Live GemRB Market screenshot confirming the full-sized painted Algoreth player renders clearly](screenshots/player-palette-fix-live.png)
+
 Scout Tessa now stands visibly on the Mistwood road near Algoreth rather than below the camera's play area:
 
 ![Scout Tessa staged on the Mistwood road beside Algoreth](screenshots/mistwood-tessa-road-live.png)
