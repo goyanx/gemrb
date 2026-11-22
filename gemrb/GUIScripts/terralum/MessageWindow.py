@@ -72,6 +72,10 @@ def OnLoad():
 	_style(actor_talk)
 	actor_talk.SetText("TALK")
 	actor_talk.SetHotKey("t", 0, True)
+	attack_button = window.CreateButton(20, 183, 183, 150, 34)
+	_style(attack_button)
+	attack_button.SetText("ATTACK")
+	attack_button.SetHotKey("a", 0, True)
 	save_button = window.CreateButton(18, 10, 183, 78, 34)
 	_style(save_button)
 	save_button.SetText("SAVE")
@@ -178,6 +182,12 @@ def OnLoad():
 		GemRB.GameControlSetTargetMode(TARGET_MODE_TALK, GA_NO_DEAD | GA_NO_ENEMY | GA_NO_HIDDEN)
 		message.Append("\n\nChoose a scene NPC to speak with.")
 
+	def begin_actor_attack():
+		if dialogue_state["has_choices"] or journal_state["open"]:
+			return
+		GemRB.GameSelectPC(1, True, SELECT_REPLACE)
+		GemRB.GameControlSetTargetMode(TARGET_MODE_ATTACK, GA_NO_DEAD | GA_NO_SELF | GA_NO_HIDDEN)
+
 	def save_game():
 		GUICommon.SetSaveDir()
 		games = GemRB.GetSaveGames()
@@ -209,6 +219,7 @@ def OnLoad():
 		message.SetText("TERRALUM  |  LOAD SAVED GAME\n\nLoad '" + save.GetName() + "'?\n\nYour current unsaved progress will be replaced.")
 		for index, button in enumerate(choice_buttons):
 			button.SetVisible(index < 2)
+		attack_button.SetVisible(False)
 		if load_state["selected"] is not None:
 			choice_buttons[0].SetText("LOAD")
 			choice_buttons[0].OnPress(lambda _button=None, save=save: (GemRB.QuitGame(), GemRB.SetTimer(lambda: load_game(save), 0, 0)))
@@ -238,6 +249,7 @@ def OnLoad():
 				button.SetText(save.GetName()[:22])
 				button.OnPress(lambda _button=None, save=save: confirm_load(save))
 		journal_button.SetVisible(True)
+		attack_button.SetVisible(False)
 		journal_button.SetText("CANCEL")
 		journal_button.OnPress(show)
 		cast.SetVisible(page_count > 1)
@@ -278,6 +290,7 @@ def OnLoad():
 				button.SetHotKey(str(index + 1), 0, True)
 				button.OnPress(lambda _button=None, choice=choice, person=person: choose_dialogue(person, choice))
 		dialogue_state["has_choices"] = bool(choices)
+		attack_button.SetVisible(not bool(choices))
 		journal_button.SetVisible(not bool(choices))
 		cast.SetVisible(not bool(choices))
 		save_button.SetVisible(not bool(choices))
@@ -313,6 +326,7 @@ def OnLoad():
 		dialogue_state["has_choices"] = False
 		for button in choice_buttons:
 			button.SetVisible(False)
+		attack_button.SetVisible(True)
 		journal_button.SetVisible(True)
 		cast.SetVisible(True)
 		save_button.SetVisible(True)
@@ -361,6 +375,7 @@ def OnLoad():
 			return
 		journal_state["open"] = not journal_state["open"]
 		if journal_state["open"]:
+			attack_button.SetVisible(False)
 			journal_button.SetText("CLOSE")
 			message.SetText(render_journal())
 			action.SetText("CLOSE LOG")
@@ -429,6 +444,7 @@ def OnLoad():
 		dialogue_state["has_choices"] = False
 		for button in choice_buttons:
 			button.SetVisible(False)
+		attack_button.SetVisible(True)
 		cast.SetVisible(True)
 		cast.SetText("CAST")
 		cast.OnPress(talk_to_scene_npc)
@@ -643,6 +659,7 @@ def OnLoad():
 		show()
 
 	action.OnPress(advance)
+	attack_button.OnPress(begin_actor_attack)
 	journal_button.OnPress(toggle_journal)
 	voice.OnPress(narrate)
 	cast.OnPress(talk_to_scene_npc)

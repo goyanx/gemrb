@@ -50,6 +50,10 @@ Four generated portrait sheets now provide medium and small GemRB portrait resou
 
 Mistwood's two ambushers use their own painted 2D enemy sprites instead of generic protagonist/riddler placeholders. Their encounter CREs and animation rows are registered separately from neutral scene NPCs in `enemy_avatars.json`. Each enemy has a directional painted attack sheet and idle–strike–recovery melee BAMs. A live battle capture shows the Stalker and Pale-stone Prowler attacking the enlarged player; defeat/reload recovery and combat balance still need work.
 
+The custom story panel includes an **ATTACK** button and `A` shortcut that enter GemRB's standard attack-target mode. The live scene confirms that the control appears during the ambush; successful party attacks and encounter victory still need playtesting.
+
+![Mistwood encounter with visible scout, distinct enemies, and ATTACK control](screenshots/mistwood-attack-button.png)
+
 Scout Tessa now stands visibly on the Mistwood road near Algoreth rather than below the camera's play area:
 
 ![Scout Tessa staged on the Mistwood road beside Algoreth](screenshots/mistwood-tessa-road-live.png)
