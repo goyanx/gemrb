@@ -221,7 +221,7 @@ def OnLoad():
 			return
 		GemRB.GameControlSetTargetMode(TARGET_MODE_ATTACK,
 									  GA_NO_DEAD | GA_NO_SELF | GA_NO_HIDDEN | GA_NO_NEUTRAL)
-		message.Append("\n\nTarget a hostile creature to attack.")
+		message.Append("\n\nClick a hostile creature to attack. Clicking open ground only sets a move marker.")
 
 	def select_tessa():
 		if GemRB.GetPartySize() > 1:
