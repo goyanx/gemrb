@@ -152,6 +152,9 @@ def OnLoad():
 		if GemRB.GetGameVar("TLCAST") == chapter_index + 1:
 			return
 		for person in Story.cast(chapter["area"]):
+			spawn_beat = person.get("spawn_beat")
+			if spawn_beat is not None and GemRB.GetGameVar("TLBEAT") < spawn_beat:
+				continue
 			actor = GemRB.CreateCreature(1, person.get("avatar_creature", person["creature"]),
 									 person["position"][0], person["position"][1])
 			GemRB.SetPlayerName(actor, person["name"], 0)
@@ -739,13 +742,17 @@ def OnLoad():
 					return
 			else:
 				spawn = phase.get("position", beat.get("spawn_position"))
+				creature = phase.get("creature", "riddler")
 				if spawn:
-					enemy = GemRB.CreateCreature(1, "riddler", spawn[0], spawn[1])
+					enemy = GemRB.CreateCreature(1, creature, spawn[0], spawn[1])
 				else:
-					enemy = GemRB.CreateCreature(1, "riddler")
+					enemy = GemRB.CreateCreature(1, creature)
 			GemRB.SetGlobal("TLENEMY", "GLOBAL", enemy)
 			if not actor_flag:
 				GemRB.SetPlayerName(enemy, phase.get("name", beat["encounter"]), 0)
+				spawn_flag = phase.get("spawn_flag")
+				if spawn_flag:
+					GemRB.SetGlobal(spawn_flag, "GLOBAL", enemy)
 			GemRB.SetPlayerStat(enemy, IE_EA, ENEMY)
 			GemRB.ExecuteString("Attack(Player1)", enemy)
 			encounter_name = phase.get("name", beat["encounter"])
@@ -775,9 +782,13 @@ def OnLoad():
 						return
 				else:
 					spawn = phase.get("position")
-					enemy = GemRB.CreateCreature(1, "riddler", spawn[0], spawn[1])
+					creature = phase.get("creature", "riddler")
+					enemy = GemRB.CreateCreature(1, creature, spawn[0], spawn[1])
 					GemRB.SetPlayerName(enemy, phase["name"], 0)
 				GemRB.SetGlobal("TLENEMY", "GLOBAL", enemy)
+				spawn_flag = phase.get("spawn_flag")
+				if spawn_flag:
+					GemRB.SetGlobal(spawn_flag, "GLOBAL", enemy)
 				GemRB.SetPlayerStat(enemy, IE_EA, ENEMY)
 				GemRB.ExecuteString("Attack(Player1)", enemy)
 				message.Append("\n\nENCOUNTER: " + phase["text"] + " Defeat it to continue.")

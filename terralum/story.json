@@ -746,15 +746,21 @@
           "encounter_phases": [
             {
               "name": "Ward Shard",
+              "creature": "wrdshard",
               "position": [
-                1320,
-                500
+                1100,
+                680
               ],
               "text": "The Ward Shard tears free and attacks. Its collapse will expose the voice behind it."
             },
             {
               "name": "False Algoreth",
-              "actor_flag": "TLFALSE_ALGORETH",
+              "creature": "falseal",
+              "spawn_flag": "TLFALSE_ALGORETH",
+              "position": [
+                1200,
+                680
+              ],
               "text": "The first pulse breaks. False Algoreth takes shape inside the boundary and warns, 'Next time, I will have learned.'"
             }
           ]

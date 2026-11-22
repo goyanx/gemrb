@@ -8,5 +8,10 @@
     "creature": "paleprow",
     "asset": "paleprow",
     "base_creature": "protagon"
+  },
+  {
+    "creature": "wrdshard",
+    "asset": "wardshard",
+    "base_creature": "riddler"
   }
 ]

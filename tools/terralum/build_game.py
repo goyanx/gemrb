@@ -148,7 +148,9 @@ def encounter_avatar_catalog():
     other_index = sum(avatar["name"] != "Queen Alisande" for avatar in NPC_AVATARS)
     avatars = []
     for spec in specs:
-        if (not isinstance(spec, dict) or not spec.get("creature") or not spec.get("asset")
+        if (not isinstance(spec, dict) or not isinstance(spec.get("creature"), str)
+                or not spec["creature"] or len(spec["creature"]) > 8
+                or not isinstance(spec.get("asset"), str) or not spec.get("asset")
                 or spec.get("base_creature") not in ("protagon", "riddler")
                 or spec["creature"] in used_creatures):
             raise ValueError("enemy_avatars.json entries need unique creature/asset names and a supported base CRE")
@@ -276,8 +278,15 @@ def read_story():
                 for phase in phases:
                     position = phase.get("position") if isinstance(phase, dict) else None
                     phase_flag = phase.get("actor_flag") if isinstance(phase, dict) else None
+                    spawn_flag = phase.get("spawn_flag") if isinstance(phase, dict) else None
+                    phase_creature = phase.get("creature", "riddler") if isinstance(phase, dict) else None
                     if (not isinstance(phase, dict) or not isinstance(phase.get("name"), str)
                             or not phase["name"].strip() or not phase.get("text")
+                            or not isinstance(phase_creature, str)
+                            or phase_creature not in SUPPORTED_CREATURES
+                            or (spawn_flag is not None and (not isinstance(spawn_flag, str)
+                                or not re.fullmatch(r"TL[A-Z][A-Z0-9_]{1,28}", spawn_flag)
+                                or spawn_flag not in initialized_flags))
                             or (position is not None and (not isinstance(position, list) or len(position) != 2
                                 or any(type(value) is not int or not 0 <= value <= 32767 for value in position)))
                             or (phase_flag is not None and (not isinstance(phase_flag, str)
@@ -372,6 +381,11 @@ def validate_npc(person, area, require_design=False):
     if spawn_flag is not None and (not isinstance(spawn_flag, str)
                                    or not re.fullmatch(r"TL[A-Z][A-Z0-9_]{1,28}", spawn_flag)):
         raise ValueError(f"scene cast spawn flag for {area} must be a TL global name")
+    spawn_beat = person.get("spawn_beat")
+    if spawn_beat is not None and (type(spawn_beat) is not int or spawn_beat < 0 or spawn_beat > 99):
+        raise ValueError(f"scene cast spawn beat for {area} must be an integer from 0 to 99")
+    if spawn_beat is not None and not spawn_flag:
+        raise ValueError(f"deferred scene cast for {area} needs a spawn flag")
     dialog = person.get("dialog")
     if dialog is not None and (not isinstance(dialog, str) or not re.fullmatch(r"[A-Za-z0-9_]{1,8}", dialog)):
         raise ValueError(f"scene cast dialogue resource for {area} must be a resref of at most eight characters")
