@@ -141,7 +141,7 @@ The campaign-flow mock checks scene progression and response effects. The MCP te
 
 ### NPC world-avatar pipeline
 
-The preferred art direction for named NPCs is a hand-painted 2D fantasy sprite, with realistic proportions and readable costume details at the game's map scale. Eleven cast members currently have transparent 3×3 turnaround sources and imported directional idle frames in [`art/reference/painted_turnarounds/`](art/reference/painted_turnarounds/README.md). `import_painted_turnaround.py` crops nine views into GemRB's 80×96 frame slots; its current prototype repeats each idle view across the four walk-frame slots, so authored locomotion remains open work.
+The preferred art direction for named NPCs is a hand-painted 2D fantasy sprite, with realistic proportions and readable costume details at the game's map scale. Seventeen cast members currently have transparent 3×3 turnaround sources and imported directional idle frames in [`art/reference/painted_turnarounds/`](art/reference/painted_turnarounds/README.md). `import_painted_turnaround.py` crops nine views into GemRB's 80×96 frame slots; its current prototype repeats each idle view across the four walk-frame slots, so authored locomotion remains open work.
 
 `build_npc_bams.py` compiles walk, ready, awake, and attack BAMs, and `build_game.py` binds each character through unique CRE resources and `avatars.2da` rows. Algoreth's staff-bearing player sprite now uses 1.25× 100×120 frames and its own directional attack sheet; import both his turnaround and attacks with `--scale 1.25` so he remains slightly prominent without overpowering NPCs. The remaining cast still uses frames rendered by `render_cast_sprites.py` from procedural Blender models; these are placeholders pending painted sources. Review all visible NPCs in each scene, since changing only the named speaker leaves blocky supporting characters beside the new art. With Blender available, regenerate missing placeholder frames and the contact sheet with:
 
@@ -154,6 +154,16 @@ Use `--force` to rerender all characters after changing the model script. Rebuil
 The last command uses the WSL build in this checkout. On Windows with a native GemRB build, use `terralum/build/terralum.cfg`. `terralum/play.ps1` builds and launches through WSL and stops if another GemRB process is already running, preventing ambiguous duplicate game windows. The assembled pack under `terralum/build/` is ignored by Git.
 
 If a running GemRB session has the standard pack open, set `TERRALUM_GAME_OUTPUT` to an isolated output folder before running `build_game.py` and `test_native_dialogues.py`. The builder places the matching Windows and WSL config files next to that pack and leaves the normal launch config untouched.
+
+To open a review build in the Windows desktop through WSLg while an older Xvfb review process remains running, build into a separate pack and launch its WSL config on display `:0`:
+
+```powershell
+$env:TERRALUM_GAME_OUTPUT = Join-Path $PWD "terralum\build\gui-review"
+python tools\terralum\build_game.py
+wsl --cd (Get-Location).Path --exec env DISPLAY=:0 ./build/gemrb/gemrb -c terralum/build/gui-review-wsl.cfg
+```
+
+This starts a second GemRB process with isolated game resources. Use the regular `play.ps1` launcher after other GemRB processes have exited.
 
 The twenty-six scene-entry narration clips under `terralum/audio/` were rendered locally with Kokoro ONNX using the `af_heart` woman voice. Narration plays when each scene begins and can be replayed with **NARRATE**. To regenerate them, use the standalone Kokoro Python environment and provide local model and voice files:
 
