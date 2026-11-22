@@ -34,6 +34,7 @@ These generated transparent turnarounds establish the corrected world-character 
 | Mistwood Stalker (encounter enemy) | `mistalk` | `mistwood_stalker.png` |
 | Pale-Stone Prowler (encounter enemy) | `paleprow` | `pale_stone_prowler.png` |
 | Ward Shard (Academy encounter enemy) | `wardshard` | `ward_shard.png` |
+| False Algoreth (Academy echo) | `falseal` | `false_algoreth.png` |
 
 The Index Warden sheet has eight authored headings; the forward view occupies the ninth center slot. The Stalker and Prowler also have directional attack turnarounds in `mistwood_stalker_attack.png` and `pale_stone_prowler_attack.png`. Import their attack poses with `python tools/terralum/import_painted_turnaround.py <sheet> <asset> --attack`. The BAM builder uses these frames for all nine mirrored-human melee attack resources, with an idle/strike/recovery sequence per direction.
 
