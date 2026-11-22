@@ -54,6 +54,10 @@ The custom story panel includes an **ATTACK** button and `A` shortcut that enter
 
 ![Mistwood encounter with visible scout, distinct enemies, and ATTACK control](screenshots/mistwood-attack-button.png)
 
+The live Market capture confirms the ATTACK prompt now explains that an open-ground click places GemRB's move marker, which can otherwise look like a character marker.
+
+![Live GemRB Attack prompt explaining that open ground clicks set a move marker](screenshots/attack-target-ground-instruction-live.png)
+
 Scout Tessa now stands visibly on the Mistwood road near Algoreth rather than below the camera's play area:
 
 ![Scout Tessa staged on the Mistwood road beside Algoreth](screenshots/mistwood-tessa-road-live.png)
