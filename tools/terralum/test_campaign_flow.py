@@ -81,7 +81,7 @@ events = []
 globals_ = {"CHAPTER": 1, "TLCHAP": 0, "TLBEAT": 0, "TLENEMY": 0, "TLENEMY_STALKER": 0,
             "TLENEMY_PROWLER": 0, "TLCAST": 0, "TLWAYFARER": 0, "TLJRN_WAYFARER_PUBLIC": 0, "TLJRN_WAYFARER_PRIVATE": 0,
             "TLMARALEAD": 0, "TLLIBRARYCLUE": 0, "TLWATCHPOST": 0, "TLHUNTER": 0,
-            "TLGALLERY": 0, "TLCOURT": 0, "TLECHO": 0, "TLECHOPHASE": 0, "TLFALSE_ALGORETH": 0, "TLWARDING": 0, "TLJRN_WARDING": 0, "TLMISTWOODSAFE": 0, "TLMISTWOODVICTORY": 0, "TLARCHIVE": 0, "TLVOYAGE": 0, "TLBRIEFING": 0,
+            "TLGALLERY": 0, "TLGALLSOLVED": 0, "TLCOURT": 0, "TLECHO": 0, "TLECHOPHASE": 0, "TLFALSE_ALGORETH": 0, "TLWARDING": 0, "TLJRN_WARDING": 0, "TLMISTWOODSAFE": 0, "TLMISTWOODVICTORY": 0, "TLARCHIVE": 0, "TLVOYAGE": 0, "TLBRIEFING": 0,
             "TLARCHIVEWARD": 0, "TLDEEP_ARCHIVE_WARDEN": 0, "TLJRN_ARCHIVE_WARD": 0,
             "TLJRN_BYZANTEM": 0, "TLJRN_MISTWOOD": 0, "TLJRN_MISTWOOD_AMBUSH": 0, "TLJRN_HUNTER": 0, "TLJRN_HUNTER_RESOLVED": 0,
             "TLHUNTERTRACK": 0, "TLJRN_TRACKS": 0, "TLTRAVELKIT": 0, "TLJRN_TRAVELKIT": 0, "TLROYALORDER": 0, "TLJRN_ROYALORDER": 0, "TLRIVER": 0, "TLRIVERROUTE": 0, "TLJRN_RIVER": 0,
@@ -239,6 +239,11 @@ assert sorted({chapter["act"] for chapter in chapters}) == list(range(1, 8))
 for chapter_index, chapter in enumerate(chapters):
     assert globals_["TLCHAP"] == chapter_index
     assert current_area == chapter["area"]
+    if chapter["area"] == "tl0010":
+        # The native DLG puzzle is verified in test_native_dialogues; this
+        # end-to-end panel mock enters the scene with the puzzle already solved.
+        globals_["TLGALLSOLVED"] = 1
+        globals_["TLGALLERY"] = 1
     people = campaign.Story.cast(chapter["area"])
     assert len(people) >= 2
     assert all(all(person.get(field) for field in
@@ -262,7 +267,7 @@ for chapter_index, chapter in enumerate(chapters):
             window.controls[13].press()
             assert globals_["TLARCHIVEWARD"] == 2
             assert "dormant ward intact" in window.controls[0].text
-        if people[0].get("choices"):
+        if people[0].get("choices") and chapter["area"] != "tl0010":
             selected = people[0]["choices"][0]
             choice_button = window.controls[12]
             assert choice_button.hotkey == ("1", 0, True)
@@ -437,7 +442,7 @@ for selected, event_flag, response in (
     assert window.controls[12].visible is False
 
 # Exercise every remaining response option and its next-beat result.
-for chapter_index, choice_index in ((chapter_index_by_area[area], choice) for area, choice in (("tl0001", 1), ("tl0001", 2), ("tl0008", 1), ("tl0017", 1), ("tl0015", 1), ("tl0016", 1), ("tl0009", 1), ("tl0003", 1), ("tl0010", 1), ("tl0011", 1), ("tl0012", 1), ("tl0021", 1), ("tl0013", 1), ("tl0014", 1))):
+for chapter_index, choice_index in ((chapter_index_by_area[area], choice) for area, choice in (("tl0001", 1), ("tl0001", 2), ("tl0008", 1), ("tl0017", 1), ("tl0015", 1), ("tl0016", 1), ("tl0009", 1), ("tl0003", 1), ("tl0011", 1), ("tl0012", 1), ("tl0021", 1), ("tl0013", 1), ("tl0014", 1))):
     chapter = chapters[chapter_index]
     window = Window()
     events.clear()
@@ -578,18 +583,25 @@ for gallery_value, court_line in gallery_outcomes:
     timed_events.clear()
     current_area = "tl0010"
     globals_.update({"TLCHAP": chapter_index_by_area["tl0010"], "TLBEAT": 0, "TLENEMY": 0, "TLCAST": 0,
-                     "TLGALLERY": 0, "TLJRN_GALLERY_RESOLUTION": 0})
+                     "TLGALLERY": 0, "TLGALLSOLVED": 0, "TLJRN_GALLERY_RESOLUTION": 0})
     campaign.OnLoad()
     while timed_events:
         timed_events.pop(0)()
     window.controls[4].press()
     assert globals_["TLBEAT"] == 0
-    assert "Speak with the Gallery Keeper" in window.controls[0].text
+    assert "Gallery Keeper" in window.controls[0].text and "solve its order" in window.controls[0].text
     window.controls[11].press()
-    choice = campaign.Story.cast("tl0010")[0]["choices"][gallery_value - 1]
-    window.controls[12 + gallery_value - 1].press()
+    assert not window.controls[12].visible
+    assert not window.controls[13].visible
+    window.controls[4].press()
+    assert globals_["TLBEAT"] == 0
+    globals_["TLGALLSOLVED"] = 1
+    window.controls[4].press()
+    assert globals_["TLBEAT"] == 0
+    globals_["TLGALLERY"] = gallery_value
+    # The native DLG commits the same route choice; advance() then records the
+    # story beat and its journal event through the ordinary campaign flow.
     assert globals_["TLGALLERY"] == gallery_value
-    assert choice["reply"] in window.controls[0].text
     window.controls[4].press()
     assert globals_["TLBEAT"] == 1
     assert globals_["TLJRN_GALLERY_RESOLUTION"] == 1
@@ -938,6 +950,8 @@ for waystone, expected_text in (
 # Exercise every authored player response once, including choices on later NPCs.
 choice_count = 0
 for chapter_index, chapter in enumerate(chapters):
+    if chapter["area"] == "tl0010":
+        continue  # Its choices now live exclusively in the Keeper's native DLG.
     people = campaign.Story.cast(chapter["area"])
     for person_index, person in enumerate(people):
         for choice_index, choice in enumerate(person.get("choices", [])):
@@ -966,7 +980,7 @@ for chapter_index, chapter in enumerate(chapters):
                 assert globals_[event["flag"]] == 1
                 assert any(entry["value"] == event["text"] for entry in journal_entries)
             choice_count += 1
-assert choice_count == 48
+assert choice_count == 46
 
 # Native NPC DLG writes the route flag directly; the scene panel reconciles
 # its authored journal event on the next render without duplicating it.
@@ -1049,7 +1063,7 @@ for selected, expected, response in (
     assert response in window.controls[0].text
 
 choice_count += len(selene_followup["choices"])
-assert choice_count == 50
+assert choice_count == 48
 
 # Mara's staged ledger conversation records one shared journal event and carries
 # either handling choice into Scholar Inessa's later library dialogue.
@@ -1114,7 +1128,7 @@ for selected, expected_response in ((1, "separate landmark copy"),
 
 # Include the two nested options in the campaign-wide authored response count.
 choice_count += len(followup["choices"])
-assert choice_count == 52
+assert choice_count == 50
 
 # The Act IV council hearing requires the player to choose how Oren preserves
 # the evidence; Alisande and the closing record both acknowledge either path.
@@ -1168,7 +1182,7 @@ for selected, expected_response, expected_route in (
     assert expected_route in window.controls[0].text
 
 choice_count += len(council_followup["choices"])
-assert choice_count == 54
+assert choice_count == 52
 
 # Pell's council deposition is optional, gives bounded route testimony, and
 # journals the player's decision to publish only the warning or restrict detail.
@@ -1229,7 +1243,7 @@ for selected, event_flag, expected_response in (
             policy_response = "The road remains open to supervised scholars and travellers." if court_policy == 1 else "Scroll access requires leave from Edmon and me."
             assert policy_response in window.controls[0].text
 
-assert choice_count == 54
+assert choice_count == 52
 
 # The return to the Mistwood Watchpost reuses the location but changes its
 # conversation. Both records persist through a script reload and change court dialogue.
@@ -1291,7 +1305,7 @@ for selected, expected_response, expected_edmon, expected_route in (
     assert expected_edmon in window.controls[0].text
 
 choice_count += len(return_followup["choices"])
-assert choice_count == 56
+assert choice_count == 54
 
 # Act VI's optional archive quest offers a peaceful path and a gated warder
 # challenge. Victory records the comparison leaf and changes dialogue in the
@@ -1470,7 +1484,7 @@ for signal in (1, 2):
         assert expected in window.controls[0].text
 
 choice_count += len(relay_followup["choices"])
-assert choice_count == 58
+assert choice_count == 56
 
 # The Act VII Eldrador landing and sanctuary-approach adaptations preserve the
 # unresolved Tear while carrying both evidence and protocol choices forward.
@@ -1665,7 +1679,7 @@ for choice_value, victory in ((1, 0), (1, 1), (2, 0), (2, 1)):
                 or "No traveller's account" in window.controls[0].text)
     assert ("drove both creatures off the road" in window.controls[0].text) == bool(victory)
 
-assert choice_count == 58
+assert choice_count == 56
 
 print(len(chapters), "scenes across seven acts,", sum(len(campaign.Story.cast(chapter["area"])) for chapter in chapters),
-      "named scene actors, keyboard controls, authored journal events, four-state NPC response conditions, all 58 response options, three market routes, four encounter gates, twenty-four transitions, and narration for all", len(chapters), "scenes passed with", voice_cues, "playback cues")
+      "named scene actors, keyboard controls, authored journal events, four-state NPC response conditions, all 56 campaign-panel response options, Seal Gallery native DLG puzzle routing, three market routes, four encounter gates, twenty-four transitions, and narration for all", len(chapters), "scenes passed with", voice_cues, "playback cues")

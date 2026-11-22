@@ -123,19 +123,26 @@ class NativeDialogueResourceTests(unittest.TestCase):
         self.assertEqual(bindings["GALLKEEP"], [("tl0010", "Gallery Keeper")])
         self.assertEqual(bindings["GALLECHO"], [("tl0010", "Dorian's Echo")])
         gallery = dialogues["GALLKEEP"]["states"]
-        self.assertEqual(len(gallery), 7)
+        self.assertEqual(len(gallery), 12)
         self.assertEqual({tuple(condition["value"] for condition in state["when"]
-                                if condition["flag"] == "TLCHAP") for state in (gallery[0], *gallery[5:])},
+                                if condition["flag"] == "TLCHAP") for state in (gallery[0], gallery[6], *gallery[9:11])},
                          {(11,)})
-        self.assertEqual([transition.get("set") for transition in gallery[0]["transitions"]], [
-            None,
-            None,
+        self.assertEqual([transition["next"] for transition in gallery[0]["transitions"]], [1, 2, 3])
+        self.assertEqual(gallery[0]["when"], [
+            {"flag": "TLCHAP", "value": 11},
+            {"flag": "TLGALLERY", "value": 0},
+            {"flag": "TLGALLSOLVED", "value": 0},
+        ])
+        self.assertEqual({transition["next"] for transition in gallery[3]["transitions"]}, {4, 11})
+        self.assertEqual({transition["next"] for transition in gallery[4]["transitions"]}, {5, 11})
+        self.assertEqual(gallery[5]["transitions"][0]["set"], [{"flag": "TLGALLSOLVED", "value": 1}])
+        self.assertEqual(gallery[5]["transitions"][0]["next"], 6)
+        self.assertEqual(gallery[11]["transitions"][0]["next"], 3)
+        self.assertEqual([transition.get("set") for transition in gallery[6]["transitions"]], [
             [{"flag": "TLGALLERY", "value": 1}, {"flag": "TLJRN_GALLERY_RESOLUTION", "value": 1}],
             [{"flag": "TLGALLERY", "value": 2}, {"flag": "TLJRN_GALLERY_RESOLUTION", "value": 1}],
         ])
-        self.assertEqual([transition["next"] for transition in gallery[0]["transitions"]], [1, 2, 3, 4])
-        self.assertEqual(gallery[1]["transitions"][-1]["next"], 0)
-        self.assertEqual(gallery[2]["transitions"][-1]["next"], 0)
+        self.assertEqual({transition["next"] for transition in gallery[11]["transitions"]}, {3})
         echo = dialogues["GALLECHO"]["states"]
         self.assertEqual(len(echo), 5)
         self.assertEqual({tuple(condition["value"] for condition in state["when"]

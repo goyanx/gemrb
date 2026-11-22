@@ -784,19 +784,19 @@
   "GALLKEEP": {
     "states": [
       {
-        "when": [{"flag": "TLCHAP", "value": 11}, {"flag": "TLGALLERY", "value": 0}],
-        "say": "Three marks guard the arch: passage, return, and restraint. Ask what the marks mean, then name what must remain closed. The niches will stay sealed either way.",
+        "when": [{"flag": "TLCHAP", "value": 11}, {"flag": "TLGALLERY", "value": 0}, {"flag": "TLGALLSOLVED", "value": 0}],
+        "say": "Three marks guard the arch: passage, return, and restraint. Ask what the marks mean, then set them in an order that honours the warning. The niches will stay sealed either way.",
         "transitions": [
           {"text": "What does passage mean here?", "next": 1},
           {"text": "Why is return carved beside it?", "next": 2},
-          {"text": "Name restraint; carry the warning back unopened.", "next": 3, "journal": "In the Byzantem Seal Gallery, Algoreth chose whether to name restraint or demand passage. The sealed niches remained closed, and the return court must decide what the scrolls may be used for.", "set": [{"flag": "TLGALLERY", "value": 1}, {"flag": "TLJRN_GALLERY_RESOLUTION", "value": 1}]},
-          {"text": "Demand passage through the arch.", "next": 4, "journal": "In the Byzantem Seal Gallery, Algoreth chose whether to name restraint or demand passage. The sealed niches remained closed, and the return court must decide what the scrolls may be used for.", "set": [{"flag": "TLGALLERY", "value": 2}, {"flag": "TLJRN_GALLERY_RESOLUTION", "value": 1}]}
+          {"text": "Set the three marks in order.", "next": 3}
         ]
       },
       {
         "say": "Passage names a route, not a reason to take it. The warning asks what a traveller intends before the arch is crossed.",
         "transitions": [
           {"text": "Ask about the return mark.", "next": 2},
+          {"text": "Try the three-mark order.", "next": 3},
           {"text": "Return to the keeper's question.", "next": 0}
         ]
       },
@@ -804,11 +804,44 @@
         "say": "Return is the duty to bring an account back. It does not prove the traveller understood what was found; the court must still decide what the scrolls may be used for.",
         "transitions": [
           {"text": "Ask about the passage mark.", "next": 1},
+          {"text": "Try the three-mark order.", "next": 3},
           {"text": "Return to the keeper's question.", "next": 0}
         ]
       },
       {
-        "say": "The answer is recorded. No niche has been opened; carry the warning back to the court, where the scrolls' use must still be decided.",
+        "say": "Choose the first mark. Which principle must guide the traveller before a route is taken?",
+        "transitions": [
+          {"text": "Restraint.", "next": 4},
+          {"text": "Passage.", "next": 11},
+          {"text": "Return.", "next": 11}
+        ]
+      },
+      {
+        "say": "The first mark is restraint. Which mark follows: the route itself, or the duty to bring an account home?",
+        "transitions": [
+          {"text": "Passage, then return.", "next": 5},
+          {"text": "Return, then passage.", "next": 11},
+          {"text": "Restraint again.", "next": 11}
+        ]
+      },
+      {
+        "say": "Passage follows restraint. Which mark closes the sequence by carrying the account back?",
+        "transitions": [
+          {"text": "Return.", "next": 6, "set": [{"flag": "TLGALLSOLVED", "value": 1}]},
+          {"text": "Passage again.", "next": 11},
+          {"text": "Restraint again.", "next": 11}
+        ]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 11}, {"flag": "TLGALLSOLVED", "value": 1}, {"flag": "TLGALLERY", "value": 0}],
+        "say": "The order holds: restraint before passage, then return with an account. No niche has opened. Now name restraint as your answer, or demand passage and hear my refusal.",
+        "transitions": [
+          {"text": "Name restraint; carry the warning back unopened.", "next": 7, "journal": "In the Byzantem Seal Gallery, Algoreth chose whether to name restraint or demand passage. The sealed niches remained closed, and the return court must decide what the scrolls may be used for.", "set": [{"flag": "TLGALLERY", "value": 1}, {"flag": "TLJRN_GALLERY_RESOLUTION", "value": 1}]},
+          {"text": "Demand passage through the arch.", "next": 8, "journal": "In the Byzantem Seal Gallery, Algoreth chose whether to name restraint or demand passage. The sealed niches remained closed, and the return court must decide what the scrolls may be used for.", "set": [{"flag": "TLGALLERY", "value": 2}, {"flag": "TLJRN_GALLERY_RESOLUTION", "value": 1}]}
+        ]
+      },
+      {
+        "say": "You named restraint. The niches remain sealed, and the return court must decide what the scrolls may be used for.",
         "transitions": [{"text": "We will return with the record intact.", "final": true}]
       },
       {
@@ -824,6 +857,10 @@
         "when": [{"flag": "TLCHAP", "value": 11}, {"flag": "TLGALLERY", "value": 2}],
         "say": "You demanded passage, and I refused. The niches remain sealed; the warning returns unresolved with you.",
         "transitions": [{"text": "We will carry the unresolved warning.", "final": true}]
+      },
+      {
+        "say": "That sequence does not hold. The warning is still unanswered; begin again, and let restraint guide the route before the account returns.",
+        "transitions": [{"text": "Reset the marks and try again.", "next": 3}]
       }
     ]
   },

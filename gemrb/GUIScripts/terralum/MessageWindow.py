@@ -200,6 +200,10 @@ def OnLoad():
 				break
 		message.SetText("[cap]T[/cap]ERRALUM  |  " + chapters[chapter_index]["title"] + "\n" + chapters[chapter_index]["place"] + "\n\n" + person["name"] + ": " + line + "\n\n")
 		choices = person.get("choices", [])
+		# The gallery's required seal sequence and final response are authored in
+		# the Keeper's native DLG. Do not expose a panel shortcut around the puzzle.
+		if chapter["area"] == "tl0010":
+			choices = []
 		if choices and GemRB.GetGameVar(choices[0]["flag"]):
 			choices = []
 		show_dialogue_choices(person, choices)
@@ -622,7 +626,7 @@ def OnLoad():
 			message.Append("\n\nThe council docket is unfinished. Speak with Royal Scribe Oren and decide how the route and scroll accounts should be filed.")
 			return
 		if chapter["area"] == "tl0010" and beat_index == 0 and not GemRB.GetGameVar("TLGALLERY"):
-			message.Append("\n\nThe inscription needs an answer. Speak with the Gallery Keeper before leaving the sealed niches.")
+			message.Append("\n\nThe three-mark seal still waits. Speak with the Gallery Keeper, solve its order, and record your answer before leaving the sealed niches.")
 			return
 		if chapter["area"] == "tl0018" and beat_index == 0 and not GemRB.GetGameVar("TLROYALORDER"):
 			message.Append("\n\nThe dispatch remains to be decided. Speak with Archivist Leora before leaving the archive.")

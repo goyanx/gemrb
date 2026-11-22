@@ -40,6 +40,7 @@ def OnLoad():
 	GemRB.SetGlobal("TLLIBRARYCLUE", "GLOBAL", 0)
 	GemRB.SetGlobal("TLWATCHPOST", "GLOBAL", 0)
 	GemRB.SetGlobal("TLGALLERY", "GLOBAL", 0)
+	GemRB.SetGlobal("TLGALLSOLVED", "GLOBAL", 0)
 	GemRB.SetGlobal("TLCOURT", "GLOBAL", 0)
 	GemRB.SetGlobal("TLWITNESS", "GLOBAL", 0)
 	GemRB.SetGlobal("TLORENDOCKET", "GLOBAL", 0)
