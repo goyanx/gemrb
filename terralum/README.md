@@ -4,7 +4,7 @@ This project is a playable campaign prototype for [GemRB](../README.md). GemRB r
 
 ## In-game screenshots
 
-The Act VIII Eldrador Outer Watch Camp is a source-bounded adaptation with four named NPCs, a required watchbook policy, a continue gate, female Kokoro narration, and the existing cavern ambience. An isolated GemRB run shows all four painted actors, blocks progression until Nerys’s choice, advances to Seraphina’s closing beat, and records the Act VIII Journal entry. Save/load persistence for this new event remains to verify.
+The Act VIII Eldrador Outer Watch Camp is a source-bounded adaptation with four named NPCs, a required watchbook policy, a continue gate, female Kokoro narration, and the existing cavern ambience. An isolated GemRB run shows all four painted actors, blocks progression until Nerys’s choice, advances to Seraphina’s closing beat, and records the Act VIII Journal entry. A named save/reload preserves Nerys’s selected policy response and the Journal entry (`eldrador-outer-watch-act8-saved-v5.png`, `eldrador-outer-watch-act8-reloaded-response-v5.png`, `eldrador-outer-watch-act8-reloaded-journal-v5.png`).
 
 ![Act VIII Eldrador Outer Watch Camp in a live isolated GemRB scene](screenshots/eldrador-outer-watch-act8-live.png)
 

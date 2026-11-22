@@ -401,6 +401,7 @@ def OnLoad():
 		for index, (button, x) in enumerate(zip(choice_buttons, choice_positions)):
 			frame = button.GetFrame()
 			frame["x"] = x
+			frame["y"] = 140
 			button.SetFrame(frame)
 			button.SetVisible(index < len(choices))
 			if index < len(choices):
@@ -418,9 +419,9 @@ def OnLoad():
 		# Its NPC/choice indexes are persisted in globals and restored by OnLoad.
 		save_button.SetVisible(not bool(choices) or pending_followup)
 		load_button.SetVisible(not bool(choices) or pending_followup)
-		if pending_followup:
-			actor_talk.SetVisible(False)
-			voice.SetVisible(False)
+		actor_talk.SetVisible(not bool(choices))
+		voice.SetVisible(not bool(choices))
+		action.SetVisible(not bool(choices))
 
 	def choose_dialogue(person, choice):
 		set_portrait(person)
@@ -455,6 +456,9 @@ def OnLoad():
 		attack_button.SetVisible(True)
 		journal_button.SetVisible(True)
 		cast.SetVisible(True)
+		actor_talk.SetVisible(True)
+		voice.SetVisible(True)
+		action.SetVisible(True)
 		save_button.SetVisible(True)
 		load_button.SetVisible(True)
 		configure_party_controls()

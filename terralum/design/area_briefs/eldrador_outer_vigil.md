@@ -1,6 +1,6 @@
 # Area brief: Eldrador Outer Ward Vigil
 
-**Status:** Implemented adaptation; scene flow live-reviewed, save/load review pending
+**Status:** Implemented adaptation; scene flow and named save/load branch persistence live-reviewed
 **Act:** VIII — The Warded Vigil
 **Area:** `tl0027`, Eldrador Outer Watch Camp
 **Entry:** After the Act VII party reaches the Lower Sanctuary Threshold. The party withdraws to the existing outer ward line; no one crosses the sealed gate.
@@ -28,7 +28,7 @@ The scene uses four named NPCs: new adaptation character Warden-Scribe Nerys, re
 - Four visible NPCs, with a distinct painted 2D sprite and portrait for Nerys; reuse approved art for recurring characters.
 - Three concise beats, a required choice, conditional NPC responses, one one-time Journal event, Kokoro `af_heart` narration, and the existing cavern loop.
 - Data-driven walkable floor with blocked perimeter props; actors and party start connected.
-- Rebuild the pack, then review live actor visibility, click-to-talk, both choice paths, narration/music, Journal, and save/load. Live isolated GemRB confirms all four actors appear together, the choice gate blocks Continue, Nerys’s choice advances to Seraphina’s closing beat, and the Journal records the watch policy. Test the alternate policy and save/load next.
+- Rebuild the pack, then review live actor visibility, click-to-talk, both choice paths, narration/music, Journal, and save/load. Live isolated GemRB confirms all four actors appear together, the choice gate blocks Continue, Nerys’s choice advances to Seraphina’s closing beat, and the Journal records the watch policy. A named save/reload preserves the selected branch-specific response and Journal entry; the alternate policy path remains to verify.
 
 ## Deferred
 
