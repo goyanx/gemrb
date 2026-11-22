@@ -13,7 +13,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFilter
 
 from build_npc_bams import write_npc_avatar, write_scaled_player_avatar
 
@@ -783,6 +783,68 @@ def write_tis(image_path, reference_path, target_path):
     return image
 
 
+def write_area_lightmap(image_path, reference_path, target_path):
+    """Derive a scene-specific actor lightmap from its painted background."""
+    with Image.open(reference_path) as reference:
+        if reference.mode != "P" or reference.size != (100, 96):
+            raise ValueError("GemRB lightmap template must be a 100x96 indexed image")
+        palette = reference.getpalette()
+        used_indices = sorted(set(reference.getdata()))
+
+    with Image.open(image_path) as source:
+        art = source.convert("RGB")
+    desired_ratio = 25 / 18
+    width, height = art.size
+    if width / height > desired_ratio:
+        new_width = round(height * desired_ratio)
+        left = (width - new_width) // 2
+        art = art.crop((left, 0, left + new_width, height))
+    else:
+        new_height = round(width / desired_ratio)
+        top = (height - new_height) // 2
+        art = art.crop((0, top, width, top + new_height))
+
+    lightness = (art.resize((100, 96), Image.Resampling.LANCZOS).convert("L")
+                 .filter(ImageFilter.GaussianBlur(radius=3)))
+    histogram = lightness.histogram()
+
+    def percentile(percent):
+        threshold = (sum(histogram) * percent + 99) // 100
+        cumulative = 0
+        for value, count in enumerate(histogram):
+            cumulative += count
+            if cumulative >= threshold:
+                return value
+        return 255
+
+    low, high = percentile(8), percentile(92)
+    if high <= low:
+        high = low + 1
+
+    # The demo palette is the validated GemRB light-color ramp. Keep its
+    # available entries, and map each scene pixel onto the nearest brightness
+    # that palette can express instead of making the same light field for every
+    # painted location.
+    luminance = {
+        index: round(0.2126 * palette[index * 3]
+                     + 0.7152 * palette[index * 3 + 1]
+                     + 0.0722 * palette[index * 3 + 2])
+        for index in used_indices
+    }
+    pixels = []
+    for value in lightness.getdata():
+        normalized = max(0.0, min(1.0, (value - low) / (high - low)))
+        desired = round(202 + normalized * 42)
+        pixels.append(min(used_indices, key=lambda index: abs(luminance[index] - desired)))
+
+    lightmap = Image.new("P", (100, 96))
+    lightmap.putpalette(palette)
+    lightmap.putdata(pixels)
+    target_path.parent.mkdir(parents=True, exist_ok=True)
+    lightmap.save(target_path)
+    return lightmap
+
+
 def build():
     story = read_story()
     native_dialogues = read_native_dialogues()
@@ -864,6 +926,8 @@ def build():
         for suffix in (".are", ".WED", ".mos", "LM.BMP", "SR.BMP", "HT.BMP", "TMP.BMP"):
             if suffix == "SR.BMP" and area in searchmaps:
                 continue
+            if suffix == "LM.BMP":
+                continue
             source_name = "ar0100" + suffix if suffix in (".are", ".mos") else "AR0100" + suffix
             data = (SOURCE / "override" / source_name).read_bytes()
             if suffix in (".are", ".WED"):
@@ -881,6 +945,9 @@ def build():
                 struct.pack_into("<II", data, song_offset, song_index, song_index)
             target_name = area + suffix if suffix in (".are", ".mos") else area.upper() + suffix
             (OUTPUT / "override" / target_name).write_bytes(data)
+        write_area_lightmap(PROJECT / "art" / image_name,
+                            SOURCE / "override" / "AR0100LM.BMP",
+                            OUTPUT / "override" / (area.upper() + "LM.BMP"))
         if area in searchmaps:
             write_searchmap(SOURCE / "override" / "AR0100SR.BMP", searchmaps[area],
                             OUTPUT / "override" / (area.upper() + "SR.BMP"))

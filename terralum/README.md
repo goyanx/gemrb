@@ -9,7 +9,7 @@ The Act VIII Eldrador Outer Watch Camp is a source-bounded adaptation with four 
 ![Act VIII Eldrador Outer Watch Camp in a live isolated GemRB scene](screenshots/eldrador-outer-watch-act8-live.png)
 
 
-These captures come from isolated GemRB sessions. Mistwood shows the optional Wayfarer report and its Journal entry; the Watchpost capture shows Courier Pell responding to the anonymous warning while leaving the voice unexplained. The Market capture shows Archivist Mara's new portrait beside her dialogue.
+These captures come from isolated GemRB sessions. Mistwood shows the optional Wayfarer report and its Journal entry; the Watchpost capture shows Courier Pell responding to the anonymous warning while leaving the voice unexplained. The Market capture shows Archivist Mara's new portrait beside her dialogue. Scene builds now derive their actor light maps from each painted background; this needs live visual review before the area art and lighting can be called aligned.
 
 | Mistwood choice | Act II Journal | Watchpost callback | NPC portrait |
 | --- | --- | --- |

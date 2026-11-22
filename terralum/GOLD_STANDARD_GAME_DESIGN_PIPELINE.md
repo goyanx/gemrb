@@ -105,6 +105,8 @@ Build and dress the environment to make the intended route readable. The art, wa
 
 In the current prototype, `terralum/area_searchmaps.json` stores polygon coordinates in `SR.BMP` cell space; `tools/terralum/build_game.py` writes GemRB's indexed searchmap resource. Check the `PASSABLE` flags in the area's `terrain.2da` before choosing searchmap values. Keep the party start, cast, and intended trails on connected passable cells; block solid props that the art makes impassable. `python tools/terralum/test_area_searchmaps.py` performs four-way connectivity checks for all 27 custom searchmaps, including party starts, scene casts, encounter spawns, and routes. This structural check is an early gate only; live movement and art alignment still require GemRB playtesting.
 
+GemRB's `LM.BMP` controls ambient color and brightness on actors, separate from the baked background image. Derive it per area from the final background art, downsampled and softened to broad light zones; preserve a compatible palette and confirm sprite tint in a live scene. Do not infer a height map from image brightness or vertical screen position: author elevation and occlusion from the area's explicit geometry. Until that geometry exists, retain the known height map and call the area unfinished.
+
 **Pass:** The player can navigate from entry to exit; blocked areas match the art; NPCs and props are reachable and legible; no inherited tutorial geometry or trigger remains by accident.
 
 ### Gate F — Encounter, clue, and reward implementation
