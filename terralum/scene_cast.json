@@ -404,8 +404,8 @@
       "dialog": "WAYFAR",
       "creature": "riddler",
       "position": [
-        930,
-        500
+        900,
+        650
       ],
       "line": "Something circles the ruined watchpost. I heard it answer my name from the trees.",
       "role": "Stranded traveller",

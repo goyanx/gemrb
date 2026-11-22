@@ -150,6 +150,7 @@ This file records verified implementation findings and mistakes that should info
 - Replacing the named lead's sprite does not make a scene look finished when adjacent supporting cast still use low-poly placeholder figures. Review the full visible cast in each scene, not only the speaker or portrait.
 - Keep each painted turnaround tied to the canonical `scene_cast.json` identity and its runtime `avatar_creature`; rebuild the game pack before judging a source-image change.
 - A 3x3 painted turnaround can seed GemRB's directional idle views, but repeating one view for all walk slots is a temporary visual prototype, not an animation solution.
+- A blue ground ring with a location arrow can point to a spawned actor whose sprite is clipped or hidden; do not label it an area effect from appearance alone. In the Mistwood check, the marker remained after removing the inherited `SWIRL` animation, and its position matched the Lost Wayfarer's old spawn outside the authored road polygon. Check the spawn's walkmap location and then verify the moved NPC in a live scene.
 
 ### Save/load in the demo pack
 
