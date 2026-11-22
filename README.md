@@ -16,7 +16,7 @@ Would you like to create a game like Baldur's Gate?
 
 ## Play Terralum
 
-This fork includes **Terralum: Scrolls of Byzantem**, an original, story-driven Infinity Engine style RPG campaign built on GemRB. Follow Algoreth Jon Goren from the court of Alsperia through the Mistwood, Lorian, the eastern academy, the Deep Archives, and onward to Eldrador. The current prototype spans **25 areas across seven acts**, with local NPCs, branching choices, journaled consequences, encounters, optional narration, and ambient music.
+This fork includes **Terralum: Scrolls of Byzantem**, an original, story-driven Infinity Engine style RPG campaign built on GemRB. Follow Algoreth Jon Goren from the court of Alsperia through the Mistwood, Lorian, the eastern academy, the Deep Archives, and onward to Eldrador. The current prototype spans **26 areas across seven acts**, with local NPCs, branching choices, journaled consequences, encounters, optional narration, and ambient music.
 
 <p align="center">
   <a href="terralum/screenshots/alsperia-market-live.png"><img src="terralum/screenshots/alsperia-market-live.png" alt="Actual GemRB capture of the opening Alsperia Market scene, with the party, three local cast actors, story text, journal, Talk, Continue, and Narrate controls" width="92%"></a>
@@ -34,6 +34,12 @@ The character-art direction is shifting to hand-painted 2D figures. This current
   <a href="terralum/screenshots/painted-opening-cast.png"><img src="terralum/screenshots/painted-opening-cast.png" alt="Live GemRB scene with painted two-dimensional sprites for Archivist Mara, King Edmon, and Queen Alisande" width="92%"></a>
 </p>
 <p align="center"><em>Painted 2D NPC sprite prototype in the live Alsperia Market scene.</em></p>
+
+Magister Vael's mint-green, blocky-looking figure has been replaced with a painted silver-haired academy mage in layered indigo robes and a crystal staff. The new nine-direction sprite is visible in the rebuilt Observatory Vault:
+
+<p align="center">
+  <a href="terralum/screenshots/magister-vael-painted-live.png"><img src="terralum/screenshots/magister-vael-painted-live.png" alt="Live GemRB Observatory Vault scene with Magister Vael in painted indigo robes, beside Queen Alisande and the Ward Shard" width="92%"></a>
+</p>
 
 The playable Algoreth is now scaled to 125% of the painted NPC source, matching the other party members and named cast without dominating the scene. A fresh opening capture verifies the actual party character in GemRB:
 
@@ -157,7 +163,7 @@ The latest supporting-cast art pass adds named silhouettes and story props for D
 
 **[Campaign guide](terralum/README.md)** · **[Gold Standard pipeline](terralum/GOLD_STANDARD_GAME_DESIGN_PIPELINE.md)** · **[Campaign plan](terralum/campaign_plan.md)** · **[Current TODO](TODO.md)**
 
-> **Prototype status:** This is an expanding playable slice, not a finished full-length RPG. All 38 named cast members have custom animated world sprites. New character-specific in-scene designs give Archivist Mara her archive-blue hood, braid, spectacles, and route folio, and Archivist Leora her purple hood and sealed dispatch tube; the rebuilt Archive has been viewed live in GemRB. Fresh captures verify the opening Market, Library, and Royal Dispatch Archive casts; review the remaining scenes in-engine. All 25 areas still inherit the demo's WED layout and terrain. Live-tested native actor dialogue includes Mara and Queen Alisande in the Market, Inessa in the Library, and Leora in the Archive. Mara's copy-landmarks and sealed-ledger branches work; Inessa's copy and seal branches each show their own re-entry line and Act I Journal entry. Leora's copy-schedule and sealed-schedule branches and their re-entry lines work; Saren's later response remains open. Other branches, scene movement, and save/load still need playtesting. See the [campaign guide](terralum/README.md) for build steps and current verification limits.
+> **Prototype status:** This is an expanding playable slice, not a finished full-length RPG. All 42 named cast members have custom world sprites, though most still reuse idle artwork for walking. New character-specific in-scene designs give Archivist Mara her archive-blue hood, braid, spectacles, and route folio, Archivist Leora her purple hood and sealed dispatch tube, and Magister Vael his silver hair, indigo academy robes, and crystal staff; the rebuilt Academy has been viewed live in GemRB. Fresh captures verify the opening Market, Library, Royal Dispatch Archive, and Observatory Vault casts; review the remaining scenes in-engine. All 26 areas still inherit the demo's WED layout and terrain. Live-tested native actor dialogue includes Mara and Queen Alisande in the Market, Inessa in the Library, and Leora in the Archive. Mara's copy-landmarks and sealed-ledger branches work; Inessa's copy and seal branches each show their own re-entry line and Act I Journal entry. Leora's copy-schedule and sealed-schedule branches and their re-entry lines work; Saren's later response remains open. Other branches, scene movement, and save/load still need playtesting. See the [campaign guide](terralum/README.md) for build steps and current verification limits.
 
 To try it out you either need some of the ORIGINAL game's data or you can
 get a tiny sneak peek by running the included trivial game demo.
