@@ -106,6 +106,7 @@ next_actor = 1001
 timed_events = []
 journal_entries = []
 party_actors = set()
+player_stats = {}
 gemrb = types.ModuleType("GemRB")
 gemrb.LoadWindow = lambda *args: window
 gemrb.GetGameVar = lambda name: globals_[name]
@@ -138,7 +139,10 @@ def create_creature(*args):
 gemrb.CreateCreature = create_creature
 gemrb.SetPlayerName = lambda actor, name, *args: events.append(("name", actor, name))
 gemrb.SetPlayerDialog = lambda actor, resref: events.append(("dialog", actor, resref))
-gemrb.SetPlayerStat = lambda *args: None
+def set_player_stat(actor, stat, value):
+    events.append(("set-stat", actor, stat, value))
+    player_stats[(actor, stat)] = value
+gemrb.SetPlayerStat = set_player_stat
 def execute_string(action, actor):
     events.append(("attack", action, actor))
     if action == "JoinParty()":
@@ -147,6 +151,8 @@ gemrb.ExecuteString = execute_string
 def get_player_stat(actor, stat):
     if actor in party_actors and stat == campaign.IE_EA:
         return campaign.PC
+    if stat == campaign.IE_TOHIT:
+        return player_stats.get((actor, stat), 20)
     return 2048 if enemy_dead or actor in dead_actors else 0
 gemrb.GetPlayerStat = get_player_stat
 gemrb.GetPartySize = lambda: len(party_actors) + 1
@@ -838,6 +844,7 @@ globals_.update({"TLCHAP": chapter_index_by_area["tl0002"], "TLBEAT": 1, "TLENEM
                  "TLRIVERROUTE": 0, "TLMISTWOODSAFE": 0, "TLMISTWOODVICTORY": 0,
                  "TLJRN_MISTWOOD_AMBUSH": 0, "TLMISTWOOD_TESSA": 0,
                  "TLMISTWOOD_TESSA_COMBAT_CUE": 0})
+player_stats[(1, campaign.IE_TOHIT)] = 20
 campaign.OnLoad()
 while timed_events:
     timed_events.pop(0)()
@@ -847,10 +854,19 @@ assert [event[1] for event in events if event[0] == "spawn"][-2:] == [
 assert globals_["TLENEMY_STALKER"] > 1001
 assert globals_["TLENEMY_PROWLER"] > globals_["TLENEMY_STALKER"]
 assert globals_["TLENEMY"] == globals_["TLENEMY_STALKER"]
+assert ("set-stat", globals_["TLENEMY_STALKER"], campaign.IE_MAXHITPOINTS, 10) in events
+assert ("set-stat", globals_["TLENEMY_STALKER"], campaign.IE_HITPOINTS, 10) in events
+assert ("set-stat", globals_["TLENEMY_STALKER"], campaign.IE_DAMAGEBONUS, -2) in events
+assert ("set-stat", globals_["TLENEMY_PROWLER"], campaign.IE_MAXHITPOINTS, 8) in events
+assert ("set-stat", globals_["TLENEMY_PROWLER"], campaign.IE_HITPOINTS, 8) in events
+assert ("set-stat", globals_["TLENEMY_PROWLER"], campaign.IE_DAMAGEBONUS, -2) in events
 assert any(event[0] == "attack" and event[1] == "JoinParty()" for event in events)
 while timed_events:
     timed_events.pop(0)()
-assert sum(event[0] == "attack" and event[1] == "Attack(Player1)" for event in events) == 2
+assert ("set-stat", 1, campaign.IE_TOHIT, 17) in events, [event for event in events if event[0] == "set-stat"]
+assert ("set-stat", globals_["TLMISTWOOD_TESSA"], campaign.IE_TOHIT, 17) in events
+assert sum(event[0] == "attack" and event[1] == "Attack(Player1)" for event in events) == 1
+assert sum(event[0] == "attack" and event[1] == "Attack(Player2)" for event in events) == 1
 assert globals_["TLMISTWOOD_TESSA_COMBAT_CUE"] == 1
 assert "Tessa points out the prowler and calls for Algoreth to hold the road." in window.controls[0].text
 assert window.controls[21].visible
@@ -862,6 +878,8 @@ window.controls[21].press()
 assert events[-1] == ("select-pc", 2, True, 1)
 window.controls[20].press()
 assert events[-1][0:2] == ("target-mode", 2)
+assert events[-1][2] == (campaign.GA_NO_DEAD | campaign.GA_NO_SELF
+                         | campaign.GA_NO_HIDDEN | campaign.GA_NO_NEUTRAL)
 window.controls[4].press()
 assert globals_["TLBEAT"] == 1
 assert "Mistwood stalker and Pale-stone prowler" in window.controls[0].text
@@ -876,6 +894,8 @@ assert globals_["TLENEMY_STALKER"] == globals_["TLENEMY_PROWLER"] == globals_["T
 assert globals_["TLMISTWOODVICTORY"] == globals_["TLJRN_MISTWOOD_AMBUSH"] == 1
 assert any(entry["value"].startswith("Algoreth and Tessa broke the two-foe ambush")
            for entry in journal_entries)
+assert player_stats[(1, campaign.IE_TOHIT)] == 20
+assert player_stats[(globals_["TLMISTWOOD_TESSA"], campaign.IE_TOHIT)] == 20
 dead_actors.clear()
 
 # The victory changes Courier Pell's response at the next scene, carrying the

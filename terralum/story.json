@@ -278,6 +278,7 @@
           "companion": {
             "actor_flag": "TLMISTWOOD_TESSA",
             "triggered_flag": "TLMISTWOOD_TESSA_COMBAT_CUE",
+            "party_to_hit": 17,
             "join_line": "Tessa points out the prowler and calls for Algoreth to hold the road."
           },
           "victory_journal": {
@@ -289,6 +290,8 @@
             {
               "name": "Mistwood stalker",
               "creature": "mistalk",
+              "hit_points": 10,
+              "damage_bonus": -2,
               "position": [
                 1008,
                 444
@@ -298,6 +301,8 @@
             {
               "name": "Pale-stone prowler",
               "creature": "paleprow",
+              "hit_points": 8,
+              "damage_bonus": -2,
               "position": [
                 1120,
                 560

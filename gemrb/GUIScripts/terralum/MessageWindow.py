@@ -11,7 +11,8 @@ import GUIINV
 import NPCPalette
 from GUIDefines import *
 from ie_stats import (IE_EA, IE_STATE_ID, STATE_DEAD, ENEMY, NEUTRAL,
-					  IE_HAIR_COLOR, IE_MAJOR_COLOR, IE_MINOR_COLOR)
+					  IE_HAIR_COLOR, IE_MAJOR_COLOR, IE_MINOR_COLOR,
+					  IE_HITPOINTS, IE_MAXHITPOINTS, IE_DAMAGEBONUS, IE_TOHIT)
 
 NPC_PALETTES_BY_NAME = NPCPalette.palettes_by_name(Story.cast_catalog())
 PORTRAIT_ALIASES = {
@@ -131,6 +132,7 @@ def OnLoad():
 	journal_state = {"open": False}
 	dialogue_state = {"has_choices": False, "must_finish_followup": False, "followup_journal": None}
 	load_state = {"games": (), "page": 0, "selected": None}
+	combat_state = {"original_tohit": {}}
 
 	chapters = Story.chapters()
 	cast_index = {"line": -1}
@@ -217,7 +219,8 @@ def OnLoad():
 	def begin_actor_attack():
 		if dialogue_state["has_choices"] or journal_state["open"]:
 			return
-		GemRB.GameControlSetTargetMode(TARGET_MODE_ATTACK, GA_NO_DEAD | GA_NO_SELF | GA_NO_HIDDEN)
+		GemRB.GameControlSetTargetMode(TARGET_MODE_ATTACK,
+									  GA_NO_DEAD | GA_NO_SELF | GA_NO_HIDDEN | GA_NO_NEUTRAL)
 
 	def select_tessa():
 		if GemRB.GetPartySize() > 1:
@@ -558,14 +561,28 @@ def OnLoad():
 		action.OnPress(advance)
 		voice.SetDisabled(not chapter.get("voice"))
 
-	def begin_group_combat(actors, companion_flag=None):
+	def begin_group_combat(actors, companion_flag=None, companion_actor=None, party_to_hit=None):
 		# Start combat after the one-round delay so a joining companion is in
 		# the party before GemRB initializes the active initiative list.
-		for _name, enemy_actor in actors:
-			GemRB.ExecuteString("Attack(Player1)", enemy_actor)
+		if party_to_hit is not None:
+			for actor in (1, companion_actor):
+				if not actor:
+					continue
+				if actor not in combat_state["original_tohit"]:
+					combat_state["original_tohit"][actor] = GemRB.GetPlayerStat(actor, IE_TOHIT)
+				if combat_state["original_tohit"][actor] > party_to_hit:
+					GemRB.SetPlayerStat(actor, IE_TOHIT, party_to_hit)
+		for index, (_name, enemy_actor) in enumerate(actors):
+			target = "Player2" if index % 2 and GemRB.GetPartySize() > 1 else "Player1"
+			GemRB.ExecuteString("Attack(" + target + ")", enemy_actor)
 		if companion_flag:
 			GemRB.SetGlobal(companion_flag, "GLOBAL", 1)
 		configure_party_controls()
+
+	def restore_combat_stats():
+		for actor, to_hit in combat_state["original_tohit"].items():
+			GemRB.SetPlayerStat(actor, IE_TOHIT, to_hit)
+		combat_state["original_tohit"].clear()
 
 	def advance():
 		chapter_index = GemRB.GetGameVar("TLCHAP")
@@ -646,6 +663,13 @@ def OnLoad():
 					GemRB.SetGlobal(member["flag"], "GLOBAL", actor)
 					GemRB.SetPlayerName(actor, member["name"], 0)
 					GemRB.SetPlayerStat(actor, IE_EA, ENEMY)
+					hit_points = member.get("hit_points")
+					if hit_points:
+						GemRB.SetPlayerStat(actor, IE_MAXHITPOINTS, hit_points)
+						GemRB.SetPlayerStat(actor, IE_HITPOINTS, hit_points)
+					damage_bonus = member.get("damage_bonus")
+					if damage_bonus is not None:
+						GemRB.SetPlayerStat(actor, IE_DAMAGEBONUS, damage_bonus)
 					spawned_names.append(member["name"])
 				group_actors.append((member["name"], actor))
 			companion = beat.get("companion")
@@ -654,8 +678,9 @@ def OnLoad():
 				if actor:
 					GemRB.ExecuteString("JoinParty()", actor)
 					GemRB.SetGlobal(companion["triggered_flag"], "GLOBAL", 2)
-					GemRB.SetTimedEvent(lambda actors=tuple(group_actors), flag=companion["triggered_flag"]:
-						begin_group_combat(actors, flag), 1)
+					GemRB.SetTimedEvent(lambda actors=tuple(group_actors), flag=companion["triggered_flag"],
+										ally=actor, to_hit=companion.get("party_to_hit"):
+						begin_group_combat(actors, flag, ally, to_hit), 1)
 					party_button.SetVisible(True)
 					hero_button.SetVisible(True)
 					message.Append("\n\n" + companion["join_line"])
@@ -674,6 +699,7 @@ def OnLoad():
 				return
 			for member in group:
 				GemRB.SetGlobal(member["flag"], "GLOBAL", 0)
+			restore_combat_stats()
 			GemRB.SetGlobal("TLENEMY", "GLOBAL", 0)
 			GemRB.SetGlobal("TLMISTWOODVICTORY", "GLOBAL", 1)
 			record_journal_event(beat.get("victory_journal"), chapter["act"])
