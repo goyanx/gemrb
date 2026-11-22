@@ -1272,8 +1272,8 @@
       "portrait": "FALSEAL",
       "creature": "riddler",
       "position": [
-        1250,
-        600
+        930,
+        760
       ],
       "line": "Next time, I will have learned.",
       "role": "Echo within the contained Tear",

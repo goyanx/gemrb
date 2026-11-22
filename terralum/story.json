@@ -761,8 +761,8 @@
               "creature": "falseal",
               "spawn_flag": "TLFALSE_ALGORETH",
               "position": [
-                850,
-                540
+                930,
+                760
               ],
               "hit_points": 14,
               "damage_bonus": -1,
