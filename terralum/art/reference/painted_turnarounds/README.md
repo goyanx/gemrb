@@ -18,6 +18,8 @@ These generated transparent turnarounds establish the corrected world-character 
 | Mistwood Stalker (encounter enemy) | `mistalk` | `mistwood_stalker.png` |
 | Pale-Stone Prowler (encounter enemy) | `paleprow` | `pale_stone_prowler.png` |
 
+The Stalker and Prowler also have directional attack turnarounds in `mistwood_stalker_attack.png` and `pale_stone_prowler_attack.png`. Import their attack poses with `python tools/terralum/import_painted_turnaround.py <sheet> <asset> --attack`. The BAM builder uses these frames for all nine mirrored-human melee attack resources, with an idle/strike/recovery sequence per direction.
+
 Convert a sheet into GemRB's nine directional 80x96 frame slots with:
 
 ```powershell

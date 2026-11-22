@@ -24,6 +24,8 @@ def main():
 	parser = argparse.ArgumentParser(description=__doc__)
 	parser.add_argument("sheet", type=Path, help="transparent 3x3 turnaround PNG")
 	parser.add_argument("asset", help="world sprite folder name, such as mara00")
+	parser.add_argument("--attack", action="store_true",
+		help="import directional attack views as attack_00.png through attack_08.png")
 	args = parser.parse_args()
 	with Image.open(args.sheet) as source:
 		image = source.convert("RGBA")
@@ -41,9 +43,13 @@ def main():
 		cell.thumbnail((72, 88), Image.Resampling.LANCZOS)
 		frame = Image.new("RGBA", FRAME_SIZE, (0, 0, 0, 0))
 		frame.alpha_composite(cell, ((FRAME_SIZE[0] - cell.width) // 2, FRAME_SIZE[1] - cell.height))
-		for pose in range(4):
-			frame.save(output / f"{direction:02d}_{pose:02d}.png")
-	print(f"Imported 9 painted idle views for {args.asset} into {output}")
+		if args.attack:
+			frame.save(output / f"attack_{direction:02d}.png")
+		else:
+			for pose in range(4):
+				frame.save(output / f"{direction:02d}_{pose:02d}.png")
+	mode = "attack" if args.attack else "idle"
+	print(f"Imported 9 painted {mode} views for {args.asset} into {output}")
 
 
 if __name__ == "__main__":

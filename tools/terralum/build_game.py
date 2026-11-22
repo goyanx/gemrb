@@ -835,7 +835,8 @@ def build():
     songs.write_text(songs.read_text(encoding="ascii").replace("mx0100.mus", "tlcity.mus").replace("mx0110.mus", "tlcave.mus")
                      + "3       mistwood        tlwood.mus\n", encoding="ascii")
     actions = OUTPUT / "override" / "action.ids"
-    actions.write_text(actions.read_text(encoding="ascii") + "\n3 Attack(O:Target*)\n", encoding="ascii")
+    actions.write_text(actions.read_text(encoding="ascii")
+                       + "\n3 Attack(O:Target*)\n248 RunToPoint(P:Point*)\n", encoding="ascii")
     for sound in (PROJECT / "audio").glob("tln*.ogg"):
         shutil.copy2(sound, OUTPUT / "override" / sound.name)
     for music in (PROJECT / "audio" / "music").rglob("*"):

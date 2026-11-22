@@ -224,6 +224,9 @@ def write_npc_avatar(name, prefix, output_override):
 	walk_bam = _bam_bytes(walk, walk_cycles)
 
 	idle = [_open_world_frame(source / f"{direction:02d}_00.png") for direction in range(9)]
+	attack_paths = [source / f"attack_{direction:02d}.png" for direction in range(9)]
+	attack = [_open_world_frame(path) for path in attack_paths] if all(
+		path.is_file() for path in attack_paths) else idle
 	# The standard humanoid's G17 awake stance indexes cycles 63 through 71.
 	idle_cycles = [[0] for _ in range(63)]
 	idle_cycles.extend([[direction] for direction in range(9)])
@@ -249,4 +252,16 @@ def write_npc_avatar(name, prefix, output_override):
 	(output_override / f"{prefix}G17.BAM").write_bytes(idle_bam)
 	for suffix, data in stance_bams.items():
 		(output_override / f"{prefix}{suffix}.BAM").write_bytes(data)
+
+	# IE_ANI_CODE_MIRROR resolves the three weapon families to a1-a3,
+	# a4-a6, or a7-a9 during melee. Supply all directional action BAMs.
+	attack_frames = []
+	attack_cycles = []
+	for direction in range(9):
+		start = len(attack_frames)
+		attack_frames.extend((idle[direction], attack[direction], idle[direction]))
+		attack_cycles.append([start, start + 1, start + 2])
+	attack_bam = _bam_bytes(attack_frames, attack_cycles)
+	for suffix in range(1, 10):
+		(output_override / f"{prefix}a{suffix}.BAM").write_bytes(attack_bam)
 	return (len(walk_bam), len(ready_bam), len(idle_bam))

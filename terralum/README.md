@@ -48,7 +48,7 @@ The latest readability pass gives Scout Tessa a blue-green cloak, rust signal ma
 
 Four generated portrait sheets now provide medium and small GemRB portrait resources for all thirty-eight unique named NPCs across the seven-act cast. These dialogue portraits are separate from the animated world sprites. Portraits are selected by NPC data and appear beside their dialogue. The latest sheet adds distinct portraits for twelve previously unpictured characters.
 
-Mistwood's two ambushers use their own painted 2D enemy sprites instead of generic protagonist/riddler placeholders. Their encounter CREs and animation rows are registered separately from neutral scene NPCs in `enemy_avatars.json`. A live battle capture shows the Stalker and Pale-stone Prowler attacking the enlarged player; movement scripting and battle balance still need work.
+Mistwood's two ambushers use their own painted 2D enemy sprites instead of generic protagonist/riddler placeholders. Their encounter CREs and animation rows are registered separately from neutral scene NPCs in `enemy_avatars.json`. Each enemy has a directional painted attack sheet and idle–strike–recovery melee BAMs. A live battle capture shows the Stalker and Pale-stone Prowler attacking the enlarged player; defeat/reload recovery and combat balance still need work.
 
 ![Live GemRB screenshot of the Mistwood ambush with unique enemy sprites and enlarged player](screenshots/mistwood-unique-enemies-live.png)
 
