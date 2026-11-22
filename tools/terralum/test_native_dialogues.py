@@ -181,6 +181,56 @@ class NativeDialogueResourceTests(unittest.TestCase):
             for transition, choice in zip(dialogue_state["transitions"], inessa_cast["choices"]):
                 self.assertEqual(transition["journal"], choice["journal"]["text"])
 
+    def test_gallery_order_puzzle_retry_outcomes_and_echo_limits(self):
+        dialogues = read_native_dialogues()
+        keeper = dialogues["GALLKEEP"]["states"]
+
+        def choose(state_index, label, globals_):
+            transition = next(option for option in keeper[state_index]["transitions"]
+                              if option["text"] == label)
+            for write in transition.get("set", []):
+                globals_[write["flag"]] = write["value"]
+            return transition
+
+        globals_ = {"TLCHAP": 11, "TLGALLERY": 0, "TLGALLSOLVED": 0,
+                    "TLJRN_GALLERY_RESOLUTION": 0}
+        state = choose(0, "Why is return carved beside it?", globals_)["next"]
+        state = choose(state, "Try the three-mark order.", globals_)["next"]
+        state = choose(state, "Restraint.", globals_)["next"]
+        state = choose(state, "Return, then passage.", globals_)["next"]
+        self.assertEqual(state, 11)
+        state = choose(state, "Reset the marks and try again.", globals_)["next"]
+        state = choose(state, "Restraint.", globals_)["next"]
+        state = choose(state, "Passage, then return.", globals_)["next"]
+        completion = choose(state, "Return.", globals_)
+        self.assertEqual(completion["next"], 6)
+        self.assertEqual(globals_["TLGALLSOLVED"], 1)
+        self.assertEqual(keeper[6]["when"], [
+            {"flag": "TLCHAP", "value": 11},
+            {"flag": "TLGALLSOLVED", "value": 1},
+            {"flag": "TLGALLERY", "value": 0},
+        ])
+
+        for value, label, outcome_state in (
+                (1, "Name restraint; carry the warning back unopened.", 7),
+                (2, "Demand passage through the arch.", 8)):
+            route_state = choose(6, label, globals_)
+            self.assertEqual(route_state["next"], outcome_state)
+            self.assertEqual(globals_["TLGALLERY"], value)
+            self.assertEqual(globals_["TLJRN_GALLERY_RESOLUTION"], 1)
+            self.assertTrue(route_state["journal"].startswith("In the Byzantem Seal Gallery"))
+            expected_niche_line = "niches remain sealed" if outcome_state == 7 else "will not open the niches"
+            self.assertIn(expected_niche_line, keeper[outcome_state]["say"])
+            globals_["TLGALLERY"] = 0
+            globals_["TLJRN_GALLERY_RESOLUTION"] = 0
+
+        echo = dialogues["GALLECHO"]["states"]
+        identity_state = echo[echo[0]["transitions"][0]["next"]]
+        contents_state = echo[echo[0]["transitions"][1]["next"]]
+        self.assertIn("cannot give you a name", identity_state["say"])
+        self.assertNotIn("Dorian", identity_state["say"])
+        self.assertIn("niches remain sealed", contents_state["say"])
+
     def test_compiled_alistair_dialogue_and_tlk(self):
         pack = Path(os.environ.get("TERRALUM_GAME_OUTPUT", PROJECT / "build" / "game")).resolve()
         dlg_path = pack / "override" / "alistar.dlg"
