@@ -86,6 +86,11 @@ During active combat, the save control explains that GemRB blocks saving and dir
 
 ![Terralum after loading back into the saved Market scene](screenshots/save-load-restored.png)
 
+The safe route through Mistwood also survives a named save and reload at Dorian's warning:
+
+![Terralum saving the Mistwood safe-route scene](screenshots/safe-mistwood-saved.png)
+![Terralum restored to the Mistwood safe-route scene](screenshots/safe-mistwood-restored.png)
+
 ## Build and play
 
 Native Infinity Engine DLG conversations currently cover Archivist Mara, King Edmon, and Queen Alisande in the opening scene, the Lost Wayfarer on Mistwood Road, Royal Scribe Oren in the council, and Alistair in the Chart Room and Hangar. The Wayfarer's anonymous-warning and private-account choices use the same campaign and one-time journal flags as the campaign panel; Courier Pell's later callback reads those outcomes. Both native branches and the private branch's Act II Journal entry have been live-verified in an isolated GemRB session. Mara's and Oren's two-stage DLGs likewise set shared campaign globals and journal entries that affect later NPC dialogue. At the council, Captain Rovan’s one-time open-road/restricted-scroll policy is journaled. Courier Pell offers an optional public-warning or crown-restricted deposition; both interaction surfaces journal the selected record, and Queen Alisande’s later council response combines Pell’s decision with Oren’s paired/separate docket choice. Edmon and Alisande's return-court DLG entry states combine the public/archive route choice with the resolved/open Lorian gallery warning; Alisande’s twelve council responses combine Rovan’s policy, Pell’s deposition, and Oren’s docket outcomes. Other authored NPC choices still use the campaign panel. DLG resources are compiled with `dialog.tlk` strings and checked by `test_native_dialogues.py`; Queen Alisande's actor click-to-talk and one response are verified in isolated GemRB. Archivist Mara's two-stage native conversation, both ledger outcomes, and the Act I journal entry are live-verified. Named save creation and loading the saved scene back into GemRB are live-verified; later campaign choices and pending dialogue state still need persistence checks. Other NPCs remain to be tested.
