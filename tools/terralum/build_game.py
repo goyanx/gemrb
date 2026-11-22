@@ -25,6 +25,7 @@ OUTPUT = Path(os.environ.get("TERRALUM_GAME_OUTPUT", PROJECT / "build" / "game")
 CAST_FILE = PROJECT / "scene_cast.json"
 NATIVE_DIALOGUE_FILE = PROJECT / "native_dialogues.json"
 SEARCHMAP_FILE = PROJECT / "area_searchmaps.json"
+AREA_GEOMETRY_FILE = PROJECT / "area_geometry.json"
 ENEMY_AVATAR_FILE = PROJECT / "enemy_avatars.json"
 AREA_IMAGE = PROJECT / "art" / "observatory_courtyard.png"
 PORTRAIT_SHEETS = (
@@ -714,6 +715,106 @@ def read_searchmaps():
     return specs
 
 
+def read_area_geometry():
+    """Load authored static WED occlusion polygons keyed by area resref."""
+    if not AREA_GEOMETRY_FILE.exists():
+        return {}
+    specs = json.loads(AREA_GEOMETRY_FILE.read_text(encoding="utf-8"))
+    if not isinstance(specs, dict) or not set(specs).issubset(AREAS):
+        raise ValueError("area_geometry.json keys must name built scene areas")
+    for area, spec in specs.items():
+        if not isinstance(spec, dict) or not isinstance(spec.get("walls"), list):
+            raise ValueError(f"WED geometry for {area} needs a walls list")
+        for wall in spec["walls"]:
+            points = wall.get("points") if isinstance(wall, dict) else None
+            if (not isinstance(points, list) or len(points) < 4
+                    or any(not isinstance(point, list) or len(point) != 2
+                           or any(type(coord) is not int for coord in point)
+                           for point in points)):
+                raise ValueError(f"WED walls for {area} need four or more integer [x, y] points")
+    return specs
+
+
+def write_wed_geometry(wed_data, spec):
+    """Replace a cloned WED's wall polygons with authored area occlusion data."""
+    if len(wed_data) < 32 or wed_data[:8] != b"WED V1.3":
+        raise ValueError("Area geometry source must be a WED V1.3 resource")
+    overlay_count, _, overlays_offset, sec_offset, _, _ = struct.unpack_from("<6I", wed_data, 8)
+    if overlay_count < 1:
+        raise ValueError("WED geometry source has no tilemap overlays")
+    map_width, map_height = struct.unpack_from("<HH", wed_data, overlays_offset)
+    wall_count, _, _, groups_offset, _ = struct.unpack_from("<5I", wed_data, sec_offset)
+    del wall_count
+    groups_x = (map_width + 9) // 10
+    groups_y = (map_height * 2 + 14) // 15
+    group_count = groups_x * groups_y
+    max_x, max_y = map_width * 64, map_height * 64
+
+    polygons = []
+    for wall in spec["walls"]:
+        points = wall["points"]
+        if any(x < 0 or y < 0 or x > max_x or y > max_y for x, y in points):
+            raise ValueError(f"WED wall polygon exceeds the {max_x}x{max_y} area")
+        if points[0] == points[1]:
+            raise ValueError("WED wall baseline must have two distinct points")
+        min_x = min(point[0] for point in points)
+        max_x_wall = max(point[0] for point in points)
+        min_y = min(point[1] for point in points)
+        max_y_wall = max(point[1] for point in points)
+        if min_x == max_x_wall or min_y == max_y_wall:
+            raise ValueError("WED wall polygons must have nonzero width and height")
+        polygons.append((points, (min_x, max_x_wall, min_y, max_y_wall)))
+
+    group_polygons = [[] for _ in range(group_count)]
+    group_width, group_height = 640, 480
+    for polygon_index, (_, bounds) in enumerate(polygons):
+        min_x, max_x_wall, min_y, max_y_wall = bounds
+        for gy in range(groups_y):
+            for gx in range(groups_x):
+                left, top = gx * group_width, gy * group_height
+                right = min(max_x, (gx + 1) * group_width)
+                bottom = min(max_y, (gy + 1) * group_height)
+                if min_x <= right and max_x_wall >= left and min_y <= bottom and max_y_wall >= top:
+                    group_polygons[gy * groups_x + gx].append(polygon_index)
+
+    wall_groups = bytearray()
+    plt_indices = []
+    for members in group_polygons:
+        if len(plt_indices) > 0xFFFF or len(members) > 0xFFFF:
+            raise ValueError("WED wall group exceeds 16-bit index limits")
+        wall_groups.extend(struct.pack("<HH", len(plt_indices), len(members)))
+        plt_indices.extend(members)
+
+    polygon_headers = bytearray()
+    vertices = bytearray()
+    first_vertex = 0
+    for points, bounds in polygons:
+        if first_vertex > 0xFFFFFFFF or len(points) > 0xFFFFFFFF:
+            raise ValueError("WED wall vertices exceed 32-bit index limits")
+        min_x, max_x_wall, min_y, max_y_wall = bounds
+        polygon_headers.extend(struct.pack(
+            "<IIBB4H", first_vertex, len(points), 1, 255,
+            min_x, max_x_wall, min_y, max_y_wall,
+        ))
+        for x, y in points:
+            vertices.extend(struct.pack("<hh", x, y))
+        first_vertex += len(points)
+
+    polygon_offset = groups_offset + len(wall_groups)
+    plt_offset = polygon_offset + len(polygon_headers)
+    plt_data = b"".join(struct.pack("<H", index) for index in plt_indices)
+    vertices_offset = plt_offset + len(plt_data)
+    output = bytearray(wed_data[:groups_offset])
+    output.extend(wall_groups)
+    output.extend(polygon_headers)
+    output.extend(plt_data)
+    output.extend(vertices)
+    struct.pack_into("<I", output, 12, 0)  # no inherited demo doors
+    struct.pack_into("<5I", output, sec_offset, len(polygons), polygon_offset,
+                     vertices_offset, groups_offset, plt_offset)
+    return bytes(output)
+
+
 def write_searchmap(reference_path, spec, target_path=None):
     """Build a paletted GemRB SR map from authored walkable and blocked polygons."""
     with Image.open(reference_path) as reference:
@@ -849,6 +950,7 @@ def build():
     story = read_story()
     native_dialogues = read_native_dialogues()
     searchmaps = read_searchmaps()
+    area_geometry = read_area_geometry()
     if OUTPUT.exists():
         shutil.rmtree(OUTPUT)
     shutil.copytree(SOURCE, OUTPUT)
@@ -932,6 +1034,8 @@ def build():
             data = (SOURCE / "override" / source_name).read_bytes()
             if suffix in (".are", ".WED"):
                 data = data.replace(b"AR0100", upper)
+            if suffix == ".WED" and area in area_geometry:
+                data = write_wed_geometry(data, area_geometry[area])
             if suffix == ".are":
                 data = bytearray(data)
                 struct.pack_into("<H", data, 0x58, 0)  # actor count
