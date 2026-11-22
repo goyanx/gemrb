@@ -108,6 +108,10 @@ def DeathWindow ():
 	# break out of any cutscenes, so we get mouse input back
 	# can also happen in "cutscene lite" mode, eg. with wk spirit warrior dream #715
 	GemRB.EndCutSceneMode ()
+	if GemRB.GameType == "terralum":
+		import MessageWindow
+		if MessageWindow.ShowDefeat():
+			return
 	GemRB.ExecuteString ("SetCursorState(0)")
 	if GameCheck.IsIWD1():
 		#no death movie, but music is changed

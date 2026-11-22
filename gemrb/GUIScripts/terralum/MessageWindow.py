@@ -20,6 +20,27 @@ PORTRAIT_ALIASES = {
 	"Queen Alisande": "ALISAV",
 	"Algoreth": "ALGOVR",
 }
+_defeat_ui = None
+
+
+def ShowDefeat():
+	"""Show a game-over state using the campaign panel when the demo has no death CHU."""
+	if not _defeat_ui:
+		return False
+	GemRB.GamePause(1, 0)
+	ui = _defeat_ui
+	ui["message"].SetText("TERRALUM  |  THE PARTY HAS FALLEN\n\nThe road has taken its toll. Load a named save to return to your last safe place.")
+	ui["load_state"]["defeated"] = True
+	for control in (ui["attack"], ui["cast"], ui["talk"], ui["voice"], ui["journal"], ui["save"]):
+		control.SetVisible(False)
+	for button in ui["choices"]:
+		button.SetVisible(False)
+	ui["action"].SetVisible(False)
+	ui["portrait"].SetVisible(False)
+	ui["load"].SetVisible(True)
+	ui["load"].SetText("LOAD")
+	ui["load"].OnPress(ui["open_load"])
+	return True
 
 
 def _style(button, width=None):
@@ -32,6 +53,7 @@ def _style(button, width=None):
 
 
 def OnLoad():
+	global _defeat_ui
 	window = GemRB.LoadWindow(0, GUICommon.GetWindowPack(), WINDOW_BOTTOM | WINDOW_HCENTER)
 	window.SetFlags(WF_BORDERLESS | IE_GUI_VIEW_IGNORE_EVENTS, OP_OR)
 	window.AddAlias("MSGWIN")
@@ -268,18 +290,44 @@ def OnLoad():
 		load_state["page"] = (load_state["page"] + direction) % page_count
 		show_load_page()
 
+	def restart_game():
+		GemRB.QuitGame()
+		GemRB.SetNextScript("Start")
+
 	def open_load_window():
 		GUICommon.SetSaveDir()
 		games = list(GemRB.GetSaveGames())
 		if not games:
-			message.SetText("TERRALUM  |  NO SAVED GAMES\n\nPress SAVE to create a named save before loading a game.")
-			action.SetText("CONTINUE")
-			action.OnPress(advance)
+			if load_state.get("defeated"):
+				message.SetText("TERRALUM  |  NO SAFE SAVE FOUND\n\nStart a new journey in Alsperia to try again.")
+				action.SetText("RESTART")
+				action.OnPress(restart_game)
+			else:
+				message.SetText("TERRALUM  |  NO SAVED GAMES\n\nPress SAVE to create a named save before loading a game.")
+				action.SetText("CONTINUE")
+				action.OnPress(advance)
+			action.SetVisible(True)
 			return
 		games.sort(key=lambda game: (game.GetGameDate(), game.GetName()), reverse=True)
 		load_state["games"] = tuple(games)
 		load_state["page"] = 0
 		show_load_page()
+
+	_defeat_ui = {
+		"message": message,
+		"attack": attack_button,
+		"cast": cast,
+		"talk": actor_talk,
+		"voice": voice,
+		"journal": journal_button,
+		"save": save_button,
+		"choices": choice_buttons,
+		"action": action,
+		"portrait": portrait_button,
+		"load": load_button,
+		"load_state": load_state,
+		"open_load": open_load_window,
+	}
 
 	def show_dialogue_choices(person, choices):
 		for index, button in enumerate(choice_buttons):
