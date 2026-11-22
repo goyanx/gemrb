@@ -1255,7 +1255,7 @@
       "creature": "alisande",
       "position": [
         1100,
-        700
+        500
       ],
       "line": "I will hold the wardens at the perimeter. Do not mistake the echo for a command.",
       "role": "Queen of Alsperia and co-ruler beside Algoreth",
@@ -1272,8 +1272,8 @@
       "portrait": "FALSEAL",
       "creature": "riddler",
       "position": [
-        1200,
-        680
+        1250,
+        600
       ],
       "line": "Next time, I will have learned.",
       "role": "Echo within the contained Tear",

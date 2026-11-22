@@ -749,7 +749,7 @@
               "creature": "wrdshard",
               "position": [
                 1100,
-                680
+                600
               ],
               "text": "The Ward Shard tears free and attacks. Its collapse will expose the voice behind it."
             },
@@ -758,8 +758,8 @@
               "creature": "falseal",
               "spawn_flag": "TLFALSE_ALGORETH",
               "position": [
-                1200,
-                680
+                1250,
+                600
               ],
               "text": "The first pulse breaks. False Algoreth takes shape inside the boundary and warns, 'Next time, I will have learned.'"
             }
