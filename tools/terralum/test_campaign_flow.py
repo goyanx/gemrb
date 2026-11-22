@@ -239,6 +239,10 @@ assert sorted({chapter["act"] for chapter in chapters}) == list(range(1, 8))
 for chapter_index, chapter in enumerate(chapters):
     assert globals_["TLCHAP"] == chapter_index
     assert current_area == chapter["area"]
+    falseal_spawn_count = sum(event[0] == "spawn" and event[1][1] == "falseal" for event in events)
+    if chapter["area"] == "tl0005":
+        # False Algoreth must stay out of the neutral cast through the Ward Shard phase.
+        assert falseal_spawn_count == 0
     if chapter["area"] == "tl0010":
         # The native DLG puzzle is verified in test_native_dialogues; this
         # end-to-end panel mock enters the scene with the puzzle already solved.
@@ -358,6 +362,8 @@ for chapter_index, chapter in enumerate(chapters):
                 assert "Dorian's inscription" in window.controls[0].text
                 assert "skirts the stalker's ambush" in window.controls[0].text
                 continue
+            if chapter["area"] == "tl0005":
+                assert sum(event[0] == "spawn" and event[1][1] == "falseal" for event in events) == 0
             window.controls[4].press()
             assert any(event[:2] == ("attack", "Attack(Player1)") for event in events)
             assert globals_["TLENEMY"] > 1001
@@ -380,6 +386,8 @@ for chapter_index, chapter in enumerate(chapters):
                 assert "False Algoreth" in window.controls[0].text, window.controls[0].text
         window.controls[4].press()
         enemy_dead = False
+        if chapter["area"] == "tl0005" and beat.get("encounter_phases"):
+            assert sum(event[0] == "spawn" and event[1][1] == "falseal" for event in events) == 1
     while timed_events:
         timed_events.pop(0)()
     if chapter_index + 1 < len(chapters):
@@ -562,7 +570,7 @@ for purpose_index, guardian_line in enumerate(guardian_lines):
     current_area = "tl0003"
     enemy_dead = False
     globals_.update({"TLCHAP": chapter_index_by_area["tl0003"], "TLBEAT": 0, "TLENEMY": 0, "TLCAST": 0,
-                     "TLLORIANPURPOSE": 0, "TLJRN_LORIAN_PURPOSE": 0})
+                     "TLLORIANPURPOSE": 0, "TLJRN_LORIAN_PURPOSE": 0, "TLLORIAN_GUARDIAN": 0})
     campaign.OnLoad()
     while timed_events:
         timed_events.pop(0)()
@@ -1439,7 +1447,7 @@ for warding in (1, 2):
     window.controls[4].press()
     window.controls[4].press()
     assert "Ward Shard" in window.controls[0].text, window.controls[0].text
-    assert (1, "wrdshard", 1100, 600) in [event[1] for event in events if event[0] == "spawn"]
+    assert (1, "wrdshard", 930, 600) in [event[1] for event in events if event[0] == "spawn"]
     enemy_dead = True
     window.controls[4].press()
     assert "False Algoreth" in window.controls[0].text

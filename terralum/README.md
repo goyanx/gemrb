@@ -56,7 +56,15 @@ Four generated portrait sheets now provide medium and small GemRB portrait resou
 
 Mistwood's two ambushers use their own painted 2D enemy sprites instead of generic protagonist/riddler placeholders. Their encounter CREs and animation rows are registered separately from neutral scene NPCs in `enemy_avatars.json`. Each enemy has a directional painted attack sheet and idle–strike–recovery melee BAMs. Algoreth has a painted 3×3 turnaround and nine directional staff attack views. The Pale-stone Prowler's old `(1120, 560)` road spawn showed its hostile circle without its body; moving it to `(1080, 480)` makes the painted enemy visible in a fresh GemRB build. A live targeted pass confirms Tessa damages the visible Prowler, which had 4 HP remaining at capture. Victory and post-battle save/load remain unverified.
 
-The Academy vault now uses a dedicated painted Ward Shard CRE and directional avatar. False Algoreth is deferred until the second encounter phase; the live scene review confirmed that the Ward Shard and False Algoreth both render on the open floor after moving them off the raised stair tiles. The phase-two script path was exercised with a test-injected defeat state; a normal player-driven win and post-fight save/load still need verification.
+The Academy vault now uses a dedicated painted Ward Shard CRE and directional avatar. False Algoreth is deferred until phase two and uses the painted False Algoreth CRE. Fresh isolated GemRB captures show Magister Vael and Queen Alisande on connected open-floor cells and confirm the phase-two actor spawns. The phase capture uses a test-injected Ward Shard defeat, so a normal player-driven win and post-fight save/load still need verification.
+
+| Academy vault cast | Test-injected phase-two spawn |
+| --- | --- |
+| ![Fresh GemRB Observatory Vault scene with Magister Vael, Queen Alisande, and Algoreth](screenshots/academy-cast-staging-live.png) | ![False Algoreth spawns after the test-injected Ward Shard defeat](screenshots/academy-false-algoreth-phase-live.png) |
+
+The first phase has its own visible painted crystal enemy on the connected central floor:
+
+![Fresh Academy vault capture with the painted Ward Shard beside Algoreth](screenshots/academy-ward-shard-live.png)
 
 ![Fresh GemRB Mistwood ambush showing the painted Stalker, armored Prowler, and balanced player scale](screenshots/player-scale-balanced-live.png)
 

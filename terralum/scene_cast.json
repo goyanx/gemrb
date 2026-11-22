@@ -1338,7 +1338,8 @@
       ],
       "provenance": "adaptation",
       "avatar_creature": "falseal",
-      "spawn_beat": 2
+      "spawn_flag": "TLFALSE_ALGORETH",
+      "spawn_beat": 3
     }
   ],
   "tl0021": [

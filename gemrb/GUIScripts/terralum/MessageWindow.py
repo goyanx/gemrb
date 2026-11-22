@@ -145,6 +145,22 @@ def OnLoad():
 		else:
 			portrait_button.SetVisible(False)
 
+	def create_scene_actor(person):
+		actor = GemRB.CreateCreature(1, person.get("avatar_creature", person["creature"]),
+								 person["position"][0], person["position"][1])
+		GemRB.SetPlayerName(actor, person["name"], 0)
+		if person["creature"] in ("protagon", "riddler"):
+			palette = NPC_PALETTES_BY_NAME[person["name"]]
+			GemRB.SetPlayerStat(actor, IE_HAIR_COLOR, palette[0])
+			GemRB.SetPlayerStat(actor, IE_MAJOR_COLOR, palette[1])
+			GemRB.SetPlayerStat(actor, IE_MINOR_COLOR, palette[2])
+		GemRB.SetPlayerStat(actor, IE_EA, NEUTRAL)
+		if person.get("dialog"):
+			GemRB.SetPlayerDialog(actor, person["dialog"])
+		if person.get("spawn_flag"):
+			GemRB.SetGlobal(person["spawn_flag"], "GLOBAL", actor)
+		return actor
+
 	def spawn_cast(chapter_index):
 		chapter = chapters[chapter_index]
 		if GemRB.GetCurrentArea().lower() != chapter["area"]:
@@ -155,24 +171,28 @@ def OnLoad():
 			spawn_beat = person.get("spawn_beat")
 			if spawn_beat is not None and GemRB.GetGameVar("TLBEAT") < spawn_beat:
 				continue
-			actor = GemRB.CreateCreature(1, person.get("avatar_creature", person["creature"]),
-									 person["position"][0], person["position"][1])
-			GemRB.SetPlayerName(actor, person["name"], 0)
-			if person["creature"] in ("protagon", "riddler"):
-				palette = NPC_PALETTES_BY_NAME[person["name"]]
-				GemRB.SetPlayerStat(actor, IE_HAIR_COLOR, palette[0])
-				GemRB.SetPlayerStat(actor, IE_MAJOR_COLOR, palette[1])
-				GemRB.SetPlayerStat(actor, IE_MINOR_COLOR, palette[2])
-			GemRB.SetPlayerStat(actor, IE_EA, NEUTRAL)
-			if person.get("dialog"):
-				GemRB.SetPlayerDialog(actor, person["dialog"])
-			if person.get("spawn_flag"):
-				GemRB.SetGlobal(person["spawn_flag"], "GLOBAL", actor)
+			spawn_flag = person.get("spawn_flag")
+			if spawn_flag and GemRB.GetGameVar(spawn_flag):
+				continue
+			create_scene_actor(person)
 		if chapter["area"] == "tl0002" and GemRB.GetGameVar("TLMARALEAD") == 2:
 			warden = GemRB.CreateCreature(1, "riddler", 850, 650)
 			GemRB.SetPlayerName(warden, "Edmon's Waywarden", 0)
 			GemRB.SetPlayerStat(warden, IE_EA, NEUTRAL)
 		GemRB.SetGlobal("TLCAST", "GLOBAL", chapter_index + 1)
+
+	def spawn_deferred_cast(chapter_index, beat_index):
+		chapter = chapters[chapter_index]
+		if GemRB.GetCurrentArea().lower() != chapter["area"]:
+			return
+		for person in Story.cast(chapter["area"]):
+			spawn_beat = person.get("spawn_beat")
+			spawn_flag = person.get("spawn_flag")
+			if spawn_beat is None or beat_index < spawn_beat:
+				continue
+			if spawn_flag and GemRB.GetGameVar(spawn_flag):
+				continue
+			create_scene_actor(person)
 
 	def talk_to_scene_npc():
 		if dialogue_state["must_finish_followup"]:
@@ -532,6 +552,7 @@ def OnLoad():
 		chapter_index = GemRB.GetGameVar("TLCHAP")
 		beat_index = GemRB.GetGameVar("TLBEAT")
 		chapter = chapters[chapter_index]
+		spawn_deferred_cast(chapter_index, beat_index)
 		# GemRB's AddJournalEntry reads the game-script CHAPTER global; SetVar
 		# only updates the separate GUI dictionary and does not select a journal page.
 		GemRB.SetGlobal("CHAPTER", "GLOBAL", chapter["act"])
