@@ -742,6 +742,7 @@
           "text": "A false version of me waits inside the Tear. I will give the breach a boundary instead of feeding it more force.",
           "action": "Hold the ward",
           "encounter": "Vault echo",
+          "party_to_hit": 14,
           "failure_recovery": "If the party is overcome, reload the latest save made before the vault fight. The seal and journal resolve only after both phases are defeated.",
           "encounter_phases": [
             {

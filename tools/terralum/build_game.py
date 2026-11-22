@@ -241,6 +241,11 @@ def read_story():
         if not all(beat.get("speaker") and beat.get("text") and beat.get("action") for beat in chapter["beats"]):
             raise ValueError("each story beat needs a speaker, text, and action")
         for beat_index, beat in enumerate(chapter["beats"]):
+            party_to_hit = beat.get("party_to_hit")
+            if party_to_hit is not None and (
+                    not beat.get("encounter") or type(party_to_hit) is not int
+                    or not 1 <= party_to_hit <= 50):
+                raise ValueError(f"party_to_hit for {chapter['area']} must be an encounter THAC0 from 1 to 50")
             enemies = beat.get("enemies")
             if enemies is not None:
                 if (not beat.get("encounter") or not isinstance(enemies, list)

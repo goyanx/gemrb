@@ -615,20 +615,24 @@ def OnLoad():
 	def begin_group_combat(actors, companion_flag=None, companion_actor=None, party_to_hit=None):
 		# Start combat after the one-round delay so a joining companion is in
 		# the party before GemRB initializes the active initiative list.
-		if party_to_hit is not None:
-			for actor in (1, companion_actor):
-				if not actor:
-					continue
-				if actor not in combat_state["original_tohit"]:
-					combat_state["original_tohit"][actor] = GemRB.GetPlayerStat(actor, IE_TOHIT)
-				if combat_state["original_tohit"][actor] > party_to_hit:
-					GemRB.SetPlayerStat(actor, IE_TOHIT, party_to_hit)
+		set_party_to_hit(party_to_hit, (1, companion_actor))
 		for index, (_name, enemy_actor) in enumerate(actors):
 			target = "Player2" if index % 2 and GemRB.GetPartySize() > 1 else "Player1"
 			GemRB.ExecuteString("Attack(" + target + ")", enemy_actor)
 		if companion_flag:
 			GemRB.SetGlobal(companion_flag, "GLOBAL", 1)
 		configure_party_controls()
+
+	def set_party_to_hit(party_to_hit, actors):
+		if party_to_hit is None:
+			return
+		for actor in actors:
+			if not actor:
+				continue
+			if actor not in combat_state["original_tohit"]:
+				combat_state["original_tohit"][actor] = GemRB.GetPlayerStat(actor, IE_TOHIT)
+			if combat_state["original_tohit"][actor] > party_to_hit:
+				GemRB.SetPlayerStat(actor, IE_TOHIT, party_to_hit)
 
 	def restore_combat_stats():
 		for actor, to_hit in combat_state["original_tohit"].items():
@@ -785,6 +789,8 @@ def OnLoad():
 					GemRB.SetGlobal(spawn_flag, "GLOBAL", enemy)
 			GemRB.SetPlayerStat(enemy, IE_EA, ENEMY)
 			apply_encounter_phase_stats(enemy, phase)
+			tessa = GemRB.GetGameVar("TLMISTWOOD_TESSA")
+			set_party_to_hit(beat.get("party_to_hit"), (1, tessa))
 			GemRB.ExecuteString("Attack(Player1)", enemy)
 			encounter_name = phase.get("name", beat["encounter"])
 			encounter_text = phase.get("text", encounter_name + " emerges.")
@@ -822,6 +828,8 @@ def OnLoad():
 					GemRB.SetGlobal(spawn_flag, "GLOBAL", enemy)
 				GemRB.SetPlayerStat(enemy, IE_EA, ENEMY)
 				apply_encounter_phase_stats(enemy, phase)
+				tessa = GemRB.GetGameVar("TLMISTWOOD_TESSA")
+				set_party_to_hit(beat.get("party_to_hit"), (1, tessa))
 				GemRB.ExecuteString("Attack(Player1)", enemy)
 				message.Append("\n\nENCOUNTER: " + phase["text"] + " Defeat it to continue.")
 				action.SetText("CONTINUE")
@@ -830,6 +838,7 @@ def OnLoad():
 				record_journal_event(beat.get("victory_journal"), chapter["act"])
 				if phases:
 					GemRB.SetGlobal("TLECHOPHASE", "GLOBAL", 0)
+				restore_combat_stats()
 		GemRB.SetGlobal("TLENEMY", "GLOBAL", 0)
 		beat_index += 1
 		if beat_index >= len(chapter["beats"]):

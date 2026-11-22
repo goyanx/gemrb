@@ -1423,7 +1423,7 @@ for warding in (1, 2):
     globals_.update({"TLCHAP": annex_index, "TLBEAT": 0, "TLENEMY": 0, "TLCAST": 0,
                      "TLECHOPHASE": 0, "TLFALSE_ALGORETH": 0,
                      "TLWARDING": 0, "TLJRN_WARDING": 0, "TLJRN_TEAR": 0,
-                     "TLECHO": 1})
+                     "TLECHO": 1, "TLMISTWOOD_TESSA": 77})
     campaign.OnLoad()
     while timed_events:
         timed_events.pop(0)()
@@ -1452,6 +1452,8 @@ for warding in (1, 2):
     assert ("set-stat", ward_shard, campaign.IE_MAXHITPOINTS, 10) in events
     assert ("set-stat", ward_shard, campaign.IE_HITPOINTS, 10) in events
     assert ("set-stat", ward_shard, campaign.IE_DAMAGEBONUS, -2) in events
+    for actor in (1, globals_["TLMISTWOOD_TESSA"]):
+        assert ("set-stat", actor, campaign.IE_TOHIT, 14) in events
     enemy_dead = True
     window.controls[4].press()
     assert "False Algoreth" in window.controls[0].text
@@ -1465,6 +1467,8 @@ for warding in (1, 2):
     assert ("set-stat", false_algoreth, campaign.IE_MAXHITPOINTS, 14) in events
     assert ("set-stat", false_algoreth, campaign.IE_HITPOINTS, 14) in events
     assert ("set-stat", false_algoreth, campaign.IE_DAMAGEBONUS, -1) in events
+    for actor in (1, globals_["TLMISTWOOD_TESSA"]):
+        assert ("set-stat", actor, campaign.IE_TOHIT, 14) in events
     assert globals_["TLJRN_TEAR"] == 0
     window.controls[4].press()
     resolution = next(route for route in campaign.Story.chapters()[chapter_index_by_area["tl0005"]]["beats"][3]["routes"]
@@ -1473,6 +1477,8 @@ for warding in (1, 2):
     assert "false self remains contained" in resolution["text"]
     assert globals_["TLJRN_TEAR"] == 1
     assert globals_["TLECHOPHASE"] == 0
+    for actor in (1, globals_["TLMISTWOOD_TESSA"]):
+        assert ("set-stat", actor, campaign.IE_TOHIT, 20) in events
 
 # The Mistwood Relay choice records one shared journal event for either route
 # and preserves the dispatch schedule's limits in Saren's dialogue.
