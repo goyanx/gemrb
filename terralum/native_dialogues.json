@@ -53,6 +53,36 @@
       }
     ]
   },
+  "TAVIN": {
+    "states": [
+      {
+        "when": [{"flag": "TLCHAP", "value": 3}, {"flag": "TLTRAVELKIT", "value": 0}],
+        "say": "The horse is ready, and Edda can pack one field kit. A hooded lantern can signal from cover; rope can secure a rough crossing. I can prepare either, but not both.",
+        "transitions": [
+          {"text": "Ask how the lantern should be used.", "next": 1},
+          {"text": "Ask where the rope will help.", "next": 2}
+        ]
+      },
+      {
+        "say": "Keep the shutter closed until Scout Tessa says a signal will help. A visible flame could draw eyes from the road.",
+        "transitions": [{"text": "I will wait for Tessa's advice.", "final": true}]
+      },
+      {
+        "say": "Ranger Ilya knows the creek. With a sound handline she can guide the party across below the exposed track.",
+        "transitions": [{"text": "We will ask Ilya to judge the crossing.", "final": true}]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 3}, {"flag": "TLTRAVELKIT", "value": 1}],
+        "say": "The shuttered lantern and spare oil are packed. I will keep the rope with the stable stores; Tessa can decide whether a signal is worth showing in the trees.",
+        "transitions": [{"text": "Keep the lantern shuttered until we reach the camp.", "final": true}]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 3}, {"flag": "TLTRAVELKIT", "value": 2}],
+        "say": "The rope and rations are packed. I will leave the lantern here; Ilya can judge whether the creek bank will take a handline.",
+        "transitions": [{"text": "Carry the rope and let Ilya judge the stream.", "final": true}]
+      }
+    ]
+  },
   "INESSA": {
     "states": [
       {

@@ -1684,6 +1684,7 @@
     {
       "name": "Groom Tavin",
       "portrait": "TAVIN0",
+      "dialog": "TAVIN",
       "creature": "riddler",
       "position": [
         1000,
