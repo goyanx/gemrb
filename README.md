@@ -48,6 +48,12 @@ The Mistwood ambush now plays through both defeats, records its victory Journal 
   <a href="terralum/screenshots/mistwood-victory-reloaded-journal.png"><img src="terralum/screenshots/mistwood-victory-reloaded-journal.png" alt="Mistwood victory Journal entry after loading the post-battle save" width="48%"></a>
 </p>
 
+The Ruined Watchpost courier has a victory-aware follow-up. A GemRB scene seeded with the saved ambush result shows Pell thanking Tessa and reporting that the road is clear:
+
+<p align="center">
+  <a href="terralum/screenshots/mistwood-watchpost-pell-victory-response.png"><img src="terralum/screenshots/mistwood-watchpost-pell-victory-response.png" alt="Courier Pell's Watchpost dialogue recognizes that the Mistwood attackers were defeated" width="92%"></a>
+</p>
+
 The named save/load flow preserves both outcomes of Mara's campaign-panel ledger decision across area transitions. The native DLG sealed-ledger branch has also been saved and reloaded, and Inessa's Library response matches it. The shared quest and ledger record remain in the Journal.
 
 <p align="center">

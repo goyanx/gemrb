@@ -172,3 +172,8 @@ This file records verified implementation findings and mistakes that should info
 # Painted player sprite palettes
 
 GemRB's `avatars.2da` palette mode `0` runs the actor's CRE paper-doll color remapping against the BAM palette. That is suitable for classic indexed paper-doll art, but it corrupts a fully painted sprite after BAM quantization. For Terralum's painted player BAM, use palette mode `1`, the same mode as the custom NPC rows; this preserves the image's baked costume colors. Verify the controllable `protagon.cre` in a fresh GemRB run, since checking only the cameo CRE or the generated BAM files will miss the player-specific recoloring path.
+
+## Downstream encounter continuity
+
+- Verify downstream NPC callbacks with an explicitly seeded state, and label the scope. A fresh GemRB Watchpost startup with `TLMISTWOODVICTORY=1` shows Courier Pell acknowledge Tessa's report that both creatures are gone (`terralum/screenshots/mistwood-watchpost-pell-victory-response.png`). This proves the actor and conditional line render in GemRB; a continuous area transition must still verify the route into the callback.
+- Avoid unbounded repeated attack automation in the story panel. A ten-cycle Xvfb attack loop repeatedly selected targets and appended combat prompts until GemRB asserted in `ContentContainer::DeleteContentsInRect`. The ordinary full-victory run completed with six cycles, but scripted repetition is not a robust endurance test; stop on observed victory/defeat state rather than increasing a fixed click loop.
