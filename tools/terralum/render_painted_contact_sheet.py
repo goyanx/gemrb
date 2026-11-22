@@ -19,6 +19,7 @@ CHARACTERS = (
 	("Waywarden Saren", "saren.png"),
 	("Lost Wayfarer", "wayfarer.png"),
 	("Dorian the Seer", "dorian.png"),
+	("Dorian's Echo", "dorian_echo.png"),
 	("Royal Scribe Oren", "oren.png"),
 	("Courier Pell", "pell.png"),
 	("Courier Eren", "eren.png"),

@@ -12,6 +12,7 @@ These generated transparent turnarounds establish the corrected world-character 
 | Waywarden Saren | `saren0` | `saren.png` |
 | Lost Wayfarer | `wayfar` | `wayfarer.png` |
 | Dorian the Seer | `dorian` | `dorian.png` |
+| Dorian's Echo | `doriech` | `dorian_echo.png` |
 | Royal Scribe Oren | `oren00` | `oren.png` |
 | Courier Pell | `pell00` | `pell.png` |
 | Courier Eren | `eren00` | `eren.png` |
