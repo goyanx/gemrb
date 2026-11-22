@@ -852,7 +852,7 @@ def build():
                      + "3       mistwood        tlwood.mus\n", encoding="ascii")
     actions = OUTPUT / "override" / "action.ids"
     actions.write_text(actions.read_text(encoding="ascii")
-                       + "\n3 Attack(O:Target*)\n248 RunToPoint(P:Point*)\n", encoding="ascii")
+                       + "\n3 Attack(O:Target*)\n19 JoinParty()\n248 RunToPoint(P:Point*)\n", encoding="ascii")
     for sound in (PROJECT / "audio").glob("tln*.ogg"):
         shutil.copy2(sound, OUTPUT / "override" / sound.name)
     for music in (PROJECT / "audio" / "music").rglob("*"):

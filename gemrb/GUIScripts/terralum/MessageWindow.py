@@ -31,7 +31,7 @@ def ShowDefeat():
 	ui = _defeat_ui
 	ui["message"].SetText("TERRALUM  |  THE PARTY HAS FALLEN\n\nThe road has taken its toll. Load a named save to return to your last safe place.")
 	ui["load_state"]["defeated"] = True
-	for control in (ui["attack"], ui["cast"], ui["talk"], ui["voice"], ui["journal"], ui["save"]):
+	for control in (ui["attack"], ui["cast"], ui["talk"], ui["voice"], ui["journal"], ui["save"], ui["party"], ui["hero"]):
 		control.SetVisible(False)
 	for button in ui["choices"]:
 		button.SetVisible(False)
@@ -82,15 +82,15 @@ def OnLoad():
 
 	action = window.GetControl(4)
 	_style(action, 100)
-	voice = window.CreateButton(10, 630, 183, 90, 34)
+	voice = window.CreateButton(10, 580, 183, 70, 34)
 	_style(voice)
 	voice.SetText("NARRATE")
 	voice.SetHotKey("n", 0, True)
-	cast = window.CreateButton(11, 440, 183, 90, 34)
+	cast = window.CreateButton(11, 440, 183, 65, 34)
 	_style(cast)
 	cast.SetText("CAST")
 	cast.SetHotKey("c", 0, True)
-	actor_talk = window.CreateButton(16, 535, 183, 90, 34)
+	actor_talk = window.CreateButton(16, 510, 183, 65, 34)
 	_style(actor_talk)
 	actor_talk.SetText("TALK")
 	actor_talk.SetHotKey("t", 0, True)
@@ -98,6 +98,16 @@ def OnLoad():
 	_style(attack_button)
 	attack_button.SetText("ATTACK")
 	attack_button.SetHotKey("a", 0, True)
+	hero_button = window.CreateButton(22, 655, 183, 65, 34)
+	_style(hero_button)
+	hero_button.SetText("HERO")
+	hero_button.SetHotKey("1", 0, True)
+	hero_button.SetVisible(False)
+	party_button = window.CreateButton(21, 722, 183, 78, 34)
+	_style(party_button)
+	party_button.SetText("TESSA")
+	party_button.SetHotKey("2", 0, True)
+	party_button.SetVisible(False)
 	save_button = window.CreateButton(18, 10, 183, 78, 34)
 	_style(save_button)
 	save_button.SetText("SAVE")
@@ -207,8 +217,24 @@ def OnLoad():
 	def begin_actor_attack():
 		if dialogue_state["has_choices"] or journal_state["open"]:
 			return
-		GemRB.GameSelectPC(1, True, SELECT_REPLACE)
 		GemRB.GameControlSetTargetMode(TARGET_MODE_ATTACK, GA_NO_DEAD | GA_NO_SELF | GA_NO_HIDDEN)
+
+	def select_tessa():
+		if GemRB.GetPartySize() > 1:
+			GemRB.GameSelectPC(2, True, SELECT_REPLACE)
+			message.Append("\n\nScout Tessa selected. Choose ATTACK, then select a target.")
+
+	def select_lead():
+		GemRB.GameSelectPC(1, True, SELECT_REPLACE)
+		message.Append("\n\nAlgoreth selected. Choose ATTACK, then select a target.")
+
+	def configure_party_controls():
+		show_party = GemRB.GetPartySize() > 1
+		hero_button.SetVisible(show_party)
+		party_button.SetVisible(show_party)
+
+	party_button.OnPress(select_tessa)
+	hero_button.OnPress(select_lead)
 
 	def save_game():
 		GUICommon.SetSaveDir()
@@ -253,6 +279,8 @@ def OnLoad():
 		voice.SetVisible(False)
 		save_button.SetVisible(False)
 		load_button.SetVisible(False)
+		hero_button.SetVisible(False)
+		party_button.SetVisible(False)
 		action.SetText("CANCEL")
 		action.SetVisible(False)
 		action.OnPress(show)
@@ -281,6 +309,8 @@ def OnLoad():
 		voice.SetVisible(False)
 		save_button.SetVisible(False)
 		load_button.SetVisible(False)
+		hero_button.SetVisible(False)
+		party_button.SetVisible(False)
 		action.SetText("NEXT")
 		action.SetVisible(page_count > 1)
 		action.OnPress(lambda: change_load_page(1))
@@ -316,6 +346,8 @@ def OnLoad():
 	_defeat_ui = {
 		"message": message,
 		"attack": attack_button,
+		"party": party_button,
+		"hero": hero_button,
 		"cast": cast,
 		"talk": actor_talk,
 		"voice": voice,
@@ -339,6 +371,8 @@ def OnLoad():
 				button.OnPress(lambda _button=None, choice=choice, person=person: choose_dialogue(person, choice))
 		dialogue_state["has_choices"] = bool(choices)
 		attack_button.SetVisible(not bool(choices))
+		hero_button.SetVisible(not bool(choices) and GemRB.GetPartySize() > 1)
+		party_button.SetVisible(not bool(choices) and GemRB.GetPartySize() > 1)
 		journal_button.SetVisible(not bool(choices))
 		cast.SetVisible(not bool(choices))
 		save_button.SetVisible(not bool(choices))
@@ -379,6 +413,7 @@ def OnLoad():
 		cast.SetVisible(True)
 		save_button.SetVisible(True)
 		load_button.SetVisible(True)
+		configure_party_controls()
 
 	def record_journal_event(event, act):
 		if event and not GemRB.GetGameVar(event["flag"]):
@@ -494,8 +529,7 @@ def OnLoad():
 			button.SetVisible(False)
 		attack_button.SetVisible(True)
 		cast.SetVisible(True)
-		cast.SetText("CAST")
-		cast.OnPress(talk_to_scene_npc)
+		configure_party_controls()
 		actor_talk.SetVisible(True)
 		actor_talk.OnPress(begin_actor_talk)
 		voice.SetVisible(True)
@@ -523,6 +557,15 @@ def OnLoad():
 		action.SetVisible(True)
 		action.OnPress(advance)
 		voice.SetDisabled(not chapter.get("voice"))
+
+	def begin_group_combat(actors, companion_flag=None):
+		# Start combat after the one-round delay so a joining companion is in
+		# the party before GemRB initializes the active initiative list.
+		for _name, enemy_actor in actors:
+			GemRB.ExecuteString("Attack(Player1)", enemy_actor)
+		if companion_flag:
+			GemRB.SetGlobal(companion_flag, "GLOBAL", 1)
+		configure_party_controls()
 
 	def advance():
 		chapter_index = GemRB.GetGameVar("TLCHAP")
@@ -603,20 +646,23 @@ def OnLoad():
 					GemRB.SetGlobal(member["flag"], "GLOBAL", actor)
 					GemRB.SetPlayerName(actor, member["name"], 0)
 					GemRB.SetPlayerStat(actor, IE_EA, ENEMY)
-					GemRB.ExecuteString("Attack(Player1)", actor)
 					spawned_names.append(member["name"])
 				group_actors.append((member["name"], actor))
 			companion = beat.get("companion")
 			if companion and not GemRB.GetGameVar(companion["triggered_flag"]):
 				actor = GemRB.GetGameVar(companion["actor_flag"])
 				if actor:
-					GemRB.ExecuteString("Attack(NearestEnemyOf(Myself))", actor)
-					# ExecuteString adds actions to the front of the queue. Queue the
-					# attack first so JoinParty runs first and enables the ally turn.
-					GemRB.ExecuteString("Attack(NearestEnemyOf(Myself))", actor)
 					GemRB.ExecuteString("JoinParty()", actor)
-					GemRB.SetGlobal(companion["triggered_flag"], "GLOBAL", 1)
+					GemRB.SetGlobal(companion["triggered_flag"], "GLOBAL", 2)
+					GemRB.SetTimedEvent(lambda actors=tuple(group_actors), flag=companion["triggered_flag"]:
+						begin_group_combat(actors, flag), 1)
+					party_button.SetVisible(True)
+					hero_button.SetVisible(True)
 					message.Append("\n\n" + companion["join_line"])
+				else:
+					begin_group_combat(group_actors)
+			elif spawned_names:
+				begin_group_combat(group_actors)
 			if spawned_names:
 				if not enemy:
 					GemRB.SetGlobal("TLENEMY", "GLOBAL", group_actors[0][1])

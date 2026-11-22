@@ -105,6 +105,7 @@ current_area = "tl0001"
 next_actor = 1001
 timed_events = []
 journal_entries = []
+party_actors = set()
 gemrb = types.ModuleType("GemRB")
 gemrb.LoadWindow = lambda *args: window
 gemrb.GetGameVar = lambda name: globals_[name]
@@ -138,8 +139,17 @@ gemrb.CreateCreature = create_creature
 gemrb.SetPlayerName = lambda actor, name, *args: events.append(("name", actor, name))
 gemrb.SetPlayerDialog = lambda actor, resref: events.append(("dialog", actor, resref))
 gemrb.SetPlayerStat = lambda *args: None
-gemrb.ExecuteString = lambda action, actor: events.append(("attack", action, actor))
-gemrb.GetPlayerStat = lambda actor, stat: 2048 if enemy_dead or actor in dead_actors else 0
+def execute_string(action, actor):
+    events.append(("attack", action, actor))
+    if action == "JoinParty()":
+        party_actors.add(actor)
+gemrb.ExecuteString = execute_string
+def get_player_stat(actor, stat):
+    if actor in party_actors and stat == campaign.IE_EA:
+        return campaign.PC
+    return 2048 if enemy_dead or actor in dead_actors else 0
+gemrb.GetPlayerStat = get_player_stat
+gemrb.GetPartySize = lambda: len(party_actors) + 1
 gemrb.GamePause = lambda *args: None
 gemrb.GameSelectPC = lambda *args: events.append(("select-pc", *args))
 gemrb.GameControlSetTargetMode = lambda mode, types=0: events.append(("target-mode", mode, types))
@@ -479,6 +489,8 @@ for lead, expect_warden in ((2, True), (3, False)):
     warden_spawned = any(event[0] == "name" and event[2] == "Edmon's Waywarden" for event in events)
     assert warden_spawned is expect_warden
     window.controls[4].press()
+    while timed_events:
+        timed_events.pop(0)()
     assert globals_["TLMISTWOODSAFE"] == 0
     assert globals_["TLENEMY"] > 1001
     assert any(event[:2] == ("attack", "Attack(Player1)") for event in events)
@@ -488,6 +500,7 @@ resolved_journal_count = len(journal_entries)
 window = Window()
 events.clear()
 timed_events.clear()
+party_actors.clear()
 current_area = "tl0002"
 enemy_dead = False
 dead_actors.clear()
@@ -651,6 +664,7 @@ assert len(journal_entries) == track_journal_count + 1
 window = Window()
 events.clear()
 timed_events.clear()
+party_actors.clear()
 current_area = "tl0002"
 globals_.update({"TLCHAP": chapter_index_by_area["tl0002"], "TLBEAT": 1, "TLENEMY": 0,
                      "TLENEMY_STALKER": 0, "TLENEMY_PROWLER": 0, "TLCAST": 0,
@@ -833,11 +847,21 @@ assert [event[1] for event in events if event[0] == "spawn"][-2:] == [
 assert globals_["TLENEMY_STALKER"] > 1001
 assert globals_["TLENEMY_PROWLER"] > globals_["TLENEMY_STALKER"]
 assert globals_["TLENEMY"] == globals_["TLENEMY_STALKER"]
+assert any(event[0] == "attack" and event[1] == "JoinParty()" for event in events)
+while timed_events:
+    timed_events.pop(0)()
 assert sum(event[0] == "attack" and event[1] == "Attack(Player1)" for event in events) == 2
-queued_actions = [event[1] for event in events if event[0] == "attack"]
-assert queued_actions.index("Attack(NearestEnemyOf(Myself))") < queued_actions.index("JoinParty()")
 assert globals_["TLMISTWOOD_TESSA_COMBAT_CUE"] == 1
 assert "Tessa points out the prowler and calls for Algoreth to hold the road." in window.controls[0].text
+assert window.controls[21].visible
+assert window.controls[11].text == "CAST"
+assert window.controls[22].text == "HERO" and window.controls[22].visible
+window.controls[22].press()
+assert events[-1] == ("select-pc", 1, True, 1)
+window.controls[21].press()
+assert events[-1] == ("select-pc", 2, True, 1)
+window.controls[20].press()
+assert events[-1][0:2] == ("target-mode", 2)
 window.controls[4].press()
 assert globals_["TLBEAT"] == 1
 assert "Mistwood stalker and Pale-stone prowler" in window.controls[0].text
