@@ -76,7 +76,7 @@ scene_production_plan.md tracks the BG2-inspired delivery slices. campaign_plan.
 
 ## Save and load
 
-The game panel has **SAVE** and **LOAD** controls. SAVE creates a named snapshot based on the current scene. LOAD lists saved games in pages, asks before replacing unsaved progress, and restores the selected game. This uses GemRB's native save-game APIs with a custom in-panel UI because the open demo pack does not include the stock save/load window resources.
+The game panel has **SAVE** and **LOAD** controls. SAVE creates a named snapshot based on the current scene. GemRB blocks saves during active combat and while enemies are close; the panel explains this and asks the player to save after the encounter. LOAD lists saved games in pages, asks before replacing unsaved progress, and restores the selected game. This uses GemRB's native save-game APIs with a custom in-panel UI because the open demo pack does not include the stock save/load window resources.
 
 ![Terralum showing a successful named save in the game panel](screenshots/save-load-saved.png)
 

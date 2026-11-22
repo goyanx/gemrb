@@ -191,8 +191,10 @@ def OnLoad():
 		result = GemRB.SaveGame(None, save_name, -1, GemRB.GetGamePreview())
 		if result == 0:
 			message.SetText("TERRALUM  |  GAME SAVED\n\n" + save_name + "\n\nYour party, current area, campaign decisions, and journal have been saved.")
+		elif result in (3, 7):
+			message.SetText("TERRALUM  |  SAVE UNAVAILABLE\n\nYou cannot save during combat or while enemies are close. Finish the encounter, then save from a safe place.")
 		else:
-			message.SetText("TERRALUM  |  SAVE FAILED\n\nGemRB could not write the save. Check the game log for the storage error.")
+			message.SetText("TERRALUM  |  SAVE FAILED\n\nGemRB could not write the save (error {}). Check the game log for details.".format(result))
 		action.SetText("CONTINUE")
 		action.OnPress(advance)
 
