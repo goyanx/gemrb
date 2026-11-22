@@ -72,9 +72,11 @@ The Royal Stables now stage Stablemaster Edda clearly in the courtyard beside Gr
 
 ![Live GemRB screenshot of Edda, the player, and Tavin in the Royal Stables](screenshots/stables-edda-position-test.png)
 
-Groom Tavin now has his own compiled, kit-aware native dialogue. The isolated GemRB scene shows his named actor in Talk mode; his opening lines and both route callbacks still need live confirmation.
+Groom Tavin now has his own compiled, kit-aware native dialogue. In an isolated GemRB scene, clicking him opens his authored opening lines; both questions advance live to Tavin's lantern advice about waiting for Tessa and his rope advice to ask Ilya to judge the creek crossing.
 
-![Live GemRB Royal Stables scene with the Talk prompt identifying Groom Tavin](screenshots/tavin-stables-dialog-live.png)
+| Lantern advice | Rope advice |
+| --- | --- |
+| ![Live GemRB dialogue showing Groom Tavin's advice to wait for Tessa before showing a signal](screenshots/tavin-dialog-choice-one.png) | ![Live GemRB dialogue showing Groom Tavin's advice to ask Ilya to judge the creek crossing](screenshots/tavin-dialog-choice-two.png) |
 
 ![Twelve new Terralum NPC portrait concepts for the complete cast](art/character_portraits_sheet_4.png)
 
