@@ -44,3 +44,5 @@ python tools/terralum/import_painted_turnaround.py terralum/art/reference/painte
 ```
 
 The initial import duplicates each direction into four walk slots. It provides painted idle views, not hand-painted locomotion; the repeated walk frames are a prototype limitation and must be replaced with authored motion before final acceptance. Always inspect the built BAM in a live scene for palette, transparency, scale, facing, and ground anchoring.
+
+Algoreth's current sheet presents him as a grounded field traveler and scholar: olive travel coat, practical leather layers, satchel, and journal, with a plain wood-and-brass quarterstaff for defense. He has no royal or wizard-king regalia and no magical orb. The generated idle source is normalized to the standard front/side/back 3x3 view order before import; mirrored side and front views fill directions not independently authored by the generator. A matching painted attack turnaround replaces his old ornate staff swings. The walk frames still repeat each idle view until motion art is authored.

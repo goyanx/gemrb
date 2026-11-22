@@ -76,7 +76,7 @@ The live Market capture confirms the ATTACK prompt now explains that an open-gro
 
 ![Live GemRB Attack prompt explaining that open ground clicks set a move marker](screenshots/attack-target-ground-instruction-live.png)
 
-The player sprite uses the painted BAM palette directly. This prevents GemRB's classic paper-doll recoloring from turning Algoreth into a blue, scrambled silhouette. The earlier 2× player frames overwhelmed the NPCs; regenerated 1.25× frames now keep Algoreth slightly prominent while matching the painted cast's scene scale.
+The player sprite uses the painted BAM palette directly. This prevents GemRB's classic paper-doll recoloring from turning Algoreth into a blue, scrambled silhouette. Algoreth's revised painted turnaround gives him a grounded travel-scholar design—olive field coat, leather layers, satchel, and journal—in place of the blocky green robe and magical staff look. The earlier 2× player frames overwhelmed the NPCs; regenerated 1.25× frames now keep Algoreth slightly prominent while matching the painted cast's scene scale.
 
 ![Live GemRB Market screenshot confirming Algoreth's balanced scale beside the painted NPCs](screenshots/player-scale-balanced-market.png)
 
