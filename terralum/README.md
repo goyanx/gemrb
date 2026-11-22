@@ -80,6 +80,10 @@ The player sprite uses the painted BAM palette directly. This prevents GemRB's c
 
 ![Live GemRB Market screenshot confirming Algoreth's balanced scale beside the painted NPCs](screenshots/player-scale-balanced-market.png)
 
+The revised traveler design is now visible in a fresh GemRB Market run beside the distinct court cast:
+
+![Algoreth's new painted travel-scholar sprite in GemRB](screenshots/algoreth-painted-player-review.png)
+
 Scout Tessa now stands visibly on the Mistwood road near Algoreth rather than below the camera's play area:
 
 ![Scout Tessa staged on the Mistwood road beside Algoreth](screenshots/mistwood-tessa-road-live.png)
