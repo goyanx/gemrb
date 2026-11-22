@@ -120,6 +120,23 @@ class NativeDialogueResourceTests(unittest.TestCase):
         self.assertEqual({tuple(condition["value"] for condition in state["when"]
                                 if condition["flag"] == "TLLORIANPURPOSE")
                           for state in dorian[4:]}, {(1,), (2,), (3,)})
+        self.assertEqual(bindings["GALLKEEP"], [("tl0010", "Gallery Keeper")])
+        self.assertEqual(bindings["GALLECHO"], [("tl0010", "Dorian's Echo")])
+        gallery = dialogues["GALLKEEP"]["states"]
+        self.assertEqual(len(gallery), 5)
+        self.assertEqual({tuple(condition["value"] for condition in state["when"]
+                                if condition["flag"] == "TLCHAP") for state in (gallery[0], *gallery[3:])},
+                         {(11,)})
+        self.assertEqual([transition["set"] for transition in gallery[0]["transitions"]], [
+            [{"flag": "TLGALLERY", "value": 1}, {"flag": "TLJRN_GALLERY_RESOLUTION", "value": 1}],
+            [{"flag": "TLGALLERY", "value": 2}, {"flag": "TLJRN_GALLERY_RESOLUTION", "value": 1}],
+        ])
+        self.assertEqual([transition["next"] for transition in gallery[0]["transitions"]], [1, 2])
+        echo = dialogues["GALLECHO"]["states"]
+        self.assertEqual(len(echo), 3)
+        self.assertEqual({tuple(condition["value"] for condition in state["when"]
+                                if condition["flag"] == "TLGALLERY") for state in echo},
+                         {(0,), (1,), (2,)})
         self.assertEqual(bindings["TESSA"], [("tl0015", "Scout Tessa")])
         tessa = dialogues["TESSA"]["states"]
         self.assertEqual([item["set"][0]["value"] for item in tessa[0]["transitions"]], [1, 2])

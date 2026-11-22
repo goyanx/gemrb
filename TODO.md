@@ -115,6 +115,7 @@ This is the current work ledger for human and AI contributors. Read [AGENTS.md](
 
 - [x] Live-playtested the Market's copy-landmarks follow-up branch through a real named save and reload. Mara's choices stayed closed, the quest and ledger event remained in the Journal, and Inessa returned the copied-ledger Library response.
 - [x] Added a two-stage Market ledger conversation with a required follow-up choice, one shared journal event, and later Library callbacks for both outcomes; mock-tested both branches.
+- [x] Bound Gallery Keeper and Dorian's Echo to native GemRB DLGs. The keeper's restraint/passage outcomes preserve the existing route flag and record the Gallery journal event immediately; the Echo and Keeper have outcome-aware re-entry lines. The compiled resources and state bindings pass `test_native_dialogues.py`; live in-game click-to-talk and save/load checks remain open.
 - [x] Persisted the pending conversation's NPC and topic indexes in campaign globals and restore its required choice when the game script reloads; the flow mock simulates reloads before and after both outcomes.
 - [x] Live-tested both Market follow-up branches in the campaign panel and native DLG through named save/load; Inessa's later Library response matches each saved choice. Other one-turn choice scenes still need deeper topics.
 - [x] Give the market quest a readable persistent journal entry; robust failure/skip paths beyond the current route and ambush outcomes remain open.

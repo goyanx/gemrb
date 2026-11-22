@@ -137,7 +137,7 @@ python tools/terralum/test_native_dialogues.py
 ./build/gemrb/gemrb -c terralum/build/terralum-wsl.cfg
 ```
 
-The campaign-flow mock checks scene progression and response effects. The MCP test checks JSON-RPC discovery, cast authoring, and campaign-flag registration; neither replaces a live playthrough.
+The campaign-flow mock checks scene progression and response effects. The MCP test checks JSON-RPC discovery, cast authoring, and campaign-flag registration; neither replaces a live playthrough. In the Seal Gallery, the Keeper and Dorian's Echo now have native actor-click DLG conversations, including the existing restraint/passage decision, immediate journal recording, and outcome-aware return lines; live click-to-talk verification remains pending.
 
 ### NPC world-avatar pipeline
 

@@ -780,5 +780,54 @@
         ]
       }
     ]
+  },
+  "GALLKEEP": {
+    "states": [
+      {
+        "when": [{"flag": "TLCHAP", "value": 11}, {"flag": "TLGALLERY", "value": 0}],
+        "say": "Three marks guard the arch: passage, return, and restraint. Name what must remain closed, and the warning can be carried home without opening the sealed niches.",
+        "transitions": [
+          {"text": "Name restraint; carry the warning back unopened.", "next": 1, "journal": "In the Byzantem Seal Gallery, Algoreth chose whether to name restraint or demand passage. The sealed niches remained closed, and the return court must decide what the scrolls may be used for.", "set": [{"flag": "TLGALLERY", "value": 1}, {"flag": "TLJRN_GALLERY_RESOLUTION", "value": 1}]},
+          {"text": "Demand passage through the arch.", "next": 2, "journal": "In the Byzantem Seal Gallery, Algoreth chose whether to name restraint or demand passage. The sealed niches remained closed, and the return court must decide what the scrolls may be used for.", "set": [{"flag": "TLGALLERY", "value": 2}, {"flag": "TLJRN_GALLERY_RESOLUTION", "value": 1}]}
+        ]
+      },
+      {
+        "say": "The answer is recorded. No niche has been opened; carry the warning back to the court, where the scrolls' use must still be decided.",
+        "transitions": [{"text": "We will return with the record intact.", "final": true}]
+      },
+      {
+        "say": "I will not open the niches. Your demand leaves the warning unresolved; carry that refusal back without claiming passage was granted.",
+        "transitions": [{"text": "We will return without opening the niches.", "final": true}]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 11}, {"flag": "TLGALLERY", "value": 1}],
+        "say": "You named restraint. The niches remain sealed, and the return court must decide what the scrolls may be used for.",
+        "transitions": [{"text": "The warning will travel with us.", "final": true}]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 11}, {"flag": "TLGALLERY", "value": 2}],
+        "say": "You demanded passage, and I refused. The niches remain sealed; the warning returns unresolved with you.",
+        "transitions": [{"text": "We will carry the unresolved warning.", "final": true}]
+      }
+    ]
+  },
+  "GALLECHO": {
+    "states": [
+      {
+        "when": [{"flag": "TLCHAP", "value": 11}, {"flag": "TLGALLERY", "value": 0}],
+        "say": "A warning is not a lock. It is a question the traveller must answer before choosing to cross. I repeat the inscription; I cannot tell you what lies behind the niches.",
+        "transitions": [{"text": "We will hear the keeper's answer first.", "final": true}]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 11}, {"flag": "TLGALLERY", "value": 1}],
+        "say": "Restraint answers the warning without breaking it. The record can return to court; the sealed niches remain beyond our knowledge.",
+        "transitions": [{"text": "The warning stays intact.", "final": true}]
+      },
+      {
+        "when": [{"flag": "TLCHAP", "value": 11}, {"flag": "TLGALLERY", "value": 2}],
+        "say": "The keeper refused passage. A demand did not turn the warning into permission; the niches remain sealed.",
+        "transitions": [{"text": "We will not claim permission we were denied.", "final": true}]
+      }
+    ]
   }
 }

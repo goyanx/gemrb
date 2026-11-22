@@ -672,6 +672,7 @@
       "name": "Gallery Keeper",
       "portrait": "GALLKEE",
       "creature": "protagon",
+      "dialog": "GALLKEEP",
       "position": [
         690,
         520
@@ -703,6 +704,7 @@
       "name": "Dorian's Echo",
       "portrait": "DORIECH",
       "creature": "riddler",
+      "dialog": "GALLECHO",
       "position": [
         930,
         500
